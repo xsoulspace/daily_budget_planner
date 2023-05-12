@@ -6,13 +6,11 @@ export 'interfaces/interfaces.dart';
 
 class RemoteApiServices {
   const RemoteApiServices._({
-    required this.projects,
     required this.user,
   });
   factory RemoteApiServices.buildAppRuntime() {
     final userApi = UserApiRemoteServiceFirebaseImpl();
     return RemoteApiServices._(
-      projects: ProjectsApiRemoteServiceFirebaseImpl(),
       user: userApi,
     );
   }
@@ -21,7 +19,6 @@ class RemoteApiServices {
     throw UnimplementedError('reason');
   }
 
-  final ProjectsApiService projects;
   final UserApiRemoteService user;
 }
 

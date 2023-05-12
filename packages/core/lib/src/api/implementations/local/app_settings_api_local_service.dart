@@ -12,18 +12,17 @@ class AppSettingsApiLocalService {
   Future<void> saveSettings({
     required final AppSettingsModel settings,
   }) async {
-    await localApiService.setMap(_persistenceKey, settings.toJson());
+    await localApiService.setInstance(
+      key: _persistenceKey,
+      value: settings,
+      toJson: (final instance) => instance.toJson(),
+    );
   }
 
-  Future<AppSettingsModel> loadSettings() async {
-    final jsonMap = await localApiService.getMap(_persistenceKey);
-    if (jsonMap.isEmpty) return AppSettingsModel.empty;
-    try {
-      return AppSettingsModel.fromJson(jsonMap);
-      // ignore: avoid_catches_without_on_clauses
-    } catch (e) {
-      // TODO(arenukvern): ignore this error but handle it in future
-      return AppSettingsModel.empty;
-    }
-  }
+  Future<AppSettingsModel> loadSettings() async => localApiService.getInstance(
+        key: _persistenceKey,
+        defaultValue: AppSettingsModel.empty,
+        fromJson: (final json) =>
+            json.isEmpty ? null : AppSettingsModel.fromJson(json),
+      );
 }

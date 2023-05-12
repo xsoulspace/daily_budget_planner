@@ -18,15 +18,10 @@ class UserApiLocalServiceImpl implements UserApiLocalService {
   }
 
   @override
-  Future<UserModel> loadUser() async {
-    final jsonMap = await localApiService.getMap(_persistenceKey);
-    if (jsonMap.isEmpty) return UserModel.empty;
-    try {
-      return UserModel.fromJson(jsonMap);
-      // ignore: avoid_catches_without_on_clauses
-    } catch (e) {
-      // TODO(arenukvern): ignore this error but handle it in future
-      return UserModel.empty;
-    }
-  }
+  Future<UserModel> loadUser() async => localApiService.getInstance(
+        key: _persistenceKey,
+        defaultValue: UserModel.empty,
+        fromJson: (final json) =>
+            json.isEmpty ? null : UserModel.fromJson(json),
+      );
 }

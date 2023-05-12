@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../models/models.dart';
+
 abstract interface class LocalApiService {
   Future<void> setMap(
     final String key,
     final Map<String, dynamic> value,
   );
-  Future<Map<String, dynamic>> getMap(
+  Future<Map<String, dynamic>?> getMap(
     final String key,
   );
   Future<void> setString(final String key, final String value);
@@ -26,6 +28,24 @@ abstract interface class LocalApiService {
     final String key, {
     final int defaultValue = 0,
   });
+  Future<Map<String, dynamic>> getJson(
+    final String key, {
+    final Map<String, dynamic> defaultValue = const {},
+  });
+  Future<void> setJson({
+    required final String key,
+    required final Map<String, dynamic> value,
+  });
+  Future<TModel> getInstance<TModel>({
+    required final String key,
+    required final TModel defaultValue,
+    required final FromJsonCallback<TModel> fromJson,
+  });
+  Future<void> setInstance<TModel>({
+    required final String key,
+    required final TModel value,
+    required final ToJsonCallback<TModel> toJson,
+  });
 }
 
 /// This service purpose to manage shared preferences only
@@ -43,11 +63,11 @@ class LocalApiServiceSharedPreferencesImpl implements LocalApiService {
       setString(key, jsonEncode(value));
 
   @override
-  Future<Map<String, dynamic>> getMap(
+  Future<Map<String, dynamic>?> getMap(
     final String key,
   ) async {
     final str = await getString(key);
-    if (str.isEmpty) return {};
+    if (str.isEmpty) return null;
 
     return Map.castFrom<dynamic, dynamic, String, dynamic>(
       jsonDecode(str),
@@ -102,5 +122,41 @@ class LocalApiServiceSharedPreferencesImpl implements LocalApiService {
     final prefs = await sharedPreferences;
 
     return prefs.getInt(key) ?? defaultValue;
+  }
+
+  @override
+  Future<Map<String, dynamic>> getJson(
+    final String key, {
+    final Map<String, dynamic> defaultValue = const {},
+  }) async =>
+      (await getMap(key)) ?? defaultValue;
+
+  @override
+  Future<void> setJson({
+    required final String key,
+    required final Map<String, dynamic> value,
+  }) async =>
+      setMap(key, value);
+
+  @override
+  Future<TModel> getInstance<TModel>({
+    required final String key,
+    required final TModel defaultValue,
+    required final FromJsonCallback<TModel> fromJson,
+  }) async {
+    final json = await getJson(key);
+    if (json.isEmpty) return defaultValue;
+    return fromJson(json) ?? defaultValue;
+  }
+
+  @override
+  Future<void> setInstance<TModel>({
+    required final String key,
+    required final TModel value,
+    required final ToJsonCallback<TModel> toJson,
+  }) async {
+    final json = toJson(value);
+    if (json.isEmpty) return;
+    await setJson(key: key, value: json);
   }
 }

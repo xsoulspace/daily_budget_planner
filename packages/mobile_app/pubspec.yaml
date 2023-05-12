@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animations: ^2.0.7
+  bloc: ^8.1.1
   blur: ^3.1.0
   collection: ^1.17.1
   connectivity_plus: ^3.0.6
@@ -43,6 +44,7 @@ dependencies:
   firebase_crashlytics: ^3.0.6
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.2
   flutter_hooks: ^0.18.6
   flutter_keyboard_visibility: ^5.4.1
   flutter_localizations:
@@ -60,7 +62,6 @@ dependencies:
   package_info_plus: ^3.1.2
   path_to_regexp: ^0.4.0
   provider: ^6.0.5
-  # purchases_flutter: ^4.12.0
   quiver: ^3.2.1
   recase: ^4.1.0
   rxdart: ^0.27.7

@@ -16,50 +16,33 @@ Map<String, dynamic> _$$_AppSettingsModelToJson(_$_AppSettingsModel instance) =>
       'locale': localeToString(instance.locale),
     };
 
-_$NoteProjectModel _$$NoteProjectModelFromJson(Map<String, dynamic> json) =>
-    _$NoteProjectModel(
-      remoteId: ProjectModelId.remoteFromJson(json['remote_id'] as String),
-      localId: ProjectModelId.localFromJson(json['local_id'] as String),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      isArchived: json['is_archived'] as bool,
-      type: $enumDecode(_$ProjectTypeEnumMap, json['type']),
-      ownerId: UserModelId.remoteFromJson(json['owner_id'] as String),
-      charactersLimit: json['characters_limit'] as int?,
-      note: DeltaModel.fromJson(json['note'] as Map<String, dynamic>),
-      isDeleted: json['is_deleted'] as bool? ?? false,
-      daysBeforeDeletion: json['days_before_deletion'] as int? ?? 30,
+_$_MonthlyBudgetModel _$$_MonthlyBudgetModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_MonthlyBudgetModel(
+      id: BudgetModelId.fromJson(json['id'] as String),
+      endDate: dateTimeFromMilisecondsSinceEpoch(json['endDate'] as int?),
+      amount: (json['amount'] as num?)?.toDouble() ?? 0,
     );
 
-Map<String, dynamic> _$$NoteProjectModelToJson(_$NoteProjectModel instance) =>
+Map<String, dynamic> _$$_MonthlyBudgetModelToJson(
+        _$_MonthlyBudgetModel instance) =>
     <String, dynamic>{
-      'remote_id': ProjectModelId.toStringJson(instance.remoteId),
-      'local_id': ProjectModelId.toStringJson(instance.localId),
-      'created_at': instance.createdAt.toIso8601String(),
-      'updated_at': instance.updatedAt.toIso8601String(),
-      'is_archived': instance.isArchived,
-      'type': _$ProjectTypeEnumMap[instance.type]!,
-      'owner_id': UserModelId.toStringJson(instance.ownerId),
-      'characters_limit': instance.charactersLimit,
-      'note': instance.note.toJson(),
-      'is_deleted': instance.isDeleted,
-      'days_before_deletion': instance.daysBeforeDeletion,
+      'id': instance.id,
+      'endDate': dateTimeToMilisecondsSinceEpoch(instance.endDate),
+      'amount': instance.amount,
     };
 
-const _$ProjectTypeEnumMap = {
-  ProjectType.note: 'NoteProjectModel',
-  ProjectType.idea: 'IdeaProjectModel',
-  ProjectType.story: 'StoryProjectModel',
-};
-
-_$_DeltaModel _$$_DeltaModelFromJson(Map<String, dynamic> json) =>
-    _$_DeltaModel(
-      value: DeltaModel._deltaFromJson(json['value'] as String),
+_$_WeeklyBudgetModel _$$_WeeklyBudgetModelFromJson(Map<String, dynamic> json) =>
+    _$_WeeklyBudgetModel(
+      id: BudgetModelId.fromJson(json['id'] as String),
+      amount: (json['amount'] as num?)?.toDouble() ?? 0,
     );
 
-Map<String, dynamic> _$$_DeltaModelToJson(_$_DeltaModel instance) =>
+Map<String, dynamic> _$$_WeeklyBudgetModelToJson(
+        _$_WeeklyBudgetModel instance) =>
     <String, dynamic>{
-      'value': DeltaModel._deltaToJson(instance.value),
+      'id': instance.id,
+      'amount': instance.amount,
     };
 
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
