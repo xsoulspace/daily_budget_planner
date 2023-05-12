@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "name": "app",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": ["--dart-define", "db-url=https://", "--web-port=3000"]
+    }
+  ]
+}
