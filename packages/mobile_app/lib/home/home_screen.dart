@@ -1,9 +1,9 @@
-import 'package:daily_budget_planner/home/monthly/monthly_cubit.dart';
-import 'package:daily_budget_planner/home/monthly/monthly_view.dart';
-import 'package:daily_budget_planner/home/weekly/weekly_cubit.dart';
-import 'package:daily_budget_planner/home/weekly/weekly_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_app/home/monthly/monthly_cubit.dart';
+import 'package:mobile_app/home/monthly/monthly_view.dart';
+import 'package:mobile_app/home/weekly/weekly_cubit.dart';
+import 'package:mobile_app/home/weekly/weekly_view.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class HomeScreen extends StatefulWidget {

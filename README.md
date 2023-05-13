@@ -1,8 +1,8 @@
-# infan_face
+# Daily Budget Planner
 
-A new Flutter project.
+Give yourself quick insight of what amount of money can be spent in day / week
 
-## Getting Started
+## Flutter - Getting Started
 
 This project is a starting point for a Flutter application.
 

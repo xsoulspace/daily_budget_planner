@@ -9,7 +9,7 @@
     },
     {
       "name": "mobile-app",
-      "program": "packages/mobile_app/lib/main.dart",
+      "program": "packages/mobile_app/lib/main_dev.dart",
       "request": "launch",
       "type": "dart",
       "toolArgs": ["--dart-define", "db-url=https://", "--web-port=3000"]

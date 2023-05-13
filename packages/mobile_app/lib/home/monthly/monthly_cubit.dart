@@ -32,7 +32,7 @@ class MonthlyCubit extends Cubit<MonthlyCubitState> {
 
   void onAmountChange(final String value) {
     final updatedBudget = state.budget.copyWith(
-      amount: double.parse(value),
+      amount: double.tryParse(value) ?? 0,
     );
     emit(state.copyWith(budget: updatedBudget));
     unawaited(dto.localApiServices.budget.upsertMonthlyBudget(updatedBudget));

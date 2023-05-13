@@ -42,7 +42,7 @@ class WeeklyCubit extends Cubit<WeeklyCubitState> {
 
   void onAmountChange(final String value) {
     final updatedBudget = state.budget.copyWith(
-      amount: double.parse(value),
+      amount: double.tryParse(value) ?? 0,
     );
     emit(state.copyWith(budget: updatedBudget));
     unawaited(dto.localApiServices.budget.upsertWeeklyBudget(updatedBudget));

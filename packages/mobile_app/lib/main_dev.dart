@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:daily_budget_planner/navigation/navigation.dart';
+import 'package:mobile_app/navigation/navigation.dart';
 
 Future<void> main() async => bootstrapMain(
       builder: (final context) => const AppScaffold(

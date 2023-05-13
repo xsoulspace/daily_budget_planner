@@ -1,8 +1,8 @@
-import 'package:daily_budget_planner/home/weekly/weekly_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:mobile_app/home/weekly/weekly_cubit.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class WeeklyView extends StatefulWidget {
