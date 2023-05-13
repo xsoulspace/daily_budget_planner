@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:daily_budget_planner/home/monthly/monthly_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,20 +34,23 @@ class _MonthlyViewState extends State<MonthlyView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Your Budget'),
+                    const Gap(12),
                     TextFormField(
                       autofocus: true,
                       keyboardType: TextInputType.number,
                       controller: monthlyCubit.amountController,
                       onChanged: monthlyCubit.onAmountChange,
+                      decoration: const InputDecoration(filled: true),
                     ),
-                    const Gap(24),
+                    const Gap(48),
                     const Text('Next Budget Day'),
-                    const Gap(12),
+                    const Gap(4),
                     TextButton(
                       onPressed: () async =>
                           monthlyCubit.onChangeNextBudgetDay(context),
                       child: Text(
-                        monthlyCubit.state.budget.nextBudgetDay?.toString() ??
+                        monthlyCubit.state.budget.nextBudgetDay
+                                ?.formatDdMmYyyy() ??
                             'Choose date',
                       ),
                     ),
