@@ -26,6 +26,7 @@ class LocalApiServices {
   const LocalApiServices._({
     required this.localApi,
     required this.appSettings,
+    required this.budget,
   });
 
   factory LocalApiServices.buildAppRuntime() {
@@ -35,13 +36,14 @@ class LocalApiServices {
       appSettings: AppSettingsApiLocalService(
         localApiService: localApi,
       ),
+      budget: BudgetApiLocalServiceImpl(localApi: localApi),
     );
   }
   factory LocalApiServices.buildMockRuntime() {
     // TODO(arenukvern): description
     throw UnimplementedError('reason');
   }
-
+  final BudgetApiService budget;
   final LocalApiService localApi;
   final AppSettingsApiLocalService appSettings;
 }

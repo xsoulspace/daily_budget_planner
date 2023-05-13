@@ -1,4 +1,4 @@
-package com.example.daily_buget_planner
+package dev.xsoulspace.daily_budget_planner
 
 import io.flutter.embedding.android.FlutterActivity
 

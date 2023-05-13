@@ -11,7 +11,7 @@ class BudgetApiLocalServiceImpl implements BudgetApiService {
   Future<MonthlyBudgetModel> getMonthlyBudget(final BudgetModelId id) =>
       localApi.getInstance(
         key: id.value,
-        defaultValue: MonthlyBudgetModel.create(),
+        defaultValue: MonthlyBudgetModel(id: id),
         fromJson: (final json) =>
             json.isEmpty ? null : MonthlyBudgetModel.fromJson(json),
       );
@@ -20,7 +20,7 @@ class BudgetApiLocalServiceImpl implements BudgetApiService {
   Future<WeeklyBudgetModel> getWeeklyBudget(final BudgetModelId id) =>
       localApi.getInstance(
         key: id.value,
-        defaultValue: WeeklyBudgetModel.create(),
+        defaultValue: WeeklyBudgetModel(id: id),
         fromJson: (final json) =>
             json.isEmpty ? null : WeeklyBudgetModel.fromJson(json),
       );

@@ -32,6 +32,9 @@ class MonthlyBudgetModel with _$MonthlyBudgetModel {
         endDate: DateTime.now().add(const Duration(days: 30)),
         id: BudgetModelId.create(),
       );
+  static const initial = MonthlyBudgetModel(
+    id: BudgetModelId(value: ''),
+  );
 }
 
 @freezed
@@ -45,4 +48,7 @@ class WeeklyBudgetModel with _$WeeklyBudgetModel {
   factory WeeklyBudgetModel.create() => WeeklyBudgetModel(
         id: BudgetModelId.create(),
       );
+  static const initial = WeeklyBudgetModel(
+    id: BudgetModelId(value: ''),
+  );
 }

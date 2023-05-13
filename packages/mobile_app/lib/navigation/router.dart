@@ -1,4 +1,4 @@
-import 'package:daily_buget_planner/home/home.dart';
+import 'package:daily_budget_planner/home/home.dart';
 import 'package:go_router/go_router.dart';
 
 enum AppPath {

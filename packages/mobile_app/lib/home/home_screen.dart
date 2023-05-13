@@ -1,9 +1,10 @@
-import 'package:daily_buget_planner/home/monthly/monthly_cubit.dart';
-import 'package:daily_buget_planner/home/monthly/monthly_view.dart';
-import 'package:daily_buget_planner/home/weekly/weekly_cubit.dart';
-import 'package:daily_buget_planner/home/weekly/weekly_view.dart';
+import 'package:daily_budget_planner/home/monthly/monthly_cubit.dart';
+import 'package:daily_budget_planner/home/monthly/monthly_view.dart';
+import 'package:daily_budget_planner/home/weekly/weekly_cubit.dart';
+import 'package:daily_budget_planner/home/weekly/weekly_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -25,8 +26,16 @@ class _HomeScreenProvider extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => MultiBlocProvider(
         providers: [
-          BlocProvider(create: (final context) => WeeklyCubit()),
-          BlocProvider(create: (final context) => MonthlyCubit())
+          BlocProvider(
+            create: (final context) => WeeklyCubit(
+              dto: WeeklyCubitDto(context: context),
+            ),
+          ),
+          BlocProvider(
+            create: (final context) => MonthlyCubit(
+              dto: MonthlyCubitDto(context: context),
+            ),
+          )
         ],
         child: Builder(builder: builder),
       );
@@ -36,10 +45,10 @@ class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
+  Widget build(final BuildContext context) => const Scaffold(
         body: Column(
           children: [
-            const Expanded(
+            Expanded(
               child: TabBarView(
                 children: [
                   WeeklyView(),
@@ -49,20 +58,17 @@ class HomeScreenBody extends StatelessWidget {
             ),
             TabBar(
               tabs: [
-                FilledButton.tonalIcon(
-                  onPressed: () =>
-                      DefaultTabController.of(context).animateTo(0),
-                  icon: const Icon(Icons.view_week_rounded),
-                  label: const Text('Weekly'),
+                Tab(
+                  icon: Icon(Icons.view_week_rounded),
+                  text: 'Weekly',
                 ),
-                FilledButton.tonalIcon(
-                  onPressed: () =>
-                      DefaultTabController.of(context).animateTo(1),
-                  icon: const Icon(Icons.calendar_month_rounded),
-                  label: const Text('Montly'),
-                ),
+                Tab(
+                  icon: Icon(Icons.calendar_month_rounded),
+                  text: 'Monthly',
+                )
               ],
             ),
+            BottomSafeArea()
           ],
         ),
       );

@@ -60,38 +60,3 @@ class UiRadius with _$UiRadius {
         small: Radius.circular(spacing.small),
       );
 }
-
-@immutable
-@Freezed(
-  equal: true,
-  addImplicitFinal: true,
-  copyWith: true,
-)
-class UiBoxSpacing with _$UiBoxSpacing {
-  const factory UiBoxSpacing({
-    required final Widget none,
-    required final Widget extraSmall,
-    required final Widget small,
-    required final Widget medium,
-    required final Widget large,
-    required final Widget extraLarge,
-    required final Widget full,
-  }) = _UiBoxSpacing;
-  const UiBoxSpacing._();
-  factory UiBoxSpacing.fromSpacing({
-    required final UiSpacing spacing,
-  }) =>
-      UiBoxSpacing(
-        none: const SizedBox(),
-        extraSmall: spacing.extraSmall.toGap,
-        small: spacing.small.toGap,
-        medium: spacing.medium.toGap,
-        large: spacing.large.toGap,
-        extraLarge: spacing.extraLarge.toGap,
-        full: spacing.full.toGap,
-      );
-}
-
-extension DoubleExt on double {
-  Gap get toGap => Gap(this);
-}
