@@ -293,7 +293,7 @@ mixin _$MonthlyBudgetModel {
   @JsonKey(
       fromJson: dateTimeFromMilisecondsSinceEpoch,
       toJson: dateTimeToMilisecondsSinceEpoch)
-  DateTime? get endDate => throw _privateConstructorUsedError;
+  DateTime? get nextBudgetDay => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -311,7 +311,7 @@ abstract class $MonthlyBudgetModelCopyWith<$Res> {
   $Res call(
       {BudgetModelId id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
-          DateTime? endDate,
+          DateTime? nextBudgetDay,
       double amount});
 
   $BudgetModelIdCopyWith<$Res> get id;
@@ -331,7 +331,7 @@ class _$MonthlyBudgetModelCopyWithImpl<$Res, $Val extends MonthlyBudgetModel>
   @override
   $Res call({
     Object? id = null,
-    Object? endDate = freezed,
+    Object? nextBudgetDay = freezed,
     Object? amount = null,
   }) {
     return _then(_value.copyWith(
@@ -339,9 +339,9 @@ class _$MonthlyBudgetModelCopyWithImpl<$Res, $Val extends MonthlyBudgetModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as BudgetModelId,
-      endDate: freezed == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
+      nextBudgetDay: freezed == nextBudgetDay
+          ? _value.nextBudgetDay
+          : nextBudgetDay // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       amount: null == amount
           ? _value.amount
@@ -370,7 +370,7 @@ abstract class _$$_MonthlyBudgetModelCopyWith<$Res>
   $Res call(
       {BudgetModelId id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
-          DateTime? endDate,
+          DateTime? nextBudgetDay,
       double amount});
 
   @override
@@ -389,7 +389,7 @@ class __$$_MonthlyBudgetModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? endDate = freezed,
+    Object? nextBudgetDay = freezed,
     Object? amount = null,
   }) {
     return _then(_$_MonthlyBudgetModel(
@@ -397,9 +397,9 @@ class __$$_MonthlyBudgetModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as BudgetModelId,
-      endDate: freezed == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
+      nextBudgetDay: freezed == nextBudgetDay
+          ? _value.nextBudgetDay
+          : nextBudgetDay // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       amount: null == amount
           ? _value.amount
@@ -415,7 +415,7 @@ class _$_MonthlyBudgetModel implements _MonthlyBudgetModel {
   const _$_MonthlyBudgetModel(
       {required this.id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
-          this.endDate,
+          this.nextBudgetDay,
       this.amount = 0});
 
   factory _$_MonthlyBudgetModel.fromJson(Map<String, dynamic> json) =>
@@ -427,14 +427,14 @@ class _$_MonthlyBudgetModel implements _MonthlyBudgetModel {
   @JsonKey(
       fromJson: dateTimeFromMilisecondsSinceEpoch,
       toJson: dateTimeToMilisecondsSinceEpoch)
-  final DateTime? endDate;
+  final DateTime? nextBudgetDay;
   @override
   @JsonKey()
   final double amount;
 
   @override
   String toString() {
-    return 'MonthlyBudgetModel(id: $id, endDate: $endDate, amount: $amount)';
+    return 'MonthlyBudgetModel(id: $id, nextBudgetDay: $nextBudgetDay, amount: $amount)';
   }
 
   @override
@@ -443,13 +443,14 @@ class _$_MonthlyBudgetModel implements _MonthlyBudgetModel {
         (other.runtimeType == runtimeType &&
             other is _$_MonthlyBudgetModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.nextBudgetDay, nextBudgetDay) ||
+                other.nextBudgetDay == nextBudgetDay) &&
             (identical(other.amount, amount) || other.amount == amount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, endDate, amount);
+  int get hashCode => Object.hash(runtimeType, id, nextBudgetDay, amount);
 
   @JsonKey(ignore: true)
   @override
@@ -470,7 +471,7 @@ abstract class _MonthlyBudgetModel implements MonthlyBudgetModel {
   const factory _MonthlyBudgetModel(
       {required final BudgetModelId id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
-          final DateTime? endDate,
+          final DateTime? nextBudgetDay,
       final double amount}) = _$_MonthlyBudgetModel;
 
   factory _MonthlyBudgetModel.fromJson(Map<String, dynamic> json) =
@@ -482,7 +483,7 @@ abstract class _MonthlyBudgetModel implements MonthlyBudgetModel {
   @JsonKey(
       fromJson: dateTimeFromMilisecondsSinceEpoch,
       toJson: dateTimeToMilisecondsSinceEpoch)
-  DateTime? get endDate;
+  DateTime? get nextBudgetDay;
   @override
   double get amount;
   @override

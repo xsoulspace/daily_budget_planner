@@ -5,11 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-class WeeklyView extends StatelessWidget {
+class WeeklyView extends StatefulWidget {
   const WeeklyView({super.key});
 
   @override
+  State<WeeklyView> createState() => _WeeklyViewState();
+}
+
+class _WeeklyViewState extends State<WeeklyView>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(final BuildContext context) {
+    super.build(context);
     final weeklyCubit = context.watch<WeeklyCubit>();
 
     return Padding(
@@ -30,7 +37,7 @@ class WeeklyView extends StatelessWidget {
                       autofocus: true,
                       keyboardType: TextInputType.number,
                       controller: weeklyCubit.amountController,
-                      onChanged: weeklyCubit.onBudgetChange,
+                      onChanged: weeklyCubit.onAmountChange,
                     ),
                   ],
                 ),
@@ -91,4 +98,7 @@ class WeeklyView extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

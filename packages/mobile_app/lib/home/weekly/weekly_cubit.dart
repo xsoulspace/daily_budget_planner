@@ -22,7 +22,6 @@ class WeeklyCubit extends Cubit<WeeklyCubitState> {
     unawaited(onLoad());
   }
   final WeeklyCubitDto dto;
-  final dayOfWeek = DateTime.now().weekday;
   final amountController = TextEditingController();
   @override
   Future<void> close() {
@@ -30,17 +29,18 @@ class WeeklyCubit extends Cubit<WeeklyCubitState> {
     return super.close();
   }
 
+  final dayOfWeek = DateTime.now().weekday;
   late final int daysLeft = 7 - dayOfWeek + 1;
-  String get dailyBudget => (state.budget.amount / daysLeft).toString();
-  static const BudgetModelId id = BudgetModelId(value: 'monthly_budget');
+  String get dailyBudget => (state.budget.amount / daysLeft).toStringAsFixed(2);
+  static const BudgetModelId id = BudgetModelId(value: 'weekly_budget');
 
   Future<void> onLoad() async {
     final budget = await dto.localApiServices.budget.getWeeklyBudget(id);
-    amountController.text = budget.amount.toString();
+    amountController.text = budget.amount.toStringAsFixed(2);
     emit(state.copyWith(budget: budget, isLoading: false));
   }
 
-  void onBudgetChange(final String value) {
+  void onAmountChange(final String value) {
     final updatedBudget = state.budget.copyWith(
       amount: double.parse(value),
     );

@@ -22,14 +22,14 @@ class MonthlyBudgetModel with _$MonthlyBudgetModel {
       fromJson: dateTimeFromMilisecondsSinceEpoch,
       toJson: dateTimeToMilisecondsSinceEpoch,
     )
-        final DateTime? endDate,
+        final DateTime? nextBudgetDay,
     @Default(0)
         final double amount,
   }) = _MonthlyBudgetModel;
   factory MonthlyBudgetModel.fromJson(final Map<String, dynamic> json) =>
       _$MonthlyBudgetModelFromJson(json);
   factory MonthlyBudgetModel.create() => MonthlyBudgetModel(
-        endDate: DateTime.now().add(const Duration(days: 30)),
+        nextBudgetDay: DateTime.now().add(const Duration(days: 30)),
         id: BudgetModelId.create(),
       );
   static const initial = MonthlyBudgetModel(

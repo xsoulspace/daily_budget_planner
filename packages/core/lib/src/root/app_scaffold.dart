@@ -7,25 +7,26 @@ import 'package:ui_locale/ui_locale.dart';
 
 class AppScaffold extends StatefulWidget {
   const AppScaffold({
-    required this.goRouter,
+    required this.goRouterBuilder,
     super.key,
   });
-  final GoRouter goRouter;
+  final ValueGetter<GoRouter> goRouterBuilder;
   @override
   State<AppScaffold> createState() => _AppScaffoldState();
 }
 
 class _AppScaffoldState extends State<AppScaffold> {
   late final UiThemeScheme _themeScheme = UiThemeScheme.m3(context);
+  late final _goRouter = widget.goRouterBuilder();
   @override
   void dispose() {
-    widget.goRouter.dispose();
+    _goRouter.dispose();
     super.dispose();
   }
 
   @override
   Widget build(final BuildContext context) => MaterialApp.router(
-        routerConfig: widget.goRouter,
+        routerConfig: _goRouter,
         builder: (final context, final child) => Builder(
           builder: (final context) {
             context.read<L10nScope>().s = S.of(context);
