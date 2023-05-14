@@ -26,8 +26,8 @@ class _WeeklyViewState extends State<WeeklyView>
   void _requestAmountFocusByIndex(final int index) {
     if (index != 1) return;
     final monthlyCubit = context.read<WeeklyCubit>();
-    monthlyCubit.amountFocusNode.requestFocus();
     unawaited(SoftKeyboard.open());
+    monthlyCubit.amountFocusNode.requestFocus();
   }
 
   @override
@@ -51,23 +51,38 @@ class _WeeklyViewState extends State<WeeklyView>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(context.s.weeklyBudget),
-                  TextFormField(
-                    focusNode: weeklyCubit.amountFocusNode,
-                    autofocus: true,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                    controller: weeklyCubit.amountController,
-                    onChanged: weeklyCubit.onAmountChange,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          focusNode: weeklyCubit.amountFocusNode,
+                          autofocus: true,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
+                          controller: weeklyCubit.amountController,
+                          onChanged: weeklyCubit.onAmountChange,
+                          decoration: const InputDecoration(filled: true),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          weeklyCubit.amountController.clear();
+                          weeklyCubit.onAmountChange('');
+                          _requestAmountFocus();
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            const Gap(8),
+            const Gap(2),
             const SizedBox(
               height: 100,
               child: VerticalDivider(thickness: 2),
             ),
-            const Gap(18),
+            const Gap(6),
             Flexible(
               flex: 3,
               child: Column(

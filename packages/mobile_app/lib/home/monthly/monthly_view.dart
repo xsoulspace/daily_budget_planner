@@ -25,15 +25,15 @@ class _MonthlyViewState extends State<MonthlyView>
 
   void _requestSavingsFocus() {
     final monthlyCubit = context.read<MonthlyCubit>();
-    monthlyCubit.savingsFocusNode.requestFocus();
     unawaited(SoftKeyboard.open());
+    monthlyCubit.savingsFocusNode.requestFocus();
   }
 
   void _requestAmountFocusByIndex(final int index) {
     if (index != 0) return;
     final monthlyCubit = context.read<MonthlyCubit>();
-    monthlyCubit.amountFocusNode.requestFocus();
     unawaited(SoftKeyboard.open());
+    monthlyCubit.amountFocusNode.requestFocus();
   }
 
   @override
@@ -134,10 +134,10 @@ class _MonthlyViewState extends State<MonthlyView>
               ),
               const Gap(2),
               const SizedBox(
-                height: 220,
+                height: 300,
                 child: VerticalDivider(thickness: 2),
               ),
-              const Gap(18),
+              const Gap(6),
               Flexible(
                 flex: 3,
                 child: Column(
