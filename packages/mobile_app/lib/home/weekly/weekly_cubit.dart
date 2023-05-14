@@ -22,10 +22,12 @@ class WeeklyCubit extends Cubit<WeeklyCubitState> {
     unawaited(onLoad());
   }
   final WeeklyCubitDto dto;
+  final amountFocusNode = FocusNode();
   final amountController = TextEditingController();
   @override
   Future<void> close() {
     amountController.dispose();
+    amountFocusNode.dispose();
     return super.close();
   }
 

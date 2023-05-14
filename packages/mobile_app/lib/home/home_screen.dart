@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:mobile_app/home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/home/monthly/monthly_view.dart';
 import 'package:mobile_app/home/weekly/weekly_cubit.dart';
@@ -54,26 +55,54 @@ class HomeScreenBody extends StatelessWidget {
         body: Column(
           children: [
             Expanded(
-              child: TabBarView(
-                children: [
-                  MonthlyView(),
-                  WeeklyView(),
-                ],
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 24, horizontal: 18),
+                child: TabBarView(
+                  children: [
+                    MonthlyView(),
+                    WeeklyView(),
+                  ],
+                ),
               ),
             ),
             TabBar(
+              padding: EdgeInsets.zero,
+              labelPadding: EdgeInsets.zero,
               tabs: [
-                Tab(
-                  icon: Icon(Icons.calendar_month_rounded),
-                  text: 'Monthly',
+                UiTab(
+                  iconData: Icons.calendar_month_rounded,
+                  label: 'Monthly',
                 ),
-                Tab(
-                  icon: Icon(Icons.view_week_rounded),
-                  text: 'Weekly',
+                UiTab(
+                  iconData: Icons.view_week_rounded,
+                  label: 'Weekly',
                 ),
               ],
             ),
             BottomSafeArea()
+          ],
+        ),
+      );
+}
+
+class UiTab extends StatelessWidget {
+  const UiTab({
+    required this.label,
+    required this.iconData,
+    super.key,
+  });
+  final String label;
+  final IconData iconData;
+  @override
+  Widget build(final BuildContext context) => Tab(
+        height: 32,
+        iconMargin: EdgeInsets.zero,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(iconData),
+            const Gap(4),
+            Text(label),
           ],
         ),
       );

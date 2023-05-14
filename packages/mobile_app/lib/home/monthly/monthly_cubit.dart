@@ -24,9 +24,14 @@ class MonthlyCubit extends Cubit<MonthlyCubitState> {
   final MonthlyCubitDto dto;
   final amountController = TextEditingController();
   final savingsController = TextEditingController();
+  final amountFocusNode = FocusNode();
+  final savingsFocusNode = FocusNode();
+
   @override
   Future<void> close() {
     savingsController.dispose();
+    amountFocusNode.dispose();
+    savingsFocusNode.dispose();
     return super.close();
   }
 

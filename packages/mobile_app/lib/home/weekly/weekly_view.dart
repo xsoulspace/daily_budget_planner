@@ -1,11 +1,16 @@
+import 'dart:async';
+
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
+import 'package:mobile_app/home/hooks/tab_controller_listener.dart';
 import 'package:mobile_app/home/weekly/weekly_cubit.dart';
+import 'package:mobile_app/home/widgets/copy_button.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-class WeeklyView extends StatefulWidget {
+class WeeklyView extends StatefulHookWidget {
   const WeeklyView({super.key});
 
   @override
@@ -14,96 +19,93 @@ class WeeklyView extends StatefulWidget {
 
 class _WeeklyViewState extends State<WeeklyView>
     with AutomaticKeepAliveClientMixin {
+  void _requestAmountFocus() {
+    _requestAmountFocusByIndex(DefaultTabController.of(context).index);
+  }
+
+  void _requestAmountFocusByIndex(final int index) {
+    if (index != 1) return;
+    final monthlyCubit = context.read<WeeklyCubit>();
+    monthlyCubit.amountFocusNode.requestFocus();
+    unawaited(SoftKeyboard.open());
+  }
+
   @override
   Widget build(final BuildContext context) {
     super.build(context);
     final weeklyCubit = context.watch<WeeklyCubit>();
-
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        children: [
-          const TopSafeArea(),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Weekly Budget'),
-                    TextFormField(
-                      autofocus: true,
-                      keyboardType: TextInputType.number,
-                      controller: weeklyCubit.amountController,
-                      onChanged: weeklyCubit.onAmountChange,
-                    ),
-                  ],
-                ),
+    useTabControllerListenerState(
+      onTabChanged: _requestAmountFocusByIndex,
+    );
+    return ListView(
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      children: [
+        const TopSafeArea(),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(context.s.weeklyBudget),
+                  TextFormField(
+                    focusNode: weeklyCubit.amountFocusNode,
+                    autofocus: true,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    controller: weeklyCubit.amountController,
+                    onChanged: weeklyCubit.onAmountChange,
+                  ),
+                ],
               ),
-              const Gap(8),
-              const SizedBox(
-                height: 100,
-                child: VerticalDivider(thickness: 2),
+            ),
+            const Gap(8),
+            const SizedBox(
+              height: 100,
+              child: VerticalDivider(thickness: 2),
+            ),
+            const Gap(18),
+            Flexible(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(context.s.dailyBudget),
+                  Row(
+                    children: [
+                      Text(
+                        weeklyCubit.dailyBudget,
+                        style: context.textTheme.titleLarge,
+                      ),
+                      const Spacer(),
+                      CopyButton(value: weeklyCubit.dailyBudget),
+                    ],
+                  ),
+                  const Divider(),
+                  const Gap(6),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        context.s.daysLeftInWeek,
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      const Gap(16),
+                      Text(
+                        weeklyCubit.daysLeft.toString(),
+                        style: context.textTheme.titleLarge,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              const Gap(18),
-              Flexible(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Daily Budget'),
-                    Row(
-                      children: [
-                        Text(
-                          weeklyCubit.dailyBudget,
-                          style: context.textTheme.titleLarge,
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () async {
-                            final messenger = ScaffoldMessenger.of(context);
-                            await Clipboard.setData(
-                              ClipboardData(text: weeklyCubit.dailyBudget),
-                            );
-                            messenger.showSnackBar(
-                              SnackBar(
-                                content: const Text('Copied'),
-                                action: SnackBarAction(
-                                  onPressed: messenger.hideCurrentSnackBar,
-                                  label: 'Ok',
-                                ),
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.copy),
-                        )
-                      ],
-                    ),
-                    const Divider(),
-                    const Gap(6),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Days Left in week: ',
-                          style: context.textTheme.bodyLarge,
-                        ),
-                        const Gap(16),
-                        Text(
-                          weeklyCubit.daysLeft.toString(),
-                          style: context.textTheme.titleLarge,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

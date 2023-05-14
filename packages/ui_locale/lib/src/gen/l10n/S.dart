@@ -100,6 +100,84 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @yourBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Budget'**
+  String get yourBudget;
+
+  /// No description provided for @dailyBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Budget'**
+  String get dailyBudget;
+
+  /// No description provided for @weeklyBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Budget'**
+  String get weeklyBudget;
+
+  /// No description provided for @monthlyBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Budget'**
+  String get monthlyBudget;
+
+  /// No description provided for @daysLeftInWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Days Left in week'**
+  String get daysLeftInWeek;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copied;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @nextBudgetDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Budget Day'**
+  String get nextBudgetDay;
+
+  /// No description provided for @chooseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Date'**
+  String get chooseDate;
+
+  /// No description provided for @extraCostsOrSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra costs or savings'**
+  String get extraCostsOrSaving;
+
+  /// No description provided for @willBeSubstructedFromYourBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'will be subtracted from your budget'**
+  String get willBeSubstructedFromYourBudget;
+
+  /// No description provided for @canBeLessIfYouHaveLessThan7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'can be less if you have less than 7 days till chosen date'**
+  String get canBeLessIfYouHaveLessThan7Days;
+
+  /// No description provided for @daysInTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Days in total:'**
+  String get daysInTotal;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
