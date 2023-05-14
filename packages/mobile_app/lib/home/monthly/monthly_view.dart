@@ -59,33 +59,63 @@ class _MonthlyViewState extends State<MonthlyView>
                   children: [
                     Text(context.s.yourBudget),
                     const Gap(12),
-                    TextFormField(
-                      autofocus: true,
-                      focusNode: monthlyCubit.amountFocusNode,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                      controller: monthlyCubit.amountController,
-                      onChanged: monthlyCubit.onAmountChange,
-                      onEditingComplete: _requestSavingsFocus,
-                      onFieldSubmitted: (final value) => _requestSavingsFocus(),
-                      decoration: const InputDecoration(filled: true),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            autofocus: true,
+                            focusNode: monthlyCubit.amountFocusNode,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            controller: monthlyCubit.amountController,
+                            onChanged: monthlyCubit.onAmountChange,
+                            onEditingComplete: _requestSavingsFocus,
+                            onFieldSubmitted: (final value) =>
+                                _requestSavingsFocus(),
+                            decoration: const InputDecoration(filled: true),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            monthlyCubit.amountController.clear();
+                            monthlyCubit.onAmountChange('');
+                            _requestAmountFocus();
+                          },
+                          icon: const Icon(Icons.clear),
+                        ),
+                      ],
                     ),
-                    const Gap(12),
+                    const Gap(28),
                     Text(context.s.extraCostsOrSaving),
                     Text(
                       context.s.willBeSubstructedFromYourBudget,
                       style: context.textTheme.labelMedium,
                     ),
                     const Gap(12),
-                    TextFormField(
-                      focusNode: monthlyCubit.savingsFocusNode,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.previous,
-                      onEditingComplete: _requestAmountFocus,
-                      onFieldSubmitted: (final value) => _requestAmountFocus(),
-                      controller: monthlyCubit.savingsController,
-                      onChanged: monthlyCubit.onSavingsChange,
-                      decoration: const InputDecoration(filled: true),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            focusNode: monthlyCubit.savingsFocusNode,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.previous,
+                            onEditingComplete: _requestAmountFocus,
+                            onFieldSubmitted: (final value) =>
+                                _requestAmountFocus(),
+                            controller: monthlyCubit.savingsController,
+                            onChanged: monthlyCubit.onSavingsChange,
+                            decoration: const InputDecoration(filled: true),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            monthlyCubit.savingsController.clear();
+                            monthlyCubit.onSavingsChange('');
+                            _requestSavingsFocus();
+                          },
+                          icon: const Icon(Icons.clear),
+                        ),
+                      ],
                     ),
                     const Gap(16),
                     Text(context.s.nextBudgetDay),
@@ -102,7 +132,7 @@ class _MonthlyViewState extends State<MonthlyView>
                   ],
                 ),
               ),
-              const Gap(8),
+              const Gap(2),
               const SizedBox(
                 height: 220,
                 child: VerticalDivider(thickness: 2),
