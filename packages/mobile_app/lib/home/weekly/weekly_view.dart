@@ -81,12 +81,20 @@ class _WeeklyViewState extends State<WeeklyView>
                         )
                       ],
                     ),
-                    const Gap(12),
+                    const Divider(),
+                    const Gap(6),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Days Left in week: '),
+                        Text(
+                          'Days Left in week: ',
+                          style: context.textTheme.bodyLarge,
+                        ),
                         const Gap(16),
-                        Text(weeklyCubit.daysLeft.toString()),
+                        Text(
+                          weeklyCubit.daysLeft.toString(),
+                          style: context.textTheme.titleLarge,
+                        ),
                       ],
                     ),
                   ],

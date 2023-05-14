@@ -56,21 +56,21 @@ class HomeScreenBody extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
-                  WeeklyView(),
                   MonthlyView(),
+                  WeeklyView(),
                 ],
               ),
             ),
             TabBar(
               tabs: [
                 Tab(
+                  icon: Icon(Icons.calendar_month_rounded),
+                  text: 'Monthly',
+                ),
+                Tab(
                   icon: Icon(Icons.view_week_rounded),
                   text: 'Weekly',
                 ),
-                Tab(
-                  icon: Icon(Icons.calendar_month_rounded),
-                  text: 'Monthly',
-                )
               ],
             ),
             BottomSafeArea()

@@ -23,6 +23,7 @@ _$_MonthlyBudgetModel _$$_MonthlyBudgetModelFromJson(
       nextBudgetDay:
           dateTimeFromMilisecondsSinceEpoch(json['nextBudgetDay'] as int?),
       amount: (json['amount'] as num?)?.toDouble() ?? 0,
+      savings: (json['savings'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$$_MonthlyBudgetModelToJson(
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$_MonthlyBudgetModelToJson(
       'id': instance.id,
       'nextBudgetDay': dateTimeToMilisecondsSinceEpoch(instance.nextBudgetDay),
       'amount': instance.amount,
+      'savings': instance.savings,
     };
 
 _$_WeeklyBudgetModel _$$_WeeklyBudgetModelFromJson(Map<String, dynamic> json) =>

@@ -42,7 +42,21 @@ class _MonthlyViewState extends State<MonthlyView>
                       onChanged: monthlyCubit.onAmountChange,
                       decoration: const InputDecoration(filled: true),
                     ),
-                    const Gap(48),
+                    const Gap(12),
+                    const Text('Extra costs or savings'),
+                    Text(
+                      'will be substrcuted from budget',
+                      style: context.textTheme.labelMedium,
+                    ),
+                    const Gap(12),
+                    TextFormField(
+                      autofocus: true,
+                      keyboardType: TextInputType.number,
+                      controller: monthlyCubit.savingsController,
+                      onChanged: monthlyCubit.onSavingsChange,
+                      decoration: const InputDecoration(filled: true),
+                    ),
+                    const Gap(16),
                     const Text('Next Budget Day'),
                     const Gap(4),
                     TextButton(
@@ -162,7 +176,7 @@ class _MonthlyViewState extends State<MonthlyView>
                     // ),
                     const Gap(12),
                     const Divider(),
-                    const Gap(12),
+                    const Gap(24),
                     // Row(
                     //   children: [
                     //     const Text('Days Left this week: '),
@@ -171,10 +185,16 @@ class _MonthlyViewState extends State<MonthlyView>
                     //   ],
                     // ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Days in total: '),
-                        const Gap(4),
-                        Text(monthlyCubit.daysCount.toString()),
+                        Text(
+                          'Days in total: ',
+                          style: context.textTheme.bodyLarge,
+                        ),
+                        Text(
+                          monthlyCubit.daysCount.toString(),
+                          style: context.textTheme.titleLarge,
+                        ),
                       ],
                     ),
                   ],

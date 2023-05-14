@@ -23,16 +23,32 @@ class MonthlyCubit extends Cubit<MonthlyCubitState> {
   }
   final MonthlyCubitDto dto;
   final amountController = TextEditingController();
+  final savingsController = TextEditingController();
+  @override
+  Future<void> close() {
+    savingsController.dispose();
+    return super.close();
+  }
+
   static const BudgetModelId id = BudgetModelId(value: 'monthly_budget');
   Future<void> onLoad() async {
     final budget = await dto.localApiServices.budget.getMonthlyBudget(id);
     amountController.text = budget.amount.toString();
+    savingsController.text = budget.savings.toString();
     emit(state.copyWith(budget: budget, isLoading: false));
   }
 
   void onAmountChange(final String value) {
     final updatedBudget = state.budget.copyWith(
       amount: double.tryParse(value) ?? 0,
+    );
+    emit(state.copyWith(budget: updatedBudget));
+    unawaited(dto.localApiServices.budget.upsertMonthlyBudget(updatedBudget));
+  }
+
+  void onSavingsChange(final String value) {
+    final updatedBudget = state.budget.copyWith(
+      savings: double.tryParse(value) ?? 0,
     );
     emit(state.copyWith(budget: updatedBudget));
     unawaited(dto.localApiServices.budget.upsertMonthlyBudget(updatedBudget));
@@ -58,7 +74,8 @@ class MonthlyCubit extends Cubit<MonthlyCubitState> {
     return range.duration.inDays + 2;
   }
 
-  double get dailyBudgetNum => state.budget.amount / daysCount;
+  double get dailyBudgetNum =>
+      (state.budget.amount - state.budget.savings) / daysCount;
   String get dailyBudget => dailyBudgetNum.toStringAsFixed(2);
 
   Future<void> onChangeNextBudgetDay(final BuildContext context) async {

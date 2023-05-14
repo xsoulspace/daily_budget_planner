@@ -295,6 +295,7 @@ mixin _$MonthlyBudgetModel {
       toJson: dateTimeToMilisecondsSinceEpoch)
   DateTime? get nextBudgetDay => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
+  double get savings => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -312,7 +313,8 @@ abstract class $MonthlyBudgetModelCopyWith<$Res> {
       {BudgetModelId id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
           DateTime? nextBudgetDay,
-      double amount});
+      double amount,
+      double savings});
 
   $BudgetModelIdCopyWith<$Res> get id;
 }
@@ -333,6 +335,7 @@ class _$MonthlyBudgetModelCopyWithImpl<$Res, $Val extends MonthlyBudgetModel>
     Object? id = null,
     Object? nextBudgetDay = freezed,
     Object? amount = null,
+    Object? savings = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -346,6 +349,10 @@ class _$MonthlyBudgetModelCopyWithImpl<$Res, $Val extends MonthlyBudgetModel>
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      savings: null == savings
+          ? _value.savings
+          : savings // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -371,7 +378,8 @@ abstract class _$$_MonthlyBudgetModelCopyWith<$Res>
       {BudgetModelId id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
           DateTime? nextBudgetDay,
-      double amount});
+      double amount,
+      double savings});
 
   @override
   $BudgetModelIdCopyWith<$Res> get id;
@@ -391,6 +399,7 @@ class __$$_MonthlyBudgetModelCopyWithImpl<$Res>
     Object? id = null,
     Object? nextBudgetDay = freezed,
     Object? amount = null,
+    Object? savings = null,
   }) {
     return _then(_$_MonthlyBudgetModel(
       id: null == id
@@ -405,6 +414,10 @@ class __$$_MonthlyBudgetModelCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
+      savings: null == savings
+          ? _value.savings
+          : savings // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -416,7 +429,8 @@ class _$_MonthlyBudgetModel implements _MonthlyBudgetModel {
       {required this.id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
           this.nextBudgetDay,
-      this.amount = 0});
+      this.amount = 0,
+      this.savings = 0});
 
   factory _$_MonthlyBudgetModel.fromJson(Map<String, dynamic> json) =>
       _$$_MonthlyBudgetModelFromJson(json);
@@ -431,10 +445,13 @@ class _$_MonthlyBudgetModel implements _MonthlyBudgetModel {
   @override
   @JsonKey()
   final double amount;
+  @override
+  @JsonKey()
+  final double savings;
 
   @override
   String toString() {
-    return 'MonthlyBudgetModel(id: $id, nextBudgetDay: $nextBudgetDay, amount: $amount)';
+    return 'MonthlyBudgetModel(id: $id, nextBudgetDay: $nextBudgetDay, amount: $amount, savings: $savings)';
   }
 
   @override
@@ -445,12 +462,14 @@ class _$_MonthlyBudgetModel implements _MonthlyBudgetModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.nextBudgetDay, nextBudgetDay) ||
                 other.nextBudgetDay == nextBudgetDay) &&
-            (identical(other.amount, amount) || other.amount == amount));
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.savings, savings) || other.savings == savings));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, nextBudgetDay, amount);
+  int get hashCode =>
+      Object.hash(runtimeType, id, nextBudgetDay, amount, savings);
 
   @JsonKey(ignore: true)
   @override
@@ -472,7 +491,8 @@ abstract class _MonthlyBudgetModel implements MonthlyBudgetModel {
       {required final BudgetModelId id,
       @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)
           final DateTime? nextBudgetDay,
-      final double amount}) = _$_MonthlyBudgetModel;
+      final double amount,
+      final double savings}) = _$_MonthlyBudgetModel;
 
   factory _MonthlyBudgetModel.fromJson(Map<String, dynamic> json) =
       _$_MonthlyBudgetModel.fromJson;
@@ -486,6 +506,8 @@ abstract class _MonthlyBudgetModel implements MonthlyBudgetModel {
   DateTime? get nextBudgetDay;
   @override
   double get amount;
+  @override
+  double get savings;
   @override
   @JsonKey(ignore: true)
   _$$_MonthlyBudgetModelCopyWith<_$_MonthlyBudgetModel> get copyWith =>

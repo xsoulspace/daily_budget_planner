@@ -25,6 +25,8 @@ class MonthlyBudgetModel with _$MonthlyBudgetModel {
         final DateTime? nextBudgetDay,
     @Default(0)
         final double amount,
+    @Default(0)
+        final double savings,
   }) = _MonthlyBudgetModel;
   factory MonthlyBudgetModel.fromJson(final Map<String, dynamic> json) =>
       _$MonthlyBudgetModelFromJson(json);
