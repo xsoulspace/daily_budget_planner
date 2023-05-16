@@ -11,7 +11,7 @@ description: |
   Join Discord - https://discord.gg/y54DpJwmAn
 
   Have fun and a great time!
-icon: snap/gui/daily-budget-planner
+icon: snap/gui/daily-budget-planner.svg
 confinement: strict
 base: core18
 grade: stable
