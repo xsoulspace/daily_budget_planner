@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=Word By Word Game
+Name=Daily Budget Planner
 
-GenericName=Word By Word Game
-Comment=Simple, fun and self-educative game to write word after word, based on last 3 letters of last word
+GenericName=Daily Budget Planner
+Comment=Give yourself quick insight of what amount of money can be spent in day / week
 Exec=daily-budget-planner
-Icon=${SNAP}/meta/gui/word-by-word-game.png
+Icon=${SNAP}/meta/gui/daily-budget-planner.svg
 Terminal=false
 Type=Application
-Categories=Education;Game;
+Categories=Finance;Productivity;
