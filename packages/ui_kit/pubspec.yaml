@@ -54,10 +54,10 @@ flutter:
     - assets/json/
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-  fonts:
-    # - family: la_icons
-    #   fonts:
-    #     - asset: packages/ui_kit/fonts/la_icons.ttf
+  # fonts:
+  # - family: la_icons
+  #   fonts:
+  #     - asset: packages/ui_kit/fonts/la_icons.ttf
 
 # For information see the following page:
 # https://pub.dev/packages/flutter_gen
