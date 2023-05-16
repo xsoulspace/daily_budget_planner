@@ -5,44 +5,59 @@ class SIt extends S {
   SIt([String locale = 'it']) : super(locale);
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Impostazioni';
 
   @override
-  String get yourBudget => 'Your Budget';
+  String get yourBudget => 'Il tuo budget';
 
   @override
-  String get dailyBudget => 'Daily Budget';
+  String get dailyBudget => 'Budget giornaliero';
 
   @override
-  String get weeklyBudget => 'Weekly Budget';
+  String get weeklyBudget => 'Budget settimanale';
 
   @override
-  String get monthlyBudget => 'Monthly Budget';
+  String get monthlyBudget => 'Budget mensile';
 
   @override
-  String get daysLeftInWeek => 'Days Left in week';
+  String get daysLeftInWeek => 'Giorni rimanenti nella settimana';
 
   @override
-  String get copied => 'Copied';
+  String get copied => 'Copiato';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get nextBudgetDay => 'Next Budget Day';
+  String get monthly => 'Mensile';
 
   @override
-  String get chooseDate => 'Choose Date';
+  String get weekly => 'Settimanale';
 
   @override
-  String get extraCostsOrSaving => 'Extra costs or savings';
+  String get language => 'Lingua';
 
   @override
-  String get willBeSubstructedFromYourBudget => 'will be subtracted from your budget';
+  String get chooseLanguage => 'Scegli lingua';
 
   @override
-  String get canBeLessIfYouHaveLessThan7Days => 'can be less if you have less than 7 days till chosen date';
+  String get done => 'Fatto';
 
   @override
-  String get daysInTotal => 'Days in total:';
+  String get nextBudgetDay => 'Prossimo giorno di budget';
+
+  @override
+  String get chooseDate => 'Scegli data';
+
+  @override
+  String get extraCostsOrSaving => 'Costi o risparmi aggiuntivi';
+
+  @override
+  String get willBeSubstructedFromYourBudget => 'verrà sottratto dal tuo budget';
+
+  @override
+  String get canBeLessIfYouHaveLessThan7Days => 'può essere inferiore se mancano meno di 7 giorni alla data scelta';
+
+  @override
+  String get daysInTotal => 'Giorni in totale:';
 }

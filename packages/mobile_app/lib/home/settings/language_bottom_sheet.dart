@@ -26,7 +26,7 @@ class LanguageBottomSheet extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                'Choose Language',
+                context.s.chooseLanguage,
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class LanguageBottomSheet extends StatelessWidget {
               bottom: 0,
               child: TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Done'),
+                child: Text(context.s.done),
               ),
             ),
           ],

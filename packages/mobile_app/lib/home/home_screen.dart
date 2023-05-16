@@ -55,10 +55,10 @@ class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
 
   @override
-  Widget build(final BuildContext context) => const Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
         body: Column(
           children: [
-            Expanded(
+            const Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 24, horizontal: 18),
                 child: TabBarView(
@@ -78,19 +78,19 @@ class HomeScreenBody extends StatelessWidget {
                     tabs: [
                       UiTab(
                         iconData: Icons.calendar_month_rounded,
-                        label: 'Monthly',
+                        label: context.s.monthly,
                       ),
                       UiTab(
                         iconData: Icons.view_week_rounded,
-                        label: 'Weekly',
+                        label: context.s.weekly,
                       ),
                     ],
                   ),
                 ),
-                SettingsIconButton(),
+                const SettingsIconButton(),
               ],
             ),
-            BottomSafeArea()
+            const BottomSafeArea()
           ],
         ),
       );

@@ -29,6 +29,21 @@ class SRu extends S {
   String get ok => 'OK';
 
   @override
+  String get monthly => 'Месяц';
+
+  @override
+  String get weekly => 'Неделя';
+
+  @override
+  String get language => 'Язык';
+
+  @override
+  String get chooseLanguage => 'Выбери язык';
+
+  @override
+  String get done => 'Ок';
+
+  @override
   String get nextBudgetDay => 'Следующий день бюджета';
 
   @override

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_app/home/settings/language_bottom_sheet.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class SettingsBottomPopup extends StatelessWidget {
   const SettingsBottomPopup({
@@ -26,7 +27,7 @@ class SettingsBottomPopup extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                title: const Text('Language'),
+                title: Text(context.s.language),
                 trailing: const Icon(Icons.language),
               ),
             ],

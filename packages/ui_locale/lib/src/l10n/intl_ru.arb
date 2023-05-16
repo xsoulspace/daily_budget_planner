@@ -12,5 +12,10 @@
   "extraCostsOrSaving": "Доп затраты или в копилку",
   "willBeSubstructedFromYourBudget": "будет вычтено из бюджета",
   "canBeLessIfYouHaveLessThan7Days": "может быть меньше, если осталось меньше 7 дней до дня бюджета",
-  "daysInTotal": "Дней всего:"
+  "daysInTotal": "Дней всего:",
+  "monthly": "Месяц",
+  "weekly": "Неделя",
+  "language": "Язык",
+  "chooseLanguage": "Выбери язык",
+  "done": "Ок"
 }

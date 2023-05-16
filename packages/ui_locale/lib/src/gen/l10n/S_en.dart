@@ -29,6 +29,21 @@ class SEn extends S {
   String get ok => 'OK';
 
   @override
+  String get monthly => 'Monthly';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get chooseLanguage => 'Choose Language';
+
+  @override
+  String get done => 'Done';
+
+  @override
   String get nextBudgetDay => 'Next Budget Day';
 
   @override

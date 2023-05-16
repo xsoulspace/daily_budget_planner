@@ -221,9 +221,11 @@ class _MonthlyViewState extends State<MonthlyView>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          context.s.daysInTotal,
-                          style: context.textTheme.bodyLarge,
+                        Flexible(
+                          child: Text(
+                            context.s.daysInTotal,
+                            style: context.textTheme.bodyLarge,
+                          ),
                         ),
                         Text(
                           monthlyCubit.daysCount.toString(),

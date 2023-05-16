@@ -104,9 +104,11 @@ class _WeeklyViewState extends State<WeeklyView>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        context.s.daysLeftInWeek,
-                        style: context.textTheme.bodyLarge,
+                      Flexible(
+                        child: Text(
+                          context.s.daysLeftInWeek,
+                          style: context.textTheme.bodyLarge,
+                        ),
                       ),
                       const Gap(16),
                       Text(
