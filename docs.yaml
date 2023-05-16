@@ -1,0 +1,10 @@
+name: Daily Budget Planner
+
+sidebar:
+  - - About
+    - "/"
+  - - Legal
+    - - - Privacy Policy
+        - "/legal/privacy-policy"
+      - - Term And Conditions
+        - "/legal/terms-and-conditions"
