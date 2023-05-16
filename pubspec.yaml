@@ -45,6 +45,14 @@ dependency_overrides:
   intl: ^0.18.0
   melos: ^3.0.1
 
+# flutter pub run flutter_launcher_icons:main
+# generate for macos https://appicon.co
+flutter_launcher_icons:
+  image_path: "assets/icons/logo.png"
+  ios: true
+  android: true
+  remove_alpha_ios: true
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
