@@ -29,7 +29,7 @@ Thank you for your support and have a great day! 🌄
 
 ## Contributing
 
-All [comments](https://github.com/xsoulspace/word_by_word_game/issues) and [pull requests](https://github.com/xsoulspace/word_by_word_game/pulls) are welcome.
+All [comments](https://github.com/xsoulspace/daily_budget_planner/issues) and [pull requests](https://github.com/xsoulspace/daily_budget_planner/pulls) are welcome.
 
 ## Getting Help
 

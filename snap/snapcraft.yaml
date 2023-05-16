@@ -1,5 +1,5 @@
 name: daily-budget-planner
-version: 0.0.1+1
+version: 0.0.2+2
 summary: Give yourself quick insight of what amount of money can be spent in day / week
 description: |
   The app purpose - give quick insight of
@@ -37,7 +37,7 @@ apps:
       - dbus-daily-budget-planner
 
 parts:
-  word-by-word-game:
+  daily-budget-planner:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
