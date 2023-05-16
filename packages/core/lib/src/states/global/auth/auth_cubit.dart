@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -12,9 +14,9 @@ part 'auth_cubit_states.dart';
 class AuthCubitDto {
   AuthCubitDto({required final BuildContext context})
       : repositories = context.read(),
-        userNotifier = context.read();
+        userCubit = context.read();
   final RepositoriesCollection repositories;
-  final UserNotifier userNotifier;
+  final UserCubit userCubit;
 }
 
 /// The class is required to keep information about user auth status.
@@ -30,12 +32,12 @@ final class AuthCubit extends Cubit<AuthCubitState> implements Loadable {
 
   void onSignIn() {
     dto.repositories.user.signIn();
-    dto.userNotifier.loadProfile();
+    unawaited(dto.userCubit.loadProfile());
     emit(const AuthCubitState.authorized());
   }
 
   void onSignOut() {
-    dto.userNotifier.reset();
+    dto.userCubit.reset();
     dto.repositories.user.signOut();
     emit(const AuthCubitState.unauthorized());
   }

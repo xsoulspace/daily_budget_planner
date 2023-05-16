@@ -29,6 +29,6 @@ class RouterPageBuilder<TRouterController extends RouterController> {
   TRouteParams getParams<TRouteParams>(
     final FromJsonCallback<TRouteParams> paramsFromJson,
   ) =>
-      paramsFromJson(routeState.route.parameters);
+      paramsFromJson(routeState.route.parameters)!;
   String get pathTemplate => _dto.pathTemplate;
 }

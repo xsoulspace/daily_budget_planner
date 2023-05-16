@@ -1,3 +1,21 @@
 {
-  "settings": "Settings"
+  "settings": "Settings",
+  "yourBudget": "Your Budget",
+  "dailyBudget": "Daily Budget",
+  "weeklyBudget": "Weekly Budget",
+  "monthlyBudget": "Monthly Budget",
+  "daysLeftInWeek": "Days Left in week",
+  "copied": "Copied",
+  "ok": "OK",
+  "monthly": "Monthly",
+  "weekly": "Weekly",
+  "language": "Language",
+  "chooseLanguage": "Choose Language",
+  "done": "Done",
+  "nextBudgetDay": "Next Budget Day",
+  "chooseDate": "Choose Date",
+  "extraCostsOrSaving": "Extra costs or savings",
+  "willBeSubstructedFromYourBudget": "will be subtracted from your budget",
+  "canBeLessIfYouHaveLessThan7Days": "can be less if you have less than 7 days till chosen date",
+  "daysInTotal": "Days in total:"
 }

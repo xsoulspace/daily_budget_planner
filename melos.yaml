@@ -1,8 +1,9 @@
-# fvm flutter pub global run melos bootstrap
-name: lastanswer
+name: daily_budget_planner
 
 packages:
   - packages/*
 
 scripts:
   get: fvm flutter pub get && fvm flutter pub run melos bootstrap
+  clean-melos: fvm flutter pub run melos clean
+  clean-root: fvm flutter clean

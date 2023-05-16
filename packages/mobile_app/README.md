@@ -1,4 +1,4 @@
-# daily_buget_planner
+# daily_budget_planner
 
 A new Flutter project.
 

@@ -7,7 +7,6 @@ class RootProvidersModel with _$RootProvidersModel {
     required final Create<AnalyticsService> analyticsService,
     required final Create<RemoteApiServices> remoteApiServices,
     required final Create<LocalApiServices> localApiServices,
-    required final Create<UserNotifier> userNotifier,
   }) = _RootProvidersModel;
 
   factory RootProvidersModel.appRuntime({
@@ -21,9 +20,6 @@ class RootProvidersModel with _$RootProvidersModel {
           user: UserRepository(sources: RepositoryDataSources.of(context)),
         ),
         analyticsService: (final context) => globalInitializer.analyticsService,
-        userNotifier: (final context) => UserNotifier(
-          repositories: context.read(),
-        ),
       );
 
   factory RootProvidersModel.mock({
@@ -38,8 +34,5 @@ class RootProvidersModel with _$RootProvidersModel {
           user: UserRepository(sources: RepositoryDataSources.of(context)),
         ),
         analyticsService: (final context) => globalInitializer.analyticsService,
-        userNotifier: (final context) => UserNotifier(
-          repositories: context.read(),
-        ),
       );
 }

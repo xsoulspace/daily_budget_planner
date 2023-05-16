@@ -1,0 +1,43 @@
+name: daily-budget-planner
+version: 0.0.1+1
+summary: Give yourself quick insight of what amount of money can be spent in day / week
+description: |
+  The app purpose - give quick insight of
+  what amount of money can be spent in day / week
+  based on set budget.
+
+  ## Have an idea, improvements, or bugs?
+
+  Join Discord - https://discord.gg/y54DpJwmAn
+
+  Have fun and a great time!
+icon: snap/gui/daily-budget-planner
+confinement: strict
+base: core18
+grade: stable
+
+slots:
+  dbus-daily-budget-planner:
+    interface: dbus
+    bus: session
+    name: dev.xsoulspace.daily_budget_planner # adjust accordingly
+
+apps:
+  daily-budget-planner:
+    command: daily_budget_planner
+    extensions: [flutter-stable] # Where "master" defines which Flutter channel to use for the build
+    # using dev as it is the one channel that supports linux
+    plugs:
+      - home
+      - network
+      - desktop
+      - desktop-legacy
+
+    slots:
+      - dbus-daily-budget-planner
+
+parts:
+  word-by-word-game:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart # The main entry-point file of the application

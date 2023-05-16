@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:gap/gap.dart';
 
 part 'app/colors.dart';
 part 'app/typography.dart';
@@ -21,7 +20,6 @@ part 'theme.freezed.dart';
 class UiThemeScheme with _$UiThemeScheme {
   const factory UiThemeScheme({
     required final UiSpacing spacing,
-    required final UiBoxSpacing gaps,
     required final UiRadius circularRadius,
     required final UiTextTheme text,
     required final UiPersistentFormFactors persistentFormFactors,
@@ -36,7 +34,6 @@ class UiThemeScheme with _$UiThemeScheme {
       persistentFormFactors: UiPersistentFormFactors.of(context),
       circularRadius: UiRadius.circularBySpacing(spacing: spacing),
       spacing: spacing,
-      gaps: UiBoxSpacing.fromSpacing(spacing: spacing),
     );
   }
 }

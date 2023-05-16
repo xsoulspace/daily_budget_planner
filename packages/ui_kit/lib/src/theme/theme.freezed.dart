@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UiThemeScheme {
   UiSpacing get spacing => throw _privateConstructorUsedError;
-  UiBoxSpacing get gaps => throw _privateConstructorUsedError;
   UiRadius get circularRadius => throw _privateConstructorUsedError;
   UiTextTheme get text => throw _privateConstructorUsedError;
   UiPersistentFormFactors get persistentFormFactors =>
@@ -38,14 +37,12 @@ abstract class $UiThemeSchemeCopyWith<$Res> {
   @useResult
   $Res call(
       {UiSpacing spacing,
-      UiBoxSpacing gaps,
       UiRadius circularRadius,
       UiTextTheme text,
       UiPersistentFormFactors persistentFormFactors,
       UiCustomizableFormFactors customizableFormFactors});
 
   $UiSpacingCopyWith<$Res> get spacing;
-  $UiBoxSpacingCopyWith<$Res> get gaps;
   $UiRadiusCopyWith<$Res> get circularRadius;
   $UiTextThemeCopyWith<$Res> get text;
   $UiPersistentFormFactorsCopyWith<$Res> get persistentFormFactors;
@@ -66,7 +63,6 @@ class _$UiThemeSchemeCopyWithImpl<$Res, $Val extends UiThemeScheme>
   @override
   $Res call({
     Object? spacing = null,
-    Object? gaps = null,
     Object? circularRadius = null,
     Object? text = null,
     Object? persistentFormFactors = null,
@@ -77,10 +73,6 @@ class _$UiThemeSchemeCopyWithImpl<$Res, $Val extends UiThemeScheme>
           ? _value.spacing
           : spacing // ignore: cast_nullable_to_non_nullable
               as UiSpacing,
-      gaps: null == gaps
-          ? _value.gaps
-          : gaps // ignore: cast_nullable_to_non_nullable
-              as UiBoxSpacing,
       circularRadius: null == circularRadius
           ? _value.circularRadius
           : circularRadius // ignore: cast_nullable_to_non_nullable
@@ -105,14 +97,6 @@ class _$UiThemeSchemeCopyWithImpl<$Res, $Val extends UiThemeScheme>
   $UiSpacingCopyWith<$Res> get spacing {
     return $UiSpacingCopyWith<$Res>(_value.spacing, (value) {
       return _then(_value.copyWith(spacing: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UiBoxSpacingCopyWith<$Res> get gaps {
-    return $UiBoxSpacingCopyWith<$Res>(_value.gaps, (value) {
-      return _then(_value.copyWith(gaps: value) as $Val);
     });
   }
 
@@ -161,7 +145,6 @@ abstract class _$$_UiThemeSchemeCopyWith<$Res>
   @useResult
   $Res call(
       {UiSpacing spacing,
-      UiBoxSpacing gaps,
       UiRadius circularRadius,
       UiTextTheme text,
       UiPersistentFormFactors persistentFormFactors,
@@ -169,8 +152,6 @@ abstract class _$$_UiThemeSchemeCopyWith<$Res>
 
   @override
   $UiSpacingCopyWith<$Res> get spacing;
-  @override
-  $UiBoxSpacingCopyWith<$Res> get gaps;
   @override
   $UiRadiusCopyWith<$Res> get circularRadius;
   @override
@@ -193,7 +174,6 @@ class __$$_UiThemeSchemeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? spacing = null,
-    Object? gaps = null,
     Object? circularRadius = null,
     Object? text = null,
     Object? persistentFormFactors = null,
@@ -204,10 +184,6 @@ class __$$_UiThemeSchemeCopyWithImpl<$Res>
           ? _value.spacing
           : spacing // ignore: cast_nullable_to_non_nullable
               as UiSpacing,
-      gaps: null == gaps
-          ? _value.gaps
-          : gaps // ignore: cast_nullable_to_non_nullable
-              as UiBoxSpacing,
       circularRadius: null == circularRadius
           ? _value.circularRadius
           : circularRadius // ignore: cast_nullable_to_non_nullable
@@ -233,7 +209,6 @@ class __$$_UiThemeSchemeCopyWithImpl<$Res>
 class _$_UiThemeScheme extends _UiThemeScheme with DiagnosticableTreeMixin {
   const _$_UiThemeScheme(
       {required this.spacing,
-      required this.gaps,
       required this.circularRadius,
       required this.text,
       required this.persistentFormFactors,
@@ -242,8 +217,6 @@ class _$_UiThemeScheme extends _UiThemeScheme with DiagnosticableTreeMixin {
 
   @override
   final UiSpacing spacing;
-  @override
-  final UiBoxSpacing gaps;
   @override
   final UiRadius circularRadius;
   @override
@@ -255,7 +228,7 @@ class _$_UiThemeScheme extends _UiThemeScheme with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UiThemeScheme(spacing: $spacing, gaps: $gaps, circularRadius: $circularRadius, text: $text, persistentFormFactors: $persistentFormFactors, customizableFormFactors: $customizableFormFactors)';
+    return 'UiThemeScheme(spacing: $spacing, circularRadius: $circularRadius, text: $text, persistentFormFactors: $persistentFormFactors, customizableFormFactors: $customizableFormFactors)';
   }
 
   @override
@@ -264,7 +237,6 @@ class _$_UiThemeScheme extends _UiThemeScheme with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'UiThemeScheme'))
       ..add(DiagnosticsProperty('spacing', spacing))
-      ..add(DiagnosticsProperty('gaps', gaps))
       ..add(DiagnosticsProperty('circularRadius', circularRadius))
       ..add(DiagnosticsProperty('text', text))
       ..add(DiagnosticsProperty('persistentFormFactors', persistentFormFactors))
@@ -278,7 +250,6 @@ class _$_UiThemeScheme extends _UiThemeScheme with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _$_UiThemeScheme &&
             (identical(other.spacing, spacing) || other.spacing == spacing) &&
-            (identical(other.gaps, gaps) || other.gaps == gaps) &&
             (identical(other.circularRadius, circularRadius) ||
                 other.circularRadius == circularRadius) &&
             (identical(other.text, text) || other.text == text) &&
@@ -290,8 +261,8 @@ class _$_UiThemeScheme extends _UiThemeScheme with DiagnosticableTreeMixin {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, spacing, gaps, circularRadius,
-      text, persistentFormFactors, customizableFormFactors);
+  int get hashCode => Object.hash(runtimeType, spacing, circularRadius, text,
+      persistentFormFactors, customizableFormFactors);
 
   @JsonKey(ignore: true)
   @override
@@ -303,7 +274,6 @@ class _$_UiThemeScheme extends _UiThemeScheme with DiagnosticableTreeMixin {
 abstract class _UiThemeScheme extends UiThemeScheme {
   const factory _UiThemeScheme(
           {required final UiSpacing spacing,
-          required final UiBoxSpacing gaps,
           required final UiRadius circularRadius,
           required final UiTextTheme text,
           required final UiPersistentFormFactors persistentFormFactors,
@@ -313,8 +283,6 @@ abstract class _UiThemeScheme extends UiThemeScheme {
 
   @override
   UiSpacing get spacing;
-  @override
-  UiBoxSpacing get gaps;
   @override
   UiRadius get circularRadius;
   @override
@@ -1152,266 +1120,6 @@ abstract class _UiRadius extends UiRadius {
   @override
   @JsonKey(ignore: true)
   _$$_UiRadiusCopyWith<_$_UiRadius> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$UiBoxSpacing {
-  Widget get none => throw _privateConstructorUsedError;
-  Widget get extraSmall => throw _privateConstructorUsedError;
-  Widget get small => throw _privateConstructorUsedError;
-  Widget get medium => throw _privateConstructorUsedError;
-  Widget get large => throw _privateConstructorUsedError;
-  Widget get extraLarge => throw _privateConstructorUsedError;
-  Widget get full => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $UiBoxSpacingCopyWith<UiBoxSpacing> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $UiBoxSpacingCopyWith<$Res> {
-  factory $UiBoxSpacingCopyWith(
-          UiBoxSpacing value, $Res Function(UiBoxSpacing) then) =
-      _$UiBoxSpacingCopyWithImpl<$Res, UiBoxSpacing>;
-  @useResult
-  $Res call(
-      {Widget none,
-      Widget extraSmall,
-      Widget small,
-      Widget medium,
-      Widget large,
-      Widget extraLarge,
-      Widget full});
-}
-
-/// @nodoc
-class _$UiBoxSpacingCopyWithImpl<$Res, $Val extends UiBoxSpacing>
-    implements $UiBoxSpacingCopyWith<$Res> {
-  _$UiBoxSpacingCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? none = null,
-    Object? extraSmall = null,
-    Object? small = null,
-    Object? medium = null,
-    Object? large = null,
-    Object? extraLarge = null,
-    Object? full = null,
-  }) {
-    return _then(_value.copyWith(
-      none: null == none
-          ? _value.none
-          : none // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      extraSmall: null == extraSmall
-          ? _value.extraSmall
-          : extraSmall // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      small: null == small
-          ? _value.small
-          : small // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      medium: null == medium
-          ? _value.medium
-          : medium // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      large: null == large
-          ? _value.large
-          : large // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      extraLarge: null == extraLarge
-          ? _value.extraLarge
-          : extraLarge // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      full: null == full
-          ? _value.full
-          : full // ignore: cast_nullable_to_non_nullable
-              as Widget,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_UiBoxSpacingCopyWith<$Res>
-    implements $UiBoxSpacingCopyWith<$Res> {
-  factory _$$_UiBoxSpacingCopyWith(
-          _$_UiBoxSpacing value, $Res Function(_$_UiBoxSpacing) then) =
-      __$$_UiBoxSpacingCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {Widget none,
-      Widget extraSmall,
-      Widget small,
-      Widget medium,
-      Widget large,
-      Widget extraLarge,
-      Widget full});
-}
-
-/// @nodoc
-class __$$_UiBoxSpacingCopyWithImpl<$Res>
-    extends _$UiBoxSpacingCopyWithImpl<$Res, _$_UiBoxSpacing>
-    implements _$$_UiBoxSpacingCopyWith<$Res> {
-  __$$_UiBoxSpacingCopyWithImpl(
-      _$_UiBoxSpacing _value, $Res Function(_$_UiBoxSpacing) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? none = null,
-    Object? extraSmall = null,
-    Object? small = null,
-    Object? medium = null,
-    Object? large = null,
-    Object? extraLarge = null,
-    Object? full = null,
-  }) {
-    return _then(_$_UiBoxSpacing(
-      none: null == none
-          ? _value.none
-          : none // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      extraSmall: null == extraSmall
-          ? _value.extraSmall
-          : extraSmall // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      small: null == small
-          ? _value.small
-          : small // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      medium: null == medium
-          ? _value.medium
-          : medium // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      large: null == large
-          ? _value.large
-          : large // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      extraLarge: null == extraLarge
-          ? _value.extraLarge
-          : extraLarge // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      full: null == full
-          ? _value.full
-          : full // ignore: cast_nullable_to_non_nullable
-              as Widget,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_UiBoxSpacing extends _UiBoxSpacing with DiagnosticableTreeMixin {
-  const _$_UiBoxSpacing(
-      {required this.none,
-      required this.extraSmall,
-      required this.small,
-      required this.medium,
-      required this.large,
-      required this.extraLarge,
-      required this.full})
-      : super._();
-
-  @override
-  final Widget none;
-  @override
-  final Widget extraSmall;
-  @override
-  final Widget small;
-  @override
-  final Widget medium;
-  @override
-  final Widget large;
-  @override
-  final Widget extraLarge;
-  @override
-  final Widget full;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UiBoxSpacing(none: $none, extraSmall: $extraSmall, small: $small, medium: $medium, large: $large, extraLarge: $extraLarge, full: $full)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UiBoxSpacing'))
-      ..add(DiagnosticsProperty('none', none))
-      ..add(DiagnosticsProperty('extraSmall', extraSmall))
-      ..add(DiagnosticsProperty('small', small))
-      ..add(DiagnosticsProperty('medium', medium))
-      ..add(DiagnosticsProperty('large', large))
-      ..add(DiagnosticsProperty('extraLarge', extraLarge))
-      ..add(DiagnosticsProperty('full', full));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_UiBoxSpacing &&
-            (identical(other.none, none) || other.none == none) &&
-            (identical(other.extraSmall, extraSmall) ||
-                other.extraSmall == extraSmall) &&
-            (identical(other.small, small) || other.small == small) &&
-            (identical(other.medium, medium) || other.medium == medium) &&
-            (identical(other.large, large) || other.large == large) &&
-            (identical(other.extraLarge, extraLarge) ||
-                other.extraLarge == extraLarge) &&
-            (identical(other.full, full) || other.full == full));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, none, extraSmall, small, medium, large, extraLarge, full);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_UiBoxSpacingCopyWith<_$_UiBoxSpacing> get copyWith =>
-      __$$_UiBoxSpacingCopyWithImpl<_$_UiBoxSpacing>(this, _$identity);
-}
-
-abstract class _UiBoxSpacing extends UiBoxSpacing {
-  const factory _UiBoxSpacing(
-      {required final Widget none,
-      required final Widget extraSmall,
-      required final Widget small,
-      required final Widget medium,
-      required final Widget large,
-      required final Widget extraLarge,
-      required final Widget full}) = _$_UiBoxSpacing;
-  const _UiBoxSpacing._() : super._();
-
-  @override
-  Widget get none;
-  @override
-  Widget get extraSmall;
-  @override
-  Widget get small;
-  @override
-  Widget get medium;
-  @override
-  Widget get large;
-  @override
-  Widget get extraLarge;
-  @override
-  Widget get full;
-  @override
-  @JsonKey(ignore: true)
-  _$$_UiBoxSpacingCopyWith<_$_UiBoxSpacing> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

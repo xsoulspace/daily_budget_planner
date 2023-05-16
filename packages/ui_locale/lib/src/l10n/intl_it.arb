@@ -1,3 +1,21 @@
 {
-  "settings": "Settings"
+  "settings": "Impostazioni",
+  "yourBudget": "Il tuo budget",
+  "dailyBudget": "Budget giornaliero",
+  "weeklyBudget": "Budget settimanale",
+  "monthlyBudget": "Budget mensile",
+  "daysLeftInWeek": "Giorni rimanenti nella settimana",
+  "copied": "Copiato",
+  "ok": "OK",
+  "nextBudgetDay": "Prossimo giorno di budget",
+  "chooseDate": "Scegli data",
+  "extraCostsOrSaving": "Costi o risparmi aggiuntivi",
+  "willBeSubstructedFromYourBudget": "verrà sottratto dal tuo budget",
+  "canBeLessIfYouHaveLessThan7Days": "può essere inferiore se mancano meno di 7 giorni alla data scelta",
+  "daysInTotal": "Giorni in totale:",
+  "monthly": "Mensile",
+  "weekly": "Settimanale",
+  "language": "Lingua",
+  "chooseLanguage": "Scegli lingua",
+  "done": "Fatto"
 }

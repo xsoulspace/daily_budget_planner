@@ -42,6 +42,8 @@ class UserModel with _$UserModel {
     required final DateTime createdAt,
     required final DateTime updatedAt,
     required final SubscriptionModel subscription,
+    @JsonKey(fromJson: localeFromString, toJson: localeToString)
+        final Locale? locale,
   }) = _UserModel;
   const UserModel._();
   factory UserModel.fromJson(final Map<String, dynamic> json) =>
