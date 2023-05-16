@@ -6,19 +6,19 @@ import 'local_api_service.dart';
 /// application wide user settings like locale, etc
 class UserApiLocalServiceImpl implements UserApiLocalService {
   UserApiLocalServiceImpl({
-    required this.localApiService,
+    required this.localApi,
   });
-  final LocalApiService localApiService;
+  final LocalApiService localApi;
   static const _persistenceKey = 'user';
   @override
   Future<void> saveUser({
     required final UserModel user,
   }) async {
-    await localApiService.setMap(_persistenceKey, user.toJson());
+    await localApi.setMap(_persistenceKey, user.toJson());
   }
 
   @override
-  Future<UserModel> loadUser() async => localApiService.getInstance(
+  Future<UserModel> loadUser() async => localApi.getInstance(
         key: _persistenceKey,
         defaultValue: UserModel.empty,
         fromJson: (final json) =>

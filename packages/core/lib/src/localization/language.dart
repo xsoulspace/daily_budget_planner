@@ -61,6 +61,7 @@ final Map<Languages, NamedLocale> namedLocalesMap = {
     locale: Locales.it,
   ),
 };
+final List<NamedLocale> namedLocalesList = namedLocalesMap.values.toList();
 
 String getLanguageCodeByStr(final LanguageName language) {
   String lang = language;

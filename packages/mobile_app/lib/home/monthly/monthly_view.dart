@@ -9,6 +9,7 @@ import 'package:mobile_app/home/hooks/tab_controller_listener.dart';
 import 'package:mobile_app/home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/home/widgets/copy_button.dart';
 import 'package:ui_kit/ui_kit.dart';
+import 'package:universal_io/io.dart';
 
 class MonthlyView extends StatefulHookWidget {
   const MonthlyView({super.key});
@@ -66,7 +67,9 @@ class _MonthlyViewState extends State<MonthlyView>
                             autofocus: true,
                             focusNode: monthlyCubit.amountFocusNode,
                             keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
+                            textInputAction: Platform.isAndroid
+                                ? TextInputAction.next
+                                : TextInputAction.done,
                             controller: monthlyCubit.amountController,
                             onChanged: monthlyCubit.onAmountChange,
                             onEditingComplete: _requestSavingsFocus,
@@ -98,7 +101,9 @@ class _MonthlyViewState extends State<MonthlyView>
                           child: TextFormField(
                             focusNode: monthlyCubit.savingsFocusNode,
                             keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.previous,
+                            textInputAction: Platform.isAndroid
+                                ? TextInputAction.previous
+                                : TextInputAction.done,
                             onEditingComplete: _requestAmountFocus,
                             onFieldSubmitted: (final value) =>
                                 _requestAmountFocus(),

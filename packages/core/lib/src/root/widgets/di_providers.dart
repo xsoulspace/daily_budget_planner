@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:ui_locale/ui_locale.dart';
 
-import '../models/models.dart';
+import '../../../core.dart';
 
 class RootDiProviders extends StatelessWidget {
   const RootDiProviders({
@@ -20,8 +20,13 @@ class RootDiProviders extends StatelessWidget {
           Provider(create: providers.analyticsService),
           Provider(create: providers.localApiServices),
           Provider(create: providers.remoteApiServices),
+          Provider(
+            create: (final context) => context.read<RemoteApiServices>().user,
+          ),
+          Provider(
+            create: (final context) => context.read<LocalApiServices>().user,
+          ),
           Provider(create: providers.repositories),
-          Provider(create: providers.userNotifier),
           Provider(create: (final context) => L10nScope()),
         ],
         builder: (final context, final child) => builder(context),
@@ -42,6 +47,7 @@ class BlocDiProviders extends StatelessWidget {
   Widget build(final BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider(create: providers.authCubit),
+          BlocProvider(create: providers.userCubit),
         ],
         child: Builder(builder: builder),
       );

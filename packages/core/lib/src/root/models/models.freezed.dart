@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BlocProvidersModel {
   Create<AuthCubit> get authCubit => throw _privateConstructorUsedError;
+  Create<UserCubit> get userCubit => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BlocProvidersModelCopyWith<BlocProvidersModel> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $BlocProvidersModelCopyWith<$Res> {
           BlocProvidersModel value, $Res Function(BlocProvidersModel) then) =
       _$BlocProvidersModelCopyWithImpl<$Res, BlocProvidersModel>;
   @useResult
-  $Res call({Create<AuthCubit> authCubit});
+  $Res call({Create<AuthCubit> authCubit, Create<UserCubit> userCubit});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$BlocProvidersModelCopyWithImpl<$Res, $Val extends BlocProvidersModel>
   @override
   $Res call({
     Object? authCubit = null,
+    Object? userCubit = null,
   }) {
     return _then(_value.copyWith(
       authCubit: null == authCubit
           ? _value.authCubit
           : authCubit // ignore: cast_nullable_to_non_nullable
               as Create<AuthCubit>,
+      userCubit: null == userCubit
+          ? _value.userCubit
+          : userCubit // ignore: cast_nullable_to_non_nullable
+              as Create<UserCubit>,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$_BlocProvidersModelCopyWith<$Res>
       __$$_BlocProvidersModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Create<AuthCubit> authCubit});
+  $Res call({Create<AuthCubit> authCubit, Create<UserCubit> userCubit});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$_BlocProvidersModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? authCubit = null,
+    Object? userCubit = null,
   }) {
     return _then(_$_BlocProvidersModel(
       authCubit: null == authCubit
           ? _value.authCubit
           : authCubit // ignore: cast_nullable_to_non_nullable
               as Create<AuthCubit>,
+      userCubit: null == userCubit
+          ? _value.userCubit
+          : userCubit // ignore: cast_nullable_to_non_nullable
+              as Create<UserCubit>,
     ));
   }
 }
@@ -92,14 +103,17 @@ class __$$_BlocProvidersModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_BlocProvidersModel implements _BlocProvidersModel {
-  const _$_BlocProvidersModel({required this.authCubit});
+  const _$_BlocProvidersModel(
+      {required this.authCubit, required this.userCubit});
 
   @override
   final Create<AuthCubit> authCubit;
+  @override
+  final Create<UserCubit> userCubit;
 
   @override
   String toString() {
-    return 'BlocProvidersModel(authCubit: $authCubit)';
+    return 'BlocProvidersModel(authCubit: $authCubit, userCubit: $userCubit)';
   }
 
   @override
@@ -108,11 +122,13 @@ class _$_BlocProvidersModel implements _BlocProvidersModel {
         (other.runtimeType == runtimeType &&
             other is _$_BlocProvidersModel &&
             (identical(other.authCubit, authCubit) ||
-                other.authCubit == authCubit));
+                other.authCubit == authCubit) &&
+            (identical(other.userCubit, userCubit) ||
+                other.userCubit == userCubit));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, authCubit);
+  int get hashCode => Object.hash(runtimeType, authCubit, userCubit);
 
   @JsonKey(ignore: true)
   @override
@@ -124,10 +140,13 @@ class _$_BlocProvidersModel implements _BlocProvidersModel {
 
 abstract class _BlocProvidersModel implements BlocProvidersModel {
   const factory _BlocProvidersModel(
-      {required final Create<AuthCubit> authCubit}) = _$_BlocProvidersModel;
+      {required final Create<AuthCubit> authCubit,
+      required final Create<UserCubit> userCubit}) = _$_BlocProvidersModel;
 
   @override
   Create<AuthCubit> get authCubit;
+  @override
+  Create<UserCubit> get userCubit;
   @override
   @JsonKey(ignore: true)
   _$$_BlocProvidersModelCopyWith<_$_BlocProvidersModel> get copyWith =>
@@ -144,7 +163,6 @@ mixin _$RootProvidersModel {
       throw _privateConstructorUsedError;
   Create<LocalApiServices> get localApiServices =>
       throw _privateConstructorUsedError;
-  Create<UserNotifier> get userNotifier => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RootProvidersModelCopyWith<RootProvidersModel> get copyWith =>
@@ -161,8 +179,7 @@ abstract class $RootProvidersModelCopyWith<$Res> {
       {Create<RepositoriesCollection> repositories,
       Create<AnalyticsService> analyticsService,
       Create<RemoteApiServices> remoteApiServices,
-      Create<LocalApiServices> localApiServices,
-      Create<UserNotifier> userNotifier});
+      Create<LocalApiServices> localApiServices});
 }
 
 /// @nodoc
@@ -182,7 +199,6 @@ class _$RootProvidersModelCopyWithImpl<$Res, $Val extends RootProvidersModel>
     Object? analyticsService = null,
     Object? remoteApiServices = null,
     Object? localApiServices = null,
-    Object? userNotifier = null,
   }) {
     return _then(_value.copyWith(
       repositories: null == repositories
@@ -201,10 +217,6 @@ class _$RootProvidersModelCopyWithImpl<$Res, $Val extends RootProvidersModel>
           ? _value.localApiServices
           : localApiServices // ignore: cast_nullable_to_non_nullable
               as Create<LocalApiServices>,
-      userNotifier: null == userNotifier
-          ? _value.userNotifier
-          : userNotifier // ignore: cast_nullable_to_non_nullable
-              as Create<UserNotifier>,
     ) as $Val);
   }
 }
@@ -221,8 +233,7 @@ abstract class _$$_RootProvidersModelCopyWith<$Res>
       {Create<RepositoriesCollection> repositories,
       Create<AnalyticsService> analyticsService,
       Create<RemoteApiServices> remoteApiServices,
-      Create<LocalApiServices> localApiServices,
-      Create<UserNotifier> userNotifier});
+      Create<LocalApiServices> localApiServices});
 }
 
 /// @nodoc
@@ -240,7 +251,6 @@ class __$$_RootProvidersModelCopyWithImpl<$Res>
     Object? analyticsService = null,
     Object? remoteApiServices = null,
     Object? localApiServices = null,
-    Object? userNotifier = null,
   }) {
     return _then(_$_RootProvidersModel(
       repositories: null == repositories
@@ -259,10 +269,6 @@ class __$$_RootProvidersModelCopyWithImpl<$Res>
           ? _value.localApiServices
           : localApiServices // ignore: cast_nullable_to_non_nullable
               as Create<LocalApiServices>,
-      userNotifier: null == userNotifier
-          ? _value.userNotifier
-          : userNotifier // ignore: cast_nullable_to_non_nullable
-              as Create<UserNotifier>,
     ));
   }
 }
@@ -274,8 +280,7 @@ class _$_RootProvidersModel implements _RootProvidersModel {
       {required this.repositories,
       required this.analyticsService,
       required this.remoteApiServices,
-      required this.localApiServices,
-      required this.userNotifier});
+      required this.localApiServices});
 
   @override
   final Create<RepositoriesCollection> repositories;
@@ -285,12 +290,10 @@ class _$_RootProvidersModel implements _RootProvidersModel {
   final Create<RemoteApiServices> remoteApiServices;
   @override
   final Create<LocalApiServices> localApiServices;
-  @override
-  final Create<UserNotifier> userNotifier;
 
   @override
   String toString() {
-    return 'RootProvidersModel(repositories: $repositories, analyticsService: $analyticsService, remoteApiServices: $remoteApiServices, localApiServices: $localApiServices, userNotifier: $userNotifier)';
+    return 'RootProvidersModel(repositories: $repositories, analyticsService: $analyticsService, remoteApiServices: $remoteApiServices, localApiServices: $localApiServices)';
   }
 
   @override
@@ -305,14 +308,12 @@ class _$_RootProvidersModel implements _RootProvidersModel {
             (identical(other.remoteApiServices, remoteApiServices) ||
                 other.remoteApiServices == remoteApiServices) &&
             (identical(other.localApiServices, localApiServices) ||
-                other.localApiServices == localApiServices) &&
-            (identical(other.userNotifier, userNotifier) ||
-                other.userNotifier == userNotifier));
+                other.localApiServices == localApiServices));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, repositories, analyticsService,
-      remoteApiServices, localApiServices, userNotifier);
+      remoteApiServices, localApiServices);
 
   @JsonKey(ignore: true)
   @override
@@ -327,8 +328,7 @@ abstract class _RootProvidersModel implements RootProvidersModel {
           {required final Create<RepositoriesCollection> repositories,
           required final Create<AnalyticsService> analyticsService,
           required final Create<RemoteApiServices> remoteApiServices,
-          required final Create<LocalApiServices> localApiServices,
-          required final Create<UserNotifier> userNotifier}) =
+          required final Create<LocalApiServices> localApiServices}) =
       _$_RootProvidersModel;
 
   @override
@@ -339,8 +339,6 @@ abstract class _RootProvidersModel implements RootProvidersModel {
   Create<RemoteApiServices> get remoteApiServices;
   @override
   Create<LocalApiServices> get localApiServices;
-  @override
-  Create<UserNotifier> get userNotifier;
   @override
   @JsonKey(ignore: true)
   _$$_RootProvidersModelCopyWith<_$_RootProvidersModel> get copyWith =>

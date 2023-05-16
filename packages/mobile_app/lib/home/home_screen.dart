@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:gap/gap.dart';
 import 'package:mobile_app/home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/home/monthly/monthly_view.dart';
+import 'package:mobile_app/home/settings/settings_icon_button.dart';
 import 'package:mobile_app/home/weekly/weekly_cubit.dart';
 import 'package:mobile_app/home/weekly/weekly_view.dart';
 import 'package:ui_kit/ui_kit.dart';
@@ -30,20 +32,22 @@ class _HomeScreenProvider extends StatelessWidget {
   });
   final WidgetBuilder builder;
   @override
-  Widget build(final BuildContext context) => MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (final context) => WeeklyCubit(
-              dto: WeeklyCubitDto(context: context),
+  Widget build(final BuildContext context) => Portal(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (final context) => WeeklyCubit(
+                dto: WeeklyCubitDto(context: context),
+              ),
             ),
-          ),
-          BlocProvider(
-            create: (final context) => MonthlyCubit(
-              dto: MonthlyCubitDto(context: context),
-            ),
-          )
-        ],
-        child: Builder(builder: builder),
+            BlocProvider(
+              create: (final context) => MonthlyCubit(
+                dto: MonthlyCubitDto(context: context),
+              ),
+            )
+          ],
+          child: Builder(builder: builder),
+        ),
       );
 }
 
@@ -65,18 +69,25 @@ class HomeScreenBody extends StatelessWidget {
                 ),
               ),
             ),
-            TabBar(
-              padding: EdgeInsets.zero,
-              labelPadding: EdgeInsets.zero,
-              tabs: [
-                UiTab(
-                  iconData: Icons.calendar_month_rounded,
-                  label: 'Monthly',
+            Row(
+              children: [
+                Expanded(
+                  child: TabBar(
+                    padding: EdgeInsets.zero,
+                    labelPadding: EdgeInsets.zero,
+                    tabs: [
+                      UiTab(
+                        iconData: Icons.calendar_month_rounded,
+                        label: 'Monthly',
+                      ),
+                      UiTab(
+                        iconData: Icons.view_week_rounded,
+                        label: 'Weekly',
+                      ),
+                    ],
+                  ),
                 ),
-                UiTab(
-                  iconData: Icons.view_week_rounded,
-                  label: 'Weekly',
-                ),
+                SettingsIconButton(),
               ],
             ),
             BottomSafeArea()

@@ -5,44 +5,44 @@ class SRu extends S {
   SRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Настройки';
 
   @override
-  String get yourBudget => 'Your Budget';
+  String get yourBudget => 'Мой бюджет';
 
   @override
-  String get dailyBudget => 'Daily Budget';
+  String get dailyBudget => 'Бюджет на день';
 
   @override
-  String get weeklyBudget => 'Weekly Budget';
+  String get weeklyBudget => 'Недельный бюджет';
 
   @override
-  String get monthlyBudget => 'Monthly Budget';
+  String get monthlyBudget => 'Месячный бюджет';
 
   @override
-  String get daysLeftInWeek => 'Days Left in week';
+  String get daysLeftInWeek => 'Осталось дней в неделе';
 
   @override
-  String get copied => 'Copied';
+  String get copied => 'Скопировано';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get nextBudgetDay => 'Next Budget Day';
+  String get nextBudgetDay => 'Следующий день бюджета';
 
   @override
-  String get chooseDate => 'Choose Date';
+  String get chooseDate => 'Выбери дату';
 
   @override
-  String get extraCostsOrSaving => 'Extra costs or savings';
+  String get extraCostsOrSaving => 'Доп затраты или в копилку';
 
   @override
-  String get willBeSubstructedFromYourBudget => 'will be subtracted from your budget';
+  String get willBeSubstructedFromYourBudget => 'будет вычтено из бюджета';
 
   @override
-  String get canBeLessIfYouHaveLessThan7Days => 'can be less if you have less than 7 days till chosen date';
+  String get canBeLessIfYouHaveLessThan7Days => 'может быть меньше, если осталось меньше 7 дней до дня бюджета';
 
   @override
-  String get daysInTotal => 'Days in total:';
+  String get daysInTotal => 'Дней всего:';
 }

@@ -27,12 +27,14 @@ class LocalApiServices {
     required this.localApi,
     required this.appSettings,
     required this.budget,
+    required this.user,
   });
 
   factory LocalApiServices.buildAppRuntime() {
     final localApi = LocalApiServiceSharedPreferencesImpl();
     return LocalApiServices._(
       localApi: localApi,
+      user: UserApiLocalServiceImpl(localApi: localApi),
       appSettings: AppSettingsApiLocalService(
         localApiService: localApi,
       ),
@@ -45,5 +47,6 @@ class LocalApiServices {
   }
   final BudgetApiService budget;
   final LocalApiService localApi;
+  final UserApiLocalService user;
   final AppSettingsApiLocalService appSettings;
 }

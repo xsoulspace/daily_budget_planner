@@ -1056,6 +1056,8 @@ mixin _$UserModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
   SubscriptionModel get subscription => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: localeFromString, toJson: localeToString)
+  Locale? get locale => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1075,7 +1077,9 @@ abstract class $UserModelCopyWith<$Res> {
           UserModelRemoteId remoteId,
       DateTime createdAt,
       DateTime updatedAt,
-      SubscriptionModel subscription});
+      SubscriptionModel subscription,
+      @JsonKey(fromJson: localeFromString, toJson: localeToString)
+          Locale? locale});
 
   $SubscriptionModelCopyWith<$Res> get subscription;
 }
@@ -1098,6 +1102,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? subscription = null,
+    Object? locale = freezed,
   }) {
     return _then(_value.copyWith(
       localId: freezed == localId
@@ -1120,6 +1125,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.subscription
           : subscription // ignore: cast_nullable_to_non_nullable
               as SubscriptionModel,
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as Locale?,
     ) as $Val);
   }
 
@@ -1146,7 +1155,9 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
           UserModelRemoteId remoteId,
       DateTime createdAt,
       DateTime updatedAt,
-      SubscriptionModel subscription});
+      SubscriptionModel subscription,
+      @JsonKey(fromJson: localeFromString, toJson: localeToString)
+          Locale? locale});
 
   @override
   $SubscriptionModelCopyWith<$Res> get subscription;
@@ -1168,6 +1179,7 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? subscription = null,
+    Object? locale = freezed,
   }) {
     return _then(_$_UserModel(
       localId: freezed == localId
@@ -1190,6 +1202,10 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.subscription
           : subscription // ignore: cast_nullable_to_non_nullable
               as SubscriptionModel,
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as Locale?,
     ));
   }
 }
@@ -1205,7 +1221,9 @@ class _$_UserModel extends _UserModel {
           required this.remoteId,
       required this.createdAt,
       required this.updatedAt,
-      required this.subscription})
+      required this.subscription,
+      @JsonKey(fromJson: localeFromString, toJson: localeToString)
+          this.locale})
       : super._();
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
@@ -1225,10 +1243,13 @@ class _$_UserModel extends _UserModel {
   final DateTime updatedAt;
   @override
   final SubscriptionModel subscription;
+  @override
+  @JsonKey(fromJson: localeFromString, toJson: localeToString)
+  final Locale? locale;
 
   @override
   String toString() {
-    return 'UserModel(localId: $localId, remoteId: $remoteId, createdAt: $createdAt, updatedAt: $updatedAt, subscription: $subscription)';
+    return 'UserModel(localId: $localId, remoteId: $remoteId, createdAt: $createdAt, updatedAt: $updatedAt, subscription: $subscription, locale: $locale)';
   }
 
   @override
@@ -1243,7 +1264,8 @@ class _$_UserModel extends _UserModel {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.subscription, subscription) ||
-                other.subscription == subscription));
+                other.subscription == subscription) &&
+            (identical(other.locale, locale) || other.locale == locale));
   }
 
   @JsonKey(ignore: true)
@@ -1254,7 +1276,8 @@ class _$_UserModel extends _UserModel {
       const DeepCollectionEquality().hash(remoteId),
       createdAt,
       updatedAt,
-      subscription);
+      subscription,
+      locale);
 
   @JsonKey(ignore: true)
   @override
@@ -1278,7 +1301,9 @@ abstract class _UserModel extends UserModel {
           required final UserModelRemoteId remoteId,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      required final SubscriptionModel subscription}) = _$_UserModel;
+      required final SubscriptionModel subscription,
+      @JsonKey(fromJson: localeFromString, toJson: localeToString)
+          final Locale? locale}) = _$_UserModel;
   const _UserModel._() : super._();
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -1298,6 +1323,9 @@ abstract class _UserModel extends UserModel {
   DateTime get updatedAt;
   @override
   SubscriptionModel get subscription;
+  @override
+  @JsonKey(fromJson: localeFromString, toJson: localeToString)
+  Locale? get locale;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
