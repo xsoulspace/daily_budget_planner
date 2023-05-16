@@ -12,21 +12,19 @@ class GlobalInitializerImpl extends GlobalInitializer {
     this.firebaseOptions,
   });
   @override
-  late final AnalyticsService analyticsService;
+  final AnalyticsService analyticsService = AnalyticsServiceImpl();
   final FirebaseOptions? firebaseOptions;
   @override
   Future<void> onLoad() async {
     final effectiveFirebaseOptions = firebaseOptions;
-    final plugins = <Type, AnalyticsServicePlugin>{};
     if (effectiveFirebaseOptions != null) {
       await FirebaseInitializerImpl(firebaseOptions: effectiveFirebaseOptions)
           .onLoad();
-      plugins.addAll({
-        FirebaseAnalyticsPlugin: FirebaseAnalyticsPlugin(),
-        FirebaseCrashlyticsPlugin: FirebaseCrashlyticsPlugin(),
-      });
+
+      analyticsService
+        ..upsertPlugin<FirebaseAnalyticsPlugin>(FirebaseAnalyticsPlugin())
+        ..upsertPlugin<FirebaseCrashlyticsPlugin>(FirebaseCrashlyticsPlugin());
     }
-    analyticsService = AnalyticsServiceImpl(plugins: plugins);
     await analyticsService.onLoad();
   }
 

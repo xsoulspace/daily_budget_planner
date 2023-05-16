@@ -61,12 +61,12 @@ Future<void> bootstrap({
   final GlobalInitializer initializer = GlobalInitializerImpl(
     firebaseOptions: dto?.firebaseOptions,
   );
-  await initializer.onLoad();
 
-  runZonedGuarded(
-    () {
+  await runZonedGuarded(
+    () async {
       final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+      await initializer.onLoad();
       Bloc.observer = _AppBlocObserver();
       runApp(builder(initializer));
     },
