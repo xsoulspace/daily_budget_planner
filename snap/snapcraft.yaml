@@ -37,7 +37,7 @@ apps:
       - dbus-daily-budget-planner
 
 parts:
-  word-by-word-game:
+  daily-budget-planner:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
