@@ -36,6 +36,11 @@ apps:
     slots:
       - dbus-daily-budget-planner
 
+# https://forum.snapcraft.io/t/failed-to-install-or-refresh-a-snap-flutter-does-not-exist/25623
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
 parts:
   daily-budget-planner:
     source: .
