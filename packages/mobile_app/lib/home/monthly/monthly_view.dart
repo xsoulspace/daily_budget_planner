@@ -49,7 +49,8 @@ class _MonthlyViewState extends State<MonthlyView>
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         children: [
-          const TopSafeArea(),
+          const HomeScreenTopBanner(),
+          const Gap(12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

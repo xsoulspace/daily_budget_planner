@@ -47,8 +47,8 @@ class BlocDiProviders extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => MultiBlocProvider(
         providers: [
-          BlocProvider(create: providers.authCubit),
           BlocProvider(create: providers.userCubit),
+          BlocProvider(create: providers.authCubit),
         ],
         child: Builder(builder: builder),
       );

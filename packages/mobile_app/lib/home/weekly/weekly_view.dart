@@ -41,7 +41,8 @@ class _WeeklyViewState extends State<WeeklyView>
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       children: [
-        const TopSafeArea(),
+        const HomeScreenTopBanner(),
+        const Gap(12),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

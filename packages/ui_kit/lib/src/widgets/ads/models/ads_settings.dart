@@ -19,11 +19,9 @@ class AdPermissions with _$AdPermissions {
   static const noAds = AdPermissions();
   static const webAds = allAdEnabled;
   static const nativeMobileAds = allAdEnabled;
-  static const nativeDesktopAds = AdPermissions(
-    homeScreenTopBannerEnabled: false,
-  );
+  static const nativeDesktopAds = noAds;
   static const allAdEnabled = AdPermissions(
     adsAllowed: true,
-    homeScreenTopBannerEnabled: false,
+    homeScreenTopBannerEnabled: true,
   );
 }

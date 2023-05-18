@@ -2,8 +2,6 @@ import 'package:core/core.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../ui_kit.dart';
-import '../models/models.dart';
-import '../states/states.dart';
 
 abstract class AdWidget extends StatelessWidget {
   const AdWidget({required super.key});

@@ -27,10 +27,7 @@ class HomeScreenTopBanner extends AdWidget {
   Widget debugBuilder(final BuildContext context) {
     final size = getSize(context);
     return Placeholder(
-      fallbackHeight: math.max(
-        20,
-        math.min(size.height * 0.2, 50),
-      ),
+      fallbackHeight: size.height,
       fallbackWidth: size.width,
       child: const Text('Ad HomeScreenTopBanner'),
     );
@@ -42,7 +39,7 @@ class HomeScreenTopBanner extends AdWidget {
       size.width,
       math.max(
         20,
-        math.min(size.height * 0.2, 50),
+        math.min(size.height * 0.2, 35),
       ),
     );
   }

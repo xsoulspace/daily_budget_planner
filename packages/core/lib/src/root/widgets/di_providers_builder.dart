@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../states/states.dart';
-import '../models/models.dart';
-import 'widgets.dart';
+import '../../../core.dart';
 
 class DiProvidersBuilder extends StatefulWidget {
   const DiProvidersBuilder._({
@@ -38,7 +36,8 @@ class _DiProvidersBuilderState extends State<DiProvidersBuilder> {
         ),
         builder: (final context) => BlocDiProviders(
           providers: BlocProvidersModel.appRuntime(),
-          builder: widget.builder,
+          builder: (final context) =>
+              AppDiInitializerLoader(child: widget.builder(context)),
         ),
       );
 }
@@ -77,7 +76,8 @@ class _MockDiProvidersBuilderState extends State<MockDiProvidersBuilder> {
         ),
         builder: (final context) => BlocDiProviders(
           providers: BlocProvidersModel.mock(),
-          builder: widget.builder,
+          builder: (final context) =>
+              AppDiInitializerLoader(child: widget.builder(context)),
         ),
       );
 }
