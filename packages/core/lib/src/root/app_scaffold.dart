@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:ui_locale/ui_locale.dart';
 
-import '../states/states.dart';
+import '../../core.dart';
 
 class AppScaffold extends StatefulWidget {
   const AppScaffold({

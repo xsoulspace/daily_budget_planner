@@ -1,4 +1,6 @@
-# melos_managed_dependency_overrides: ui_locale
+# melos_managed_dependency_overrides: ui_locale,core
 dependency_overrides:
+  core:
+    path: ../core
   ui_locale:
     path: ../ui_locale
