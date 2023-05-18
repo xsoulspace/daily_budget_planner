@@ -58,9 +58,10 @@ class HomeScreenBody extends StatelessWidget {
   Widget build(final BuildContext context) => Scaffold(
         body: Column(
           children: [
+            const TopSafeArea(),
             const Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 24, horizontal: 18),
+                padding: EdgeInsets.only(left: 18, right: 18),
                 child: TabBarView(
                   children: [
                     MonthlyView(),
@@ -69,26 +70,29 @@ class HomeScreenBody extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: TabBar(
-                    padding: EdgeInsets.zero,
-                    labelPadding: EdgeInsets.zero,
-                    tabs: [
-                      UiTab(
-                        iconData: Icons.calendar_month_rounded,
-                        label: context.s.monthly,
-                      ),
-                      UiTab(
-                        iconData: Icons.view_week_rounded,
-                        label: context.s.weekly,
-                      ),
-                    ],
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 350),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TabBar(
+                      padding: EdgeInsets.zero,
+                      labelPadding: EdgeInsets.zero,
+                      tabs: [
+                        UiTab(
+                          iconData: Icons.calendar_month_rounded,
+                          label: context.s.monthly,
+                        ),
+                        UiTab(
+                          iconData: Icons.view_week_rounded,
+                          label: context.s.weekly,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SettingsIconButton(),
-              ],
+                  const SettingsIconButton(),
+                ],
+              ),
             ),
             const BottomSafeArea()
           ],

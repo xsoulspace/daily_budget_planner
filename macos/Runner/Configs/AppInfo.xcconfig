@@ -8,7 +8,7 @@
 PRODUCT_NAME = daily_budget_planner
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = dev.xsoulspace.dailyBugetPlanner
+PRODUCT_BUNDLE_IDENTIFIER = dev.xsoulspace.dailyBudgetPlanner
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 dev.xsoulspace. All rights reserved.

@@ -25,9 +25,9 @@ final class AuthCubit extends Cubit<AuthCubitState> implements Loadable {
     required this.dto,
   }) : super(const AuthCubitState.unauthorized());
   final AuthCubitDto dto;
+  // ignore: prefer_expression_function_bodies
   Future<void> onRestoreSession() async {
-    // TODO(arenukvern): restore session
-    throw UnimplementedError();
+    return;
   }
 
   void onSignIn() {

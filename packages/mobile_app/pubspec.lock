@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: connectivity_plus
-      sha256: b74247fad72c171381dbe700ca17da24deac637ab6d43c343b42867acb95c991
+      sha256: "45262924896ff72a8cd92b722bb7e3d5020f9e0724531a3e10e22ddae2005991"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.6"
+    version: "4.0.0"
   connectivity_plus_platform_interface:
     dependency: transitive
     description:
@@ -616,10 +616,10 @@ packages:
     dependency: "direct main"
     description:
       name: form_builder_validators
-      sha256: f2d90439c56345c23ad8d0c2912e4002cd02563d816f4387c9495051c10d3321
+      sha256: e04998b1597d76a51da7f009ed3b2f12d4173f13e146e8744fd2453e8595a2c9
       url: "https://pub.dev"
     source: hosted
-    version: "8.6.1"
+    version: "9.0.0"
   freezed:
     dependency: "direct dev"
     description:
@@ -980,6 +980,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  pointer_interceptor:
+    dependency: transitive
+    description:
+      name: pointer_interceptor
+      sha256: "6aa680b30d96dccef496933d00208ad25f07e047f644dc98ce03ec6141633a9a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.3+4"
   pointycastle:
     dependency: transitive
     description:
@@ -1455,6 +1463,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  yandex_ads_sdk:
+    dependency: transitive
+    description:
+      path: "packages/yandex_ads_sdk"
+      ref: editor
+      resolved-ref: "62b3bcfd62cf85596d1f19e4d5961360b172bc31"
+      url: "https://github.com/xsoulspace/word_by_word_game"
+    source: git
+    version: "0.0.1"
 sdks:
   dart: ">=3.0.0 <4.0.0"
-  flutter: ">=3.7.0"
+  flutter: ">=3.10.0"

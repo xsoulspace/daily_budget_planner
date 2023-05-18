@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:life_hooks/life_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:ui_kit/ui_kit.dart';
@@ -54,8 +56,11 @@ class _AppDiInitializerLoaderState extends State<AppDiInitializerLoader> {
 /// ********************************************
 
 class _AppDiInitializerDto {
-  _AppDiInitializerDto.of(final Locator read) : authCubit = read();
+  _AppDiInitializerDto.of(final Locator read)
+      : authCubit = read(),
+        adManager = read();
   final AuthCubit authCubit;
+  final AdManager adManager;
 }
 
 class AppDiInitializer extends StateInitializer {
@@ -69,6 +74,8 @@ class AppDiInitializer extends StateInitializer {
     // FlutterNativeSplash.remove();
 
     final dto = _AppDiInitializerDto.of(context.read);
-    await dto.authCubit.onLoad();
+    unawaited(
+      Future.wait([dto.authCubit.onLoad(), dto.adManager.onLoad()]),
+    );
   }
 }
