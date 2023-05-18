@@ -1795,6 +1795,7 @@ path_provider_linux
 path_provider_platform_interface
 path_provider_windows
 plugin_platform_interface
+pointer_interceptor
 shared_preferences
 shared_preferences_android
 shared_preferences_foundation
@@ -5309,6 +5310,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 core
 ui_kit
 ui_locale
+yandex_ads_sdk
 
 TODO: Add your license here.
 
