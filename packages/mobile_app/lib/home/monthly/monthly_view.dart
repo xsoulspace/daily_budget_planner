@@ -60,7 +60,9 @@ class _MonthlyViewState extends State<MonthlyView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(context.s.yourBudget),
-                    const Gap(12),
+                    Gap(
+                      DeviceRuntimeType.isMobile ? 12 : 24,
+                    ),
                     Row(
                       children: [
                         Expanded(

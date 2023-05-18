@@ -42,7 +42,9 @@ class _WeeklyViewState extends State<WeeklyView>
       padding: EdgeInsets.zero,
       children: [
         const HomeScreenTopBanner(),
-        const Gap(12),
+        Gap(
+          DeviceRuntimeType.isMobile ? 12 : 24,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
