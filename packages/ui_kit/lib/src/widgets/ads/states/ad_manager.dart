@@ -8,7 +8,7 @@ class AdManager implements Loadable, Disposable {
   AdPermissions permissions = AdPermissions.noAds;
   @override
   Future<void> onLoad() async {
-    const envs = Envs.instance;
+    final envs = Envs.instance;
     if (envs.isMarketingMode) return;
     if (envs.isDebugAds) {
       permissions = AdPermissions.allAdEnabled;
