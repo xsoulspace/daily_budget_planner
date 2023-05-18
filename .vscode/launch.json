@@ -10,6 +10,9 @@
         "db-url=https://",
         "--web-port=3000",
         "--dart-define",
+        // googlePlay, appleStore, rustore, huawai
+        "store-target=rustore",
+        "--dart-define",
         "is-marketing-mode=false"
       ]
     },

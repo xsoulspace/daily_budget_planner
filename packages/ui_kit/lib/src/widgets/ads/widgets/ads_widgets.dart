@@ -14,7 +14,12 @@ class HomeScreenTopBanner extends AdWidget {
     final WidthFormFactor screenWidth,
   ) {
     if (kIsWeb) {
-      if (DeviceRuntimeType.isMobile) return 'R-A-1980143-9';
+      if (DeviceRuntimeType.isMobile) {
+        return switch (Envs.instance.storeTarget) {
+          StoreTarget.rustore => 'R-A-1980143-9',
+          _ => '',
+        };
+      }
       return 'R-A-1980143-7';
     }
     return 'R-M-2393149-1';
