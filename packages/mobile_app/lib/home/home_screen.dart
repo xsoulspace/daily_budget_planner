@@ -58,6 +58,7 @@ class HomeScreenBody extends StatelessWidget {
   Widget build(final BuildContext context) => Scaffold(
         body: Column(
           children: [
+            const HomeScreenTopBanner(),
             const Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 24, horizontal: 18),

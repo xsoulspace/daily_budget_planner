@@ -5,7 +5,13 @@
       "program": "lib/main.dart",
       "request": "launch",
       "type": "dart",
-      "toolArgs": ["--dart-define", "db-url=https://", "--web-port=3000"]
+      "toolArgs": [
+        "--dart-define",
+        "db-url=https://",
+        "--web-port=3000",
+        "--dart-define",
+        "is-marketing-mode=false"
+      ]
     },
     {
       "name": "mobile-app",

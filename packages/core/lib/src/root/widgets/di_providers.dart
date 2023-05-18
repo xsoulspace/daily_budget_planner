@@ -1,6 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:ui_kit/ui_kit.dart';
 import 'package:ui_locale/ui_locale.dart';
 
 import '../../../core.dart';
@@ -18,6 +18,7 @@ class RootDiProviders extends StatelessWidget {
   Widget build(final BuildContext context) => MultiProvider(
         providers: [
           Provider(create: providers.analyticsService),
+          Provider(create: (final context) => AdManager()),
           Provider(create: providers.localApiServices),
           Provider(create: providers.remoteApiServices),
           Provider(
