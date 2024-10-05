@@ -12,14 +12,16 @@ part of 'weekly_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$WeeklyCubitState {
   WeeklyBudgetModel get budget => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WeeklyCubitState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WeeklyCubitStateCopyWith<WeeklyCubitState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -31,8 +33,6 @@ abstract class $WeeklyCubitStateCopyWith<$Res> {
       _$WeeklyCubitStateCopyWithImpl<$Res, WeeklyCubitState>;
   @useResult
   $Res call({WeeklyBudgetModel budget, bool isLoading});
-
-  $WeeklyBudgetModelCopyWith<$Res> get budget;
 }
 
 /// @nodoc
@@ -45,14 +45,16 @@ class _$WeeklyCubitStateCopyWithImpl<$Res, $Val extends WeeklyCubitState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WeeklyCubitState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? budget = null,
+    Object? budget = freezed,
     Object? isLoading = null,
   }) {
     return _then(_value.copyWith(
-      budget: null == budget
+      budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as WeeklyBudgetModel,
@@ -62,46 +64,37 @@ class _$WeeklyCubitStateCopyWithImpl<$Res, $Val extends WeeklyCubitState>
               as bool,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $WeeklyBudgetModelCopyWith<$Res> get budget {
-    return $WeeklyBudgetModelCopyWith<$Res>(_value.budget, (value) {
-      return _then(_value.copyWith(budget: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$_WeeklyCubitStateCopyWith<$Res>
+abstract class _$$WeeklyCubitStateImplCopyWith<$Res>
     implements $WeeklyCubitStateCopyWith<$Res> {
-  factory _$$_WeeklyCubitStateCopyWith(
-          _$_WeeklyCubitState value, $Res Function(_$_WeeklyCubitState) then) =
-      __$$_WeeklyCubitStateCopyWithImpl<$Res>;
+  factory _$$WeeklyCubitStateImplCopyWith(_$WeeklyCubitStateImpl value,
+          $Res Function(_$WeeklyCubitStateImpl) then) =
+      __$$WeeklyCubitStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({WeeklyBudgetModel budget, bool isLoading});
-
-  @override
-  $WeeklyBudgetModelCopyWith<$Res> get budget;
 }
 
 /// @nodoc
-class __$$_WeeklyCubitStateCopyWithImpl<$Res>
-    extends _$WeeklyCubitStateCopyWithImpl<$Res, _$_WeeklyCubitState>
-    implements _$$_WeeklyCubitStateCopyWith<$Res> {
-  __$$_WeeklyCubitStateCopyWithImpl(
-      _$_WeeklyCubitState _value, $Res Function(_$_WeeklyCubitState) _then)
+class __$$WeeklyCubitStateImplCopyWithImpl<$Res>
+    extends _$WeeklyCubitStateCopyWithImpl<$Res, _$WeeklyCubitStateImpl>
+    implements _$$WeeklyCubitStateImplCopyWith<$Res> {
+  __$$WeeklyCubitStateImplCopyWithImpl(_$WeeklyCubitStateImpl _value,
+      $Res Function(_$WeeklyCubitStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WeeklyCubitState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? budget = null,
+    Object? budget = freezed,
     Object? isLoading = null,
   }) {
-    return _then(_$_WeeklyCubitState(
-      budget: null == budget
+    return _then(_$WeeklyCubitStateImpl(
+      budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as WeeklyBudgetModel,
@@ -115,8 +108,8 @@ class __$$_WeeklyCubitStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_WeeklyCubitState implements _WeeklyCubitState {
-  const _$_WeeklyCubitState(
+class _$WeeklyCubitStateImpl implements _WeeklyCubitState {
+  const _$WeeklyCubitStateImpl(
       {this.budget = WeeklyBudgetModel.initial, this.isLoading = true});
 
   @override
@@ -132,36 +125,43 @@ class _$_WeeklyCubitState implements _WeeklyCubitState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WeeklyCubitState &&
-            (identical(other.budget, budget) || other.budget == budget) &&
+            other is _$WeeklyCubitStateImpl &&
+            const DeepCollectionEquality().equals(other.budget, budget) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, budget, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(budget), isLoading);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WeeklyCubitState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WeeklyCubitStateCopyWith<_$_WeeklyCubitState> get copyWith =>
-      __$$_WeeklyCubitStateCopyWithImpl<_$_WeeklyCubitState>(this, _$identity);
+  _$$WeeklyCubitStateImplCopyWith<_$WeeklyCubitStateImpl> get copyWith =>
+      __$$WeeklyCubitStateImplCopyWithImpl<_$WeeklyCubitStateImpl>(
+          this, _$identity);
 }
 
 abstract class _WeeklyCubitState implements WeeklyCubitState {
   const factory _WeeklyCubitState(
       {final WeeklyBudgetModel budget,
-      final bool isLoading}) = _$_WeeklyCubitState;
+      final bool isLoading}) = _$WeeklyCubitStateImpl;
 
   @override
   WeeklyBudgetModel get budget;
   @override
   bool get isLoading;
+
+  /// Create a copy of WeeklyCubitState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_WeeklyCubitStateCopyWith<_$_WeeklyCubitState> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$WeeklyCubitStateImplCopyWith<_$WeeklyCubitStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

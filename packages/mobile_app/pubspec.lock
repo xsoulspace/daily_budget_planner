@@ -1406,6 +1406,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.0"
+  xsoulspace_foundation:
+    dependency: "direct main"
+    description:
+      path: "../xsoulspace_foundation"
+      relative: true
+    source: path
+    version: "0.0.1"
   xsoulspace_lints:
     dependency: "direct dev"
     description:

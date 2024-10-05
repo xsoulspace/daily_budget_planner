@@ -12,14 +12,16 @@ part of 'monthly_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MonthlyCubitState {
   MonthlyBudgetModel get budget => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MonthlyCubitState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MonthlyCubitStateCopyWith<MonthlyCubitState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -31,8 +33,6 @@ abstract class $MonthlyCubitStateCopyWith<$Res> {
       _$MonthlyCubitStateCopyWithImpl<$Res, MonthlyCubitState>;
   @useResult
   $Res call({MonthlyBudgetModel budget, bool isLoading});
-
-  $MonthlyBudgetModelCopyWith<$Res> get budget;
 }
 
 /// @nodoc
@@ -45,14 +45,16 @@ class _$MonthlyCubitStateCopyWithImpl<$Res, $Val extends MonthlyCubitState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MonthlyCubitState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? budget = null,
+    Object? budget = freezed,
     Object? isLoading = null,
   }) {
     return _then(_value.copyWith(
-      budget: null == budget
+      budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as MonthlyBudgetModel,
@@ -62,46 +64,37 @@ class _$MonthlyCubitStateCopyWithImpl<$Res, $Val extends MonthlyCubitState>
               as bool,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $MonthlyBudgetModelCopyWith<$Res> get budget {
-    return $MonthlyBudgetModelCopyWith<$Res>(_value.budget, (value) {
-      return _then(_value.copyWith(budget: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$_MonthlyCubitStateCopyWith<$Res>
+abstract class _$$MonthlyCubitStateImplCopyWith<$Res>
     implements $MonthlyCubitStateCopyWith<$Res> {
-  factory _$$_MonthlyCubitStateCopyWith(_$_MonthlyCubitState value,
-          $Res Function(_$_MonthlyCubitState) then) =
-      __$$_MonthlyCubitStateCopyWithImpl<$Res>;
+  factory _$$MonthlyCubitStateImplCopyWith(_$MonthlyCubitStateImpl value,
+          $Res Function(_$MonthlyCubitStateImpl) then) =
+      __$$MonthlyCubitStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({MonthlyBudgetModel budget, bool isLoading});
-
-  @override
-  $MonthlyBudgetModelCopyWith<$Res> get budget;
 }
 
 /// @nodoc
-class __$$_MonthlyCubitStateCopyWithImpl<$Res>
-    extends _$MonthlyCubitStateCopyWithImpl<$Res, _$_MonthlyCubitState>
-    implements _$$_MonthlyCubitStateCopyWith<$Res> {
-  __$$_MonthlyCubitStateCopyWithImpl(
-      _$_MonthlyCubitState _value, $Res Function(_$_MonthlyCubitState) _then)
+class __$$MonthlyCubitStateImplCopyWithImpl<$Res>
+    extends _$MonthlyCubitStateCopyWithImpl<$Res, _$MonthlyCubitStateImpl>
+    implements _$$MonthlyCubitStateImplCopyWith<$Res> {
+  __$$MonthlyCubitStateImplCopyWithImpl(_$MonthlyCubitStateImpl _value,
+      $Res Function(_$MonthlyCubitStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MonthlyCubitState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? budget = null,
+    Object? budget = freezed,
     Object? isLoading = null,
   }) {
-    return _then(_$_MonthlyCubitState(
-      budget: null == budget
+    return _then(_$MonthlyCubitStateImpl(
+      budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as MonthlyBudgetModel,
@@ -115,8 +108,8 @@ class __$$_MonthlyCubitStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MonthlyCubitState implements _MonthlyCubitState {
-  const _$_MonthlyCubitState(
+class _$MonthlyCubitStateImpl implements _MonthlyCubitState {
+  const _$MonthlyCubitStateImpl(
       {this.budget = MonthlyBudgetModel.initial, this.isLoading = true});
 
   @override
@@ -132,37 +125,43 @@ class _$_MonthlyCubitState implements _MonthlyCubitState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MonthlyCubitState &&
-            (identical(other.budget, budget) || other.budget == budget) &&
+            other is _$MonthlyCubitStateImpl &&
+            const DeepCollectionEquality().equals(other.budget, budget) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, budget, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(budget), isLoading);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MonthlyCubitState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MonthlyCubitStateCopyWith<_$_MonthlyCubitState> get copyWith =>
-      __$$_MonthlyCubitStateCopyWithImpl<_$_MonthlyCubitState>(
+  _$$MonthlyCubitStateImplCopyWith<_$MonthlyCubitStateImpl> get copyWith =>
+      __$$MonthlyCubitStateImplCopyWithImpl<_$MonthlyCubitStateImpl>(
           this, _$identity);
 }
 
 abstract class _MonthlyCubitState implements MonthlyCubitState {
   const factory _MonthlyCubitState(
       {final MonthlyBudgetModel budget,
-      final bool isLoading}) = _$_MonthlyCubitState;
+      final bool isLoading}) = _$MonthlyCubitStateImpl;
 
   @override
   MonthlyBudgetModel get budget;
   @override
   bool get isLoading;
+
+  /// Create a copy of MonthlyCubitState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_MonthlyCubitStateCopyWith<_$_MonthlyCubitState> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MonthlyCubitStateImplCopyWith<_$MonthlyCubitStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

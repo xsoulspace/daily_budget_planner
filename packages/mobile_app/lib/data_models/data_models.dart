@@ -3,5 +3,7 @@ import 'package:mobile_app/foundation/utils/utils.dart';
 
 part 'app_settings.dart';
 part 'budget.dart';
+part 'data_models.freezed.dart';
+part 'data_models.g.dart';
 part 'typedefs.dart';
 part 'user.dart';

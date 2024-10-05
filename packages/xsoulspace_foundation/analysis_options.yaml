@@ -1,8 +1,6 @@
 include: package:xsoulspace_lints/library.yaml
 
 analyzer:
-  exclude:
-    - lib/src/gen/**
 
 linter:
   # The lint rules applied to this project can be customized in the
