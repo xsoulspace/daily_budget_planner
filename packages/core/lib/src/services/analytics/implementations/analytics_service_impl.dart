@@ -64,7 +64,7 @@ class AnalyticsServiceImpl implements AnalyticsService {
     final String message = '',
     final StackTrace? stackTrace,
   }) {
-    logger.d(message, value, stackTrace);
+    logger.d(message, error: value, stackTrace: stackTrace);
     logString('$message $value $stackTrace');
   }
 
@@ -74,7 +74,7 @@ class AnalyticsServiceImpl implements AnalyticsService {
     final String message = '',
     final StackTrace? stackTrace,
   }) {
-    logger.i(message, value, stackTrace);
+    logger.i(message, error: value, stackTrace: stackTrace);
     logString('$message $value $stackTrace');
   }
 
@@ -84,7 +84,7 @@ class AnalyticsServiceImpl implements AnalyticsService {
     final String message = '',
     final StackTrace? stackTrace,
   }) {
-    logger.w(message, value, stackTrace);
+    logger.w(message, error: value, stackTrace: stackTrace);
     logString('$message $value $stackTrace');
   }
 
@@ -94,7 +94,7 @@ class AnalyticsServiceImpl implements AnalyticsService {
     final String message = '',
     final StackTrace? stackTrace,
   }) {
-    logger.e(value, message, stackTrace);
+    logger.e(message, error: value, stackTrace: stackTrace);
     logString('$message $value $stackTrace');
   }
 

@@ -63,7 +63,7 @@ class _AppDiInitializerDto {
   final AdManager adManager;
 }
 
-class AppDiInitializer extends StateInitializer {
+class AppDiInitializer implements StateInitializer {
   /// If you need to wait until, then add await for
   /// required functions. But notice: every await
   /// function will increase app loading time because
