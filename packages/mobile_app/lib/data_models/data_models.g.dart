@@ -57,9 +57,6 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       remoteId: UserModelId.remoteFromJson(json['remote_id'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
-      subscription: SubscriptionModel.fromJson(
-          json['subscription'] as Map<String, dynamic>),
-      locale: localeFromString(json['locale'] as String?),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -68,8 +65,6 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'remote_id': UserModelId.toStringJson(instance.remoteId),
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
-      'subscription': instance.subscription.toJson(),
-      'locale': localeToString(instance.locale),
     };
 
 _$SubscriptionModelImpl _$$SubscriptionModelImplFromJson(

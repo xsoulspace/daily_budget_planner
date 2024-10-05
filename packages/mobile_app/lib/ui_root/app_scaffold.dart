@@ -1,36 +1,24 @@
-import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_states/user_cubit.dart';
-import 'package:provider/provider.dart';
-import 'package:ui_locale/ui_locale.dart';
+import 'package:mobile_app/data_states/app_settings_notifier.dart';
 
-class AppScaffold extends StatefulWidget {
-  const AppScaffold({
-    required this.goRouterBuilder,
-    super.key,
-  });
-  final ValueGetter<GoRouter> goRouterBuilder;
+class DBPApp extends StatelessWidget {
+  const DBPApp({super.key});
   @override
-  State<AppScaffold> createState() => _AppScaffoldState();
+  Widget build(final BuildContext context) => GlobalStateProviders(
+        builder: (final context) => const AppScaffoldBuilder(),
+      );
 }
 
-class _AppScaffoldState extends State<AppScaffold> {
-  late final _goRouter = widget.goRouterBuilder();
-  @override
-  void dispose() {
-    _goRouter.dispose();
-    super.dispose();
-  }
-
+class AppScaffoldBuilder extends StatelessWidget {
+  const AppScaffoldBuilder({super.key});
   @override
   Widget build(final BuildContext context) {
-    final userLocale = context.select<UserNotifier, Locale?>(
-      (final cubit) => cubit.value.locale,
+    final locale = context.select<AppSettingsNotifier, Locale>(
+      (final c) => c.locale.value,
     );
     return MaterialApp.router(
-      routerConfig: _goRouter,
+      routerConfig: router,
       // builder: (final context, final child) => child!,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
@@ -38,27 +26,15 @@ class _AppScaffoldState extends State<AppScaffold> {
         ...S.localizationsDelegates,
         FormBuilderLocalizations.delegate,
       ],
-      locale: userLocale,
-      localeListResolutionCallback: (final locales, final supportedLocales) {
-        final defaultLocale = () {
-          if (locales == null || locales.isEmpty) return null;
-          for (final locale in locales) {
-            if (S.delegate.isSupported(locale)) {
-              return locale;
-            }
-          }
-        }();
 
-        /// if language is set by user, then use it
-        if (userLocale != null) return userLocale;
-
-        return defaultLocale;
-      },
-      supportedLocales: S.supportedLocales,
-      theme: ThemeData.from(
-        colorScheme: AppColorSchemes.brand().light,
-        useMaterial3: true,
-      ),
+      /// Providing a restorationScopeId allows the Navigator built by
+      /// the MaterialApp to restore the navigation stack when a user
+      /// leaves and returns to the app after it has been killed while
+      /// running in the background.
+      restorationScopeId: 'app',
+      locale: locale,
+      supportedLocales: Locales.values,
+      theme: AppThemeData.brandLight,
     );
   }
 }

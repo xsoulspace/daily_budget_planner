@@ -1,23 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:life_hooks/life_hooks.dart';
-import 'package:meta/meta.dart';
-import 'package:mobile_app/data_services/data_services.dart';
+import 'package:mobile_app/common_imports.dart';
 
-abstract interface class GlobalInitializer implements Loadable, Disposable {
-  AnalyticsService get analyticsService;
-}
-
-@reopen
-class GlobalInitializerImpl extends GlobalInitializer {
+class GlobalInitializerImpl with HasAnalyticsService {
   GlobalInitializerImpl({
     this.firebaseOptions,
   });
-  @override
-  final AnalyticsService analyticsService = AnalyticsServiceImpl();
   final FirebaseOptions? firebaseOptions;
-  @override
   Future<void> onLoad() async {
     final effectiveFirebaseOptions = firebaseOptions;
+    Di.init();
     if (effectiveFirebaseOptions != null) {
       await FirebaseInitializerImpl(firebaseOptions: effectiveFirebaseOptions)
           .onLoad();
@@ -29,7 +20,6 @@ class GlobalInitializerImpl extends GlobalInitializer {
     await analyticsService.onLoad();
   }
 
-  @override
   void dispose() {
     analyticsService.dispose();
   }

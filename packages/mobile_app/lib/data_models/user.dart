@@ -1,3 +1,4 @@
+// ignore: lines_longer_than_80_chars
 // ignore_for_file: invalid_annotation_target, prefer_constructors_over_static_methods
 
 part of 'data_models.dart';
@@ -41,23 +42,16 @@ class UserModel with _$UserModel {
     required final UserModelRemoteId remoteId,
     required final DateTime createdAt,
     required final DateTime updatedAt,
-    required final SubscriptionModel subscription,
-    @JsonKey(fromJson: localeFromString, toJson: localeToString)
-    final Locale? locale,
   }) = _UserModel;
   const UserModel._();
   factory UserModel.fromJson(final Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 
-  @useResult
-  UserPermissionsModel get permissions =>
-      UserPermissionsModel.fromSubscription(subscription);
   static final empty = UserModel(
     createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
     localId: UserModelId.localEmpty,
     remoteId: UserModelId.remoteEmpty,
-    subscription: SubscriptionModel.empty,
-    updatedAt: DateTime.now(),
   );
 }
 

@@ -17,8 +17,7 @@ class AppSettingsLocalApi with HasLocalApis {
   Future<AppSettingsModel> loadSettings() async => localDb.getItem(
         key: _persistenceKey,
         defaultValue: AppSettingsModel.empty,
-        fromJson: (final json) => json.isEmpty
-            ? AppSettingsModel.empty
-            : AppSettingsModel.fromJson(json),
+        fromJson: (final json) =>
+            json.isEmpty ? null : AppSettingsModel.fromJson(json),
       );
 }

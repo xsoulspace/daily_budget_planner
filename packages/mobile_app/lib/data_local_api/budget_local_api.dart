@@ -1,13 +1,8 @@
 import 'package:mobile_app/common_imports.dart';
 
-class BudgetLocalApi {
-  BudgetLocalApi({
-    required this.localApi,
-  });
-  final LocalApiService localApi;
-
+class BudgetLocalApi with HasLocalApis {
   Future<MonthlyBudgetModel> getMonthlyBudget(final BudgetModelId id) =>
-      localApi.getInstance(
+      localDb.getItem(
         key: id.value,
         defaultValue: MonthlyBudgetModel(id: id),
         fromJson: (final json) =>
@@ -15,7 +10,7 @@ class BudgetLocalApi {
       );
 
   Future<WeeklyBudgetModel> getWeeklyBudget(final BudgetModelId id) =>
-      localApi.getInstance(
+      localDb.getItem(
         key: id.value,
         defaultValue: WeeklyBudgetModel(id: id),
         fromJson: (final json) =>
@@ -25,14 +20,14 @@ class BudgetLocalApi {
   Future<void> upsertMonthlyBudget(
     final MonthlyBudgetModel model,
   ) =>
-      localApi.setInstance(
+      localDb.setItem(
         key: model.id.value,
         value: model,
         toJson: (final instance) => instance.toJson(),
       );
 
   Future<void> upsertWeeklyBudget(final WeeklyBudgetModel model) =>
-      localApi.setInstance(
+      localDb.setItem(
         key: model.id.value,
         value: model,
         toJson: (final instance) => instance.toJson(),

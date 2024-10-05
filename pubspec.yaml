@@ -67,7 +67,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+    - assets/google_fonts/
 # https://pub.dev/packages/flutter_native_splash
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
