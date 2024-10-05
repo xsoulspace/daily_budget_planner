@@ -133,13 +133,12 @@ class _$AppSettingsModelImpl extends _AppSettingsModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppSettingsModelImpl &&
-            const DeepCollectionEquality().equals(other.locale, locale));
+            (identical(other.locale, locale) || other.locale == locale));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(locale));
+  int get hashCode => Object.hash(runtimeType, locale);
 
   /// Create a copy of AppSettingsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1368,7 +1367,7 @@ class _$UserModelImpl extends _UserModel {
                 other.updatedAt == updatedAt) &&
             (identical(other.subscription, subscription) ||
                 other.subscription == subscription) &&
-            const DeepCollectionEquality().equals(other.locale, locale));
+            (identical(other.locale, locale) || other.locale == locale));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1380,7 +1379,7 @@ class _$UserModelImpl extends _UserModel {
       createdAt,
       updatedAt,
       subscription,
-      const DeepCollectionEquality().hash(locale));
+      locale);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

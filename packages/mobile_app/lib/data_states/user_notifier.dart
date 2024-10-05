@@ -1,13 +1,7 @@
-import 'dart:async';
-
 import 'package:mobile_app/common_imports.dart';
 
 final class UserNotifier extends ValueNotifier<UserModel> {
-  UserNotifier({
-    required this.repositories,
-  }) : super(UserModel.empty);
-  final RepositoriesCollection repositories;
-  UserRepository get _userRepository => repositories.user;
+  UserNotifier() : super(UserModel.empty);
   Future<void> loadProfile() async {
     final localUser = await _userRepository.getLocalUser(UserModel.empty);
     value = localUser;

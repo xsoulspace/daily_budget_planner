@@ -2,7 +2,6 @@ import 'package:mobile_app/common_imports.dart';
 
 export 'app_settings_local_api.dart';
 export 'budget_local_api.dart';
-export 'local_api_service.dart';
 export 'user_local_api.dart';
 
 class LocalApiServices {

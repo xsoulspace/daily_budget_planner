@@ -33,6 +33,8 @@ abstract class $MonthlyCubitStateCopyWith<$Res> {
       _$MonthlyCubitStateCopyWithImpl<$Res, MonthlyCubitState>;
   @useResult
   $Res call({MonthlyBudgetModel budget, bool isLoading});
+
+  $MonthlyBudgetModelCopyWith<$Res> get budget;
 }
 
 /// @nodoc
@@ -50,11 +52,11 @@ class _$MonthlyCubitStateCopyWithImpl<$Res, $Val extends MonthlyCubitState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? budget = freezed,
+    Object? budget = null,
     Object? isLoading = null,
   }) {
     return _then(_value.copyWith(
-      budget: freezed == budget
+      budget: null == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as MonthlyBudgetModel,
@@ -63,6 +65,16 @@ class _$MonthlyCubitStateCopyWithImpl<$Res, $Val extends MonthlyCubitState>
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
+  }
+
+  /// Create a copy of MonthlyCubitState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MonthlyBudgetModelCopyWith<$Res> get budget {
+    return $MonthlyBudgetModelCopyWith<$Res>(_value.budget, (value) {
+      return _then(_value.copyWith(budget: value) as $Val);
+    });
   }
 }
 
@@ -75,6 +87,9 @@ abstract class _$$MonthlyCubitStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({MonthlyBudgetModel budget, bool isLoading});
+
+  @override
+  $MonthlyBudgetModelCopyWith<$Res> get budget;
 }
 
 /// @nodoc
@@ -90,11 +105,11 @@ class __$$MonthlyCubitStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? budget = freezed,
+    Object? budget = null,
     Object? isLoading = null,
   }) {
     return _then(_$MonthlyCubitStateImpl(
-      budget: freezed == budget
+      budget: null == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as MonthlyBudgetModel,
@@ -129,14 +144,13 @@ class _$MonthlyCubitStateImpl implements _MonthlyCubitState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MonthlyCubitStateImpl &&
-            const DeepCollectionEquality().equals(other.budget, budget) &&
+            (identical(other.budget, budget) || other.budget == budget) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(budget), isLoading);
+  int get hashCode => Object.hash(runtimeType, budget, isLoading);
 
   /// Create a copy of MonthlyCubitState
   /// with the given fields replaced by the non-null parameter values.
