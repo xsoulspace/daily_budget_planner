@@ -1,9 +1,3 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:gap/gap.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/tab_controller_listener.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
@@ -40,7 +34,6 @@ class _WeeklyViewState extends State<WeeklyView>
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       children: [
-        const HomeScreenTopBanner(),
         Gap(
           DeviceRuntimeType.isMobile ? 12 : 24,
         ),
