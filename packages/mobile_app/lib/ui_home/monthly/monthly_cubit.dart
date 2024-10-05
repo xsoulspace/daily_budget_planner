@@ -1,7 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobile_app/common_imports.dart';
-
-part 'monthly_cubit.freezed.dart';
 
 class MonthlyCubit extends ValueNotifier<LoadableContainer<MonthlyBudgetModel>>
     with HasLocalApis {
