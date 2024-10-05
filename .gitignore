@@ -9,6 +9,7 @@
 .buildlog/
 .history
 .svn/
+*.lock
 *key.properties.*
 *key.properties
 # IntelliJ related
