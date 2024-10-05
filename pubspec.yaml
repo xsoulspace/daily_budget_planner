@@ -35,7 +35,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.5.7
-  hive_generator: ^2.0.1
   json_serializable: ^6.8.0
   melos: ^6.1.0
   xsoulspace_lints: ^0.0.10
