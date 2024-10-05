@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_app/common_imports.dart';
 
 class CopyButton extends StatelessWidget {
   const CopyButton({

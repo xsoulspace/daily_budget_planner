@@ -1,7 +1,5 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:mobile_app/home/settings/language_bottom_sheet.dart';
+import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/settings/language_bottom_sheet.dart';
 
 class SettingsBottomPopup extends StatelessWidget {
   const SettingsBottomPopup({

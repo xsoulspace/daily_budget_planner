@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:life_hooks/life_hooks.dart';
-import 'package:mobile_app/home/settings/settings_bottom_dialog.dart';
+import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/settings/settings_bottom_dialog.dart';
 
 class SettingsIconButton extends HookWidget {
   const SettingsIconButton({super.key});

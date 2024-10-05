@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
-import 'package:mobile_app/home/hooks/tab_controller_listener.dart';
-import 'package:mobile_app/home/weekly/weekly_cubit.dart';
-import 'package:mobile_app/home/widgets/copy_button.dart';
+import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/hooks/tab_controller_listener.dart';
+import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
+import 'package:mobile_app/ui_home/widgets/copy_button.dart';
 
 class WeeklyView extends StatefulHookWidget {
   const WeeklyView({super.key});

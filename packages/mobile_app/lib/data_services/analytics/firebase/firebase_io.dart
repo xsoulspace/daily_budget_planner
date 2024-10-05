@@ -45,9 +45,9 @@ class FirebaseAnalyticsPlugin implements AnalyticsServicePlugin {
 
   @override
   Future<void> recordError(
-    final exception,
+    final dynamic exception,
     final StackTrace? stack, {
-    final reason,
+    final dynamic reason,
     final Iterable<DiagnosticsNode> information = const [],
     final bool fatal = false,
     final bool? printDetails,
@@ -166,9 +166,9 @@ class FirebaseCrashlyticsPlugin implements AnalyticsServicePlugin {
 
   @override
   Future<void> recordError(
-    final exception,
+    final dynamic exception,
     final StackTrace? stack, {
-    final reason,
+    final dynamic reason,
     final Iterable<DiagnosticsNode> information = const [],
     final bool fatal = false,
     final bool? printDetails,

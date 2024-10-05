@@ -2,9 +2,8 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import '../interfaces/interfaces.dart';
-import 'firebase_initializer.dart';
+import 'package:mobile_app/data_services/analytics/firebase/firebase_initializer.dart';
+import 'package:mobile_app/data_services/analytics/interfaces/interfaces.dart';
 
 class FirebaseInitializerImpl implements FirebaseInitializer {
   FirebaseInitializerImpl({

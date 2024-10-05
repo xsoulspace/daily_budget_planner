@@ -1,9 +1,3 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:gap/gap.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/tab_controller_listener.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
@@ -131,8 +125,7 @@ class _MonthlyViewState extends State<MonthlyView>
                       onPressed: () async =>
                           monthlyCubit.onChangeNextBudgetDay(context),
                       child: Text(
-                        monthlyCubit.state.budget.nextBudgetDay
-                                ?.formatDdMmYyyy() ??
+                        monthlyCubit.budget.nextBudgetDay?.formatDdMmYyyy() ??
                             context.s.chooseDate,
                       ),
                     ),

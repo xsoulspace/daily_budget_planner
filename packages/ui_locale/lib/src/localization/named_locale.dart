@@ -59,12 +59,14 @@ Locale? localeFromString(final String? languageCode) {
 String? localeToString(final Locale? locale) => locale?.languageCode;
 
 // ignore: avoid_annotating_with_dynamic
-/// Converts a dynamic map to a map of [Languages] and their corresponding values.
+/// Converts a dynamic map to a map of [Languages] and their corresponding v
+/// alues.
 ///
-/// Throws an [UnimplementedError] if the input is neither a [String] nor a [Map].
+/// Throws an [UnimplementedError] if the input is neither a [String] nor
+/// a [Map].
 ///
 /// [map] The dynamic input to convert.
-Map<Languages, String> localeValueFromMap(final map) {
+Map<Languages, String> localeValueFromMap(final dynamic map) {
   if (map is String) {
     return {};
   } else if (map is Map) {
@@ -83,7 +85,8 @@ Map<Languages, String> localeValueFromMap(final map) {
   }
 }
 
-/// Converts a map of [Languages] and their corresponding values to a string map.
+/// Converts a map of [Languages] and their corresponding values to a
+/// string map.
 ///
 /// [locales] The map of languages to convert.
 Map<String, String> localeValueToMap(final Map<Languages, String> locales) =>

@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_portal/flutter_portal.dart';
-import 'package:gap/gap.dart';
+import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_view.dart';
 import 'package:mobile_app/ui_home/settings/settings_icon_button.dart';
@@ -32,20 +30,12 @@ class _HomeScreenProvider extends StatelessWidget {
   final WidgetBuilder builder;
   @override
   Widget build(final BuildContext context) => Portal(
-        child: MultiBlocProvider(
+        child: MultiProvider(
           providers: [
-            BlocProvider(
-              create: (final context) => WeeklyCubit(
-                dto: WeeklyCubitDto(context: context),
-              ),
-            ),
-            BlocProvider(
-              create: (final context) => MonthlyCubit(
-                dto: MonthlyCubitDto(context: context),
-              ),
-            ),
+            Provider(create: (final context) => WeeklyCubit()),
+            Provider(create: (final context) => MonthlyCubit()),
           ],
-          child: Builder(builder: builder),
+          builder: (final context, final child) => builder(context),
         ),
       );
 }

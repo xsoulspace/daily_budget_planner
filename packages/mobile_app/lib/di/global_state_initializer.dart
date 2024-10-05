@@ -1,20 +1,24 @@
 import 'package:life_hooks/life_hooks.dart' hide Disposable;
 import 'package:mobile_app/common_imports.dart';
 
-class GlobalInitializerLoader extends StatefulWidget {
-  const GlobalInitializerLoader({
-    required this.builder,
-    super.key,
-  });
-  final WidgetBuilder builder;
+class PreloadingScreen extends StatefulWidget {
+  const PreloadingScreen({super.key});
 
   @override
-  State<GlobalInitializerLoader> createState() =>
-      _GlobalInitializerLoaderState();
+  State<PreloadingScreen> createState() => _PreloadingScreenState();
 }
 
-class _GlobalInitializerLoaderState extends State<GlobalInitializerLoader> {
+class _PreloadingScreenState extends State<PreloadingScreen> {
   final _initializer = GlobalInitializerImpl();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {
+      unawaited(_initializer.onLoad());
+    });
+
+    super.initState();
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -22,35 +26,10 @@ class _GlobalInitializerLoaderState extends State<GlobalInitializerLoader> {
   }
 
   @override
-  Widget build(final BuildContext context) {
-    final isInitializedNotifier = useIsBool();
-    final isInitialized = isInitializedNotifier.value;
-
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Stack(
-        children: [
-          Builder(builder: widget.builder),
-          if (!isInitialized)
-            FutureBuilder(
-              // ignore: discarded_futures
-              future: () async {
-                if (isInitialized) return;
-                WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {
-                  isInitializedNotifier.value = true;
-                });
-
-                return _initializer.onLoad();
-              }(),
-              builder: (final context, final snapshot) => const LoadingScreen(),
-            ),
-        ],
-      ),
-    );
-  }
+  Widget build(final BuildContext context) => const LoadingScreen();
 }
 
-class AppDiInitializer
+class GlobalStateInitializer
     with
         HasUserNotifier,
         HasAppStatusNotifier,
@@ -67,6 +46,7 @@ class AppDiInitializer
 
     WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {
       appStatusNotifier.value = AppStatus.online;
+      AppPathsController.of(context).toHome();
     });
   }
 

@@ -1,8 +1,5 @@
-import 'package:core/core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
+import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/data_states/app_settings_notifier.dart';
 
 Future<void> showLanguageBottomSheet(final BuildContext context) async =>
     showModalBottomSheet(
@@ -10,15 +7,14 @@ Future<void> showLanguageBottomSheet(final BuildContext context) async =>
       builder: (final context) => const LanguageBottomSheet(),
     );
 
-class LanguageBottomSheet extends StatelessWidget {
+class LanguageBottomSheet extends HookWidget {
   const LanguageBottomSheet({super.key});
 
   @override
   Widget build(final BuildContext context) {
-    final locale = context.select<UserCubit, Locale?>(
-      (final value) => value.state.locale,
-    );
-    final userCubit = context.read<UserCubit>();
+    final appSettings = context.read<AppSettingsNotifier>();
+    useListenable(appSettings.locale);
+
     return Column(
       children: [
         Stack(
@@ -48,25 +44,25 @@ class LanguageBottomSheet extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 18),
           itemBuilder: (final context, final index) {
-            final e = namedLocalesList[index];
+            final e = namedLocalesMap.values.elementAt(index);
             return ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               dense: true,
               key: ValueKey(e),
-              onTap: () async => userCubit.changeLanguage(e.locale),
+              onTap: () async => appSettings.updateLocale(e.locale),
               tileColor: context.colorScheme.surface,
               title: Text(e.name),
-              trailing: locale == e.locale ||
+              trailing: appSettings.locale.value == e.locale ||
                       context.s.localeName == e.locale.languageCode
                   ? const Icon(Icons.done).animate().fadeIn()
                   : null,
             );
           },
           separatorBuilder: (final context, final index) => const Gap(8),
-          itemCount: namedLocalesList.length,
-        )
+          itemCount: namedLocalesMap.length,
+        ),
       ],
     );
   }

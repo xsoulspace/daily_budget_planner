@@ -4,10 +4,9 @@ import 'package:firebase_analytics_web/firebase_analytics_web.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter/material.dart';
-
-import '../interfaces/interfaces.dart';
-import '../utils/utils.dart';
-import 'firebase_initializer.dart';
+import 'package:mobile_app/data_services/analytics/firebase/firebase_initializer.dart';
+import 'package:mobile_app/data_services/analytics/interfaces/interfaces.dart';
+import 'package:mobile_app/data_services/analytics/utils/utils.dart';
 
 class FirebaseInitializerImpl implements FirebaseInitializer {
   FirebaseInitializerImpl({
@@ -63,10 +62,10 @@ class FirebaseAnalyticsPlugin implements AnalyticsServicePlugin {
       fatal: fatal,
       printDetails: printDetails,
     );
-    await analytics.logEvent(
-      name: 'flutter_error',
-      parameters: {'details': errorDetailsStr},
-    );
+    // await analytics.logEvent(
+    //   name: 'flutter_error',
+    //   parameters: {'details': errorDetailsStr},
+    // );
   }
 
   @override
