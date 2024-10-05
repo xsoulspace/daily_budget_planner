@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mobile_app/foundation/models/models.dart';
+import 'package:mobile_app/common_imports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract interface class LocalApiService {
@@ -48,7 +48,7 @@ abstract interface class LocalApiService {
 }
 
 /// This service purpose to manage shared preferences only
-class LocalApiServiceSharedPreferencesImpl implements LocalApiService {
+class LocalApiSharedPreferences implements LocalApiService {
   // cached SharedPreferences instance
   SharedPreferences? _sharedPreferences;
   Future<SharedPreferences> get sharedPreferences async =>

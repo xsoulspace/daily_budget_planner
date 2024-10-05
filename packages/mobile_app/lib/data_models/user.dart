@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_annotation_target, prefer_constructors_over_static_methods
 
-part of '../models.dart';
+part of 'data_models.dart';
 
 @freezed
 class UserModelId with _$UserModelId {
@@ -33,17 +33,17 @@ class UserModel with _$UserModel {
       fromJson: UserModelId.localFromJson,
       toJson: UserModelId.toStringJson,
     )
-        required final UserModelLocalId localId,
+    required final UserModelLocalId localId,
     @JsonKey(
       fromJson: UserModelId.remoteFromJson,
       toJson: UserModelId.toStringJson,
     )
-        required final UserModelRemoteId remoteId,
+    required final UserModelRemoteId remoteId,
     required final DateTime createdAt,
     required final DateTime updatedAt,
     required final SubscriptionModel subscription,
     @JsonKey(fromJson: localeFromString, toJson: localeToString)
-        final Locale? locale,
+    final Locale? locale,
   }) = _UserModel;
   const UserModel._();
   factory UserModel.fromJson(final Map<String, dynamic> json) =>
@@ -53,7 +53,7 @@ class UserModel with _$UserModel {
     // ignore: avoid_unused_constructor_parameters
     final SnapshotOptions? options,
   ) {
-    final json = snapshot.data()!;
+    final json = snapshot.data();
     return UserModel.fromJson(json);
   }
   static Map<String, Object?> toFirestore(

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_app/core.dart';
+import 'package:mobile_app/data_states/user_cubit.dart';
 import 'package:provider/provider.dart';
-import 'package:ui_kit/ui_kit.dart';
 import 'package:ui_locale/ui_locale.dart';
 
 class AppScaffold extends StatefulWidget {
@@ -17,7 +16,6 @@ class AppScaffold extends StatefulWidget {
 }
 
 class _AppScaffoldState extends State<AppScaffold> {
-  late final UiThemeScheme _themeScheme = UiThemeScheme.m3(context);
   late final _goRouter = widget.goRouterBuilder();
   @override
   void dispose() {
@@ -27,21 +25,12 @@ class _AppScaffoldState extends State<AppScaffold> {
 
   @override
   Widget build(final BuildContext context) {
-    final userLocale = context.select<UserCubit, Locale?>(
+    final userLocale = context.select<UserNotifier, Locale?>(
       (final cubit) => cubit.state.locale,
     );
     return MaterialApp.router(
       routerConfig: _goRouter,
-      builder: (final context, final child) => Builder(
-        builder: (final context) {
-          context.read<L10nScope>().s = S.of(context);
-
-          return UiTheme(
-            scheme: _themeScheme,
-            child: child!,
-          );
-        },
-      ),
+      // builder: (final context, final child) => child!,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
@@ -67,10 +56,6 @@ class _AppScaffoldState extends State<AppScaffold> {
       supportedLocales: S.supportedLocales,
       theme: ThemeData.from(
         colorScheme: AppColorSchemes.brand().light,
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData.from(
-        colorScheme: AppColorSchemes.brand().dark,
         useMaterial3: true,
       ),
     );

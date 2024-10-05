@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
-part of '../models.dart';
+part of 'data_models.dart';
 
 @Freezed(fromJson: false, toJson: false)
 class BudgetModelId with _$BudgetModelId {
@@ -22,11 +22,9 @@ class MonthlyBudgetModel with _$MonthlyBudgetModel {
       fromJson: dateTimeFromMilisecondsSinceEpoch,
       toJson: dateTimeToMilisecondsSinceEpoch,
     )
-        final DateTime? nextBudgetDay,
-    @Default(0)
-        final double amount,
-    @Default(0)
-        final double savings,
+    final DateTime? nextBudgetDay,
+    @Default(0) final double amount,
+    @Default(0) final double savings,
   }) = _MonthlyBudgetModel;
   factory MonthlyBudgetModel.fromJson(final Map<String, dynamic> json) =>
       _$MonthlyBudgetModelFromJson(json);

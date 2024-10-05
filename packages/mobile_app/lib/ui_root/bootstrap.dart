@@ -4,9 +4,8 @@ import 'dart:developer';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:mobile_app/di/di_providers_builder.dart';
 import 'package:mobile_app/di/global_initializer.dart';
-import 'package:mobile_app/foundation/root/widgets/widgets.dart';
 
 /// ********************************************
 /// *      APP RUNTIME

@@ -1,5 +1,5 @@
-import 'package:go_router/go_router.dart';
-import 'package:mobile_app/home/home.dart';
+import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/home.dart';
 
 enum AppPath {
   home('/');

@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
-part of '../models.dart';
+part of 'data_models.dart';
 
 @immutable
 @Freezed()
@@ -13,7 +13,7 @@ class AppSettingsModel with _$AppSettingsModel {
       fromJson: localeFromString,
       toJson: localeToString,
     )
-        final Locale? locale,
+    final Locale? locale,
   }) = _AppSettingsModel;
 
   const AppSettingsModel._();

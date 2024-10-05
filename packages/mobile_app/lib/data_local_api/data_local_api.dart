@@ -1,26 +1,9 @@
-import 'package:mobile_app/core.dart';
+import 'package:mobile_app/common_imports.dart';
 
-export '../foundation/data_api/clients/clients.dart';
-export '../foundation/data_api/implementations/implementations.dart';
-export '../foundation/data_api/interfaces/interfaces.dart';
-
-class RemoteApiServices {
-  const RemoteApiServices._({
-    required this.user,
-  });
-  factory RemoteApiServices.buildAppRuntime() {
-    final userApi = UserApiRemoteServiceFirebaseImpl();
-    return RemoteApiServices._(
-      user: userApi,
-    );
-  }
-  factory RemoteApiServices.buildMockRuntime() {
-    // TODO(arenukvern): description
-    throw UnimplementedError('reason');
-  }
-
-  final UserApiRemoteService user;
-}
+export 'app_settings_local_api.dart';
+export 'budget_local_api.dart';
+export 'local_api_service.dart';
+export 'user_local_api.dart';
 
 class LocalApiServices {
   const LocalApiServices._({
@@ -31,22 +14,18 @@ class LocalApiServices {
   });
 
   factory LocalApiServices.buildAppRuntime() {
-    final localApi = LocalApiServiceSharedPreferencesImpl();
+    final localApi = LocalApiSharedPreferences();
     return LocalApiServices._(
       localApi: localApi,
-      user: UserApiLocalServiceImpl(localApi: localApi),
-      appSettings: AppSettingsApiLocalService(
+      user: UserLocalApi(localApi: localApi),
+      appSettings: AppSettingsLocalApi(
         localApiService: localApi,
       ),
-      budget: BudgetApiLocalServiceImpl(localApi: localApi),
+      budget: BudgetLocalApi(localApi: localApi),
     );
   }
-  factory LocalApiServices.buildMockRuntime() {
-    // TODO(arenukvern): description
-    throw UnimplementedError('reason');
-  }
-  final BudgetApiService budget;
+  final BudgetLocalApi budget;
   final LocalApiService localApi;
-  final UserApiLocalService user;
-  final AppSettingsApiLocalService appSettings;
+  final UserLocalApi user;
+  final AppSettingsLocalApi appSettings;
 }

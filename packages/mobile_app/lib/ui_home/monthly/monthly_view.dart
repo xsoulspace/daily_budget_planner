@@ -8,7 +8,6 @@ import 'package:gap/gap.dart';
 import 'package:mobile_app/home/hooks/tab_controller_listener.dart';
 import 'package:mobile_app/home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/home/widgets/copy_button.dart';
-import 'package:ui_kit/ui_kit.dart';
 import 'package:universal_io/io.dart';
 
 class MonthlyView extends StatefulHookWidget {

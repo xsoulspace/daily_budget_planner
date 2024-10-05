@@ -1,10 +1,9 @@
-import 'package:mobile_app/data_local_api/local_api_service.dart';
-import 'package:mobile_app/foundation/models/models.dart';
+import 'package:mobile_app/common_imports.dart';
 
 /// The purpose of the service is to get | set information about
 /// application wide user settings like locale, etc
-class AppSettingsApiLocalService {
-  AppSettingsApiLocalService({
+class AppSettingsLocalApi {
+  AppSettingsLocalApi({
     required this.localApiService,
   });
   final LocalApiService localApiService;

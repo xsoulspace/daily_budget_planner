@@ -1,13 +1,11 @@
-import 'package:mobile_app/data_local_api/local_api_service.dart';
-import 'package:mobile_app/foundation/data_api/interfaces/interfaces.dart';
-import 'package:mobile_app/foundation/models/models.dart';
+import 'package:mobile_app/common_imports.dart';
 
-class BudgetApiLocalServiceImpl implements BudgetApiService {
-  BudgetApiLocalServiceImpl({
+class BudgetLocalApi {
+  BudgetLocalApi({
     required this.localApi,
   });
   final LocalApiService localApi;
-  @override
+
   Future<MonthlyBudgetModel> getMonthlyBudget(final BudgetModelId id) =>
       localApi.getInstance(
         key: id.value,
@@ -16,7 +14,6 @@ class BudgetApiLocalServiceImpl implements BudgetApiService {
             json.isEmpty ? null : MonthlyBudgetModel.fromJson(json),
       );
 
-  @override
   Future<WeeklyBudgetModel> getWeeklyBudget(final BudgetModelId id) =>
       localApi.getInstance(
         key: id.value,
@@ -25,7 +22,6 @@ class BudgetApiLocalServiceImpl implements BudgetApiService {
             json.isEmpty ? null : WeeklyBudgetModel.fromJson(json),
       );
 
-  @override
   Future<void> upsertMonthlyBudget(
     final MonthlyBudgetModel model,
   ) =>
@@ -35,7 +31,6 @@ class BudgetApiLocalServiceImpl implements BudgetApiService {
         toJson: (final instance) => instance.toJson(),
       );
 
-  @override
   Future<void> upsertWeeklyBudget(final WeeklyBudgetModel model) =>
       localApi.setInstance(
         key: model.id.value,

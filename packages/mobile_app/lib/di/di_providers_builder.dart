@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../../core.dart';
+import 'package:mobile_app/di/global_initializer.dart';
 
 class DiProvidersBuilder extends StatefulWidget {
   const DiProvidersBuilder._({

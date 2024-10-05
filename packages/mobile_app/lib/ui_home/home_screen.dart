@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:gap/gap.dart';
-import 'package:mobile_app/home/monthly/monthly_cubit.dart';
-import 'package:mobile_app/home/monthly/monthly_view.dart';
-import 'package:mobile_app/home/settings/settings_icon_button.dart';
-import 'package:mobile_app/home/weekly/weekly_cubit.dart';
-import 'package:mobile_app/home/weekly/weekly_view.dart';
-import 'package:ui_kit/ui_kit.dart';
+import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
+import 'package:mobile_app/ui_home/monthly/monthly_view.dart';
+import 'package:mobile_app/ui_home/settings/settings_icon_button.dart';
+import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
+import 'package:mobile_app/ui_home/weekly/weekly_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,7 +43,7 @@ class _HomeScreenProvider extends StatelessWidget {
               create: (final context) => MonthlyCubit(
                 dto: MonthlyCubitDto(context: context),
               ),
-            )
+            ),
           ],
           child: Builder(builder: builder),
         ),
@@ -94,7 +93,7 @@ class HomeScreenBody extends StatelessWidget {
                 ],
               ),
             ),
-            const BottomSafeArea()
+            const BottomSafeArea(),
           ],
         ),
       );

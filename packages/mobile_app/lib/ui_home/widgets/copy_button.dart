@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ui_kit/ui_kit.dart';
 
 class CopyButton extends StatelessWidget {
   const CopyButton({
