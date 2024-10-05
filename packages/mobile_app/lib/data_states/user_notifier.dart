@@ -1,9 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:ui_locale/ui_locale.dart';
 
 final class UserNotifier extends ValueNotifier<UserModel> {
   UserNotifier({
@@ -18,7 +15,7 @@ final class UserNotifier extends ValueNotifier<UserModel> {
 
   Future<void> changeLanguage(final Locale locale) async {
     await S.delegate.load(locale);
-    final updatedUser = state.copyWith(locale: locale);
+    final updatedUser = value.copyWith(locale: locale);
     value = updatedUser;
     unawaited(_userRepository.saveUserLocally(updatedUser));
   }

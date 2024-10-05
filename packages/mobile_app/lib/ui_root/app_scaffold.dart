@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/data_states/user_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:ui_locale/ui_locale.dart';
@@ -26,7 +27,7 @@ class _AppScaffoldState extends State<AppScaffold> {
   @override
   Widget build(final BuildContext context) {
     final userLocale = context.select<UserNotifier, Locale?>(
-      (final cubit) => cubit.state.locale,
+      (final cubit) => cubit.value.locale,
     );
     return MaterialApp.router(
       routerConfig: _goRouter,

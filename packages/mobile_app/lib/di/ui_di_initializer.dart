@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:life_hooks/life_hooks.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/states/states.dart';
-import 'package:provider/provider.dart';
 
 /// ********************************************
 /// *      Widget
