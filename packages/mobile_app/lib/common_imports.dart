@@ -5,6 +5,7 @@ export 'package:go_router/go_router.dart';
 export 'package:mobile_app/router.dart';
 export 'package:provider/provider.dart' hide Dispose;
 export 'package:ui_locale/ui_locale.dart';
+export 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
 export 'data_local_api/data_local_api.dart';
 export 'data_models/data_models.dart';

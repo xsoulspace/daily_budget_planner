@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mobile_app/foundation/utils/utils.dart';
+import 'package:mobile_app/common_imports.dart';
 
 part 'app_settings.dart';
 part 'budget.dart';

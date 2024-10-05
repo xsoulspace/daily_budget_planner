@@ -6,10 +6,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_app/data_services/analytics/firebase/firebase_initializer.dart';
-import 'package:mobile_app/data_services/analytics/interfaces/interfaces.dart';
-import 'package:mobile_app/data_services/analytics/utils/utils.dart';
-import 'package:mobile_app/foundation/utils/utils.dart';
+import 'package:mobile_app/common_imports.dart';
 import 'package:universal_io/io.dart';
 
 class FirebaseInitializerImpl implements FirebaseInitializer {

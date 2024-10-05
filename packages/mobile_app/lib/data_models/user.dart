@@ -48,19 +48,7 @@ class UserModel with _$UserModel {
   const UserModel._();
   factory UserModel.fromJson(final Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
-  factory UserModel.fromFirestore(
-    final DocumentSnapshot<Map<String, dynamic>> snapshot,
-    // ignore: avoid_unused_constructor_parameters
-    final SnapshotOptions? options,
-  ) {
-    final json = snapshot.data();
-    return UserModel.fromJson(json);
-  }
-  static Map<String, Object?> toFirestore(
-    final UserModel value,
-    final SetOptions? options,
-  ) =>
-      value.toJson();
+
   @useResult
   UserPermissionsModel get permissions =>
       UserPermissionsModel.fromSubscription(subscription);
