@@ -6,8 +6,6 @@ export 'package:flutter_animate/flutter_animate.dart';
 export 'package:flutter_hooks/flutter_hooks.dart';
 export 'package:gap/gap.dart';
 export 'package:go_router/go_router.dart';
-export 'package:intl/intl_standalone.dart'
-    if (dart.library.html) 'package:intl/intl_browser.dart';
 export 'package:provider/provider.dart' hide Dispose;
 export 'package:ui_locale/ui_locale.dart';
 export 'package:xsoulspace_foundation/xsoulspace_foundation.dart';

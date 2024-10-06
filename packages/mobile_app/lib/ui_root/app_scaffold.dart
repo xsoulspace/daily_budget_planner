@@ -2,8 +2,42 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/data_states/app_settings_notifier.dart';
 
-class DBPApp extends StatelessWidget {
-  const DBPApp({super.key});
+class DBPApp extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
+  const DBPApp(this.initializer);
+  final GlobalInitializerImpl initializer;
+  @override
+  State<DBPApp> createState() => _DBPAppState();
+}
+
+class _DBPAppState extends State<DBPApp> {
+  @override
+  void initState() {
+    _loadDi();
+    super.initState();
+  }
+
+  void _loadDi() {
+    _initializeLocalization();
+    Di.init(analyticsService: widget.initializer.analyticsService);
+  }
+
+  void _initializeLocalization() => LocalizationConfig.initialize(
+        LocalizationConfig(
+          supportedLanguages: [
+            languages.en,
+            languages.ru,
+            languages.it,
+          ],
+          fallbackLanguage: languages.en,
+        ),
+      );
+  @override
+  void dispose() {
+    Di.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(final BuildContext context) => GlobalStateProviders(
         builder: (final context) => const AppScaffoldBuilder(),

@@ -3,20 +3,21 @@ part of 'localization.dart';
 
 /// A class representing a named locale for user selection.
 ///
-/// This class is used to display a list of supported [Languages]
+/// This class is used to display a list of supported [UiLanguage]s
 /// and allows the user to choose one of them.
 ///
 /// Use [NamedLocale] to create instances that pair a user-friendly
 /// name with a corresponding [Locale].
 ///
 /// ```dart
-/// final namedLocale = NamedLocale(name: 'English', locale: Locales.en);
+/// final namedLocale = NamedLocale(name: 'English',
+/// locale: Locale('en', 'US'));
 /// ```
 ///
 /// @ai When using this class, ensure to provide meaningful names
 /// for better user experience.
 @immutable
-class NamedLocale {
+class NamedLocale extends Equatable {
   /// Creates a [NamedLocale] instance.
   ///
   /// The [name] is the display name for the locale, and [locale]
@@ -37,6 +38,12 @@ class NamedLocale {
   /// This is equivalent to [Locale.languageCode] and can be used
   /// to retrieve the language code for the current locale.
   String get code => locale.languageCode;
+
+  @override
+  List<Object?> get props => [name, locale];
+
+  @override
+  String toString() => 'NamedLocale(name: $name, locale: $locale)';
 }
 
 /// Converts a language code string to a corresponding [Locale].
@@ -46,9 +53,7 @@ class NamedLocale {
 /// [languageCode] The language code to convert to a [Locale].
 Locale? localeFromString(final String? languageCode) {
   if (languageCode == null || languageCode.isEmpty) return null;
-  final language = Languages.byLanguageCode(languageCode);
-  final locale = Locales.byLanguage(language);
-  return locale;
+  return UiLanguage.byCode(languageCode)?.locale;
 }
 
 /// Converts a [Locale] to its corresponding language code string.
@@ -59,64 +64,59 @@ Locale? localeFromString(final String? languageCode) {
 String? localeToString(final Locale? locale) => locale?.languageCode;
 
 // ignore: avoid_annotating_with_dynamic
-/// Converts a dynamic map to a map of [Languages] and their corresponding v
-/// alues.
+/// Converts a dynamic map to a map of [UiLanguage]s and their corresponding
+/// values.
 ///
 /// Throws an [UnimplementedError] if the input is neither a [String] nor
 /// a [Map].
 ///
 /// [map] The dynamic input to convert.
-Map<Languages, String> localeValueFromMap(final dynamic map) {
+Map<UiLanguage, String> localeValueFromMap(final dynamic map) {
   if (map is String) {
     return {};
   } else if (map is Map) {
     if (map.isEmpty) {
-      return Languages.values.toMap(
-        toKey: (final item) => item,
-        toValue: (final item) => '',
-      );
+      return {
+        for (final lang in LocalizationConfig.instance.supportedLanguages)
+          lang: '',
+      };
     }
-    return map.map(
-      (final key, final value) => MapEntry(Languages.values.byName(key), value),
-    );
+    final localeMap = <UiLanguage, String>{};
+    for (final key in map.keys) {
+      final language = UiLanguage.byCode(key);
+      if (language == null) continue;
+      localeMap[language] = map[key];
+    }
+    return localeMap;
   } else {
-    // TODO(arenukvern): description
     throw UnimplementedError('localeValueFromMap $map');
   }
 }
 
-/// Converts a map of [Languages] and their corresponding values to a
+/// Converts a map of [UiLanguage]s and their corresponding values to a
 /// string map.
 ///
 /// [locales] The map of languages to convert.
-Map<String, String> localeValueToMap(final Map<Languages, String> locales) =>
+Map<String, String> localeValueToMap(final Map<UiLanguage, String> locales) =>
     locales.map(
-      (final key, final value) => MapEntry(key.name, value),
+      (final key, final value) => MapEntry(key.code, value),
     );
 
 /// A class representing a localized map of values for different languages.
 ///
 /// This class is used to manage localized strings associated with
-/// different [Languages].
+/// different [UiLanguage]s.
 @immutable
-@freezed
-class LocalizedMap with _$LocalizedMap {
-  @JsonSerializable(explicitToJson: true)
-  const factory LocalizedMap({
-    @JsonKey(
-      fromJson: localeValueFromMap,
-      toJson: localeValueToMap,
-    )
-    required final Map<Languages, String> value,
-  }) = _LocalizedMap;
-
-  const LocalizedMap._();
+class LocalizedMap extends Equatable {
+  const LocalizedMap({
+    required this.value,
+  });
 
   /// Creates a [LocalizedMap] from a JSON map.
   ///
   /// [json] The JSON map to convert.
   factory LocalizedMap.fromJson(final Map<String, dynamic> json) =>
-      _$LocalizedMapFromJson(json);
+      LocalizedMap(value: localeValueFromMap(json['value']));
 
   /// Creates a [LocalizedMap] from a JSON value map.
   ///
@@ -134,16 +134,19 @@ class LocalizedMap with _$LocalizedMap {
 
   /// Creates a [LocalizedMap] initialized with empty values for all languages.
   factory LocalizedMap.fromLanguages() => LocalizedMap(
-        value: Map.fromEntries(
-          Languages.values.map((final e) => MapEntry(e, '')),
-        ),
+        value: {
+          for (final lang in LocalizationConfig.instance.supportedLanguages)
+            lang: '',
+        },
       );
+
+  final Map<UiLanguage, String> value;
 
   /// Converts the [LocalizedMap] to a JSON value map.
   ///
   /// [map] The [LocalizedMap] to convert.
   static Map<String, dynamic> toJsonValueMap(final LocalizedMap map) =>
-      map.toJson()['value'];
+      {'value': localeValueToMap(map.value)};
 
   /// An empty [LocalizedMap].
   static const empty = LocalizedMap(value: {});
@@ -152,19 +155,40 @@ class LocalizedMap with _$LocalizedMap {
   ///
   /// [locale] The locale to get the value for.
   String getValue(final Locale locale) =>
-      getValueByLanguage(Languages.byLanguageCode(locale.languageCode));
+      getValueByLanguage(UiLanguage.byLocale(locale));
 
-  /// Retrieves the localized value for a given [Languages] enum.
+  /// Retrieves the localized value for a given [UiLanguage].
   ///
   /// If no language is provided, it defaults to the current language.
   ///
   /// [language] The language to get the value for.
-  String getValueByLanguage([final Languages? language]) =>
-      value[language ?? getCurrentLanugage()]!;
+  String getValueByLanguage([final UiLanguage? language]) {
+    final lang = language ?? getCurrentLanguage();
+    return value[lang] ??
+        value[LocalizationConfig.instance.fallbackLanguage] ??
+        '';
+  }
 
   /// Retrieves the current language based on the locale.
-  static Languages getCurrentLanugage() {
+  static UiLanguage getCurrentLanguage() {
     final languageCode = getLanguageCodeByStr(Intl.getCurrentLocale());
-    return Languages.byLanguageCode(languageCode);
+    return UiLanguage.byCodeWithFallback(languageCode);
   }
+
+  Map<String, dynamic> toJson() => {
+        'value': localeValueToMap(value),
+      };
+
+  LocalizedMap copyWith({
+    final Map<UiLanguage, String>? value,
+  }) =>
+      LocalizedMap(
+        value: value ?? this.value,
+      );
+
+  @override
+  List<Object?> get props => [value];
+
+  @override
+  String toString() => 'LocalizedMap(value: $value)';
 }

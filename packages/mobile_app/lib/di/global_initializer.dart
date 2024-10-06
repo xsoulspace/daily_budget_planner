@@ -1,14 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mobile_app/common_imports.dart';
 
-class GlobalInitializerImpl with HasAnalyticsService {
+class GlobalInitializerImpl {
   GlobalInitializerImpl({
     this.firebaseOptions,
   });
   final FirebaseOptions? firebaseOptions;
-  Future<void> onLoad() async {
+  final analyticsService = AnalyticsServiceImpl();
+  Future<void> loadAnalytics() async {
     final effectiveFirebaseOptions = firebaseOptions;
-    Di.init();
     if (effectiveFirebaseOptions != null) {
       await FirebaseInitializerImpl(firebaseOptions: effectiveFirebaseOptions)
           .onLoad();

@@ -9,14 +9,11 @@ class PreloadingScreen extends StatefulWidget {
 }
 
 class _PreloadingScreenState extends State<PreloadingScreen> {
-  final _initializer = GlobalInitializerImpl();
+  final _initializer = GlobalStateInitializer();
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {
-      unawaited(_initializer.onLoad());
-    });
-
     super.initState();
+    unawaited(_initializer.onLoad(context));
   }
 
   @override
@@ -31,6 +28,7 @@ class _PreloadingScreenState extends State<PreloadingScreen> {
 
 class GlobalStateInitializer
     with
+        HasLocalApis,
         HasUserNotifier,
         HasAppStatusNotifier,
         HasAppSettingsNotifier,
@@ -39,9 +37,11 @@ class GlobalStateInitializer
     implements StateInitializer, Disposable {
   @override
   Future<void> onLoad(final BuildContext context) async {
+    await localDb.init();
     // FlutterNativeSplash.remove();
     await Future.wait([
       userNotifier.loadProfile(),
+      appSettingsNotifier.onLoad(),
     ]);
 
     WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {

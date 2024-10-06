@@ -1,6 +1,5 @@
-import 'package:mobile_app/common_imports.dart';
+import 'package:flutter/material.dart';
 
-@stateDistributor
 class UiLocaleNotifier extends ValueNotifier<Locale> {
   UiLocaleNotifier(super.value);
 }

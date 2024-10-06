@@ -11,7 +11,7 @@ import 'package:mobile_app/di/di.dart';
 /// ********************************************
 
 Future<void> bootstrapMain({
-  required final ValueGetter<Widget> builder,
+  required final Widget Function(GlobalInitializerImpl) builder,
   final AppBootstrapDto? dto,
 }) =>
     _bootstrap(
@@ -27,13 +27,13 @@ typedef AppBootstrapDto = ({
 });
 
 Future<void> _bootstrap({
-  required final ValueGetter<Widget> builder,
+  required final Widget Function(GlobalInitializerImpl) builder,
   required final AppBootstrapDto? dto,
 }) async {
   final initializer = GlobalInitializerImpl(
     firebaseOptions: dto?.firebaseOptions,
   );
-
+  await initializer.loadAnalytics();
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
@@ -43,8 +43,7 @@ Future<void> _bootstrap({
         yield LicenseEntryWithLineBreaks(['google_fonts'], license);
       });
       // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-      await initializer.onLoad();
-      runApp(builder());
+      runApp(builder(initializer));
     },
     initializer.analyticsService.recordError,
   );

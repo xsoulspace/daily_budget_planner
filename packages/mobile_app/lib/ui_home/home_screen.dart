@@ -33,8 +33,8 @@ class _HomeScreenProvider extends StatelessWidget {
   Widget build(final BuildContext context) => Portal(
         child: MultiProvider(
           providers: [
-            Provider(create: (final context) => WeeklyCubit()),
-            Provider(create: (final context) => MonthlyCubit()),
+            ChangeNotifierProvider(create: (final context) => WeeklyCubit()),
+            ChangeNotifierProvider(create: (final context) => MonthlyCubit()),
           ],
           builder: (final context, final child) => builder(context),
         ),

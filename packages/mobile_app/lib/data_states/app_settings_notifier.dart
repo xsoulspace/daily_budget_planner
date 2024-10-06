@@ -17,12 +17,13 @@ class AppSettingsNotifier extends ValueNotifier<AppSettingsModel>
   }
 
   ValueListenable<Locale> get locale => localeNotifier;
-  Languages get language => locale.value.language;
+  UiLanguage get language => locale.value.language;
   Future<void> updateLocale(final Locale? locale) async {
     final result = await LocaleLogic().updateLocale(
       newLocale: locale,
       oldLocale: value.locale,
       uiLocale: localeNotifier.value,
+      onLocaleChanged: S.delegate.load,
     );
     if (result == null) return;
     localeNotifier.value = result.uiLocale;
@@ -30,8 +31,4 @@ class AppSettingsNotifier extends ValueNotifier<AppSettingsModel>
     if (value.locale == result.updatedLocale) return;
     await _updateSettings(value.copyWith(locale: result.updatedLocale));
   }
-}
-
-extension LocaleX on Locale {
-  Languages get language => Languages.byLanguageCode(languageCode);
 }

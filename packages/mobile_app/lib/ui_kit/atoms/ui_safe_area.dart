@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 /// A widget that provides a safe area for the bottom or top of the screen.
 ///
@@ -43,5 +42,5 @@ class UiSafeArea extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) =>
-      SafeArea(top: !_isBottom, bottom: _isBottom, child: const Gap(0));
+      SafeArea(top: !_isBottom, bottom: _isBottom, child: const SizedBox());
 }

@@ -18,17 +18,13 @@ class Di {
 
 void _dispose() => unawaited(_getIt.reset());
 
-void _init() {
+void _init({required final AnalyticsService analyticsService}) {
   final r = _getIt.registerSingleton;
-
-  /// ********************************************
-  /// *      Stateless
-  /// ********************************************
-  r<AnalyticsService>(AnalyticsServiceImpl());
 
   /// ********************************************
   /// *      API
   /// ********************************************
+  r<AnalyticsService>(analyticsService);
   r<LocalDbI>(PrefsDb());
   r(UserLocalApi());
   r(AppSettingsLocalApi());
@@ -37,7 +33,7 @@ void _init() {
   /// ********************************************
   /// *      STATES
   /// ********************************************
-  r(UiLocaleNotifier(Locales.en));
+  r(UiLocaleNotifier(Locales.fallback));
   r(AppSettingsNotifier());
   r(UserNotifier());
   r(AppStatusNotifier());
