@@ -1,4 +1,4 @@
-import 'localization/localization.dart';
+import 'package:xsoulspace_locale/xsoulspace_locale.dart';
 
 final languages = (
   en: UiLanguage('en', 'English'),
