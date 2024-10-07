@@ -1,0 +1,43 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../purchases/abstract_purchase_manager.dart';
+import 'keeper_state.dart';
+
+part 'keeper_manager.freezed.dart';
+part 'keeper_manager.g.dart';
+
+/// {@template keeper_manager}
+/// Manages the state of user access to premium features.
+/// {@endtemplate}
+class KeeperManager {
+  KeeperState _state = KeeperState.free;
+
+  /// The current state of user access.
+  KeeperState get state => _state;
+
+  /// Updates the state based on a purchase result.
+  void updateStateFromPurchase(final PurchaseResult result) {
+    result.when(
+      success: (final details) => _state = KeeperState.purchased,
+      failure: (final _) => _state = KeeperState.free,
+    );
+  }
+
+  /// Updates the state based on an ad interaction result.
+  void updateStateFromAd(final AdResult result) {
+    result.when(
+      rewarded: () => _state = KeeperState.purchased,
+      failed: () => _state = KeeperState.free,
+    );
+  }
+}
+
+/// Represents the result of an ad interaction.
+@freezed
+class AdResult with _$AdResult {
+  const factory AdResult.rewarded() = AdRewarded;
+  const factory AdResult.failed() = AdFailed;
+
+  factory AdResult.fromJson(final Map<String, dynamic> json) =>
+      _$AdResultFromJson(json);
+}
