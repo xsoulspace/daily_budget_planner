@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 
 import '../src/purchases/abstract_purchase_manager.dart';
 
+/// {@template purchase_screen}
+/// A widget that displays available one-time purchases and allows users
+/// to buy them.
+/// {@endtemplate}
 class PurchaseScreen extends StatelessWidget {
+  /// {@macro purchase_screen}
   const PurchaseScreen({required this.purchaseManager, super.key});
+
+  /// The purchase manager to handle purchase operations.
   final AbstractPurchaseManager purchaseManager;
 
   @override
   Widget build(final BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Purchase Options')),
-        body: FutureBuilder<List<AvailableOneTimePurchase>>(
+        body: FutureBuilder<List<AvailableNonConsumable>>(
           // ignore: discarded_futures
-          future: purchaseManager.getAvailableOneTimePurchases(),
+          future: purchaseManager.getNonConsumables(),
           builder: (final context, final snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -26,15 +33,15 @@ class PurchaseScreen extends StatelessWidget {
                 final purchase = purchases[index];
                 return ListTile(
                   title: Text(purchase.name),
-                  subtitle: Text('\$${purchase.price.toStringAsFixed(2)}'),
+                  subtitle: Text('${purchase.price} ${purchase.currency}'),
                   trailing: ElevatedButton(
                     onPressed: () async {
-                      final result =
-                          await purchaseManager.purchaseOneTimePurchase(
-                        OneTimePurchaseDetails(
-                          id: purchase.id,
+                      final result = await purchaseManager.buyNonConsumable(
+                        NonConsumableDetails(
+                          productId: purchase.productId,
                           name: purchase.name,
                           price: purchase.price,
+                          currency: purchase.currency,
                         ),
                       );
                       result.when(

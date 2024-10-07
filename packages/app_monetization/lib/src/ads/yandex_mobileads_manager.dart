@@ -14,22 +14,25 @@ class YandexMobileAdsManager implements AbstractAdManager {
 
   @override
   Future<void> showRewardedAd() async {
-    final rewardedAd = RewardedAd(adUnitId: 'your_rewarded_ad_unit_id');
-    await rewardedAd.load();
-    await rewardedAd.show();
+    // final rewardedAd = RewardedAd(adUnitId: 'your_rewarded_ad_unit_id');
+    // await rewardedAd.load();
+    // await rewardedAd.show();
   }
 
   @override
   Future<void> showInterstitialAd() async {
-    final interstitialAd =
-        InterstitialAd(adUnitId: 'your_interstitial_ad_unit_id');
-    await interstitialAd.load();
-    await interstitialAd.show();
+    // final interstitialAd =
+    //     InterstitialAd(adUnitId: 'your_interstitial_ad_unit_id');
+    // await interstitialAd.load();
+    // await interstitialAd.show();
   }
 
   @override
-  Widget buildBannerAd() => BannerAdWidget(
-        adUnitId: 'your_banner_ad_unit_id',
-        adSize: BannerAdSize.stickySize(width: 320),
-      );
+  Widget buildBannerAd() {
+    throw UnimplementedError();
+    // return BannerAdWidget(
+    //     adUnitId: 'your_banner_ad_unit_id',
+    //     adSize: BannerAdSize.stickySize(width: 320),
+    //   );
+  }
 }

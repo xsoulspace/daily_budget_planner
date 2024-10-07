@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../src/purchases/abstract_purchase_manager.dart';
 
+/// {@template subscription_screen}
+/// A widget that displays available subscriptions and allows
+/// users to subscribe.
+/// {@endtemplate}
 class SubscriptionScreen extends StatelessWidget {
+  /// {@macro subscription_screen}
   const SubscriptionScreen({required this.purchaseManager, super.key});
+
+  /// The purchase manager to handle subscription operations.
   final AbstractPurchaseManager purchaseManager;
 
   @override
@@ -11,7 +18,7 @@ class SubscriptionScreen extends StatelessWidget {
         appBar: AppBar(title: const Text('Subscription Options')),
         body: FutureBuilder<List<AvailableSubscription>>(
           // ignore: discarded_futures
-          future: purchaseManager.getAvailableSubscriptions(),
+          future: purchaseManager.getSubscriptions(),
           builder: (final context, final snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -27,15 +34,16 @@ class SubscriptionScreen extends StatelessWidget {
                 return ListTile(
                   title: Text(subscription.name),
                   subtitle: Text(
-                    '\$${subscription.price.toStringAsFixed(2)} / ${subscription.duration.inDays} days',
+                    '${subscription.price} ${subscription.currency} / ${subscription.duration.inDays} days',
                   ),
                   trailing: ElevatedButton(
                     onPressed: () async {
-                      final result = await purchaseManager.purchaseSubscription(
+                      final result = await purchaseManager.subscribe(
                         SubscriptionDetails(
-                          id: subscription.id,
+                          productId: subscription.productId,
                           name: subscription.name,
                           price: subscription.price,
+                          currency: subscription.currency,
                           duration: subscription.duration,
                         ),
                       );

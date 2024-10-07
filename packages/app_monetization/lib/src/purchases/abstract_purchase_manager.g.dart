@@ -9,79 +9,125 @@ part of 'abstract_purchase_manager.dart';
 _$SubscriptionDetailsImpl _$$SubscriptionDetailsImplFromJson(
         Map<String, dynamic> json) =>
     _$SubscriptionDetailsImpl(
-      id: json['id'] as String,
+      productId: ProductId.fromJson(json['productId']),
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
+      currency: json['currency'] as String,
       duration: Duration(microseconds: (json['duration'] as num).toInt()),
     );
 
 Map<String, dynamic> _$$SubscriptionDetailsImplToJson(
         _$SubscriptionDetailsImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'productId': instance.productId,
       'name': instance.name,
       'price': instance.price,
+      'currency': instance.currency,
       'duration': instance.duration.inMicroseconds,
     };
 
-_$OneTimePurchaseDetailsImpl _$$OneTimePurchaseDetailsImplFromJson(
+_$ConsumableDetailsImpl _$$ConsumableDetailsImplFromJson(
         Map<String, dynamic> json) =>
-    _$OneTimePurchaseDetailsImpl(
-      id: json['id'] as String,
+    _$ConsumableDetailsImpl(
+      productId: ProductId.fromJson(json['productId']),
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
+      currency: json['currency'] as String,
     );
 
-Map<String, dynamic> _$$OneTimePurchaseDetailsImplToJson(
-        _$OneTimePurchaseDetailsImpl instance) =>
+Map<String, dynamic> _$$ConsumableDetailsImplToJson(
+        _$ConsumableDetailsImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'productId': instance.productId,
       'name': instance.name,
       'price': instance.price,
+      'currency': instance.currency,
+    };
+
+_$NonConsumableDetailsImpl _$$NonConsumableDetailsImplFromJson(
+        Map<String, dynamic> json) =>
+    _$NonConsumableDetailsImpl(
+      productId: ProductId.fromJson(json['productId']),
+      name: json['name'] as String,
+      price: (json['price'] as num).toDouble(),
+      currency: json['currency'] as String,
+    );
+
+Map<String, dynamic> _$$NonConsumableDetailsImplToJson(
+        _$NonConsumableDetailsImpl instance) =>
+    <String, dynamic>{
+      'productId': instance.productId,
+      'name': instance.name,
+      'price': instance.price,
+      'currency': instance.currency,
     };
 
 _$AvailableSubscriptionImpl _$$AvailableSubscriptionImplFromJson(
         Map<String, dynamic> json) =>
     _$AvailableSubscriptionImpl(
-      id: json['id'] as String,
+      productId: ProductId.fromJson(json['productId']),
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
+      currency: json['currency'] as String,
       duration: Duration(microseconds: (json['duration'] as num).toInt()),
     );
 
 Map<String, dynamic> _$$AvailableSubscriptionImplToJson(
         _$AvailableSubscriptionImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'productId': instance.productId,
       'name': instance.name,
       'price': instance.price,
+      'currency': instance.currency,
       'duration': instance.duration.inMicroseconds,
     };
 
-_$AvailableOneTimePurchaseImpl _$$AvailableOneTimePurchaseImplFromJson(
+_$AvailableConsumableImpl _$$AvailableConsumableImplFromJson(
         Map<String, dynamic> json) =>
-    _$AvailableOneTimePurchaseImpl(
-      id: json['id'] as String,
+    _$AvailableConsumableImpl(
+      productId: ProductId.fromJson(json['productId']),
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
+      currency: json['currency'] as String,
     );
 
-Map<String, dynamic> _$$AvailableOneTimePurchaseImplToJson(
-        _$AvailableOneTimePurchaseImpl instance) =>
+Map<String, dynamic> _$$AvailableConsumableImplToJson(
+        _$AvailableConsumableImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'productId': instance.productId,
       'name': instance.name,
       'price': instance.price,
+      'currency': instance.currency,
+    };
+
+_$AvailableNonConsumableImpl _$$AvailableNonConsumableImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AvailableNonConsumableImpl(
+      productId: ProductId.fromJson(json['productId']),
+      name: json['name'] as String,
+      price: (json['price'] as num).toDouble(),
+      currency: json['currency'] as String,
+    );
+
+Map<String, dynamic> _$$AvailableNonConsumableImplToJson(
+        _$AvailableNonConsumableImpl instance) =>
+    <String, dynamic>{
+      'productId': instance.productId,
+      'name': instance.name,
+      'price': instance.price,
+      'currency': instance.currency,
     };
 
 _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
         Map<String, dynamic> json) =>
     _$PurchaseDetailsImpl(
-      id: json['id'] as String,
+      purchaseId: PurchaseId.fromJson(json['purchaseId']),
+      productId: ProductId.fromJson(json['productId']),
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
+      currency: json['currency'] as String,
       purchaseDate: DateTime.parse(json['purchaseDate'] as String),
-      subscriptionId: json['subscriptionId'] as String?,
+      purchaseType: $enumDecode(_$PurchaseTypeEnumMap, json['purchaseType']),
       expiryDate: json['expiryDate'] == null
           ? null
           : DateTime.parse(json['expiryDate'] as String),
@@ -90,13 +136,21 @@ _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
 Map<String, dynamic> _$$PurchaseDetailsImplToJson(
         _$PurchaseDetailsImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'purchaseId': instance.purchaseId,
+      'productId': instance.productId,
       'name': instance.name,
       'price': instance.price,
+      'currency': instance.currency,
       'purchaseDate': instance.purchaseDate.toIso8601String(),
-      'subscriptionId': instance.subscriptionId,
+      'purchaseType': _$PurchaseTypeEnumMap[instance.purchaseType]!,
       'expiryDate': instance.expiryDate?.toIso8601String(),
     };
+
+const _$PurchaseTypeEnumMap = {
+  PurchaseType.consumable: 'consumable',
+  PurchaseType.nonConsumable: 'nonConsumable',
+  PurchaseType.subscription: 'subscription',
+};
 
 _$PurchaseSuccessImpl _$$PurchaseSuccessImplFromJson(
         Map<String, dynamic> json) =>
@@ -121,6 +175,76 @@ _$PurchaseFailureImpl _$$PurchaseFailureImplFromJson(
 
 Map<String, dynamic> _$$PurchaseFailureImplToJson(
         _$PurchaseFailureImpl instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'runtimeType': instance.$type,
+    };
+
+_$PurchaseUpdateImpl _$$PurchaseUpdateImplFromJson(Map<String, dynamic> json) =>
+    _$PurchaseUpdateImpl(
+      purchaseId: PurchaseId.fromJson(json['purchaseId']),
+      status: $enumDecode(_$PurchaseStatusEnumMap, json['status']),
+    );
+
+Map<String, dynamic> _$$PurchaseUpdateImplToJson(
+        _$PurchaseUpdateImpl instance) =>
+    <String, dynamic>{
+      'purchaseId': instance.purchaseId,
+      'status': _$PurchaseStatusEnumMap[instance.status]!,
+    };
+
+const _$PurchaseStatusEnumMap = {
+  PurchaseStatus.pending: 'pending',
+  PurchaseStatus.completed: 'completed',
+  PurchaseStatus.cancelled: 'cancelled',
+  PurchaseStatus.failed: 'failed',
+};
+
+_$RestoreSuccessImpl _$$RestoreSuccessImplFromJson(Map<String, dynamic> json) =>
+    _$RestoreSuccessImpl(
+      (json['restoredPurchases'] as List<dynamic>)
+          .map((e) => PurchaseDetails.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$RestoreSuccessImplToJson(
+        _$RestoreSuccessImpl instance) =>
+    <String, dynamic>{
+      'restoredPurchases': instance.restoredPurchases,
+      'runtimeType': instance.$type,
+    };
+
+_$RestoreFailureImpl _$$RestoreFailureImplFromJson(Map<String, dynamic> json) =>
+    _$RestoreFailureImpl(
+      json['error'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$RestoreFailureImplToJson(
+        _$RestoreFailureImpl instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'runtimeType': instance.$type,
+    };
+
+_$CancelSuccessImpl _$$CancelSuccessImplFromJson(Map<String, dynamic> json) =>
+    _$CancelSuccessImpl(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$CancelSuccessImplToJson(_$CancelSuccessImpl instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+_$CancelFailureImpl _$$CancelFailureImplFromJson(Map<String, dynamic> json) =>
+    _$CancelFailureImpl(
+      json['error'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$CancelFailureImplToJson(_$CancelFailureImpl instance) =>
     <String, dynamic>{
       'error': instance.error,
       'runtimeType': instance.$type,
