@@ -13,10 +13,14 @@ _$PurchaseProductDetailsImpl _$$PurchaseProductDetailsImplFromJson(
       productType:
           $enumDecode(_$PurchaseProductTypeEnumMap, json['productType']),
       name: json['name'] as String,
+      formattedPrice: json['formattedPrice'] as String,
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String,
       duration: Duration(microseconds: (json['duration'] as num).toInt()),
       description: json['description'] as String? ?? '',
+      freeTrialDuration: json['freeTrialDuration'] == null
+          ? Duration.zero
+          : Duration(microseconds: (json['freeTrialDuration'] as num).toInt()),
     );
 
 Map<String, dynamic> _$$PurchaseProductDetailsImplToJson(
@@ -25,10 +29,12 @@ Map<String, dynamic> _$$PurchaseProductDetailsImplToJson(
       'productId': instance.productId,
       'productType': instance.productType,
       'name': instance.name,
+      'formattedPrice': instance.formattedPrice,
       'price': instance.price,
       'currency': instance.currency,
       'duration': instance.duration.inMicroseconds,
       'description': instance.description,
+      'freeTrialDuration': instance.freeTrialDuration.inMicroseconds,
     };
 
 const _$PurchaseProductTypeEnumMap = {
@@ -43,6 +49,7 @@ _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
       purchaseId: PurchaseId.fromJson(json['purchaseId']),
       productId: ProductId.fromJson(json['productId']),
       name: json['name'] as String,
+      formattedPrice: json['formattedPrice'] as String,
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String,
       purchaseDate: DateTime.parse(json['purchaseDate'] as String),
@@ -59,6 +66,7 @@ Map<String, dynamic> _$$PurchaseDetailsImplToJson(
       'purchaseId': instance.purchaseId,
       'productId': instance.productId,
       'name': instance.name,
+      'formattedPrice': instance.formattedPrice,
       'price': instance.price,
       'currency': instance.currency,
       'purchaseDate': instance.purchaseDate.toIso8601String(),

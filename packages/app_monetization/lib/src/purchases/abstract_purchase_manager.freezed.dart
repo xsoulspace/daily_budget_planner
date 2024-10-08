@@ -24,10 +24,16 @@ mixin _$PurchaseProductDetails {
   ProductId get productId => throw _privateConstructorUsedError;
   PurchaseProductType get productType => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+
+  /// formatted price with currency
+  String get formattedPrice => throw _privateConstructorUsedError;
+
+  /// price without currency in smallest unit of currency
   double get price => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  Duration get freeTrialDuration => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseProductDetails to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,10 +55,12 @@ abstract class $PurchaseProductDetailsCopyWith<$Res> {
       {ProductId productId,
       PurchaseProductType productType,
       String name,
+      String formattedPrice,
       double price,
       String currency,
       Duration duration,
-      String description});
+      String description,
+      Duration freeTrialDuration});
 }
 
 /// @nodoc
@@ -74,10 +82,12 @@ class _$PurchaseProductDetailsCopyWithImpl<$Res,
     Object? productId = null,
     Object? productType = null,
     Object? name = null,
+    Object? formattedPrice = null,
     Object? price = null,
     Object? currency = null,
     Object? duration = null,
     Object? description = null,
+    Object? freeTrialDuration = null,
   }) {
     return _then(_value.copyWith(
       productId: null == productId
@@ -91,6 +101,10 @@ class _$PurchaseProductDetailsCopyWithImpl<$Res,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedPrice: null == formattedPrice
+          ? _value.formattedPrice
+          : formattedPrice // ignore: cast_nullable_to_non_nullable
               as String,
       price: null == price
           ? _value.price
@@ -108,6 +122,10 @@ class _$PurchaseProductDetailsCopyWithImpl<$Res,
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      freeTrialDuration: null == freeTrialDuration
+          ? _value.freeTrialDuration
+          : freeTrialDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
     ) as $Val);
   }
 }
@@ -125,10 +143,12 @@ abstract class _$$PurchaseProductDetailsImplCopyWith<$Res>
       {ProductId productId,
       PurchaseProductType productType,
       String name,
+      String formattedPrice,
       double price,
       String currency,
       Duration duration,
-      String description});
+      String description,
+      Duration freeTrialDuration});
 }
 
 /// @nodoc
@@ -149,10 +169,12 @@ class __$$PurchaseProductDetailsImplCopyWithImpl<$Res>
     Object? productId = null,
     Object? productType = null,
     Object? name = null,
+    Object? formattedPrice = null,
     Object? price = null,
     Object? currency = null,
     Object? duration = null,
     Object? description = null,
+    Object? freeTrialDuration = null,
   }) {
     return _then(_$PurchaseProductDetailsImpl(
       productId: null == productId
@@ -166,6 +188,10 @@ class __$$PurchaseProductDetailsImplCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedPrice: null == formattedPrice
+          ? _value.formattedPrice
+          : formattedPrice // ignore: cast_nullable_to_non_nullable
               as String,
       price: null == price
           ? _value.price
@@ -183,6 +209,10 @@ class __$$PurchaseProductDetailsImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      freeTrialDuration: null == freeTrialDuration
+          ? _value.freeTrialDuration
+          : freeTrialDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
     ));
   }
 }
@@ -194,10 +224,12 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
       {required this.productId,
       required this.productType,
       required this.name,
+      required this.formattedPrice,
       required this.price,
       required this.currency,
       required this.duration,
-      this.description = ''});
+      this.description = '',
+      this.freeTrialDuration = Duration.zero});
 
   factory _$PurchaseProductDetailsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseProductDetailsImplFromJson(json);
@@ -208,6 +240,12 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
   final PurchaseProductType productType;
   @override
   final String name;
+
+  /// formatted price with currency
+  @override
+  final String formattedPrice;
+
+  /// price without currency in smallest unit of currency
   @override
   final double price;
   @override
@@ -217,10 +255,13 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
   @override
   @JsonKey()
   final String description;
+  @override
+  @JsonKey()
+  final Duration freeTrialDuration;
 
   @override
   String toString() {
-    return 'PurchaseProductDetails(productId: $productId, productType: $productType, name: $name, price: $price, currency: $currency, duration: $duration, description: $description)';
+    return 'PurchaseProductDetails(productId: $productId, productType: $productType, name: $name, formattedPrice: $formattedPrice, price: $price, currency: $currency, duration: $duration, description: $description, freeTrialDuration: $freeTrialDuration)';
   }
 
   @override
@@ -233,19 +274,32 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
             (identical(other.productType, productType) ||
                 other.productType == productType) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.formattedPrice, formattedPrice) ||
+                other.formattedPrice == formattedPrice) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.freeTrialDuration, freeTrialDuration) ||
+                other.freeTrialDuration == freeTrialDuration));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, productId, productType, name,
-      price, currency, duration, description);
+  int get hashCode => Object.hash(
+      runtimeType,
+      productId,
+      productType,
+      name,
+      formattedPrice,
+      price,
+      currency,
+      duration,
+      description,
+      freeTrialDuration);
 
   /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
@@ -269,10 +323,12 @@ abstract class _PurchaseProductDetails implements PurchaseProductDetails {
       {required final ProductId productId,
       required final PurchaseProductType productType,
       required final String name,
+      required final String formattedPrice,
       required final double price,
       required final String currency,
       required final Duration duration,
-      final String description}) = _$PurchaseProductDetailsImpl;
+      final String description,
+      final Duration freeTrialDuration}) = _$PurchaseProductDetailsImpl;
 
   factory _PurchaseProductDetails.fromJson(Map<String, dynamic> json) =
       _$PurchaseProductDetailsImpl.fromJson;
@@ -283,6 +339,12 @@ abstract class _PurchaseProductDetails implements PurchaseProductDetails {
   PurchaseProductType get productType;
   @override
   String get name;
+
+  /// formatted price with currency
+  @override
+  String get formattedPrice;
+
+  /// price without currency in smallest unit of currency
   @override
   double get price;
   @override
@@ -291,6 +353,8 @@ abstract class _PurchaseProductDetails implements PurchaseProductDetails {
   Duration get duration;
   @override
   String get description;
+  @override
+  Duration get freeTrialDuration;
 
   /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
@@ -309,6 +373,11 @@ mixin _$PurchaseDetails {
   PurchaseId get purchaseId => throw _privateConstructorUsedError;
   ProductId get productId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+
+  /// formatted price with currency
+  String get formattedPrice => throw _privateConstructorUsedError;
+
+  /// price without currency in smallest unit of currency
   double get price => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   DateTime get purchaseDate => throw _privateConstructorUsedError;
@@ -335,6 +404,7 @@ abstract class $PurchaseDetailsCopyWith<$Res> {
       {PurchaseId purchaseId,
       ProductId productId,
       String name,
+      String formattedPrice,
       double price,
       String currency,
       DateTime purchaseDate,
@@ -360,6 +430,7 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
     Object? purchaseId = null,
     Object? productId = null,
     Object? name = null,
+    Object? formattedPrice = null,
     Object? price = null,
     Object? currency = null,
     Object? purchaseDate = null,
@@ -378,6 +449,10 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedPrice: null == formattedPrice
+          ? _value.formattedPrice
+          : formattedPrice // ignore: cast_nullable_to_non_nullable
               as String,
       price: null == price
           ? _value.price
@@ -415,6 +490,7 @@ abstract class _$$PurchaseDetailsImplCopyWith<$Res>
       {PurchaseId purchaseId,
       ProductId productId,
       String name,
+      String formattedPrice,
       double price,
       String currency,
       DateTime purchaseDate,
@@ -438,6 +514,7 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
     Object? purchaseId = null,
     Object? productId = null,
     Object? name = null,
+    Object? formattedPrice = null,
     Object? price = null,
     Object? currency = null,
     Object? purchaseDate = null,
@@ -456,6 +533,10 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedPrice: null == formattedPrice
+          ? _value.formattedPrice
+          : formattedPrice // ignore: cast_nullable_to_non_nullable
               as String,
       price: null == price
           ? _value.price
@@ -488,6 +569,7 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
       {required this.purchaseId,
       required this.productId,
       required this.name,
+      required this.formattedPrice,
       required this.price,
       required this.currency,
       required this.purchaseDate,
@@ -503,6 +585,12 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
   final ProductId productId;
   @override
   final String name;
+
+  /// formatted price with currency
+  @override
+  final String formattedPrice;
+
+  /// price without currency in smallest unit of currency
   @override
   final double price;
   @override
@@ -516,7 +604,7 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
 
   @override
   String toString() {
-    return 'PurchaseDetails(purchaseId: $purchaseId, productId: $productId, name: $name, price: $price, currency: $currency, purchaseDate: $purchaseDate, purchaseType: $purchaseType, expiryDate: $expiryDate)';
+    return 'PurchaseDetails(purchaseId: $purchaseId, productId: $productId, name: $name, formattedPrice: $formattedPrice, price: $price, currency: $currency, purchaseDate: $purchaseDate, purchaseType: $purchaseType, expiryDate: $expiryDate)';
   }
 
   @override
@@ -529,6 +617,8 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.formattedPrice, formattedPrice) ||
+                other.formattedPrice == formattedPrice) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
@@ -543,7 +633,7 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, purchaseId, productId, name,
-      price, currency, purchaseDate, purchaseType, expiryDate);
+      formattedPrice, price, currency, purchaseDate, purchaseType, expiryDate);
 
   /// Create a copy of PurchaseDetails
   /// with the given fields replaced by the non-null parameter values.
@@ -567,6 +657,7 @@ abstract class _PurchaseDetails implements PurchaseDetails {
       {required final PurchaseId purchaseId,
       required final ProductId productId,
       required final String name,
+      required final String formattedPrice,
       required final double price,
       required final String currency,
       required final DateTime purchaseDate,
@@ -582,6 +673,12 @@ abstract class _PurchaseDetails implements PurchaseDetails {
   ProductId get productId;
   @override
   String get name;
+
+  /// formatted price with currency
+  @override
+  String get formattedPrice;
+
+  /// price without currency in smallest unit of currency
   @override
   double get price;
   @override

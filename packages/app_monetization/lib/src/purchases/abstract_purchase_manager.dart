@@ -11,6 +11,9 @@ extension type ProductId(String value) {
   String toJson() => value;
 }
 
+/// {@template product_list_x}
+/// Extension on List<ProductId> to convert to JSON.
+/// {@endtemplate}
 extension ProductListX on List<ProductId> {
   List<String> toJson() =>
       map((final productId) => productId.toJson()).toSet().toList();
@@ -25,6 +28,9 @@ extension type PurchaseId(String value) {
   String toJson() => value;
 }
 
+/// {@template purchase_product_type}
+/// Represents the type of a purchasable product.
+/// {@endtemplate}
 enum PurchaseProductType {
   consumable,
   nonConsumable,
@@ -99,10 +105,16 @@ class PurchaseProductDetails with _$PurchaseProductDetails {
     required final ProductId productId,
     required final PurchaseProductType productType,
     required final String name,
+
+    /// formatted price with currency
+    required final String formattedPrice,
+
+    /// price without currency in smallest unit of currency
     required final double price,
     required final String currency,
     required final Duration duration,
     @Default('') final String description,
+    @Default(Duration.zero) final Duration freeTrialDuration,
   }) = _PurchaseProductDetails;
 
   factory PurchaseProductDetails.fromJson(final Map<String, dynamic> json) =>
@@ -118,6 +130,11 @@ class PurchaseDetails with _$PurchaseDetails {
     required final PurchaseId purchaseId,
     required final ProductId productId,
     required final String name,
+
+    /// formatted price with currency
+    required final String formattedPrice,
+
+    /// price without currency in smallest unit of currency
     required final double price,
     required final String currency,
     required final DateTime purchaseDate,
@@ -159,12 +176,7 @@ class PurchaseUpdate with _$PurchaseUpdate {
 /// {@template purchase_status}
 /// Represents the status of a purchase.
 /// {@endtemplate}
-enum PurchaseStatus {
-  pending,
-  completed,
-  cancelled,
-  failed,
-}
+enum PurchaseStatus { pending, completed, cancelled, failed }
 
 /// {@template restore_result}
 /// Represents the result of a restore operation.

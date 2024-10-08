@@ -16,6 +16,8 @@ import 'abstract_purchase_manager.dart';
 /// [deeplinkScheme] is the deeplink scheme of the application.
 /// "yourappscheme://iamback",
 /// [enableLogger] is the flag to enable logger.
+///
+/// https://www.rustore.ru/help/en/sdk/payments/flutter/6-1-0
 /// {@endtemplate}
 class FlutterRustoreBillingManager implements AbstractPurchaseManager {
   FlutterRustoreBillingManager({
@@ -67,6 +69,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
           purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
           productId: details.productId,
           name: details.name,
+          formattedPrice: details.formattedPrice,
           price: details.price,
           currency: details.currency,
           purchaseDate: DateTime.now(),
@@ -101,6 +104,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
           purchaseType: PurchaseProductType.nonConsumable,
           productId: details.productId,
           name: details.name,
+          formattedPrice: details.formattedPrice,
           price: details.price,
           currency: details.currency,
           purchaseDate: DateTime.now(),
@@ -132,6 +136,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
           purchaseType: PurchaseProductType.subscription,
           productId: details.productId,
           name: details.name,
+          formattedPrice: details.formattedPrice,
           price: details.price,
           currency: details.currency,
           purchaseDate: DateTime.now(),
@@ -161,6 +166,8 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
             productType:
                 PurchaseProductType.fromRustoreJson(product.productType),
             name: product.title ?? '',
+            formattedPrice: product.priceLabel ?? '',
+            description: product.description ?? '',
             price: doubleFromJson(product.price ?? '0'),
             currency: product.currency ?? '',
             duration: _getDurationFromId(product.productId),
@@ -187,6 +194,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
             productType:
                 PurchaseProductType.fromRustoreJson(product.productType),
             name: product.title ?? '',
+            formattedPrice: product.priceLabel ?? '',
             price: doubleFromJson(product.price ?? '0'),
             currency: product.currency ?? '',
             duration: _getDurationFromId(product.productId),
@@ -213,6 +221,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
             productType:
                 PurchaseProductType.fromRustoreJson(product.productType),
             name: product.title ?? '',
+            formattedPrice: product.priceLabel ?? '',
             price: doubleFromJson(product.price ?? '0'),
             currency: product.currency ?? '',
             duration: _getDurationFromId(product.productId),
@@ -223,7 +232,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
 
   @override
   Future<void> openSubscriptionManagement() async {
-    // TODO: Implement subscription management opening for RuStore
+    /// TODO: open rustore app for subscription management
     throw UnimplementedError();
   }
 
@@ -243,8 +252,11 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
               purchaseId: PurchaseId(purchase?.purchaseId ?? ''),
               productId: ProductId(purchase?.productId ?? ''),
               name: '',
+              formattedPrice: purchase?.amountLabel ?? '',
               price: doubleFromJson(purchase?.amount ?? '0'),
               currency: purchase?.currency ?? '',
+
+              /// verify format
               purchaseDate: DateTime.fromMillisecondsSinceEpoch(
                 intFromJson(purchase?.purchaseTime ?? '0'),
               ),
@@ -272,9 +284,9 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
   }
 
   Duration _getDurationFromId(final String id) {
-    if (id.contains('weekly')) return const Duration(days: 7);
-    if (id.contains('monthly')) return const Duration(days: 30);
-    if (id.contains('yearly')) return const Duration(days: 365);
+    if (id.endsWith('month_1')) return const Duration(days: 30);
+    if (id.endsWith('month_3')) return const Duration(days: 90);
+    if (id.endsWith('year_1')) return const Duration(days: 365);
     return const Duration(days: 30); // Default to monthly
   }
 

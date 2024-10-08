@@ -119,6 +119,7 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
         .where((final product) => product.id.startsWith('subscription_'))
         .map(
           (final product) => PurchaseProductDetails(
+            formattedPrice: product.price,
             productId: ProductId(product.id),
             productType: PurchaseProductType.subscription,
             name: product.title,
@@ -140,6 +141,7 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
         .map(
           (final product) => PurchaseProductDetails(
             productId: ProductId(product.id),
+            formattedPrice: product.price,
             productType: PurchaseProductType.consumable,
             duration: Duration.zero,
             name: product.title,
@@ -160,6 +162,7 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
         .map(
           (final product) => PurchaseProductDetails(
             productId: ProductId(product.id),
+            formattedPrice: product.price,
             duration: Duration.zero,
             productType: PurchaseProductType.nonConsumable,
             name: product.title,
