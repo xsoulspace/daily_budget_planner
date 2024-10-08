@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_catches_without_on_clauses
 
+import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart' as iap;
 
 import 'abstract_purchase_manager.dart';
@@ -14,7 +15,19 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   Future<bool> isAvailable() => _inAppPurchase.isAvailable();
 
   @override
-  Future<PurchaseResult> buyConsumable(final ConsumableDetails details) async {
+  Future<bool> init() async {
+    try {
+      return await _inAppPurchase.isAvailable();
+    } catch (e) {
+      debugPrint('InAppPurchaseManager.init: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<PurchaseResult> buyConsumable(
+    final PurchaseProductDetails details,
+  ) async {
     try {
       throw UnimplementedError();
       // final productDetails = await _getProductDetails(details.productId.value);
@@ -42,7 +55,7 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
 
   @override
   Future<PurchaseResult> buyNonConsumable(
-    final NonConsumableDetails details,
+    final PurchaseProductDetails details,
   ) async {
     try {
       throw UnimplementedError();
@@ -70,7 +83,7 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<PurchaseResult> subscribe(final SubscriptionDetails details) async {
+  Future<PurchaseResult> subscribe(final PurchaseProductDetails details) async {
     try {
       throw UnimplementedError();
       // final productDetails = await _getProductDetails(details.productId.value);
@@ -98,15 +111,16 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableSubscription>> getSubscriptions(
+  Future<List<PurchaseProductDetails>> getSubscriptions(
     final List<ProductId> productIds,
   ) async {
     final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('subscription_'))
         .map(
-          (final product) => AvailableSubscription(
+          (final product) => PurchaseProductDetails(
             productId: ProductId(product.id),
+            productType: PurchaseProductType.subscription,
             name: product.title,
             price: product.rawPrice,
             currency: product.currencyCode,
@@ -117,15 +131,17 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableConsumable>> getConsumables(
+  Future<List<PurchaseProductDetails>> getConsumables(
     final List<ProductId> productIds,
   ) async {
     final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('consumable_'))
         .map(
-          (final product) => AvailableConsumable(
+          (final product) => PurchaseProductDetails(
             productId: ProductId(product.id),
+            productType: PurchaseProductType.consumable,
+            duration: Duration.zero,
             name: product.title,
             price: product.rawPrice,
             currency: product.currencyCode,
@@ -135,15 +151,17 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableNonConsumable>> getNonConsumables(
+  Future<List<PurchaseProductDetails>> getNonConsumables(
     final List<ProductId> productIds,
   ) async {
     final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('non_consumable_'))
         .map(
-          (final product) => AvailableNonConsumable(
+          (final product) => PurchaseProductDetails(
             productId: ProductId(product.id),
+            duration: Duration.zero,
+            productType: PurchaseProductType.nonConsumable,
             name: product.title,
             price: product.rawPrice,
             currency: product.currencyCode,
@@ -196,7 +214,7 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<CancelResult> cancel(final SubscriptionDetails details) async {
+  Future<CancelResult> cancel(final PurchaseProductDetails details) async {
     // Cancellation might not be directly available in in_app_purchase package
     throw UnimplementedError();
   }

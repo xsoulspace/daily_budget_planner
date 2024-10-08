@@ -6,117 +6,36 @@ part of 'abstract_purchase_manager.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SubscriptionDetailsImpl _$$SubscriptionDetailsImplFromJson(
+_$PurchaseProductDetailsImpl _$$PurchaseProductDetailsImplFromJson(
         Map<String, dynamic> json) =>
-    _$SubscriptionDetailsImpl(
+    _$PurchaseProductDetailsImpl(
       productId: ProductId.fromJson(json['productId']),
+      productType:
+          $enumDecode(_$PurchaseProductTypeEnumMap, json['productType']),
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String,
       duration: Duration(microseconds: (json['duration'] as num).toInt()),
+      description: json['description'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$SubscriptionDetailsImplToJson(
-        _$SubscriptionDetailsImpl instance) =>
+Map<String, dynamic> _$$PurchaseProductDetailsImplToJson(
+        _$PurchaseProductDetailsImpl instance) =>
     <String, dynamic>{
       'productId': instance.productId,
+      'productType': instance.productType,
       'name': instance.name,
       'price': instance.price,
       'currency': instance.currency,
       'duration': instance.duration.inMicroseconds,
+      'description': instance.description,
     };
 
-_$ConsumableDetailsImpl _$$ConsumableDetailsImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ConsumableDetailsImpl(
-      productId: ProductId.fromJson(json['productId']),
-      name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
-      currency: json['currency'] as String,
-    );
-
-Map<String, dynamic> _$$ConsumableDetailsImplToJson(
-        _$ConsumableDetailsImpl instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'name': instance.name,
-      'price': instance.price,
-      'currency': instance.currency,
-    };
-
-_$NonConsumableDetailsImpl _$$NonConsumableDetailsImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NonConsumableDetailsImpl(
-      productId: ProductId.fromJson(json['productId']),
-      name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
-      currency: json['currency'] as String,
-    );
-
-Map<String, dynamic> _$$NonConsumableDetailsImplToJson(
-        _$NonConsumableDetailsImpl instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'name': instance.name,
-      'price': instance.price,
-      'currency': instance.currency,
-    };
-
-_$AvailableSubscriptionImpl _$$AvailableSubscriptionImplFromJson(
-        Map<String, dynamic> json) =>
-    _$AvailableSubscriptionImpl(
-      productId: ProductId.fromJson(json['productId']),
-      name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
-      currency: json['currency'] as String,
-      duration: Duration(microseconds: (json['duration'] as num).toInt()),
-    );
-
-Map<String, dynamic> _$$AvailableSubscriptionImplToJson(
-        _$AvailableSubscriptionImpl instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'name': instance.name,
-      'price': instance.price,
-      'currency': instance.currency,
-      'duration': instance.duration.inMicroseconds,
-    };
-
-_$AvailableConsumableImpl _$$AvailableConsumableImplFromJson(
-        Map<String, dynamic> json) =>
-    _$AvailableConsumableImpl(
-      productId: ProductId.fromJson(json['productId']),
-      name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
-      currency: json['currency'] as String,
-    );
-
-Map<String, dynamic> _$$AvailableConsumableImplToJson(
-        _$AvailableConsumableImpl instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'name': instance.name,
-      'price': instance.price,
-      'currency': instance.currency,
-    };
-
-_$AvailableNonConsumableImpl _$$AvailableNonConsumableImplFromJson(
-        Map<String, dynamic> json) =>
-    _$AvailableNonConsumableImpl(
-      productId: ProductId.fromJson(json['productId']),
-      name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
-      currency: json['currency'] as String,
-    );
-
-Map<String, dynamic> _$$AvailableNonConsumableImplToJson(
-        _$AvailableNonConsumableImpl instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'name': instance.name,
-      'price': instance.price,
-      'currency': instance.currency,
-    };
+const _$PurchaseProductTypeEnumMap = {
+  PurchaseProductType.consumable: 'consumable',
+  PurchaseProductType.nonConsumable: 'nonConsumable',
+  PurchaseProductType.subscription: 'subscription',
+};
 
 _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
         Map<String, dynamic> json) =>
@@ -127,7 +46,8 @@ _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String,
       purchaseDate: DateTime.parse(json['purchaseDate'] as String),
-      purchaseType: $enumDecode(_$PurchaseTypeEnumMap, json['purchaseType']),
+      purchaseType:
+          $enumDecode(_$PurchaseProductTypeEnumMap, json['purchaseType']),
       expiryDate: json['expiryDate'] == null
           ? null
           : DateTime.parse(json['expiryDate'] as String),
@@ -142,15 +62,9 @@ Map<String, dynamic> _$$PurchaseDetailsImplToJson(
       'price': instance.price,
       'currency': instance.currency,
       'purchaseDate': instance.purchaseDate.toIso8601String(),
-      'purchaseType': _$PurchaseTypeEnumMap[instance.purchaseType]!,
+      'purchaseType': instance.purchaseType,
       'expiryDate': instance.expiryDate?.toIso8601String(),
     };
-
-const _$PurchaseTypeEnumMap = {
-  PurchaseType.consumable: 'consumable',
-  PurchaseType.nonConsumable: 'nonConsumable',
-  PurchaseType.subscription: 'subscription',
-};
 
 _$PurchaseSuccessImpl _$$PurchaseSuccessImplFromJson(
         Map<String, dynamic> json) =>

@@ -14,68 +14,80 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-SubscriptionDetails _$SubscriptionDetailsFromJson(Map<String, dynamic> json) {
-  return _SubscriptionDetails.fromJson(json);
+PurchaseProductDetails _$PurchaseProductDetailsFromJson(
+    Map<String, dynamic> json) {
+  return _PurchaseProductDetails.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SubscriptionDetails {
+mixin _$PurchaseProductDetails {
   ProductId get productId => throw _privateConstructorUsedError;
+  PurchaseProductType get productType => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
 
-  /// Serializes this SubscriptionDetails to a JSON map.
+  /// Serializes this PurchaseProductDetails to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of SubscriptionDetails
+  /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SubscriptionDetailsCopyWith<SubscriptionDetails> get copyWith =>
+  $PurchaseProductDetailsCopyWith<PurchaseProductDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SubscriptionDetailsCopyWith<$Res> {
-  factory $SubscriptionDetailsCopyWith(
-          SubscriptionDetails value, $Res Function(SubscriptionDetails) then) =
-      _$SubscriptionDetailsCopyWithImpl<$Res, SubscriptionDetails>;
+abstract class $PurchaseProductDetailsCopyWith<$Res> {
+  factory $PurchaseProductDetailsCopyWith(PurchaseProductDetails value,
+          $Res Function(PurchaseProductDetails) then) =
+      _$PurchaseProductDetailsCopyWithImpl<$Res, PurchaseProductDetails>;
   @useResult
   $Res call(
       {ProductId productId,
+      PurchaseProductType productType,
       String name,
       double price,
       String currency,
-      Duration duration});
+      Duration duration,
+      String description});
 }
 
 /// @nodoc
-class _$SubscriptionDetailsCopyWithImpl<$Res, $Val extends SubscriptionDetails>
-    implements $SubscriptionDetailsCopyWith<$Res> {
-  _$SubscriptionDetailsCopyWithImpl(this._value, this._then);
+class _$PurchaseProductDetailsCopyWithImpl<$Res,
+        $Val extends PurchaseProductDetails>
+    implements $PurchaseProductDetailsCopyWith<$Res> {
+  _$PurchaseProductDetailsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SubscriptionDetails
+  /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? productId = null,
+    Object? productType = null,
     Object? name = null,
     Object? price = null,
     Object? currency = null,
     Object? duration = null,
+    Object? description = null,
   }) {
     return _then(_value.copyWith(
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as ProductId,
+      productType: null == productType
+          ? _value.productType
+          : productType // ignore: cast_nullable_to_non_nullable
+              as PurchaseProductType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -92,50 +104,65 @@ class _$SubscriptionDetailsCopyWithImpl<$Res, $Val extends SubscriptionDetails>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$SubscriptionDetailsImplCopyWith<$Res>
-    implements $SubscriptionDetailsCopyWith<$Res> {
-  factory _$$SubscriptionDetailsImplCopyWith(_$SubscriptionDetailsImpl value,
-          $Res Function(_$SubscriptionDetailsImpl) then) =
-      __$$SubscriptionDetailsImplCopyWithImpl<$Res>;
+abstract class _$$PurchaseProductDetailsImplCopyWith<$Res>
+    implements $PurchaseProductDetailsCopyWith<$Res> {
+  factory _$$PurchaseProductDetailsImplCopyWith(
+          _$PurchaseProductDetailsImpl value,
+          $Res Function(_$PurchaseProductDetailsImpl) then) =
+      __$$PurchaseProductDetailsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {ProductId productId,
+      PurchaseProductType productType,
       String name,
       double price,
       String currency,
-      Duration duration});
+      Duration duration,
+      String description});
 }
 
 /// @nodoc
-class __$$SubscriptionDetailsImplCopyWithImpl<$Res>
-    extends _$SubscriptionDetailsCopyWithImpl<$Res, _$SubscriptionDetailsImpl>
-    implements _$$SubscriptionDetailsImplCopyWith<$Res> {
-  __$$SubscriptionDetailsImplCopyWithImpl(_$SubscriptionDetailsImpl _value,
-      $Res Function(_$SubscriptionDetailsImpl) _then)
+class __$$PurchaseProductDetailsImplCopyWithImpl<$Res>
+    extends _$PurchaseProductDetailsCopyWithImpl<$Res,
+        _$PurchaseProductDetailsImpl>
+    implements _$$PurchaseProductDetailsImplCopyWith<$Res> {
+  __$$PurchaseProductDetailsImplCopyWithImpl(
+      _$PurchaseProductDetailsImpl _value,
+      $Res Function(_$PurchaseProductDetailsImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SubscriptionDetails
+  /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? productId = null,
+    Object? productType = null,
     Object? name = null,
     Object? price = null,
     Object? currency = null,
     Object? duration = null,
+    Object? description = null,
   }) {
-    return _then(_$SubscriptionDetailsImpl(
+    return _then(_$PurchaseProductDetailsImpl(
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as ProductId,
+      productType: null == productType
+          ? _value.productType
+          : productType // ignore: cast_nullable_to_non_nullable
+              as PurchaseProductType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -152,25 +179,33 @@ class __$$SubscriptionDetailsImplCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SubscriptionDetailsImpl implements _SubscriptionDetails {
-  const _$SubscriptionDetailsImpl(
+class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
+  const _$PurchaseProductDetailsImpl(
       {required this.productId,
+      required this.productType,
       required this.name,
       required this.price,
       required this.currency,
-      required this.duration});
+      required this.duration,
+      this.description = ''});
 
-  factory _$SubscriptionDetailsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SubscriptionDetailsImplFromJson(json);
+  factory _$PurchaseProductDetailsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PurchaseProductDetailsImplFromJson(json);
 
   @override
   final ProductId productId;
+  @override
+  final PurchaseProductType productType;
   @override
   final String name;
   @override
@@ -179,62 +214,73 @@ class _$SubscriptionDetailsImpl implements _SubscriptionDetails {
   final String currency;
   @override
   final Duration duration;
+  @override
+  @JsonKey()
+  final String description;
 
   @override
   String toString() {
-    return 'SubscriptionDetails(productId: $productId, name: $name, price: $price, currency: $currency, duration: $duration)';
+    return 'PurchaseProductDetails(productId: $productId, productType: $productType, name: $name, price: $price, currency: $currency, duration: $duration, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SubscriptionDetailsImpl &&
+            other is _$PurchaseProductDetailsImpl &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
+            (identical(other.productType, productType) ||
+                other.productType == productType) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.duration, duration) ||
-                other.duration == duration));
+                other.duration == duration) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, productId, name, price, currency, duration);
+  int get hashCode => Object.hash(runtimeType, productId, productType, name,
+      price, currency, duration, description);
 
-  /// Create a copy of SubscriptionDetails
+  /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SubscriptionDetailsImplCopyWith<_$SubscriptionDetailsImpl> get copyWith =>
-      __$$SubscriptionDetailsImplCopyWithImpl<_$SubscriptionDetailsImpl>(
-          this, _$identity);
+  _$$PurchaseProductDetailsImplCopyWith<_$PurchaseProductDetailsImpl>
+      get copyWith => __$$PurchaseProductDetailsImplCopyWithImpl<
+          _$PurchaseProductDetailsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SubscriptionDetailsImplToJson(
+    return _$$PurchaseProductDetailsImplToJson(
       this,
     );
   }
 }
 
-abstract class _SubscriptionDetails implements SubscriptionDetails {
-  const factory _SubscriptionDetails(
+abstract class _PurchaseProductDetails implements PurchaseProductDetails {
+  const factory _PurchaseProductDetails(
       {required final ProductId productId,
+      required final PurchaseProductType productType,
       required final String name,
       required final double price,
       required final String currency,
-      required final Duration duration}) = _$SubscriptionDetailsImpl;
+      required final Duration duration,
+      final String description}) = _$PurchaseProductDetailsImpl;
 
-  factory _SubscriptionDetails.fromJson(Map<String, dynamic> json) =
-      _$SubscriptionDetailsImpl.fromJson;
+  factory _PurchaseProductDetails.fromJson(Map<String, dynamic> json) =
+      _$PurchaseProductDetailsImpl.fromJson;
 
   @override
   ProductId get productId;
+  @override
+  PurchaseProductType get productType;
   @override
   String get name;
   @override
@@ -243,1097 +289,14 @@ abstract class _SubscriptionDetails implements SubscriptionDetails {
   String get currency;
   @override
   Duration get duration;
+  @override
+  String get description;
 
-  /// Create a copy of SubscriptionDetails
+  /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SubscriptionDetailsImplCopyWith<_$SubscriptionDetailsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ConsumableDetails _$ConsumableDetailsFromJson(Map<String, dynamic> json) {
-  return _ConsumableDetails.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ConsumableDetails {
-  ProductId get productId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  double get price => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-
-  /// Serializes this ConsumableDetails to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ConsumableDetailsCopyWith<ConsumableDetails> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ConsumableDetailsCopyWith<$Res> {
-  factory $ConsumableDetailsCopyWith(
-          ConsumableDetails value, $Res Function(ConsumableDetails) then) =
-      _$ConsumableDetailsCopyWithImpl<$Res, ConsumableDetails>;
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class _$ConsumableDetailsCopyWithImpl<$Res, $Val extends ConsumableDetails>
-    implements $ConsumableDetailsCopyWith<$Res> {
-  _$ConsumableDetailsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_value.copyWith(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ConsumableDetailsImplCopyWith<$Res>
-    implements $ConsumableDetailsCopyWith<$Res> {
-  factory _$$ConsumableDetailsImplCopyWith(_$ConsumableDetailsImpl value,
-          $Res Function(_$ConsumableDetailsImpl) then) =
-      __$$ConsumableDetailsImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class __$$ConsumableDetailsImplCopyWithImpl<$Res>
-    extends _$ConsumableDetailsCopyWithImpl<$Res, _$ConsumableDetailsImpl>
-    implements _$$ConsumableDetailsImplCopyWith<$Res> {
-  __$$ConsumableDetailsImplCopyWithImpl(_$ConsumableDetailsImpl _value,
-      $Res Function(_$ConsumableDetailsImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_$ConsumableDetailsImpl(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ConsumableDetailsImpl implements _ConsumableDetails {
-  const _$ConsumableDetailsImpl(
-      {required this.productId,
-      required this.name,
-      required this.price,
-      required this.currency});
-
-  factory _$ConsumableDetailsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ConsumableDetailsImplFromJson(json);
-
-  @override
-  final ProductId productId;
-  @override
-  final String name;
-  @override
-  final double price;
-  @override
-  final String currency;
-
-  @override
-  String toString() {
-    return 'ConsumableDetails(productId: $productId, name: $name, price: $price, currency: $currency)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ConsumableDetailsImpl &&
-            (identical(other.productId, productId) ||
-                other.productId == productId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, productId, name, price, currency);
-
-  /// Create a copy of ConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ConsumableDetailsImplCopyWith<_$ConsumableDetailsImpl> get copyWith =>
-      __$$ConsumableDetailsImplCopyWithImpl<_$ConsumableDetailsImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ConsumableDetailsImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ConsumableDetails implements ConsumableDetails {
-  const factory _ConsumableDetails(
-      {required final ProductId productId,
-      required final String name,
-      required final double price,
-      required final String currency}) = _$ConsumableDetailsImpl;
-
-  factory _ConsumableDetails.fromJson(Map<String, dynamic> json) =
-      _$ConsumableDetailsImpl.fromJson;
-
-  @override
-  ProductId get productId;
-  @override
-  String get name;
-  @override
-  double get price;
-  @override
-  String get currency;
-
-  /// Create a copy of ConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ConsumableDetailsImplCopyWith<_$ConsumableDetailsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-NonConsumableDetails _$NonConsumableDetailsFromJson(Map<String, dynamic> json) {
-  return _NonConsumableDetails.fromJson(json);
-}
-
-/// @nodoc
-mixin _$NonConsumableDetails {
-  ProductId get productId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  double get price => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-
-  /// Serializes this NonConsumableDetails to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of NonConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $NonConsumableDetailsCopyWith<NonConsumableDetails> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NonConsumableDetailsCopyWith<$Res> {
-  factory $NonConsumableDetailsCopyWith(NonConsumableDetails value,
-          $Res Function(NonConsumableDetails) then) =
-      _$NonConsumableDetailsCopyWithImpl<$Res, NonConsumableDetails>;
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class _$NonConsumableDetailsCopyWithImpl<$Res,
-        $Val extends NonConsumableDetails>
-    implements $NonConsumableDetailsCopyWith<$Res> {
-  _$NonConsumableDetailsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of NonConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_value.copyWith(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$NonConsumableDetailsImplCopyWith<$Res>
-    implements $NonConsumableDetailsCopyWith<$Res> {
-  factory _$$NonConsumableDetailsImplCopyWith(_$NonConsumableDetailsImpl value,
-          $Res Function(_$NonConsumableDetailsImpl) then) =
-      __$$NonConsumableDetailsImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class __$$NonConsumableDetailsImplCopyWithImpl<$Res>
-    extends _$NonConsumableDetailsCopyWithImpl<$Res, _$NonConsumableDetailsImpl>
-    implements _$$NonConsumableDetailsImplCopyWith<$Res> {
-  __$$NonConsumableDetailsImplCopyWithImpl(_$NonConsumableDetailsImpl _value,
-      $Res Function(_$NonConsumableDetailsImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of NonConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_$NonConsumableDetailsImpl(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$NonConsumableDetailsImpl implements _NonConsumableDetails {
-  const _$NonConsumableDetailsImpl(
-      {required this.productId,
-      required this.name,
-      required this.price,
-      required this.currency});
-
-  factory _$NonConsumableDetailsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NonConsumableDetailsImplFromJson(json);
-
-  @override
-  final ProductId productId;
-  @override
-  final String name;
-  @override
-  final double price;
-  @override
-  final String currency;
-
-  @override
-  String toString() {
-    return 'NonConsumableDetails(productId: $productId, name: $name, price: $price, currency: $currency)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$NonConsumableDetailsImpl &&
-            (identical(other.productId, productId) ||
-                other.productId == productId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, productId, name, price, currency);
-
-  /// Create a copy of NonConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$NonConsumableDetailsImplCopyWith<_$NonConsumableDetailsImpl>
-      get copyWith =>
-          __$$NonConsumableDetailsImplCopyWithImpl<_$NonConsumableDetailsImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$NonConsumableDetailsImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _NonConsumableDetails implements NonConsumableDetails {
-  const factory _NonConsumableDetails(
-      {required final ProductId productId,
-      required final String name,
-      required final double price,
-      required final String currency}) = _$NonConsumableDetailsImpl;
-
-  factory _NonConsumableDetails.fromJson(Map<String, dynamic> json) =
-      _$NonConsumableDetailsImpl.fromJson;
-
-  @override
-  ProductId get productId;
-  @override
-  String get name;
-  @override
-  double get price;
-  @override
-  String get currency;
-
-  /// Create a copy of NonConsumableDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NonConsumableDetailsImplCopyWith<_$NonConsumableDetailsImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-AvailableSubscription _$AvailableSubscriptionFromJson(
-    Map<String, dynamic> json) {
-  return _AvailableSubscription.fromJson(json);
-}
-
-/// @nodoc
-mixin _$AvailableSubscription {
-  ProductId get productId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  double get price => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-  Duration get duration => throw _privateConstructorUsedError;
-
-  /// Serializes this AvailableSubscription to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of AvailableSubscription
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AvailableSubscriptionCopyWith<AvailableSubscription> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AvailableSubscriptionCopyWith<$Res> {
-  factory $AvailableSubscriptionCopyWith(AvailableSubscription value,
-          $Res Function(AvailableSubscription) then) =
-      _$AvailableSubscriptionCopyWithImpl<$Res, AvailableSubscription>;
-  @useResult
-  $Res call(
-      {ProductId productId,
-      String name,
-      double price,
-      String currency,
-      Duration duration});
-}
-
-/// @nodoc
-class _$AvailableSubscriptionCopyWithImpl<$Res,
-        $Val extends AvailableSubscription>
-    implements $AvailableSubscriptionCopyWith<$Res> {
-  _$AvailableSubscriptionCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of AvailableSubscription
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-    Object? duration = null,
-  }) {
-    return _then(_value.copyWith(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$AvailableSubscriptionImplCopyWith<$Res>
-    implements $AvailableSubscriptionCopyWith<$Res> {
-  factory _$$AvailableSubscriptionImplCopyWith(
-          _$AvailableSubscriptionImpl value,
-          $Res Function(_$AvailableSubscriptionImpl) then) =
-      __$$AvailableSubscriptionImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {ProductId productId,
-      String name,
-      double price,
-      String currency,
-      Duration duration});
-}
-
-/// @nodoc
-class __$$AvailableSubscriptionImplCopyWithImpl<$Res>
-    extends _$AvailableSubscriptionCopyWithImpl<$Res,
-        _$AvailableSubscriptionImpl>
-    implements _$$AvailableSubscriptionImplCopyWith<$Res> {
-  __$$AvailableSubscriptionImplCopyWithImpl(_$AvailableSubscriptionImpl _value,
-      $Res Function(_$AvailableSubscriptionImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of AvailableSubscription
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-    Object? duration = null,
-  }) {
-    return _then(_$AvailableSubscriptionImpl(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$AvailableSubscriptionImpl implements _AvailableSubscription {
-  const _$AvailableSubscriptionImpl(
-      {required this.productId,
-      required this.name,
-      required this.price,
-      required this.currency,
-      required this.duration});
-
-  factory _$AvailableSubscriptionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AvailableSubscriptionImplFromJson(json);
-
-  @override
-  final ProductId productId;
-  @override
-  final String name;
-  @override
-  final double price;
-  @override
-  final String currency;
-  @override
-  final Duration duration;
-
-  @override
-  String toString() {
-    return 'AvailableSubscription(productId: $productId, name: $name, price: $price, currency: $currency, duration: $duration)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AvailableSubscriptionImpl &&
-            (identical(other.productId, productId) ||
-                other.productId == productId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, productId, name, price, currency, duration);
-
-  /// Create a copy of AvailableSubscription
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AvailableSubscriptionImplCopyWith<_$AvailableSubscriptionImpl>
-      get copyWith => __$$AvailableSubscriptionImplCopyWithImpl<
-          _$AvailableSubscriptionImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AvailableSubscriptionImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _AvailableSubscription implements AvailableSubscription {
-  const factory _AvailableSubscription(
-      {required final ProductId productId,
-      required final String name,
-      required final double price,
-      required final String currency,
-      required final Duration duration}) = _$AvailableSubscriptionImpl;
-
-  factory _AvailableSubscription.fromJson(Map<String, dynamic> json) =
-      _$AvailableSubscriptionImpl.fromJson;
-
-  @override
-  ProductId get productId;
-  @override
-  String get name;
-  @override
-  double get price;
-  @override
-  String get currency;
-  @override
-  Duration get duration;
-
-  /// Create a copy of AvailableSubscription
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AvailableSubscriptionImplCopyWith<_$AvailableSubscriptionImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-AvailableConsumable _$AvailableConsumableFromJson(Map<String, dynamic> json) {
-  return _AvailableConsumable.fromJson(json);
-}
-
-/// @nodoc
-mixin _$AvailableConsumable {
-  ProductId get productId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  double get price => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-
-  /// Serializes this AvailableConsumable to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of AvailableConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AvailableConsumableCopyWith<AvailableConsumable> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AvailableConsumableCopyWith<$Res> {
-  factory $AvailableConsumableCopyWith(
-          AvailableConsumable value, $Res Function(AvailableConsumable) then) =
-      _$AvailableConsumableCopyWithImpl<$Res, AvailableConsumable>;
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class _$AvailableConsumableCopyWithImpl<$Res, $Val extends AvailableConsumable>
-    implements $AvailableConsumableCopyWith<$Res> {
-  _$AvailableConsumableCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of AvailableConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_value.copyWith(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$AvailableConsumableImplCopyWith<$Res>
-    implements $AvailableConsumableCopyWith<$Res> {
-  factory _$$AvailableConsumableImplCopyWith(_$AvailableConsumableImpl value,
-          $Res Function(_$AvailableConsumableImpl) then) =
-      __$$AvailableConsumableImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class __$$AvailableConsumableImplCopyWithImpl<$Res>
-    extends _$AvailableConsumableCopyWithImpl<$Res, _$AvailableConsumableImpl>
-    implements _$$AvailableConsumableImplCopyWith<$Res> {
-  __$$AvailableConsumableImplCopyWithImpl(_$AvailableConsumableImpl _value,
-      $Res Function(_$AvailableConsumableImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of AvailableConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_$AvailableConsumableImpl(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$AvailableConsumableImpl implements _AvailableConsumable {
-  const _$AvailableConsumableImpl(
-      {required this.productId,
-      required this.name,
-      required this.price,
-      required this.currency});
-
-  factory _$AvailableConsumableImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AvailableConsumableImplFromJson(json);
-
-  @override
-  final ProductId productId;
-  @override
-  final String name;
-  @override
-  final double price;
-  @override
-  final String currency;
-
-  @override
-  String toString() {
-    return 'AvailableConsumable(productId: $productId, name: $name, price: $price, currency: $currency)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AvailableConsumableImpl &&
-            (identical(other.productId, productId) ||
-                other.productId == productId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, productId, name, price, currency);
-
-  /// Create a copy of AvailableConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AvailableConsumableImplCopyWith<_$AvailableConsumableImpl> get copyWith =>
-      __$$AvailableConsumableImplCopyWithImpl<_$AvailableConsumableImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AvailableConsumableImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _AvailableConsumable implements AvailableConsumable {
-  const factory _AvailableConsumable(
-      {required final ProductId productId,
-      required final String name,
-      required final double price,
-      required final String currency}) = _$AvailableConsumableImpl;
-
-  factory _AvailableConsumable.fromJson(Map<String, dynamic> json) =
-      _$AvailableConsumableImpl.fromJson;
-
-  @override
-  ProductId get productId;
-  @override
-  String get name;
-  @override
-  double get price;
-  @override
-  String get currency;
-
-  /// Create a copy of AvailableConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AvailableConsumableImplCopyWith<_$AvailableConsumableImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-AvailableNonConsumable _$AvailableNonConsumableFromJson(
-    Map<String, dynamic> json) {
-  return _AvailableNonConsumable.fromJson(json);
-}
-
-/// @nodoc
-mixin _$AvailableNonConsumable {
-  ProductId get productId => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  double get price => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-
-  /// Serializes this AvailableNonConsumable to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of AvailableNonConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AvailableNonConsumableCopyWith<AvailableNonConsumable> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AvailableNonConsumableCopyWith<$Res> {
-  factory $AvailableNonConsumableCopyWith(AvailableNonConsumable value,
-          $Res Function(AvailableNonConsumable) then) =
-      _$AvailableNonConsumableCopyWithImpl<$Res, AvailableNonConsumable>;
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class _$AvailableNonConsumableCopyWithImpl<$Res,
-        $Val extends AvailableNonConsumable>
-    implements $AvailableNonConsumableCopyWith<$Res> {
-  _$AvailableNonConsumableCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of AvailableNonConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_value.copyWith(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$AvailableNonConsumableImplCopyWith<$Res>
-    implements $AvailableNonConsumableCopyWith<$Res> {
-  factory _$$AvailableNonConsumableImplCopyWith(
-          _$AvailableNonConsumableImpl value,
-          $Res Function(_$AvailableNonConsumableImpl) then) =
-      __$$AvailableNonConsumableImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ProductId productId, String name, double price, String currency});
-}
-
-/// @nodoc
-class __$$AvailableNonConsumableImplCopyWithImpl<$Res>
-    extends _$AvailableNonConsumableCopyWithImpl<$Res,
-        _$AvailableNonConsumableImpl>
-    implements _$$AvailableNonConsumableImplCopyWith<$Res> {
-  __$$AvailableNonConsumableImplCopyWithImpl(
-      _$AvailableNonConsumableImpl _value,
-      $Res Function(_$AvailableNonConsumableImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of AvailableNonConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? name = null,
-    Object? price = null,
-    Object? currency = null,
-  }) {
-    return _then(_$AvailableNonConsumableImpl(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$AvailableNonConsumableImpl implements _AvailableNonConsumable {
-  const _$AvailableNonConsumableImpl(
-      {required this.productId,
-      required this.name,
-      required this.price,
-      required this.currency});
-
-  factory _$AvailableNonConsumableImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AvailableNonConsumableImplFromJson(json);
-
-  @override
-  final ProductId productId;
-  @override
-  final String name;
-  @override
-  final double price;
-  @override
-  final String currency;
-
-  @override
-  String toString() {
-    return 'AvailableNonConsumable(productId: $productId, name: $name, price: $price, currency: $currency)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AvailableNonConsumableImpl &&
-            (identical(other.productId, productId) ||
-                other.productId == productId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, productId, name, price, currency);
-
-  /// Create a copy of AvailableNonConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AvailableNonConsumableImplCopyWith<_$AvailableNonConsumableImpl>
-      get copyWith => __$$AvailableNonConsumableImplCopyWithImpl<
-          _$AvailableNonConsumableImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AvailableNonConsumableImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _AvailableNonConsumable implements AvailableNonConsumable {
-  const factory _AvailableNonConsumable(
-      {required final ProductId productId,
-      required final String name,
-      required final double price,
-      required final String currency}) = _$AvailableNonConsumableImpl;
-
-  factory _AvailableNonConsumable.fromJson(Map<String, dynamic> json) =
-      _$AvailableNonConsumableImpl.fromJson;
-
-  @override
-  ProductId get productId;
-  @override
-  String get name;
-  @override
-  double get price;
-  @override
-  String get currency;
-
-  /// Create a copy of AvailableNonConsumable
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AvailableNonConsumableImplCopyWith<_$AvailableNonConsumableImpl>
+  _$$PurchaseProductDetailsImplCopyWith<_$PurchaseProductDetailsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1349,7 +312,7 @@ mixin _$PurchaseDetails {
   double get price => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   DateTime get purchaseDate => throw _privateConstructorUsedError;
-  PurchaseType get purchaseType => throw _privateConstructorUsedError;
+  PurchaseProductType get purchaseType => throw _privateConstructorUsedError;
   DateTime? get expiryDate => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseDetails to a JSON map.
@@ -1375,7 +338,7 @@ abstract class $PurchaseDetailsCopyWith<$Res> {
       double price,
       String currency,
       DateTime purchaseDate,
-      PurchaseType purchaseType,
+      PurchaseProductType purchaseType,
       DateTime? expiryDate});
 }
 
@@ -1431,7 +394,7 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
       purchaseType: null == purchaseType
           ? _value.purchaseType
           : purchaseType // ignore: cast_nullable_to_non_nullable
-              as PurchaseType,
+              as PurchaseProductType,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
@@ -1455,7 +418,7 @@ abstract class _$$PurchaseDetailsImplCopyWith<$Res>
       double price,
       String currency,
       DateTime purchaseDate,
-      PurchaseType purchaseType,
+      PurchaseProductType purchaseType,
       DateTime? expiryDate});
 }
 
@@ -1509,7 +472,7 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
       purchaseType: null == purchaseType
           ? _value.purchaseType
           : purchaseType // ignore: cast_nullable_to_non_nullable
-              as PurchaseType,
+              as PurchaseProductType,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
@@ -1547,7 +510,7 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
   @override
   final DateTime purchaseDate;
   @override
-  final PurchaseType purchaseType;
+  final PurchaseProductType purchaseType;
   @override
   final DateTime? expiryDate;
 
@@ -1607,7 +570,7 @@ abstract class _PurchaseDetails implements PurchaseDetails {
       required final double price,
       required final String currency,
       required final DateTime purchaseDate,
-      required final PurchaseType purchaseType,
+      required final PurchaseProductType purchaseType,
       final DateTime? expiryDate}) = _$PurchaseDetailsImpl;
 
   factory _PurchaseDetails.fromJson(Map<String, dynamic> json) =
@@ -1626,7 +589,7 @@ abstract class _PurchaseDetails implements PurchaseDetails {
   @override
   DateTime get purchaseDate;
   @override
-  PurchaseType get purchaseType;
+  PurchaseProductType get purchaseType;
   @override
   DateTime? get expiryDate;
 

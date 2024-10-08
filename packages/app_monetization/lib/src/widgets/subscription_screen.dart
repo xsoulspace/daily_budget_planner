@@ -20,7 +20,7 @@ class SubscriptionScreen extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Subscription Options')),
-        body: FutureBuilder<List<AvailableSubscription>>(
+        body: FutureBuilder<List<PurchaseProductDetails>>(
           // ignore: discarded_futures
           future: purchaseManager.getSubscriptions(productIds),
           builder: (final context, final snapshot) {
@@ -43,13 +43,7 @@ class SubscriptionScreen extends StatelessWidget {
                   trailing: ElevatedButton(
                     onPressed: () async {
                       final result = await purchaseManager.subscribe(
-                        SubscriptionDetails(
-                          productId: subscription.productId,
-                          name: subscription.name,
-                          price: subscription.price,
-                          currency: subscription.currency,
-                          duration: subscription.duration,
-                        ),
+                        subscription,
                       );
                       result.when(
                         success: (final _) =>

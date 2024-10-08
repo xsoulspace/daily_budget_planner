@@ -21,7 +21,7 @@ class PurchaseScreen extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Purchase Options')),
-        body: FutureBuilder<List<AvailableNonConsumable>>(
+        body: FutureBuilder<List<PurchaseProductDetails>>(
           // ignore: discarded_futures
           future: purchaseManager.getNonConsumables(productIds),
           builder: (final context, final snapshot) {
@@ -42,12 +42,7 @@ class PurchaseScreen extends StatelessWidget {
                   trailing: ElevatedButton(
                     onPressed: () async {
                       final result = await purchaseManager.buyNonConsumable(
-                        NonConsumableDetails(
-                          productId: purchase.productId,
-                          name: purchase.name,
-                          price: purchase.price,
-                          currency: purchase.currency,
-                        ),
+                        purchase,
                       );
                       result.when(
                         success: (final _) =>

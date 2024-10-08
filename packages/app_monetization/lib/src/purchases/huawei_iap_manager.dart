@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_catches_without_on_clauses
 
+import 'package:flutter/foundation.dart';
 import 'package:huawei_iap/huawei_iap.dart';
 
 import 'abstract_purchase_manager.dart';
@@ -8,19 +9,53 @@ import 'abstract_purchase_manager.dart';
 /// Implementation of [AbstractPurchaseManager] using Huawei IAP.
 /// {@endtemplate}
 class HuaweiIapManager implements AbstractPurchaseManager {
+  HuaweiIapManager({
+    required this.isSandbox,
+    this.enableLogger = false,
+  });
+  final bool isSandbox;
+  final bool enableLogger;
   @override
   Future<bool> isAvailable() async {
     try {
       final result = await IapClient.isEnvReady();
-      // return result.status == Status.success;
-      return false;
+
+      /// - `0`: Success
+      /// - `1`: Failure
+      /// - `404`: No resource found
+      /// - `500`: Internal error
+      return result.status?.statusCode == '0';
     } catch (e) {
+      debugPrint('HuaweiIapManager.isAvailable: $e');
       return false;
     }
   }
 
   @override
-  Future<PurchaseResult> buyConsumable(final ConsumableDetails details) async {
+  Future<bool> init() async {
+    try {
+      if (enableLogger) {
+        await IapClient.enableLogger();
+      }
+      if (isSandbox) {
+        final isSandbox = await IapClient.isSandboxActivated();
+        if (isSandbox.isSandboxApk == true) {
+          // ok
+        } else {
+          throw UnsupportedError('Sandbox is not available');
+        }
+      }
+      return true;
+    } catch (e) {
+      debugPrint('HuaweiIapManager.init: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<PurchaseResult> buyConsumable(
+    final PurchaseProductDetails details,
+  ) async {
     try {
       throw UnimplementedError();
       // final result = await IapClient.purchaseProduct(details.productId.value);
@@ -47,7 +82,7 @@ class HuaweiIapManager implements AbstractPurchaseManager {
 
   @override
   Future<PurchaseResult> buyNonConsumable(
-    final NonConsumableDetails details,
+    final PurchaseProductDetails details,
   ) async {
     // Implementation similar to buyConsumable
     try {
@@ -75,7 +110,7 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<PurchaseResult> subscribe(final SubscriptionDetails details) async {
+  Future<PurchaseResult> subscribe(final PurchaseProductDetails details) async {
     try {
       throw UnimplementedError();
       // final result = await IapClient.purchaseProduct(details.productId.value);
@@ -104,7 +139,7 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableSubscription>> getSubscriptions(
+  Future<List<PurchaseProductDetails>> getSubscriptions(
     final List<ProductId> productIds,
   ) async {
     try {
@@ -129,7 +164,7 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableConsumable>> getConsumables(
+  Future<List<PurchaseProductDetails>> getConsumables(
     final List<ProductId> productIds,
   ) async {
     try {
@@ -153,7 +188,7 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableNonConsumable>> getNonConsumables(
+  Future<List<PurchaseProductDetails>> getNonConsumables(
     final List<ProductId> productIds,
   ) async {
     try {
@@ -216,7 +251,7 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<CancelResult> cancel(final SubscriptionDetails details) async {
+  Future<CancelResult> cancel(final PurchaseProductDetails details) async {
     try {
       throw UnimplementedError();
       // final result =

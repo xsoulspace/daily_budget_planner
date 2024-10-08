@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
@@ -9,14 +10,49 @@ import 'abstract_purchase_manager.dart';
 
 /// {@template flutter_rustore_billing_manager}
 /// Implementation of [AbstractPurchaseManager] using RuStore Billing.
+///
+/// [consolApplicationId] is the application id of the console application.
+/// "123456",
+/// [deeplinkScheme] is the deeplink scheme of the application.
+/// "yourappscheme://iamback",
+/// [enableLogger] is the flag to enable logger.
 /// {@endtemplate}
 class FlutterRustoreBillingManager implements AbstractPurchaseManager {
+  FlutterRustoreBillingManager({
+    required this.consolApplicationId,
+    required this.deeplinkScheme,
+    this.enableLogger = false,
+  });
+  final String consolApplicationId;
+  final String deeplinkScheme;
+  final bool enableLogger;
   @override
   Future<bool> isAvailable() async => RustoreBillingClient.available();
 
   @override
-  Future<PurchaseResult> buyConsumable(final ConsumableDetails details) async {
+  Future<bool> init() async {
     try {
+      await RustoreBillingClient.initialize(
+        consolApplicationId,
+        deeplinkScheme,
+        enableLogger,
+      );
+      return true;
+    } catch (e) {
+      debugPrint('FlutterRustoreBillingManager.init: $e');
+      return false;
+    }
+  }
+
+  @override
+  Future<PurchaseResult> buyConsumable(
+    final PurchaseProductDetails details,
+  ) async {
+    try {
+      assert(
+        details.productType == PurchaseProductType.consumable,
+        'Product type must be consumable',
+      );
       final purchase =
           await RustoreBillingClient.purchase(details.productId.value, null);
       if (purchase.successPurchase == null) {
@@ -27,7 +63,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
       }
       return PurchaseResult.success(
         PurchaseDetails(
-          purchaseType: PurchaseType.consumable,
+          purchaseType: PurchaseProductType.consumable,
           purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
           productId: details.productId,
           name: details.name,
@@ -43,10 +79,14 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
 
   @override
   Future<PurchaseResult> buyNonConsumable(
-    final NonConsumableDetails details,
+    final PurchaseProductDetails details,
   ) async {
     // Implementation similar to buyConsumable
     try {
+      assert(
+        details.productType == PurchaseProductType.nonConsumable,
+        'Product type must be non-consumable',
+      );
       final purchase =
           await RustoreBillingClient.purchase(details.productId.value, null);
       if (purchase.successPurchase == null) {
@@ -58,7 +98,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
       return PurchaseResult.success(
         PurchaseDetails(
           purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
-          purchaseType: PurchaseType.nonConsumable,
+          purchaseType: PurchaseProductType.nonConsumable,
           productId: details.productId,
           name: details.name,
           price: details.price,
@@ -72,8 +112,12 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<PurchaseResult> subscribe(final SubscriptionDetails details) async {
+  Future<PurchaseResult> subscribe(final PurchaseProductDetails details) async {
     try {
+      assert(
+        details.productType == PurchaseProductType.subscription,
+        'Product type must be subscription',
+      );
       final purchase =
           await RustoreBillingClient.purchase(details.productId.value, null);
       if (purchase.successPurchase == null) {
@@ -85,7 +129,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
       return PurchaseResult.success(
         PurchaseDetails(
           purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
-          purchaseType: PurchaseType.subscription,
+          purchaseType: PurchaseProductType.subscription,
           productId: details.productId,
           name: details.name,
           price: details.price,
@@ -100,7 +144,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableSubscription>> getSubscriptions(
+  Future<List<PurchaseProductDetails>> getSubscriptions(
     final List<ProductId> productIds,
   ) async {
     final productsResponse =
@@ -108,12 +152,14 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
     return productsResponse.products
         .where(
           (final product) =>
-              PurchaseType.fromRustoreJson(product?.productType) ==
-              PurchaseType.subscription,
+              PurchaseProductType.fromRustoreJson(product?.productType) ==
+              PurchaseProductType.subscription,
         )
         .map(
-          (final product) => AvailableSubscription(
+          (final product) => PurchaseProductDetails(
             productId: ProductId(product!.productId),
+            productType:
+                PurchaseProductType.fromRustoreJson(product.productType),
             name: product.title ?? '',
             price: doubleFromJson(product.price ?? '0'),
             currency: product.currency ?? '',
@@ -124,7 +170,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableConsumable>> getConsumables(
+  Future<List<PurchaseProductDetails>> getConsumables(
     final List<ProductId> productIds,
   ) async {
     final productsResponse =
@@ -132,22 +178,25 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
     return productsResponse.products
         .where(
           (final product) =>
-              PurchaseType.fromRustoreJson(product?.productType) ==
-              PurchaseType.consumable,
+              PurchaseProductType.fromRustoreJson(product?.productType) ==
+              PurchaseProductType.consumable,
         )
         .map(
-          (final product) => AvailableConsumable(
+          (final product) => PurchaseProductDetails(
             productId: ProductId(product!.productId),
+            productType:
+                PurchaseProductType.fromRustoreJson(product.productType),
             name: product.title ?? '',
-            price: double.tryParse(product.priceLabel ?? '0') ?? 0,
+            price: doubleFromJson(product.price ?? '0'),
             currency: product.currency ?? '',
+            duration: _getDurationFromId(product.productId),
           ),
         )
         .toList();
   }
 
   @override
-  Future<List<AvailableNonConsumable>> getNonConsumables(
+  Future<List<PurchaseProductDetails>> getNonConsumables(
     final List<ProductId> productIds,
   ) async {
     final productsResponse =
@@ -155,15 +204,18 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
     return productsResponse.products
         .where(
           (final product) =>
-              PurchaseType.fromRustoreJson(product?.productType) ==
-              PurchaseType.nonConsumable,
+              PurchaseProductType.fromRustoreJson(product?.productType) ==
+              PurchaseProductType.nonConsumable,
         )
         .map(
-          (final product) => AvailableNonConsumable(
+          (final product) => PurchaseProductDetails(
             productId: ProductId(product!.productId),
+            productType:
+                PurchaseProductType.fromRustoreJson(product.productType),
             name: product.title ?? '',
-            price: double.tryParse(product.priceLabel ?? '0') ?? 0,
+            price: doubleFromJson(product.price ?? '0'),
             currency: product.currency ?? '',
+            duration: _getDurationFromId(product.productId),
           ),
         )
         .toList();
@@ -186,7 +238,8 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
       final restoredPurchases = purchasesResponse.purchases
           .map(
             (final purchase) => PurchaseDetails(
-              purchaseType: PurchaseType.fromRustoreJson(purchase?.productType),
+              purchaseType:
+                  PurchaseProductType.fromRustoreJson(purchase?.productType),
               purchaseId: PurchaseId(purchase?.purchaseId ?? ''),
               productId: ProductId(purchase?.productId ?? ''),
               name: '',
@@ -205,9 +258,17 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<CancelResult> cancel(final SubscriptionDetails details) async {
-    // TODO: Implement subscription cancellation for RuStore
-    throw UnimplementedError();
+  Future<CancelResult> cancel(final PurchaseProductDetails details) async {
+    try {
+      assert(
+        details.productType == PurchaseProductType.subscription,
+        'Product type must be subscription',
+      );
+      await RustoreBillingClient.deletePurchase(details.productId.value);
+      return CancelResult.success();
+    } catch (e) {
+      return CancelResult.failure(e.toString());
+    }
   }
 
   Duration _getDurationFromId(final String id) {

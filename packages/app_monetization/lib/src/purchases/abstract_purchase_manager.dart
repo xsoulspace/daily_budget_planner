@@ -25,15 +25,16 @@ extension type PurchaseId(String value) {
   String toJson() => value;
 }
 
-enum PurchaseType {
+enum PurchaseProductType {
   consumable,
   nonConsumable,
   subscription;
 
-  factory PurchaseType.fromRustoreJson(final dynamic json) => switch (json) {
-        'NON_CONSUMABLE' => PurchaseType.nonConsumable,
-        'CONSUMABLE' => PurchaseType.consumable,
-        'SUBSCRIPTION' => PurchaseType.subscription,
+  factory PurchaseProductType.fromRustoreJson(final dynamic json) =>
+      switch (json) {
+        'NON_CONSUMABLE' => PurchaseProductType.nonConsumable,
+        'CONSUMABLE' => PurchaseProductType.consumable,
+        'SUBSCRIPTION' => PurchaseProductType.subscription,
         _ => throw Exception('Invalid purchase type: $json'),
       };
   String toJson() => name;
@@ -46,27 +47,30 @@ abstract class AbstractPurchaseManager {
   /// Checks if in-app purchases are available on the device.
   Future<bool> isAvailable();
 
+  /// Initializes the purchase manager.
+  Future<bool> init();
+
   /// Purchases a consumable item.
-  Future<PurchaseResult> buyConsumable(final ConsumableDetails details);
+  Future<PurchaseResult> buyConsumable(final PurchaseProductDetails details);
 
   /// Purchases a non-consumable item.
-  Future<PurchaseResult> buyNonConsumable(final NonConsumableDetails details);
+  Future<PurchaseResult> buyNonConsumable(final PurchaseProductDetails details);
 
   /// Subscribes to a product.
-  Future<PurchaseResult> subscribe(final SubscriptionDetails details);
+  Future<PurchaseResult> subscribe(final PurchaseProductDetails details);
 
   /// Retrieves available subscriptions.
-  Future<List<AvailableSubscription>> getSubscriptions(
+  Future<List<PurchaseProductDetails>> getSubscriptions(
     final List<ProductId> productIds,
   );
 
   /// Retrieves available consumable items.
-  Future<List<AvailableConsumable>> getConsumables(
+  Future<List<PurchaseProductDetails>> getConsumables(
     final List<ProductId> productIds,
   );
 
   /// Retrieves available non-consumable items.
-  Future<List<AvailableNonConsumable>> getNonConsumables(
+  Future<List<PurchaseProductDetails>> getNonConsumables(
     final List<ProductId> productIds,
   );
 
@@ -79,109 +83,30 @@ abstract class AbstractPurchaseManager {
   /// Restores previously made purchases.
   Future<RestoreResult> restore();
 
-  /// Cancels an active subscription.
-  Future<CancelResult> cancel(final SubscriptionDetails details);
+  /// Cancels an subscription or consumable or non-consumable.
+  Future<CancelResult> cancel(final PurchaseProductDetails details);
 
   /// Disposes of the purchase manager.
   Future<void> dispose();
 }
 
-/// {@template subscription_details}
-/// Represents the details of a subscription.
+/// {@template purchase_product_details}
+/// Represents the details of a purchasable product.
 /// {@endtemplate}
 @freezed
-class SubscriptionDetails with _$SubscriptionDetails {
-  const factory SubscriptionDetails({
+class PurchaseProductDetails with _$PurchaseProductDetails {
+  const factory PurchaseProductDetails({
     required final ProductId productId,
+    required final PurchaseProductType productType,
     required final String name,
     required final double price,
     required final String currency,
     required final Duration duration,
-  }) = _SubscriptionDetails;
+    @Default('') final String description,
+  }) = _PurchaseProductDetails;
 
-  factory SubscriptionDetails.fromJson(final Map<String, dynamic> json) =>
-      _$SubscriptionDetailsFromJson(json);
-}
-
-/// {@template consumable_details}
-/// Represents the details of a consumable purchase.
-/// {@endtemplate}
-@freezed
-class ConsumableDetails with _$ConsumableDetails {
-  const factory ConsumableDetails({
-    required final ProductId productId,
-    required final String name,
-    required final double price,
-    required final String currency,
-  }) = _ConsumableDetails;
-
-  factory ConsumableDetails.fromJson(final Map<String, dynamic> json) =>
-      _$ConsumableDetailsFromJson(json);
-}
-
-/// {@template non_consumable_details}
-/// Represents the details of a non-consumable purchase.
-/// {@endtemplate}
-@freezed
-class NonConsumableDetails with _$NonConsumableDetails {
-  const factory NonConsumableDetails({
-    required final ProductId productId,
-    required final String name,
-    required final double price,
-    required final String currency,
-  }) = _NonConsumableDetails;
-
-  factory NonConsumableDetails.fromJson(final Map<String, dynamic> json) =>
-      _$NonConsumableDetailsFromJson(json);
-}
-
-/// {@template available_subscription}
-/// Represents an available subscription.
-/// {@endtemplate}
-@freezed
-class AvailableSubscription with _$AvailableSubscription {
-  const factory AvailableSubscription({
-    required final ProductId productId,
-    required final String name,
-    required final double price,
-    required final String currency,
-    required final Duration duration,
-  }) = _AvailableSubscription;
-
-  factory AvailableSubscription.fromJson(final Map<String, dynamic> json) =>
-      _$AvailableSubscriptionFromJson(json);
-}
-
-/// {@template available_consumable}
-/// Represents an available consumable item.
-/// {@endtemplate}
-@freezed
-class AvailableConsumable with _$AvailableConsumable {
-  const factory AvailableConsumable({
-    required final ProductId productId,
-    required final String name,
-    required final double price,
-    required final String currency,
-  }) = _AvailableConsumable;
-
-  factory AvailableConsumable.fromJson(final Map<String, dynamic> json) =>
-      _$AvailableConsumableFromJson(json);
-}
-
-/// {@template available_non_consumable}
-/// Represents an available non-consumable item.
-/// {@endtemplate}
-@freezed
-class AvailableNonConsumable with _$AvailableNonConsumable {
-  const factory AvailableNonConsumable({
-    required final ProductId productId,
-    required final String name,
-    required final double price,
-    required final String currency,
-  }) = _AvailableNonConsumable;
-
-  factory AvailableNonConsumable.fromJson(final Map<String, dynamic> json) =>
-      _$AvailableNonConsumableFromJson(json);
+  factory PurchaseProductDetails.fromJson(final Map<String, dynamic> json) =>
+      _$PurchaseProductDetailsFromJson(json);
 }
 
 /// {@template purchase_details}
@@ -196,7 +121,7 @@ class PurchaseDetails with _$PurchaseDetails {
     required final double price,
     required final String currency,
     required final DateTime purchaseDate,
-    required final PurchaseType purchaseType,
+    required final PurchaseProductType purchaseType,
     final DateTime? expiryDate,
   }) = _PurchaseDetails;
 
