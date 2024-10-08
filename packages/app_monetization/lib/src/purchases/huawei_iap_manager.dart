@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_catches_without_on_clauses
+
 import 'package:huawei_iap/huawei_iap.dart';
 
 import 'abstract_purchase_manager.dart';
@@ -102,7 +104,9 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableSubscription>> getSubscriptions() async {
+  Future<List<AvailableSubscription>> getSubscriptions(
+    final List<ProductId> productIds,
+  ) async {
     try {
       throw UnimplementedError();
       // final result = await IapClient.obtainProductInfo(
@@ -125,7 +129,9 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableConsumable>> getConsumables() async {
+  Future<List<AvailableConsumable>> getConsumables(
+    final List<ProductId> productIds,
+  ) async {
     try {
       throw UnimplementedError();
       // final result = await IapClient.obtainProductInfo(
@@ -147,7 +153,9 @@ class HuaweiIapManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableNonConsumable>> getNonConsumables() async {
+  Future<List<AvailableNonConsumable>> getNonConsumables(
+    final List<ProductId> productIds,
+  ) async {
     try {
       throw UnimplementedError();
       // final result = await IapClient.obtainProductInfo(
@@ -241,5 +249,11 @@ class HuaweiIapManager implements AbstractPurchaseManager {
       }
     }
     return const Duration(days: 30); // Default to monthly
+  }
+
+  @override
+  Future<void> dispose() {
+    // TODO: implement dispose
+    throw UnimplementedError();
   }
 }

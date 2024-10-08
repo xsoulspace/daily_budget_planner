@@ -1,10 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../purchases/abstract_purchase_manager.dart';
-import 'keeper_state.dart';
 
 part 'keeper_manager.freezed.dart';
 part 'keeper_manager.g.dart';
+
+/// Represents the state of user access to premium features.
+enum KeeperState { free, purchased }
 
 /// {@template keeper_manager}
 /// Manages the state of user access to premium features.

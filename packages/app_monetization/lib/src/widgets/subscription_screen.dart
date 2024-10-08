@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../src/purchases/abstract_purchase_manager.dart';
+import '../purchases/abstract_purchase_manager.dart';
 
 /// {@template subscription_screen}
 /// A widget that displays available subscriptions and allows
@@ -8,17 +8,21 @@ import '../src/purchases/abstract_purchase_manager.dart';
 /// {@endtemplate}
 class SubscriptionScreen extends StatelessWidget {
   /// {@macro subscription_screen}
-  const SubscriptionScreen({required this.purchaseManager, super.key});
+  const SubscriptionScreen({
+    required this.purchaseManager,
+    required this.productIds,
+    super.key,
+  });
 
   /// The purchase manager to handle subscription operations.
   final AbstractPurchaseManager purchaseManager;
-
+  final List<ProductId> productIds;
   @override
   Widget build(final BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Subscription Options')),
         body: FutureBuilder<List<AvailableSubscription>>(
           // ignore: discarded_futures
-          future: purchaseManager.getSubscriptions(),
+          future: purchaseManager.getSubscriptions(productIds),
           builder: (final context, final snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

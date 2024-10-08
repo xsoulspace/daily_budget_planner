@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../src/purchases/abstract_purchase_manager.dart';
+import '../purchases/abstract_purchase_manager.dart';
 
 /// {@template purchase_screen}
 /// A widget that displays available one-time purchases and allows users
@@ -8,17 +8,22 @@ import '../src/purchases/abstract_purchase_manager.dart';
 /// {@endtemplate}
 class PurchaseScreen extends StatelessWidget {
   /// {@macro purchase_screen}
-  const PurchaseScreen({required this.purchaseManager, super.key});
+  const PurchaseScreen({
+    required this.purchaseManager,
+    required this.productIds,
+    super.key,
+  });
 
   /// The purchase manager to handle purchase operations.
   final AbstractPurchaseManager purchaseManager;
+  final List<ProductId> productIds;
 
   @override
   Widget build(final BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Purchase Options')),
         body: FutureBuilder<List<AvailableNonConsumable>>(
           // ignore: discarded_futures
-          future: purchaseManager.getNonConsumables(),
+          future: purchaseManager.getNonConsumables(productIds),
           builder: (final context, final snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

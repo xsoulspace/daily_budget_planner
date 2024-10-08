@@ -11,6 +11,11 @@ extension type ProductId(String value) {
   String toJson() => value;
 }
 
+extension ProductListX on List<ProductId> {
+  List<String> toJson() =>
+      map((final productId) => productId.toJson()).toSet().toList();
+}
+
 /// {@template purchase_id}
 /// Represents a unique identifier for a purchase.
 /// {@endtemplate}
@@ -25,7 +30,7 @@ enum PurchaseType {
   nonConsumable,
   subscription;
 
-  factory PurchaseType.fromJson(final dynamic json) => switch (json) {
+  factory PurchaseType.fromRustoreJson(final dynamic json) => switch (json) {
         'NON_CONSUMABLE' => PurchaseType.nonConsumable,
         'CONSUMABLE' => PurchaseType.consumable,
         'SUBSCRIPTION' => PurchaseType.subscription,
@@ -51,13 +56,19 @@ abstract class AbstractPurchaseManager {
   Future<PurchaseResult> subscribe(final SubscriptionDetails details);
 
   /// Retrieves available subscriptions.
-  Future<List<AvailableSubscription>> getSubscriptions();
+  Future<List<AvailableSubscription>> getSubscriptions(
+    final List<ProductId> productIds,
+  );
 
   /// Retrieves available consumable items.
-  Future<List<AvailableConsumable>> getConsumables();
+  Future<List<AvailableConsumable>> getConsumables(
+    final List<ProductId> productIds,
+  );
 
   /// Retrieves available non-consumable items.
-  Future<List<AvailableNonConsumable>> getNonConsumables();
+  Future<List<AvailableNonConsumable>> getNonConsumables(
+    final List<ProductId> productIds,
+  );
 
   /// Opens the subscription management page.
   Future<void> openSubscriptionManagement();
@@ -70,6 +81,9 @@ abstract class AbstractPurchaseManager {
 
   /// Cancels an active subscription.
   Future<CancelResult> cancel(final SubscriptionDetails details);
+
+  /// Disposes of the purchase manager.
+  Future<void> dispose();
 }
 
 /// {@template subscription_details}

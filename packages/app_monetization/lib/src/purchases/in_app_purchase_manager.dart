@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_catches_without_on_clauses
+
 import 'package:in_app_purchase/in_app_purchase.dart' as iap;
 
 import 'abstract_purchase_manager.dart';
@@ -96,8 +98,10 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableSubscription>> getSubscriptions() async {
-    final productDetails = await _getProductDetails(null);
+  Future<List<AvailableSubscription>> getSubscriptions(
+    final List<ProductId> productIds,
+  ) async {
+    final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('subscription_'))
         .map(
@@ -113,8 +117,10 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableConsumable>> getConsumables() async {
-    final productDetails = await _getProductDetails(null);
+  Future<List<AvailableConsumable>> getConsumables(
+    final List<ProductId> productIds,
+  ) async {
+    final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('consumable_'))
         .map(
@@ -129,8 +135,10 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   @override
-  Future<List<AvailableNonConsumable>> getNonConsumables() async {
-    final productDetails = await _getProductDetails(null);
+  Future<List<AvailableNonConsumable>> getNonConsumables(
+    final List<ProductId> productIds,
+  ) async {
+    final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('non_consumable_'))
         .map(
@@ -194,10 +202,10 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
   }
 
   Future<List<iap.ProductDetails>> _getProductDetails(
-    final String? productId,
+    final List<ProductId> productIds,
   ) async {
     final productDetailResponse =
-        await _inAppPurchase.queryProductDetails({productId ?? ''});
+        await _inAppPurchase.queryProductDetails(productIds.toJson().toSet());
     if (productDetailResponse.error != null) {
       throw productDetailResponse.error!;
     }
@@ -224,5 +232,11 @@ class InAppPurchaseManager implements AbstractPurchaseManager {
       case iap.PurchaseStatus.restored:
         return PurchaseStatus.completed;
     }
+  }
+
+  @override
+  Future<void> dispose() {
+    // TODO: implement dispose
+    throw UnimplementedError();
   }
 }
