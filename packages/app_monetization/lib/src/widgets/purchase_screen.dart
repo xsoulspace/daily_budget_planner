@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../purchases/abstract_purchase_manager.dart';
+import '../purchases/purchase_manager.dart';
 
 /// {@template purchase_screen}
 /// A widget that displays available one-time purchases and allows users
@@ -15,7 +15,7 @@ class PurchaseScreen extends StatelessWidget {
   });
 
   /// The purchase manager to handle purchase operations.
-  final AbstractPurchaseManager purchaseManager;
+  final PurchaseManager purchaseManager;
   final List<ProductId> productIds;
 
   @override

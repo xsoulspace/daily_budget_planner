@@ -1,0 +1,5 @@
+{
+  "TEST_PAYMENTS": false,
+  "LOGGING": true,
+  "STORE": "rustore"
+}

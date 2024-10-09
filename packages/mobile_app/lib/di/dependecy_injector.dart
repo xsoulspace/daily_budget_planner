@@ -1,3 +1,4 @@
+import 'package:app_monetization/app_monetization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/data_states/app_settings_notifier.dart';
@@ -33,6 +34,14 @@ void _init({required final AnalyticsService analyticsService}) {
   /// ********************************************
   /// *      STATES
   /// ********************************************
+  r<PurchaseManager>(
+    FlutterRustoreBillingManager(
+      consoleApplicationId: Envs.rustoreApplicationId,
+      // ignore: avoid_redundant_argument_values
+      enableLogger: Envs.logging,
+      deeplinkScheme: Envs.appScheme,
+    ),
+  );
   r(UiLocaleNotifier(Locales.fallback));
   r(AppSettingsNotifier());
   r(UserNotifier());

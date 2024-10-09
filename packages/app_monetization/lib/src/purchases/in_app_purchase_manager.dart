@@ -3,12 +3,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart' as iap;
 
-import 'abstract_purchase_manager.dart';
+import 'purchase_manager.dart';
 
 /// {@template in_app_purchase_manager}
-/// Implementation of [AbstractPurchaseManager] using In-App Purchase.
+/// Implementation of [PurchaseManager] using In-App Purchase.
 /// {@endtemplate}
-class InAppPurchaseManager implements AbstractPurchaseManager {
+class InAppPurchaseManager implements PurchaseManager {
   final iap.InAppPurchase _inAppPurchase = iap.InAppPurchase.instance;
 
   @override

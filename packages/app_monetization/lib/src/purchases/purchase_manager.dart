@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'abstract_purchase_manager.freezed.dart';
-part 'abstract_purchase_manager.g.dart';
+part 'purchase_manager.freezed.dart';
+part 'purchase_manager.g.dart';
 
 /// {@template product_id}
 /// Represents a unique identifier for a product.
@@ -49,7 +49,7 @@ enum PurchaseProductType {
 /// {@template abstract_purchase_manager}
 /// An abstract class defining the interface for purchase management.
 /// {@endtemplate}
-abstract class AbstractPurchaseManager {
+abstract class PurchaseManager {
   /// Checks if in-app purchases are available on the device.
   Future<bool> isAvailable();
 

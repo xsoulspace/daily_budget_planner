@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../purchases/abstract_purchase_manager.dart';
+import '../purchases/purchase_manager.dart';
 
 /// {@template subscription_screen}
 /// A widget that displays available subscriptions and allows
@@ -15,7 +15,7 @@ class SubscriptionScreen extends StatelessWidget {
   });
 
   /// The purchase manager to handle subscription operations.
-  final AbstractPurchaseManager purchaseManager;
+  final PurchaseManager purchaseManager;
   final List<ProductId> productIds;
   @override
   Widget build(final BuildContext context) => Scaffold(

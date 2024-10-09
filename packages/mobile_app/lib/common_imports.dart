@@ -16,6 +16,7 @@ export 'data_models/data_models.dart';
 export 'data_services/data_services.dart';
 export 'data_states/data_states.dart';
 export 'di/di.dart';
+export 'envs.dart';
 export 'router.dart';
 export 'ui_home/home.dart';
 export 'ui_kit/ui_kit.dart';

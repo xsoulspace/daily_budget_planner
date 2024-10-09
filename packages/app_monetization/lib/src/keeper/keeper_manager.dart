@@ -1,6 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../purchases/abstract_purchase_manager.dart';
+import '../purchases/purchase_manager.dart';
 
 part 'keeper_manager.freezed.dart';
 part 'keeper_manager.g.dart';
@@ -11,7 +12,7 @@ enum KeeperState { free, purchased }
 /// {@template keeper_manager}
 /// Manages the state of user access to premium features.
 /// {@endtemplate}
-class KeeperManager {
+class KeeperManager extends ChangeNotifier {
   KeeperState _state = KeeperState.free;
 
   /// The current state of user access.
@@ -23,6 +24,7 @@ class KeeperManager {
       success: (final details) => _state = KeeperState.purchased,
       failure: (final _) => _state = KeeperState.free,
     );
+    notifyListeners();
   }
 
   /// Updates the state based on an ad interaction result.
@@ -31,6 +33,7 @@ class KeeperManager {
       rewarded: () => _state = KeeperState.purchased,
       failed: () => _state = KeeperState.free,
     );
+    notifyListeners();
   }
 }
 

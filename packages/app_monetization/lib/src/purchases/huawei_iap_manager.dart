@@ -3,12 +3,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:huawei_iap/huawei_iap.dart';
 
-import 'abstract_purchase_manager.dart';
+import 'purchase_manager.dart';
 
 /// {@template huawei_iap_manager}
-/// Implementation of [AbstractPurchaseManager] using Huawei IAP.
+/// Implementation of [PurchaseManager] using Huawei IAP.
 /// {@endtemplate}
-class HuaweiIapManager implements AbstractPurchaseManager {
+class HuaweiIapManager implements PurchaseManager {
   HuaweiIapManager({
     required this.isSandbox,
     this.enableLogger = false,
@@ -24,7 +24,7 @@ class HuaweiIapManager implements AbstractPurchaseManager {
       /// - `1`: Failure
       /// - `404`: No resource found
       /// - `500`: Internal error
-      return result.status?.statusCode == '0';
+      return result.status?.statusCode == 0;
     } catch (e) {
       debugPrint('HuaweiIapManager.isAvailable: $e');
       return false;

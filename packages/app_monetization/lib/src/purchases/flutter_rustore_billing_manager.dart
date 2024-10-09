@@ -4,14 +4,15 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
-import 'abstract_purchase_manager.dart';
+import 'purchase_manager.dart';
 
 /// {@template flutter_rustore_billing_manager}
-/// Implementation of [AbstractPurchaseManager] using RuStore Billing.
+/// Implementation of [PurchaseManager] using RuStore Billing.
 ///
-/// [consolApplicationId] is the application id of the console application.
+/// [consoleApplicationId] is the application id of the console application.
 /// "123456",
 /// [deeplinkScheme] is the deeplink scheme of the application.
 /// "yourappscheme://iamback",
@@ -19,23 +20,25 @@ import 'abstract_purchase_manager.dart';
 ///
 /// https://www.rustore.ru/help/en/sdk/payments/flutter/6-1-0
 /// {@endtemplate}
-class FlutterRustoreBillingManager implements AbstractPurchaseManager {
+class FlutterRustoreBillingManager implements PurchaseManager {
   FlutterRustoreBillingManager({
-    required this.consolApplicationId,
+    required this.consoleApplicationId,
     required this.deeplinkScheme,
     this.enableLogger = false,
   });
-  final String consolApplicationId;
+  final String consoleApplicationId;
   final String deeplinkScheme;
   final bool enableLogger;
+
   @override
   Future<bool> isAvailable() async => RustoreBillingClient.available();
 
   @override
   Future<bool> init() async {
     try {
+      // https://www.rustore.ru/help/sdk/payments/flutter/6-1-0#deeplink
       await RustoreBillingClient.initialize(
-        consolApplicationId,
+        consoleApplicationId,
         deeplinkScheme,
         enableLogger,
       );
@@ -118,6 +121,7 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
   @override
   Future<PurchaseResult> subscribe(final PurchaseProductDetails details) async {
     try {
+      // https://www.rustore.ru/help/developers/monetization/create-app-subscription
       assert(
         details.productType == PurchaseProductType.subscription,
         'Product type must be subscription',
@@ -232,8 +236,12 @@ class FlutterRustoreBillingManager implements AbstractPurchaseManager {
 
   @override
   Future<void> openSubscriptionManagement() async {
-    /// TODO: open rustore app for subscription management
-    throw UnimplementedError();
+    // https://www.rustore.ru/help/sdk/rustore-deeplinks
+    // 'https://www.rustore.ru/catalog/app/$deeplinkScheme',
+    await launchUrlString(
+      // open page with subscriptions
+      'rustore://profile/subscriptions',
+    );
   }
 
   final _purchasesController = StreamController<PurchaseUpdate>.broadcast();
