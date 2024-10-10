@@ -6,6 +6,22 @@ part of 'purchase_manager.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$PurchaseDurationImpl _$$PurchaseDurationImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PurchaseDurationImpl(
+      years: (json['years'] as num?)?.toInt() ?? 0,
+      months: (json['months'] as num?)?.toInt() ?? 0,
+      days: (json['days'] as num?)?.toInt() ?? 0,
+    );
+
+Map<String, dynamic> _$$PurchaseDurationImplToJson(
+        _$PurchaseDurationImpl instance) =>
+    <String, dynamic>{
+      'years': instance.years,
+      'months': instance.months,
+      'days': instance.days,
+    };
+
 _$PurchaseProductDetailsImpl _$$PurchaseProductDetailsImplFromJson(
         Map<String, dynamic> json) =>
     _$PurchaseProductDetailsImpl(
@@ -16,11 +32,14 @@ _$PurchaseProductDetailsImpl _$$PurchaseProductDetailsImplFromJson(
       formattedPrice: json['formattedPrice'] as String,
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String,
-      duration: Duration(microseconds: (json['duration'] as num).toInt()),
       description: json['description'] as String? ?? '',
-      freeTrialDuration: json['freeTrialDuration'] == null
+      duration: json['duration'] == null
           ? Duration.zero
-          : Duration(microseconds: (json['freeTrialDuration'] as num).toInt()),
+          : Duration(microseconds: (json['duration'] as num).toInt()),
+      freeTrialDuration: json['freeTrialDuration'] == null
+          ? PurchaseDuration.zero
+          : PurchaseDuration.fromJson(
+              json['freeTrialDuration'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$PurchaseProductDetailsImplToJson(
@@ -32,9 +51,9 @@ Map<String, dynamic> _$$PurchaseProductDetailsImplToJson(
       'formattedPrice': instance.formattedPrice,
       'price': instance.price,
       'currency': instance.currency,
-      'duration': instance.duration.inMicroseconds,
       'description': instance.description,
-      'freeTrialDuration': instance.freeTrialDuration.inMicroseconds,
+      'duration': instance.duration.inMicroseconds,
+      'freeTrialDuration': instance.freeTrialDuration,
     };
 
 const _$PurchaseProductTypeEnumMap = {
@@ -55,6 +74,12 @@ _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
       purchaseDate: DateTime.parse(json['purchaseDate'] as String),
       purchaseType:
           $enumDecode(_$PurchaseProductTypeEnumMap, json['purchaseType']),
+      freeTrialDuration: json['freeTrialDuration'] == null
+          ? Duration.zero
+          : Duration(microseconds: (json['freeTrialDuration'] as num).toInt()),
+      duration: json['duration'] == null
+          ? Duration.zero
+          : Duration(microseconds: (json['duration'] as num).toInt()),
       expiryDate: json['expiryDate'] == null
           ? null
           : DateTime.parse(json['expiryDate'] as String),
@@ -71,6 +96,8 @@ Map<String, dynamic> _$$PurchaseDetailsImplToJson(
       'currency': instance.currency,
       'purchaseDate': instance.purchaseDate.toIso8601String(),
       'purchaseType': instance.purchaseType,
+      'freeTrialDuration': instance.freeTrialDuration.inMicroseconds,
+      'duration': instance.duration.inMicroseconds,
       'expiryDate': instance.expiryDate?.toIso8601String(),
     };
 
@@ -104,6 +131,7 @@ Map<String, dynamic> _$$PurchaseFailureImplToJson(
 
 _$PurchaseUpdateImpl _$$PurchaseUpdateImplFromJson(Map<String, dynamic> json) =>
     _$PurchaseUpdateImpl(
+      productId: ProductId.fromJson(json['productId']),
       purchaseId: PurchaseId.fromJson(json['purchaseId']),
       status: $enumDecode(_$PurchaseStatusEnumMap, json['status']),
     );
@@ -111,6 +139,7 @@ _$PurchaseUpdateImpl _$$PurchaseUpdateImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$PurchaseUpdateImplToJson(
         _$PurchaseUpdateImpl instance) =>
     <String, dynamic>{
+      'productId': instance.productId,
       'purchaseId': instance.purchaseId,
       'status': _$PurchaseStatusEnumMap[instance.status]!,
     };

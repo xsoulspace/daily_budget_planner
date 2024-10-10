@@ -113,7 +113,7 @@ class __$$AdRewardedImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AdRewardedImpl implements AdRewarded {
+class _$AdRewardedImpl with DiagnosticableTreeMixin implements AdRewarded {
   const _$AdRewardedImpl({final String? $type}) : $type = $type ?? 'rewarded';
 
   factory _$AdRewardedImpl.fromJson(Map<String, dynamic> json) =>
@@ -123,8 +123,14 @@ class _$AdRewardedImpl implements AdRewarded {
   final String $type;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AdResult.rewarded()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AdResult.rewarded'));
   }
 
   @override
@@ -235,7 +241,7 @@ class __$$AdFailedImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AdFailedImpl implements AdFailed {
+class _$AdFailedImpl with DiagnosticableTreeMixin implements AdFailed {
   const _$AdFailedImpl({final String? $type}) : $type = $type ?? 'failed';
 
   factory _$AdFailedImpl.fromJson(Map<String, dynamic> json) =>
@@ -245,8 +251,14 @@ class _$AdFailedImpl implements AdFailed {
   final String $type;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AdResult.failed()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AdResult.failed'));
   }
 
   @override

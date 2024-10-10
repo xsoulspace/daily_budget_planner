@@ -1,9 +1,10 @@
-// ignore_for_file: avoid_catches_without_on_clauses
+// ignore_for_file: avoid_catches_without_on_clauses, lines_longer_than_80_chars
 
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
+import 'package:flutter_rustore_billing/pigeons/rustore.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
@@ -52,99 +53,70 @@ class FlutterRustoreBillingManager implements PurchaseManager {
   @override
   Future<PurchaseResult> buyConsumable(
     final PurchaseProductDetails details,
-  ) async {
-    try {
-      assert(
-        details.productType == PurchaseProductType.consumable,
-        'Product type must be consumable',
-      );
-      final purchase =
-          await RustoreBillingClient.purchase(details.productId.value, null);
-      if (purchase.successPurchase == null) {
-        return PurchaseResult.failure(
-          'Purchase failed. ${purchase.invalidPurchase} '
-          '${purchase.invalidInvoice}',
-        );
-      }
-      return PurchaseResult.success(
-        PurchaseDetails(
-          purchaseType: PurchaseProductType.consumable,
-          purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
-          productId: details.productId,
-          name: details.name,
-          formattedPrice: details.formattedPrice,
-          price: details.price,
-          currency: details.currency,
-          purchaseDate: DateTime.now(),
-        ),
-      );
-    } catch (e) {
-      return PurchaseResult.failure(e.toString());
-    }
-  }
+  ) async =>
+      _processPurchaseWithUpdate(details, PurchaseProductType.consumable);
 
   @override
   Future<PurchaseResult> buyNonConsumable(
     final PurchaseProductDetails details,
-  ) async {
-    // Implementation similar to buyConsumable
-    try {
-      assert(
-        details.productType == PurchaseProductType.nonConsumable,
-        'Product type must be non-consumable',
-      );
-      final purchase =
-          await RustoreBillingClient.purchase(details.productId.value, null);
-      if (purchase.successPurchase == null) {
-        return PurchaseResult.failure(
-          'Purchase failed. ${purchase.invalidPurchase} '
-          '${purchase.invalidInvoice}',
-        );
-      }
-      return PurchaseResult.success(
-        PurchaseDetails(
-          purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
-          purchaseType: PurchaseProductType.nonConsumable,
-          productId: details.productId,
-          name: details.name,
-          formattedPrice: details.formattedPrice,
-          price: details.price,
-          currency: details.currency,
-          purchaseDate: DateTime.now(),
-        ),
-      );
-    } catch (e) {
-      return PurchaseResult.failure(e.toString());
-    }
-  }
+  ) async =>
+      _processPurchaseWithUpdate(details, PurchaseProductType.nonConsumable);
 
   @override
-  Future<PurchaseResult> subscribe(final PurchaseProductDetails details) async {
+  Future<PurchaseResult> subscribe(
+    final PurchaseProductDetails details,
+  ) async =>
+      _processPurchaseWithUpdate(details, PurchaseProductType.subscription);
+
+  Future<PurchaseResult> _processPurchaseWithUpdate(
+    final PurchaseProductDetails details,
+    final PurchaseProductType expectedType,
+  ) async {
+    final result = await _processPurchase(details, expectedType);
+    final update = PurchaseUpdate(
+      purchaseId: result.when(
+        success: (final purchase) => purchase.purchaseId,
+        failure: (final _) => PurchaseId(''),
+      ),
+      productId: details.productId,
+      status: result.when(
+        success: (final _) => PurchaseStatus.completed,
+        failure: (final _) => PurchaseStatus.failed,
+      ),
+    );
+    _purchasesController.add(update);
+    return result;
+  }
+
+  Future<PurchaseResult> _processPurchase(
+    final PurchaseProductDetails details,
+    final PurchaseProductType expectedType,
+  ) async {
     try {
-      // https://www.rustore.ru/help/developers/monetization/create-app-subscription
       assert(
-        details.productType == PurchaseProductType.subscription,
-        'Product type must be subscription',
+        details.productType == expectedType,
+        'Product type must be $expectedType',
       );
       final purchase =
           await RustoreBillingClient.purchase(details.productId.value, null);
       if (purchase.successPurchase == null) {
         return PurchaseResult.failure(
-          'Subscription failed. ${purchase.invalidPurchase} '
-          '${purchase.invalidInvoice}',
+          'Purchase failed. ${purchase.invalidPurchase} ${purchase.invalidInvoice}',
         );
       }
       return PurchaseResult.success(
         PurchaseDetails(
           purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
-          purchaseType: PurchaseProductType.subscription,
+          purchaseType: expectedType,
           productId: details.productId,
           name: details.name,
           formattedPrice: details.formattedPrice,
           price: details.price,
           currency: details.currency,
           purchaseDate: DateTime.now(),
-          expiryDate: DateTime.now().add(details.duration),
+          expiryDate: expectedType == PurchaseProductType.subscription
+              ? DateTime.now().add(details.duration)
+              : null,
         ),
       );
     } catch (e) {
@@ -155,93 +127,59 @@ class FlutterRustoreBillingManager implements PurchaseManager {
   @override
   Future<List<PurchaseProductDetails>> getSubscriptions(
     final List<ProductId> productIds,
-  ) async {
-    final productsResponse =
-        await RustoreBillingClient.products(productIds.toJson());
-    return productsResponse.products
-        .where(
-          (final product) =>
-              PurchaseProductType.fromRustoreJson(product?.productType) ==
-              PurchaseProductType.subscription,
-        )
-        .map(
-          (final product) => PurchaseProductDetails(
-            productId: ProductId(product!.productId),
-            productType:
-                PurchaseProductType.fromRustoreJson(product.productType),
-            name: product.title ?? '',
-            formattedPrice: product.priceLabel ?? '',
-            description: product.description ?? '',
-            price: doubleFromJson(product.price ?? '0'),
-            currency: product.currency ?? '',
-            duration: _getDurationFromId(product.productId),
-          ),
-        )
-        .toList();
-  }
+  ) =>
+      _getProducts(productIds, PurchaseProductType.subscription);
 
   @override
   Future<List<PurchaseProductDetails>> getConsumables(
     final List<ProductId> productIds,
-  ) async {
-    final productsResponse =
-        await RustoreBillingClient.products(productIds.toJson());
-    return productsResponse.products
-        .where(
-          (final product) =>
-              PurchaseProductType.fromRustoreJson(product?.productType) ==
-              PurchaseProductType.consumable,
-        )
-        .map(
-          (final product) => PurchaseProductDetails(
-            productId: ProductId(product!.productId),
-            productType:
-                PurchaseProductType.fromRustoreJson(product.productType),
-            name: product.title ?? '',
-            formattedPrice: product.priceLabel ?? '',
-            price: doubleFromJson(product.price ?? '0'),
-            currency: product.currency ?? '',
-            duration: _getDurationFromId(product.productId),
-          ),
-        )
-        .toList();
-  }
+  ) =>
+      _getProducts(productIds, PurchaseProductType.consumable);
 
   @override
   Future<List<PurchaseProductDetails>> getNonConsumables(
     final List<ProductId> productIds,
+  ) =>
+      _getProducts(productIds, PurchaseProductType.nonConsumable);
+
+  Future<List<PurchaseProductDetails>> _getProducts(
+    final List<ProductId> productIds,
+    final PurchaseProductType type,
   ) async {
     final productsResponse =
         await RustoreBillingClient.products(productIds.toJson());
     return productsResponse.products
         .where(
           (final product) =>
-              PurchaseProductType.fromRustoreJson(product?.productType) ==
-              PurchaseProductType.nonConsumable,
+              PurchaseProductType.fromRustoreJson(product?.productType) == type,
         )
-        .map(
-          (final product) => PurchaseProductDetails(
-            productId: ProductId(product!.productId),
-            productType:
-                PurchaseProductType.fromRustoreJson(product.productType),
-            name: product.title ?? '',
-            formattedPrice: product.priceLabel ?? '',
-            price: doubleFromJson(product.price ?? '0'),
-            currency: product.currency ?? '',
-            duration: _getDurationFromId(product.productId),
-          ),
-        )
+        .map(_mapToPurchaseProductDetails)
         .toList();
+  }
+
+  PurchaseProductDetails _mapToPurchaseProductDetails(final Product? product) {
+    final duration = _getDurationFromId(product?.productId ?? '');
+    final freeTrialDuration = product?.subscription?.freeTrialPeriod;
+
+    return PurchaseProductDetails(
+      productId: ProductId(product!.productId),
+      productType: PurchaseProductType.fromRustoreJson(product.productType),
+      name: product.title ?? '',
+      formattedPrice: product.priceLabel ?? '',
+      price: doubleFromJson(product.price ?? '0'),
+      currency: product.currency ?? '',
+      duration: duration,
+      freeTrialDuration: PurchaseDuration(
+        years: freeTrialDuration?.years ?? 0,
+        months: freeTrialDuration?.months ?? 0,
+        days: freeTrialDuration?.days ?? 0,
+      ),
+    );
   }
 
   @override
   Future<void> openSubscriptionManagement() async {
-    // https://www.rustore.ru/help/sdk/rustore-deeplinks
-    // 'https://www.rustore.ru/catalog/app/$deeplinkScheme',
-    await launchUrlString(
-      // open page with subscriptions
-      'rustore://profile/subscriptions',
-    );
+    await launchUrlString('rustore://profile/subscriptions');
   }
 
   final _purchasesController = StreamController<PurchaseUpdate>.broadcast();
@@ -252,36 +190,38 @@ class FlutterRustoreBillingManager implements PurchaseManager {
   Future<RestoreResult> restore() async {
     try {
       final purchasesResponse = await RustoreBillingClient.purchases();
-      final restoredPurchases = purchasesResponse.purchases
-          .map(
-            (final purchase) => PurchaseDetails(
-              purchaseType:
-                  PurchaseProductType.fromRustoreJson(purchase?.productType),
-              purchaseId: PurchaseId(purchase?.purchaseId ?? ''),
-              productId: ProductId(purchase?.productId ?? ''),
-              name: '',
-              formattedPrice: purchase?.amountLabel ?? '',
-              price: doubleFromJson(purchase?.amount ?? '0'),
-              currency: purchase?.currency ?? '',
-
-              /// verify format
-              purchaseDate: DateTime.fromMillisecondsSinceEpoch(
-                intFromJson(purchase?.purchaseTime ?? '0'),
-              ),
-            ),
-          )
-          .toList();
+      final restoredPurchases =
+          purchasesResponse.purchases.map(_mapToPurchaseDetails).toList();
       return RestoreResult.success(restoredPurchases);
     } catch (e) {
       return RestoreResult.failure(e.toString());
     }
   }
 
+  PurchaseDetails _mapToPurchaseDetails(final Purchase? purchase) {
+    final purchaseDate = DateTime.fromMillisecondsSinceEpoch(
+      intFromJson(purchase?.purchaseTime ?? '0'),
+    );
+    final duration = _getDurationFromId(purchase?.productId ?? '');
+    return PurchaseDetails(
+      purchaseType: PurchaseProductType.fromRustoreJson(purchase?.productType),
+      purchaseId: PurchaseId(purchase?.purchaseId ?? ''),
+      productId: ProductId(purchase?.productId ?? ''),
+      name: '',
+      formattedPrice: purchase?.amountLabel ?? '',
+      price: doubleFromJson(purchase?.amount ?? '0'),
+      currency: purchase?.currency ?? '',
+      purchaseDate: purchaseDate,
+      duration: duration,
+      expiryDate: purchaseDate.add(duration),
+    );
+  }
+
   @override
   Future<CancelResult> cancel(final PurchaseProductDetails details) async {
     try {
       assert(
-        details.productType == PurchaseProductType.subscription,
+        details.productType == PurchaseProductType.consumable,
         'Product type must be subscription',
       );
       await RustoreBillingClient.deletePurchase(details.productId.value);

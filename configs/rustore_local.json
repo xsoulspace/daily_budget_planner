@@ -1,5 +1,5 @@
 {
-  "TEST_PAYMENTS": false,
+  "TEST_PAYMENTS": true,
   "LOGGING": true,
   "STORE": "rustore"
 }

@@ -16,7 +16,6 @@ dependencies:
   huawei_iap: ^6.13.0+302
   in_app_purchase: ^3.2.0
   json_annotation: ^4.9.0
-  store_checker: ^1.6.0
   url_launcher: ^6.3.1
   xsoulspace_foundation: ^0.0.2
   yandex_mobileads: ^7.4.0

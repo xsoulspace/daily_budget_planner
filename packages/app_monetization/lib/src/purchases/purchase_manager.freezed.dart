@@ -14,6 +14,196 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+PurchaseDuration _$PurchaseDurationFromJson(Map<String, dynamic> json) {
+  return _PurchaseDuration.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PurchaseDuration {
+  int get years => throw _privateConstructorUsedError;
+  int get months => throw _privateConstructorUsedError;
+  int get days => throw _privateConstructorUsedError;
+
+  /// Serializes this PurchaseDuration to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of PurchaseDuration
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PurchaseDurationCopyWith<PurchaseDuration> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurchaseDurationCopyWith<$Res> {
+  factory $PurchaseDurationCopyWith(
+          PurchaseDuration value, $Res Function(PurchaseDuration) then) =
+      _$PurchaseDurationCopyWithImpl<$Res, PurchaseDuration>;
+  @useResult
+  $Res call({int years, int months, int days});
+}
+
+/// @nodoc
+class _$PurchaseDurationCopyWithImpl<$Res, $Val extends PurchaseDuration>
+    implements $PurchaseDurationCopyWith<$Res> {
+  _$PurchaseDurationCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of PurchaseDuration
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? years = null,
+    Object? months = null,
+    Object? days = null,
+  }) {
+    return _then(_value.copyWith(
+      years: null == years
+          ? _value.years
+          : years // ignore: cast_nullable_to_non_nullable
+              as int,
+      months: null == months
+          ? _value.months
+          : months // ignore: cast_nullable_to_non_nullable
+              as int,
+      days: null == days
+          ? _value.days
+          : days // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PurchaseDurationImplCopyWith<$Res>
+    implements $PurchaseDurationCopyWith<$Res> {
+  factory _$$PurchaseDurationImplCopyWith(_$PurchaseDurationImpl value,
+          $Res Function(_$PurchaseDurationImpl) then) =
+      __$$PurchaseDurationImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int years, int months, int days});
+}
+
+/// @nodoc
+class __$$PurchaseDurationImplCopyWithImpl<$Res>
+    extends _$PurchaseDurationCopyWithImpl<$Res, _$PurchaseDurationImpl>
+    implements _$$PurchaseDurationImplCopyWith<$Res> {
+  __$$PurchaseDurationImplCopyWithImpl(_$PurchaseDurationImpl _value,
+      $Res Function(_$PurchaseDurationImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of PurchaseDuration
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? years = null,
+    Object? months = null,
+    Object? days = null,
+  }) {
+    return _then(_$PurchaseDurationImpl(
+      years: null == years
+          ? _value.years
+          : years // ignore: cast_nullable_to_non_nullable
+              as int,
+      months: null == months
+          ? _value.months
+          : months // ignore: cast_nullable_to_non_nullable
+              as int,
+      days: null == days
+          ? _value.days
+          : days // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PurchaseDurationImpl extends _PurchaseDuration {
+  const _$PurchaseDurationImpl({this.years = 0, this.months = 0, this.days = 0})
+      : super._();
+
+  factory _$PurchaseDurationImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PurchaseDurationImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final int years;
+  @override
+  @JsonKey()
+  final int months;
+  @override
+  @JsonKey()
+  final int days;
+
+  @override
+  String toString() {
+    return 'PurchaseDuration(years: $years, months: $months, days: $days)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PurchaseDurationImpl &&
+            (identical(other.years, years) || other.years == years) &&
+            (identical(other.months, months) || other.months == months) &&
+            (identical(other.days, days) || other.days == days));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, years, months, days);
+
+  /// Create a copy of PurchaseDuration
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PurchaseDurationImplCopyWith<_$PurchaseDurationImpl> get copyWith =>
+      __$$PurchaseDurationImplCopyWithImpl<_$PurchaseDurationImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PurchaseDurationImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PurchaseDuration extends PurchaseDuration {
+  const factory _PurchaseDuration(
+      {final int years,
+      final int months,
+      final int days}) = _$PurchaseDurationImpl;
+  const _PurchaseDuration._() : super._();
+
+  factory _PurchaseDuration.fromJson(Map<String, dynamic> json) =
+      _$PurchaseDurationImpl.fromJson;
+
+  @override
+  int get years;
+  @override
+  int get months;
+  @override
+  int get days;
+
+  /// Create a copy of PurchaseDuration
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PurchaseDurationImplCopyWith<_$PurchaseDurationImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 PurchaseProductDetails _$PurchaseProductDetailsFromJson(
     Map<String, dynamic> json) {
   return _PurchaseProductDetails.fromJson(json);
@@ -31,9 +221,9 @@ mixin _$PurchaseProductDetails {
   /// price without currency in smallest unit of currency
   double get price => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
-  Duration get duration => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  Duration get freeTrialDuration => throw _privateConstructorUsedError;
+  Duration get duration => throw _privateConstructorUsedError;
+  PurchaseDuration get freeTrialDuration => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseProductDetails to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,9 +248,11 @@ abstract class $PurchaseProductDetailsCopyWith<$Res> {
       String formattedPrice,
       double price,
       String currency,
-      Duration duration,
       String description,
-      Duration freeTrialDuration});
+      Duration duration,
+      PurchaseDuration freeTrialDuration});
+
+  $PurchaseDurationCopyWith<$Res> get freeTrialDuration;
 }
 
 /// @nodoc
@@ -85,8 +277,8 @@ class _$PurchaseProductDetailsCopyWithImpl<$Res,
     Object? formattedPrice = null,
     Object? price = null,
     Object? currency = null,
-    Object? duration = null,
     Object? description = null,
+    Object? duration = null,
     Object? freeTrialDuration = null,
   }) {
     return _then(_value.copyWith(
@@ -114,19 +306,29 @@ class _$PurchaseProductDetailsCopyWithImpl<$Res,
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       freeTrialDuration: null == freeTrialDuration
           ? _value.freeTrialDuration
           : freeTrialDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+              as PurchaseDuration,
     ) as $Val);
+  }
+
+  /// Create a copy of PurchaseProductDetails
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PurchaseDurationCopyWith<$Res> get freeTrialDuration {
+    return $PurchaseDurationCopyWith<$Res>(_value.freeTrialDuration, (value) {
+      return _then(_value.copyWith(freeTrialDuration: value) as $Val);
+    });
   }
 }
 
@@ -146,9 +348,12 @@ abstract class _$$PurchaseProductDetailsImplCopyWith<$Res>
       String formattedPrice,
       double price,
       String currency,
-      Duration duration,
       String description,
-      Duration freeTrialDuration});
+      Duration duration,
+      PurchaseDuration freeTrialDuration});
+
+  @override
+  $PurchaseDurationCopyWith<$Res> get freeTrialDuration;
 }
 
 /// @nodoc
@@ -172,8 +377,8 @@ class __$$PurchaseProductDetailsImplCopyWithImpl<$Res>
     Object? formattedPrice = null,
     Object? price = null,
     Object? currency = null,
-    Object? duration = null,
     Object? description = null,
+    Object? duration = null,
     Object? freeTrialDuration = null,
   }) {
     return _then(_$PurchaseProductDetailsImpl(
@@ -201,25 +406,25 @@ class __$$PurchaseProductDetailsImplCopyWithImpl<$Res>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       freeTrialDuration: null == freeTrialDuration
           ? _value.freeTrialDuration
           : freeTrialDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+              as PurchaseDuration,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
+class _$PurchaseProductDetailsImpl extends _PurchaseProductDetails {
   const _$PurchaseProductDetailsImpl(
       {required this.productId,
       required this.productType,
@@ -227,9 +432,10 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
       required this.formattedPrice,
       required this.price,
       required this.currency,
-      required this.duration,
       this.description = '',
-      this.freeTrialDuration = Duration.zero});
+      this.duration = Duration.zero,
+      this.freeTrialDuration = PurchaseDuration.zero})
+      : super._();
 
   factory _$PurchaseProductDetailsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseProductDetailsImplFromJson(json);
@@ -251,17 +457,18 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
   @override
   final String currency;
   @override
-  final Duration duration;
-  @override
   @JsonKey()
   final String description;
   @override
   @JsonKey()
-  final Duration freeTrialDuration;
+  final Duration duration;
+  @override
+  @JsonKey()
+  final PurchaseDuration freeTrialDuration;
 
   @override
   String toString() {
-    return 'PurchaseProductDetails(productId: $productId, productType: $productType, name: $name, formattedPrice: $formattedPrice, price: $price, currency: $currency, duration: $duration, description: $description, freeTrialDuration: $freeTrialDuration)';
+    return 'PurchaseProductDetails(productId: $productId, productType: $productType, name: $name, formattedPrice: $formattedPrice, price: $price, currency: $currency, description: $description, duration: $duration, freeTrialDuration: $freeTrialDuration)';
   }
 
   @override
@@ -279,10 +486,10 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
             (identical(other.freeTrialDuration, freeTrialDuration) ||
                 other.freeTrialDuration == freeTrialDuration));
   }
@@ -297,8 +504,8 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
       formattedPrice,
       price,
       currency,
-      duration,
       description,
+      duration,
       freeTrialDuration);
 
   /// Create a copy of PurchaseProductDetails
@@ -318,7 +525,7 @@ class _$PurchaseProductDetailsImpl implements _PurchaseProductDetails {
   }
 }
 
-abstract class _PurchaseProductDetails implements PurchaseProductDetails {
+abstract class _PurchaseProductDetails extends PurchaseProductDetails {
   const factory _PurchaseProductDetails(
       {required final ProductId productId,
       required final PurchaseProductType productType,
@@ -326,9 +533,10 @@ abstract class _PurchaseProductDetails implements PurchaseProductDetails {
       required final String formattedPrice,
       required final double price,
       required final String currency,
-      required final Duration duration,
       final String description,
-      final Duration freeTrialDuration}) = _$PurchaseProductDetailsImpl;
+      final Duration duration,
+      final PurchaseDuration freeTrialDuration}) = _$PurchaseProductDetailsImpl;
+  const _PurchaseProductDetails._() : super._();
 
   factory _PurchaseProductDetails.fromJson(Map<String, dynamic> json) =
       _$PurchaseProductDetailsImpl.fromJson;
@@ -350,11 +558,11 @@ abstract class _PurchaseProductDetails implements PurchaseProductDetails {
   @override
   String get currency;
   @override
-  Duration get duration;
-  @override
   String get description;
   @override
-  Duration get freeTrialDuration;
+  Duration get duration;
+  @override
+  PurchaseDuration get freeTrialDuration;
 
   /// Create a copy of PurchaseProductDetails
   /// with the given fields replaced by the non-null parameter values.
@@ -382,6 +590,8 @@ mixin _$PurchaseDetails {
   String get currency => throw _privateConstructorUsedError;
   DateTime get purchaseDate => throw _privateConstructorUsedError;
   PurchaseProductType get purchaseType => throw _privateConstructorUsedError;
+  Duration get freeTrialDuration => throw _privateConstructorUsedError;
+  Duration get duration => throw _privateConstructorUsedError;
   DateTime? get expiryDate => throw _privateConstructorUsedError;
 
   /// Serializes this PurchaseDetails to a JSON map.
@@ -409,6 +619,8 @@ abstract class $PurchaseDetailsCopyWith<$Res> {
       String currency,
       DateTime purchaseDate,
       PurchaseProductType purchaseType,
+      Duration freeTrialDuration,
+      Duration duration,
       DateTime? expiryDate});
 }
 
@@ -435,6 +647,8 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
     Object? currency = null,
     Object? purchaseDate = null,
     Object? purchaseType = null,
+    Object? freeTrialDuration = null,
+    Object? duration = null,
     Object? expiryDate = freezed,
   }) {
     return _then(_value.copyWith(
@@ -470,6 +684,14 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
           ? _value.purchaseType
           : purchaseType // ignore: cast_nullable_to_non_nullable
               as PurchaseProductType,
+      freeTrialDuration: null == freeTrialDuration
+          ? _value.freeTrialDuration
+          : freeTrialDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
@@ -495,6 +717,8 @@ abstract class _$$PurchaseDetailsImplCopyWith<$Res>
       String currency,
       DateTime purchaseDate,
       PurchaseProductType purchaseType,
+      Duration freeTrialDuration,
+      Duration duration,
       DateTime? expiryDate});
 }
 
@@ -519,6 +743,8 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
     Object? currency = null,
     Object? purchaseDate = null,
     Object? purchaseType = null,
+    Object? freeTrialDuration = null,
+    Object? duration = null,
     Object? expiryDate = freezed,
   }) {
     return _then(_$PurchaseDetailsImpl(
@@ -554,6 +780,14 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
           ? _value.purchaseType
           : purchaseType // ignore: cast_nullable_to_non_nullable
               as PurchaseProductType,
+      freeTrialDuration: null == freeTrialDuration
+          ? _value.freeTrialDuration
+          : freeTrialDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
@@ -564,7 +798,7 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PurchaseDetailsImpl implements _PurchaseDetails {
+class _$PurchaseDetailsImpl extends _PurchaseDetails {
   const _$PurchaseDetailsImpl(
       {required this.purchaseId,
       required this.productId,
@@ -574,7 +808,10 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
       required this.currency,
       required this.purchaseDate,
       required this.purchaseType,
-      this.expiryDate});
+      this.freeTrialDuration = Duration.zero,
+      this.duration = Duration.zero,
+      this.expiryDate})
+      : super._();
 
   factory _$PurchaseDetailsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseDetailsImplFromJson(json);
@@ -600,11 +837,17 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
   @override
   final PurchaseProductType purchaseType;
   @override
+  @JsonKey()
+  final Duration freeTrialDuration;
+  @override
+  @JsonKey()
+  final Duration duration;
+  @override
   final DateTime? expiryDate;
 
   @override
   String toString() {
-    return 'PurchaseDetails(purchaseId: $purchaseId, productId: $productId, name: $name, formattedPrice: $formattedPrice, price: $price, currency: $currency, purchaseDate: $purchaseDate, purchaseType: $purchaseType, expiryDate: $expiryDate)';
+    return 'PurchaseDetails(purchaseId: $purchaseId, productId: $productId, name: $name, formattedPrice: $formattedPrice, price: $price, currency: $currency, purchaseDate: $purchaseDate, purchaseType: $purchaseType, freeTrialDuration: $freeTrialDuration, duration: $duration, expiryDate: $expiryDate)';
   }
 
   @override
@@ -626,14 +869,29 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
                 other.purchaseDate == purchaseDate) &&
             (identical(other.purchaseType, purchaseType) ||
                 other.purchaseType == purchaseType) &&
+            (identical(other.freeTrialDuration, freeTrialDuration) ||
+                other.freeTrialDuration == freeTrialDuration) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
             (identical(other.expiryDate, expiryDate) ||
                 other.expiryDate == expiryDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, purchaseId, productId, name,
-      formattedPrice, price, currency, purchaseDate, purchaseType, expiryDate);
+  int get hashCode => Object.hash(
+      runtimeType,
+      purchaseId,
+      productId,
+      name,
+      formattedPrice,
+      price,
+      currency,
+      purchaseDate,
+      purchaseType,
+      freeTrialDuration,
+      duration,
+      expiryDate);
 
   /// Create a copy of PurchaseDetails
   /// with the given fields replaced by the non-null parameter values.
@@ -652,7 +910,7 @@ class _$PurchaseDetailsImpl implements _PurchaseDetails {
   }
 }
 
-abstract class _PurchaseDetails implements PurchaseDetails {
+abstract class _PurchaseDetails extends PurchaseDetails {
   const factory _PurchaseDetails(
       {required final PurchaseId purchaseId,
       required final ProductId productId,
@@ -662,7 +920,10 @@ abstract class _PurchaseDetails implements PurchaseDetails {
       required final String currency,
       required final DateTime purchaseDate,
       required final PurchaseProductType purchaseType,
+      final Duration freeTrialDuration,
+      final Duration duration,
       final DateTime? expiryDate}) = _$PurchaseDetailsImpl;
+  const _PurchaseDetails._() : super._();
 
   factory _PurchaseDetails.fromJson(Map<String, dynamic> json) =
       _$PurchaseDetailsImpl.fromJson;
@@ -687,6 +948,10 @@ abstract class _PurchaseDetails implements PurchaseDetails {
   DateTime get purchaseDate;
   @override
   PurchaseProductType get purchaseType;
+  @override
+  Duration get freeTrialDuration;
+  @override
+  Duration get duration;
   @override
   DateTime? get expiryDate;
 
@@ -1114,6 +1379,7 @@ PurchaseUpdate _$PurchaseUpdateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PurchaseUpdate {
+  ProductId get productId => throw _privateConstructorUsedError;
   PurchaseId get purchaseId => throw _privateConstructorUsedError;
   PurchaseStatus get status => throw _privateConstructorUsedError;
 
@@ -1133,7 +1399,8 @@ abstract class $PurchaseUpdateCopyWith<$Res> {
           PurchaseUpdate value, $Res Function(PurchaseUpdate) then) =
       _$PurchaseUpdateCopyWithImpl<$Res, PurchaseUpdate>;
   @useResult
-  $Res call({PurchaseId purchaseId, PurchaseStatus status});
+  $Res call(
+      {ProductId productId, PurchaseId purchaseId, PurchaseStatus status});
 }
 
 /// @nodoc
@@ -1151,10 +1418,15 @@ class _$PurchaseUpdateCopyWithImpl<$Res, $Val extends PurchaseUpdate>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? productId = null,
     Object? purchaseId = null,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as ProductId,
       purchaseId: null == purchaseId
           ? _value.purchaseId
           : purchaseId // ignore: cast_nullable_to_non_nullable
@@ -1175,7 +1447,8 @@ abstract class _$$PurchaseUpdateImplCopyWith<$Res>
       __$$PurchaseUpdateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PurchaseId purchaseId, PurchaseStatus status});
+  $Res call(
+      {ProductId productId, PurchaseId purchaseId, PurchaseStatus status});
 }
 
 /// @nodoc
@@ -1191,10 +1464,15 @@ class __$$PurchaseUpdateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? productId = null,
     Object? purchaseId = null,
     Object? status = null,
   }) {
     return _then(_$PurchaseUpdateImpl(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as ProductId,
       purchaseId: null == purchaseId
           ? _value.purchaseId
           : purchaseId // ignore: cast_nullable_to_non_nullable
@@ -1210,11 +1488,16 @@ class __$$PurchaseUpdateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PurchaseUpdateImpl implements _PurchaseUpdate {
-  const _$PurchaseUpdateImpl({required this.purchaseId, required this.status});
+  const _$PurchaseUpdateImpl(
+      {required this.productId,
+      required this.purchaseId,
+      required this.status});
 
   factory _$PurchaseUpdateImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseUpdateImplFromJson(json);
 
+  @override
+  final ProductId productId;
   @override
   final PurchaseId purchaseId;
   @override
@@ -1222,7 +1505,7 @@ class _$PurchaseUpdateImpl implements _PurchaseUpdate {
 
   @override
   String toString() {
-    return 'PurchaseUpdate(purchaseId: $purchaseId, status: $status)';
+    return 'PurchaseUpdate(productId: $productId, purchaseId: $purchaseId, status: $status)';
   }
 
   @override
@@ -1230,6 +1513,8 @@ class _$PurchaseUpdateImpl implements _PurchaseUpdate {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseUpdateImpl &&
+            (identical(other.productId, productId) ||
+                other.productId == productId) &&
             (identical(other.purchaseId, purchaseId) ||
                 other.purchaseId == purchaseId) &&
             (identical(other.status, status) || other.status == status));
@@ -1237,7 +1522,7 @@ class _$PurchaseUpdateImpl implements _PurchaseUpdate {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, purchaseId, status);
+  int get hashCode => Object.hash(runtimeType, productId, purchaseId, status);
 
   /// Create a copy of PurchaseUpdate
   /// with the given fields replaced by the non-null parameter values.
@@ -1258,12 +1543,15 @@ class _$PurchaseUpdateImpl implements _PurchaseUpdate {
 
 abstract class _PurchaseUpdate implements PurchaseUpdate {
   const factory _PurchaseUpdate(
-      {required final PurchaseId purchaseId,
+      {required final ProductId productId,
+      required final PurchaseId purchaseId,
       required final PurchaseStatus status}) = _$PurchaseUpdateImpl;
 
   factory _PurchaseUpdate.fromJson(Map<String, dynamic> json) =
       _$PurchaseUpdateImpl.fromJson;
 
+  @override
+  ProductId get productId;
   @override
   PurchaseId get purchaseId;
   @override

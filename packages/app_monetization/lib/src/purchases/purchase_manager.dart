@@ -28,6 +28,21 @@ extension type PurchaseId(String value) {
   String toJson() => value;
 }
 
+@Freezed()
+class PurchaseDuration with _$PurchaseDuration {
+  const factory PurchaseDuration({
+    @Default(0) final int years,
+    @Default(0) final int months,
+    @Default(0) final int days,
+  }) = _PurchaseDuration;
+  factory PurchaseDuration.fromJson(final Map<String, dynamic> json) =>
+      _$PurchaseDurationFromJson(json);
+  const PurchaseDuration._();
+  static const zero = PurchaseDuration();
+  bool get isZero => years == 0 && months == 0 && days == 0;
+  Duration get duration => Duration(days: days + (months * 30) + (years * 365));
+}
+
 /// {@template purchase_product_type}
 /// Represents the type of a purchasable product.
 /// {@endtemplate}
@@ -112,13 +127,16 @@ class PurchaseProductDetails with _$PurchaseProductDetails {
     /// price without currency in smallest unit of currency
     required final double price,
     required final String currency,
-    required final Duration duration,
     @Default('') final String description,
-    @Default(Duration.zero) final Duration freeTrialDuration,
+    @Default(Duration.zero) final Duration duration,
+    @Default(PurchaseDuration.zero) final PurchaseDuration freeTrialDuration,
   }) = _PurchaseProductDetails;
-
+  const PurchaseProductDetails._();
   factory PurchaseProductDetails.fromJson(final Map<String, dynamic> json) =>
       _$PurchaseProductDetailsFromJson(json);
+  bool get hasFreeTrial => !freeTrialDuration.isZero;
+  bool get isOneTimePurchase => duration.inDays == 0;
+  bool get isSubscription => !isOneTimePurchase;
 }
 
 /// {@template purchase_details}
@@ -139,11 +157,16 @@ class PurchaseDetails with _$PurchaseDetails {
     required final String currency,
     required final DateTime purchaseDate,
     required final PurchaseProductType purchaseType,
+    @Default(Duration.zero) final Duration freeTrialDuration,
+    @Default(Duration.zero) final Duration duration,
     final DateTime? expiryDate,
   }) = _PurchaseDetails;
-
+  const PurchaseDetails._();
   factory PurchaseDetails.fromJson(final Map<String, dynamic> json) =>
       _$PurchaseDetailsFromJson(json);
+  bool get hasFreeTrial => freeTrialDuration.inDays > 0;
+  bool get isOneTimePurchase => duration.inDays == 0;
+  bool get isSubscription => !isOneTimePurchase;
 }
 
 /// {@template purchase_result}
@@ -165,6 +188,7 @@ class PurchaseResult with _$PurchaseResult {
 @freezed
 class PurchaseUpdate with _$PurchaseUpdate {
   const factory PurchaseUpdate({
+    required final ProductId productId,
     required final PurchaseId purchaseId,
     required final PurchaseStatus status,
   }) = _PurchaseUpdate;
