@@ -1,6 +1,8 @@
 // Pixel Art Based Design Color Palette
 // Inspired by Apple Design, Material Design, Fluent UI, and Game UI Database
 
+import 'package:mobile_app/common_imports.dart';
+
 /// A class that defines the color palette for the application.
 ///
 /// This class provides static constants for various colors used throughout
@@ -18,6 +20,7 @@
 /// constants over hard-coded values for maintainability and design coherence.
 class UiColors {
   UiColors._();
+  static const biege = Color(0xFFFDEBD7);
 
   // Additional colors can be added here as needed
 }
