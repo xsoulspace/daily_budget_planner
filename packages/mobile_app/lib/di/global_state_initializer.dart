@@ -27,13 +27,7 @@ class _PreloadingScreenState extends State<PreloadingScreen> {
 }
 
 class GlobalStateInitializer
-    with
-        HasLocalApis,
-        HasUserNotifier,
-        HasAppStatusNotifier,
-        HasAppSettingsNotifier,
-        HasLocaleNotifier,
-        HasAnalyticsService
+    with HasLocalApis, HasStates, HasAnalyticsService
     implements StateInitializer, Disposable {
   @override
   Future<void> onLoad(final BuildContext context) async {

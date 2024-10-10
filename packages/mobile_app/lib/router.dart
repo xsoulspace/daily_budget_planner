@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 
 enum ScreenPaths {
   root('/'),
-  home('/home');
+  home('/home'),
+  paywall('paywall');
 
   const ScreenPaths(this.value);
   final String value;
@@ -21,6 +23,12 @@ final router = GoRouter(
         AppRoute(
           ScreenPaths.home.value,
           (final context, final state) => const HomeScreen(),
+          routes: [
+            AppRoute(
+              ScreenPaths.paywall.value,
+              (final context, final state) => const PaywallScreen(),
+            ),
+          ],
         ),
       ],
     ),
@@ -48,7 +56,13 @@ class AppPathsController {
   final BuildContext context;
   void toRoot() => go(ScreenPaths.root);
   void toHome() => go(ScreenPaths.home);
-  void go(final ScreenPaths path) => to(path.value);
+  void toPaywall() => go(ScreenPaths.paywall, routes: [ScreenPaths.home]);
+  void go(
+    final ScreenPaths path, {
+    final List<ScreenPaths> routes = const [],
+  }) =>
+      // ignore: lines_longer_than_80_chars
+      to('${routes.isEmpty ? '' : '${routes.map((final e) => e.value).join('/')}/'}${path.value}');
   void to(final String path) => context.go(path);
 }
 

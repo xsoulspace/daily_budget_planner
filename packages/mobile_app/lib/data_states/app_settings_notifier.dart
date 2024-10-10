@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_app/common_imports.dart';
 
 class AppSettingsNotifier extends ValueNotifier<AppSettingsModel>
-    with HasLocalApis, HasLocaleNotifier {
+    with HasLocalApis, HasStates {
   AppSettingsNotifier() : super(AppSettingsModel.empty);
 
   Future<void> _updateSettings(final AppSettingsModel settings) async {

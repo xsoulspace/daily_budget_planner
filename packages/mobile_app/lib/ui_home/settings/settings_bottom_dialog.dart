@@ -20,7 +20,9 @@ class SettingsBottomPopup extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _ListTile(
-              onTap: () {},
+              onTap: () {
+                // TODO(arenukvern): description
+              },
               title: LocalizedMap(
                 value: {
                   languages.en: 'Terms of use',
@@ -32,7 +34,9 @@ class SettingsBottomPopup extends StatelessWidget {
             ),
             UiDivider.size1(),
             _ListTile(
-              onTap: () {},
+              onTap: () {
+                // TODO(arenukvern): description
+              },
               title: LocalizedMap(
                 value: {
                   languages.en: 'Privacy policy',
@@ -44,7 +48,7 @@ class SettingsBottomPopup extends StatelessWidget {
             ),
             UiDivider.size5(),
             _ListTile(
-              onTap: () {},
+              onTap: () async => AppPathsController.of(context).toPaywall(),
               title: LocalizedMap(
                 value: {
                   languages.en: 'PRO version',

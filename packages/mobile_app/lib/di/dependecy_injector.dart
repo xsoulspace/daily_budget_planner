@@ -1,7 +1,7 @@
-import 'package:app_monetization/app_monetization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/data_states/app_settings_notifier.dart';
+import 'package:xsoulspace_monetization/xsoulspace_monetization.dart';
 
 /// Shortcuts
 /// Should not be exposed
@@ -46,6 +46,7 @@ void _init({required final AnalyticsService analyticsService}) {
   r(AppSettingsNotifier());
   r(UserNotifier());
   r(AppStatusNotifier());
+  r(KeeperManager());
 }
 
 mixin HasLocalApis {
@@ -54,18 +55,14 @@ mixin HasLocalApis {
   UserLocalApi get userLocalApi => _g<UserLocalApi>();
   BudgetLocalApi get budgetLocalApi => _g<BudgetLocalApi>();
 }
-mixin HasUserNotifier {
+mixin HasStates {
   UserNotifier get userNotifier => _g<UserNotifier>();
-}
-mixin HasAppStatusNotifier {
   AppStatusNotifier get appStatusNotifier => _g<AppStatusNotifier>();
-}
-mixin HasLocaleNotifier {
   UiLocaleNotifier get localeNotifier => _g<UiLocaleNotifier>();
+  KeeperManager get keeperManager => _g<KeeperManager>();
+  PurchaseManager get purchaseManager => _g<PurchaseManager>();
+  AppSettingsNotifier get appSettingsNotifier => _g<AppSettingsNotifier>();
 }
 mixin HasAnalyticsService {
   AnalyticsService get analyticsService => _g<AnalyticsService>();
-}
-mixin HasAppSettingsNotifier {
-  AppSettingsNotifier get appSettingsNotifier => _g<AppSettingsNotifier>();
 }

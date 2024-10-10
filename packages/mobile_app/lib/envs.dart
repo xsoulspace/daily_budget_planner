@@ -1,5 +1,6 @@
 // ignore_for_file: do_not_use_environment
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
+import 'package:xsoulspace_monetization/xsoulspace_monetization.dart';
 
 class Envs {
   const Envs._();
@@ -7,7 +8,10 @@ class Envs {
   static const logging = bool.fromEnvironment('LOGGING');
   static const rustoreApplicationId = '2045332927';
   static const isTestPayments = bool.fromEnvironment('TEST_PAYMENTS');
+  static final monetizationType = MonetizationType.fromJson(
+    String.fromEnvironment('MONETIZATION_TYPE', defaultValue: 'free'),
+  );
   static final storeTarget = InstallPlatformTarget.fromString(
-    const String.fromEnvironment('STORE'),
+    const String.fromEnvironment('STORE', defaultValue: 'snapstore'),
   );
 }
