@@ -50,6 +50,18 @@ class SettingsBottomPopup extends StatelessWidget {
               icon: Icons.privacy_tip_outlined,
             ),
             UiDivider.size5(),
+            _ListTile(
+              onTap: () async => AppPathsController.of(context).toExplanation(),
+              title: LocalizedMap(
+                value: {
+                  languages.en: 'How to use?',
+                  languages.it: 'Come usarlo?',
+                  languages.ru: 'Как пользоваться?',
+                },
+              ).getValue(locale),
+              icon: CupertinoIcons.question_diamond,
+            ),
+            UiDivider.size1(),
             if (isSubscriptionMonetization) ...[
               _ListTile(
                 onTap: () async => AppPathsController.of(context).toPaywall(),

@@ -1,5 +1,4 @@
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_states/app_settings_notifier.dart';
 
 class GlobalStateProviders extends StatelessWidget {
   const GlobalStateProviders({required this.builder, super.key});
@@ -16,6 +15,7 @@ class GlobalStateProviders extends StatelessWidget {
         ChangeNotifierProvider<UiLocaleNotifier>.value(value: g()),
         ChangeNotifierProvider<AppStatusNotifier>.value(value: g()),
         ChangeNotifierProvider<AppSettingsNotifier>.value(value: g()),
+        ChangeNotifierProvider<SubscriptionManager>.value(value: g()),
       ],
       child: builder(context),
     );

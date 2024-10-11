@@ -5,7 +5,6 @@ import 'package:mobile_app/ui_home/monthly/monthly_view.dart';
 import 'package:mobile_app/ui_home/settings/settings_icon_button.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_view.dart';
-import 'package:mobile_app/ui_kit/atoms/ui_safe_area.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

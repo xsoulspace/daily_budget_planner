@@ -5,7 +5,8 @@ import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 enum ScreenPaths {
   root('/'),
   home('/home'),
-  paywall('paywall');
+  paywall('paywall'),
+  explanation('explain');
 
   const ScreenPaths(this.value);
   final String value;
@@ -27,6 +28,10 @@ final router = GoRouter(
             AppRoute(
               ScreenPaths.paywall.value,
               (final context, final state) => const PaywallScreen(),
+            ),
+            AppRoute(
+              ScreenPaths.explanation.value,
+              (final context, final state) => MethodExplanationScreen(),
             ),
           ],
         ),
@@ -57,6 +62,8 @@ class AppPathsController {
   void toRoot() => go(ScreenPaths.root);
   void toHome() => go(ScreenPaths.home);
   void toPaywall() => go(ScreenPaths.paywall, routes: [ScreenPaths.home]);
+  void toExplanation() =>
+      go(ScreenPaths.explanation, routes: [ScreenPaths.home]);
   void go(
     final ScreenPaths path, {
     final List<ScreenPaths> routes = const [],
