@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
 
 /// {@template method_explanation_screen}
 /// An interactive screen that guides users through the budgeting method.
 /// {@endtemplate}
 class MethodExplanationScreen extends StatefulWidget {
   /// {@macro method_explanation_screen}
-  const MethodExplanationScreen({super.key});
+  const MethodExplanationScreen({
+    required this.isFirstOpening,
+    super.key,
+  });
+  final bool isFirstOpening;
 
   @override
   State<MethodExplanationScreen> createState() =>
@@ -74,14 +79,22 @@ class _MethodExplanationScreenState extends State<MethodExplanationScreen>
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
-    final isFirstOpening = context.routeParams['isFirstOpening'] != null;
     return Scaffold(
       appBar: AppBar(
-        leading: isFirstOpening
-            ? SizedBox()
-            : CupertinoNavigationBarBackButton(
-                onPressed: _previousPage,
-              ),
+        leading: () {
+          final back = CupertinoNavigationBarBackButton(
+            onPressed: _previousPage,
+          );
+          if (widget.isFirstOpening) {
+            if (_pageController.hasClients && _pageController.page! > 0) {
+              return back;
+            } else {
+              return SizedBox();
+            }
+          } else {
+            return back;
+          }
+        }(),
         title: Text(
           LocalizedMap(
             value: {
@@ -116,7 +129,7 @@ class _MethodExplanationScreenState extends State<MethodExplanationScreen>
             },
           ),
           _ResultPage(
-            isFirstOpening: isFirstOpening,
+            isFirstOpening: widget.isFirstOpening,
             currentBalance: currentBalance,
             expenses: expenses,
             nextSalaryDate: nextSalaryDate,
@@ -290,11 +303,7 @@ class _SalaryDatePage extends StatelessWidget {
           }
         },
       ),
-      onNext: () {
-        if (selectedDate != null) {
-          onNext(selectedDate!);
-        }
-      },
+      onNext: null,
     );
   }
 }
@@ -319,6 +328,8 @@ class _ResultPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
+    final (:isSubscriptionMonetization) =
+        useIsSubscriptionMonetization(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -370,7 +381,57 @@ class _ResultPage extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ).animate().fadeIn().slideX(),
           const SizedBox(height: 24),
-          if (isFirstOpening)
+          if (isFirstOpening && isSubscriptionMonetization) ...[
+            Text(
+              LocalizedMap(
+                value: {
+                  languages.en:
+                      'The basic functions of this app are free. To use the most advanced and extra functions, there is a subscription available.',
+                  languages.ru:
+                      'Основные функции этого приложения бесплатны. Для использования самых продвинутых и дополнительных функций доступна подписка.',
+                  languages.it:
+                      'Le funzioni di base di questa app sono gratuite. Per utilizzare le funzioni più avanzate ed extra, è disponibile un abbonamento.',
+                },
+              ).getValue(locale),
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ).animate().fadeIn().slideX(),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: onFinish,
+                  child: Text(
+                    LocalizedMap(
+                      value: {
+                        languages.en: 'Continue Free',
+                        languages.ru: 'Продолжить бесплатно',
+                        languages.it: 'Continua gratis',
+                      },
+                    ).getValue(locale),
+                  ),
+                ).animate().fadeIn().slideX(),
+                ElevatedButton(
+                  onPressed: () {
+                    final controller = AppPathsController.of(context);
+                    // Save the entered data
+                    onFinish();
+                    controller.toPaywall();
+                  },
+                  child: Text(
+                    LocalizedMap(
+                      value: {
+                        languages.en: 'Purchase',
+                        languages.ru: 'Купить',
+                        languages.it: 'Acquista',
+                      },
+                    ).getValue(locale),
+                  ),
+                ).animate().fadeIn().slideX(),
+              ],
+            ),
+          ] else
             Center(
               child: ElevatedButton(
                 onPressed: onFinish,
@@ -379,15 +440,11 @@ class _ResultPage extends StatelessWidget {
                     value: {
                       languages.en: "Cool! Let's start!",
                       languages.ru: 'Круто! Давайте продолжим!',
-                      languages.it: 'Fantastico! Iniziamo a fare!',
+                      languages.it: 'Fantastico! Iniziamo!',
                     },
                   ).getValue(locale),
                 ),
               ).animate().fadeIn().slideX(),
-            )
-          else
-            Row(
-              children: [],
             ),
           const SizedBox(height: 16),
           Text(
@@ -526,7 +583,7 @@ class _GuidePage extends StatelessWidget {
   final String title;
   final String description;
   final Widget content;
-  final VoidCallback onNext;
+  final VoidCallback? onNext;
 
   @override
   Widget build(final BuildContext context) => SingleChildScrollView(
@@ -546,18 +603,19 @@ class _GuidePage extends StatelessWidget {
             const SizedBox(height: 24),
             content.animate().fadeIn().scale(),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: onNext,
-              child: Text(
-                LocalizedMap(
-                  value: {
-                    languages.en: 'Next',
-                    languages.ru: 'Далее',
-                    languages.it: 'Avanti',
-                  },
-                ).getValue(useLocale(context)),
-              ),
-            ).animate().fadeIn().slideX(),
+            if (onNext != null)
+              ElevatedButton(
+                onPressed: onNext,
+                child: Text(
+                  LocalizedMap(
+                    value: {
+                      languages.en: 'Next',
+                      languages.ru: 'Далее',
+                      languages.it: 'Avanti',
+                    },
+                  ).getValue(useLocale(context)),
+                ),
+              ).animate().fadeIn().slideX(),
           ],
         ),
       );

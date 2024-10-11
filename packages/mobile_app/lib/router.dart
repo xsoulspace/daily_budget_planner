@@ -31,7 +31,10 @@ final router = GoRouter(
             ),
             AppRoute(
               ScreenPaths.explanation.value,
-              (final context, final state) => MethodExplanationScreen(),
+              (final context, final state) => MethodExplanationScreen(
+                isFirstOpening:
+                    state.uri.queryParameters['isFirstOpening'] != null,
+              ),
             ),
           ],
         ),
@@ -62,14 +65,24 @@ class AppPathsController {
   void toRoot() => go(ScreenPaths.root);
   void toHome() => go(ScreenPaths.home);
   void toPaywall() => go(ScreenPaths.paywall, routes: [ScreenPaths.home]);
-  void toExplanation() =>
-      go(ScreenPaths.explanation, routes: [ScreenPaths.home]);
+  void toExplanation() => go(
+        ScreenPaths.explanation,
+        routes: [ScreenPaths.home],
+        params: {
+          'isFirstOpening': 'true',
+        },
+      );
   void go(
     final ScreenPaths path, {
     final List<ScreenPaths> routes = const [],
-  }) =>
-      // ignore: lines_longer_than_80_chars
-      to('${routes.isEmpty ? '' : '${routes.map((final e) => e.value).join('/')}/'}${path.value}');
+    final Map<String, String> params = const {},
+  }) {
+    final pathWithRoutes =
+        '${routes.isEmpty ? '' : '${routes.map((final e) => e.value).join('/')}/'}${path.value}';
+    final uri = Uri(path: pathWithRoutes, queryParameters: params);
+    to(uri.toString());
+  }
+
   void to(final String path) => context.go(path);
 }
 

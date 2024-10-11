@@ -38,7 +38,8 @@ class GlobalStateInitializer
       appSettingsNotifier.onLoad(),
     ]);
     final guideVisibility = GuideVisibility();
-    final hasSeenGuide = await guideVisibility.hasSeenGuide;
+    final hasSeenGuide = false;
+    // await guideVisibility.hasSeenGuide;
 
     WidgetsBinding.instance.addPostFrameCallback((final timeStamp) async {
       appStatusNotifier.value = AppStatus.online;

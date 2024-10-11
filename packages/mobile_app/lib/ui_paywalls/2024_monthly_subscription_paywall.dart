@@ -24,6 +24,7 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
+          shrinkWrap: true,
           children: [
             AppBar(
               centerTitle: true,
@@ -81,6 +82,7 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                   children: [
                     Expanded(
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           _Block(
                             title: LocalizedMap(
@@ -115,6 +117,7 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                     ),
                     Expanded(
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           _Block(
                             image: Assets.images.paywalls.ideas,
@@ -211,9 +214,9 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                   Text(
                     LocalizedMap(
                       value: {
-                        languages.en: 'START',
-                        languages.it: 'INIZIA',
-                        languages.ru: 'НАЧАТЬ',
+                        languages.en: 'SUBSCRIBE',
+                        languages.it: 'ISCRIVITI',
+                        languages.ru: 'ПОДПИСАТЬСЯ',
                       },
                     ).getValue(locale),
                     style: context.textTheme.displaySmall?.copyWith(
