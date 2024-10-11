@@ -118,9 +118,9 @@ class _MonthlyViewState extends State<MonthlyView>
           _buildInputField(
             label: LocalizedMap(
               value: {
-                languages.en: 'Monthly Income',
-                languages.ru: 'Ежемесячный доход',
-                languages.it: 'Reddito mensile',
+                languages.en: 'Balance',
+                languages.ru: 'Баланс',
+                languages.it: 'Saldo',
               },
             ).getValue(locale),
             controller: monthlyCubit.amountController,
@@ -315,6 +315,7 @@ class _MonthlyViewState extends State<MonthlyView>
           ),
           _buildBudgetItem(
             locale: locale,
+            useDouble: false,
             label: LocalizedMap(
               value: {
                 languages.en: 'Days in Total',
@@ -341,8 +342,8 @@ class _MonthlyViewState extends State<MonthlyView>
     required final IconData icon,
     required final String tooltip,
     required final Locale locale,
+    final bool useDouble = true,
     final String? subtitle,
-    final bool applyPrefix = true,
   }) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
@@ -365,12 +366,33 @@ class _MonthlyViewState extends State<MonthlyView>
                   ],
                 ),
               ),
-              UiTextCounter(
-                value: _parseValue(value),
-                style: context.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colorScheme.primary,
-                ),
+              Builder(
+                builder: (final context) {
+                  final values =
+                      _parseValue(value).toStringAsFixed(2).split('.');
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      UiTextCounter(
+                        value: int.tryParse(values.first) ?? 0,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: context.colorScheme.primary,
+                        ),
+                      ),
+                      if (useDouble) ...[
+                        Text('.'),
+                        UiTextCounter(
+                          value: int.tryParse(values.last) ?? 0,
+                          style: context.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: context.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ],
+                  );
+                },
               ),
               const SizedBox(width: 4),
               CopyButton(value: value),
@@ -379,10 +401,11 @@ class _MonthlyViewState extends State<MonthlyView>
         ),
       );
 
-  int _parseValue(final String value) {
-    final numericValue =
-        double.tryParse(value.replaceAll(RegExp(r'[^\d.]'), ''));
-    return numericValue?.round() ?? 0;
+  double _parseValue(final String value) {
+    return double.tryParse(value) ?? 0;
+    // final numericValue =
+    //     double.tryParse(value.replaceAll(RegExp(r'[^\d.]'), ''));
+    // return numericValue?.round() ?? 0;
   }
 
   @override
