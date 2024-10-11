@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
+import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
 import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 
 /// Shortcuts
@@ -72,6 +74,8 @@ void _init({required final AnalyticsService analyticsService}) {
       subscriptionManager: subscriptionManager,
     ),
   );
+  r(WeeklyCubit());
+  r(MonthlyCubit());
 }
 
 mixin HasLocalApis {
@@ -88,6 +92,8 @@ mixin HasStates {
   AppSettingsNotifier get appSettingsNotifier => _g();
   PurchaseInitializer get purchaseIntializer => _g();
   SubscriptionManager get subscriptionManager => _g();
+  WeeklyCubit get weeklyCubit => _g();
+  MonthlyCubit get monthlyCubit => _g();
 }
 mixin HasAnalyticsService {
   AnalyticsService get analyticsService => _g();

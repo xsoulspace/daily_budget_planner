@@ -3,9 +3,7 @@ import 'package:mobile_app/common_imports.dart';
 class MonthlyCubit extends ValueNotifier<LoadableContainer<MonthlyBudgetModel>>
     with HasLocalApis {
   MonthlyCubit()
-      : super(const LoadableContainer(value: MonthlyBudgetModel.initial)) {
-    unawaited(onLoad());
-  }
+      : super(const LoadableContainer(value: MonthlyBudgetModel.initial));
   final amountController = TextEditingController();
   final savingsController = TextEditingController();
   final amountFocusNode = FocusNode();
@@ -75,6 +73,10 @@ class MonthlyCubit extends ValueNotifier<LoadableContainer<MonthlyBudgetModel>>
       firstDate: today,
       lastDate: today.add(const Duration(days: 80)),
     );
+    onUpdateNextBudgetDay(datetime);
+  }
+
+  void onUpdateNextBudgetDay(final DateTime? datetime) {
     if (datetime == null) return;
     final updatedBudget = budget.copyWith(nextBudgetDay: datetime);
     value = value.copyWith(value: updatedBudget);

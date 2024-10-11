@@ -59,7 +59,7 @@ class SettingsBottomPopup extends StatelessWidget {
                   languages.ru: 'Как пользоваться?',
                 },
               ).getValue(locale),
-              icon: CupertinoIcons.question_diamond,
+              icon: CupertinoIcons.wand_stars,
             ),
             UiDivider.size1(),
             if (isSubscriptionMonetization) ...[

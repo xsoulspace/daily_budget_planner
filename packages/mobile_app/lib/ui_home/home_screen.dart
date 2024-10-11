@@ -1,9 +1,7 @@
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_view.dart';
 import 'package:mobile_app/ui_home/settings/settings_icon_button.dart';
-import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,13 +28,7 @@ class _HomeScreenProvider extends StatelessWidget {
   final WidgetBuilder builder;
   @override
   Widget build(final BuildContext context) => Portal(
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (final context) => WeeklyCubit()),
-            ChangeNotifierProvider(create: (final context) => MonthlyCubit()),
-          ],
-          builder: (final context, final child) => builder(context),
-        ),
+        child: Builder(builder: builder),
       );
 }
 

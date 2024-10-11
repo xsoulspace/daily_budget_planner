@@ -3,9 +3,7 @@ import 'package:mobile_app/common_imports.dart';
 class WeeklyCubit extends ValueNotifier<LoadableContainer<WeeklyBudgetModel>>
     with HasLocalApis {
   WeeklyCubit()
-      : super(const LoadableContainer(value: WeeklyBudgetModel.initial)) {
-    unawaited(onLoad());
-  }
+      : super(const LoadableContainer(value: WeeklyBudgetModel.initial));
   final amountFocusNode = FocusNode();
   final amountController = TextEditingController();
   @override

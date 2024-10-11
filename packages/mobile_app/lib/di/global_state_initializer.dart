@@ -37,10 +37,22 @@ class GlobalStateInitializer
       userNotifier.loadProfile(),
       appSettingsNotifier.onLoad(),
     ]);
+    final guideVisibility = GuideVisibility();
+    final hasSeenGuide = await guideVisibility.hasSeenGuide;
 
     WidgetsBinding.instance.addPostFrameCallback((final timeStamp) async {
       appStatusNotifier.value = AppStatus.online;
       AppPathsController.of(context).toHome();
+      if (!hasSeenGuide) {
+        AppPathsController.of(context).toExplanation();
+        guideVisibility.setGuideWasOpen();
+      }
+      unawaited(
+        Future.wait([
+          weeklyCubit.onLoad(),
+          monthlyCubit.onLoad(),
+        ]),
+      );
       await purchaseIntializer.init();
       await subscriptionManager.init();
     });
@@ -48,4 +60,12 @@ class GlobalStateInitializer
 
   @override
   void dispose() {}
+}
+
+class GuideVisibility with HasLocalApis {
+  const GuideVisibility();
+  static const _key = 'has_seen_guide';
+
+  void setGuideWasOpen() => unawaited(localDb.setBool(key: _key, value: true));
+  Future<bool> get hasSeenGuide => localDb.getBool(key: _key);
 }
