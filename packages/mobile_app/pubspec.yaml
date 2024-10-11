@@ -67,6 +67,7 @@ dependencies:
   rxdart: ^0.28.0
   share_plus: ^10.0.2
   shared_preferences: ^2.3.2
+  skeletonizer: ^1.4.2
   ui_locale:
     path: ../ui_locale
   universal_io: ^2.2.2

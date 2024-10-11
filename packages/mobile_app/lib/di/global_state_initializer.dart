@@ -38,9 +38,11 @@ class GlobalStateInitializer
       appSettingsNotifier.onLoad(),
     ]);
 
-    WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((final timeStamp) async {
       appStatusNotifier.value = AppStatus.online;
       AppPathsController.of(context).toHome();
+      await purchaseIntializer.init();
+      await subscriptionManager.init();
     });
   }
 

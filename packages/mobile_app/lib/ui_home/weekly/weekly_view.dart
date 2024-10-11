@@ -1,5 +1,5 @@
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_home/hooks/tab_controller_listener.dart';
+import 'package:mobile_app/ui_home/hooks/use_tab_controller_listener.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
 import 'package:mobile_app/ui_home/widgets/copy_button.dart';
 

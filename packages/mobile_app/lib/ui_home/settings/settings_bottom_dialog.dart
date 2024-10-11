@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
 import 'package:mobile_app/ui_home/settings/language_bottom_sheet.dart';
 
 class SettingsBottomPopup extends StatelessWidget {
@@ -10,6 +11,8 @@ class SettingsBottomPopup extends StatelessWidget {
   final VoidCallback onClose;
   @override
   Widget build(final BuildContext context) {
+    final (:isSubscriptionMonetization) =
+        useIsSubscriptionMonetization(context);
     final locale = useLocale(context);
     return Card(
       child: Container(
@@ -47,18 +50,20 @@ class SettingsBottomPopup extends StatelessWidget {
               icon: Icons.privacy_tip_outlined,
             ),
             UiDivider.size5(),
-            _ListTile(
-              onTap: () async => AppPathsController.of(context).toPaywall(),
-              title: LocalizedMap(
-                value: {
-                  languages.en: 'PRO version',
-                  languages.it: 'Versione PRO',
-                  languages.ru: 'Версия PRO',
-                },
-              ).getValue(locale),
-              icon: CupertinoIcons.star_fill,
-            ),
-            UiDivider.size1(),
+            if (isSubscriptionMonetization) ...[
+              _ListTile(
+                onTap: () async => AppPathsController.of(context).toPaywall(),
+                title: LocalizedMap(
+                  value: {
+                    languages.en: 'PRO version',
+                    languages.it: 'Versione PRO',
+                    languages.ru: 'Версия PRO',
+                  },
+                ).getValue(locale),
+                icon: CupertinoIcons.star_fill,
+              ),
+              UiDivider.size1(),
+            ],
             _ListTile(
               onTap: () {
                 onClose();

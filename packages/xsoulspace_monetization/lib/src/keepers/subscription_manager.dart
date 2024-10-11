@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
 import '../purchases/purchase_manager.dart';
 import 'monetization_utils.dart';
@@ -12,66 +11,46 @@ part 'subscription_manager.g.dart';
 /// Represents the state of user access to premium features.
 enum SubscriptionManagerStatus { free, subscribed, pending }
 
-/// {@template keeper_manager}
-/// Manages the state of user access to premium features.
+/// {@template subscription_manager}
+/// Manages the state of user subscription access to premium features.
 /// {@endtemplate}
 class SubscriptionManager extends ChangeNotifier {
-  SubscriptionManager();
-  late final PurchaseManager purchaseManager;
+  SubscriptionManager({
+    required this.purchaseManager,
+    required this.monetizationType,
+    required this.productIds,
+  });
+  final List<ProductId> productIds;
+  final PurchaseManager purchaseManager;
+  final MonetizationType monetizationType;
   SubscriptionManagerStatus _state = SubscriptionManagerStatus.free;
-  MonetizationType _monetizationType = MonetizationType.subscription;
-  bool _isInitialized = false;
 
   /// The current state of user access.
   SubscriptionManagerStatus get state =>
-      _monetizationType == MonetizationType.free
+      monetizationType == MonetizationType.free
           ? SubscriptionManagerStatus.subscribed
           : _state;
 
-  /// The type of monetization used by the app.
-  MonetizationType get monetizationType => _monetizationType;
-  StreamSubscription<PurchaseVerificationDto>? _purchaseUpdateSubscription;
-  Future<void> init({
-    required final MonetizationType monetizationType,
-    required final PurchaseManager purchaseManager,
-  }) async {
-    _monetizationType = monetizationType;
-    this.purchaseManager = purchaseManager;
-    _isInitialized = await purchaseManager.init();
-    if (monetizationType case MonetizationType.subscription
-        when _isInitialized) {
-      await restore();
-      await _purchaseUpdateSubscription?.cancel();
-      _purchaseUpdateSubscription =
-          purchaseManager.purchasesStream.listen(handlePurchaseUpdate);
-    }
+  LoadableContainer<List<PurchaseProductDetails>> subscriptions =
+      LoadableContainer(value: []);
+  Future<void> init() async {
+    await getSubscriptions();
+  }
+
+  Future<void> getSubscriptions() async {
+    subscriptions = LoadableContainer.loaded(
+      await purchaseManager.getSubscriptions(productIds),
+    );
     notifyListeners();
   }
 
-  Future<void> restore() async {
-    if (!_isInitialized) return;
-    final result = await purchaseManager.restore();
-    // TODO(arenukvern): add other types of purchases handlers,
-    // which will be better handled in separate classes
-    // like for hanlder in handlers
-    // handler.onRestore()
-    switch (result) {
-      case RestoreSuccess(:final restoredPurchases):
-        for (final purchase in restoredPurchases) {
-          if (!purchase.isActive) continue;
-          await _confirmPurchase(purchase.toVerificationDto());
-        }
-      case RestoreFailure():
-        _state = SubscriptionManagerStatus.free;
-        notifyListeners();
-    }
-  }
-
   /// Updates the state based on a purchase update.
-  Future<void> handlePurchaseUpdate(final PurchaseVerificationDto dto) async {
-    if (!_isInitialized) return;
+  Future<void> handleSubscriptionUpdate(
+    final PurchaseVerificationDto dto,
+  ) async {
     switch (dto.status) {
-      case PurchaseStatus.restored || PurchaseStatus.purchased:
+      case PurchaseStatus.restored:
+      case PurchaseStatus.purchased:
         await _confirmPurchase(dto);
         return;
       case PurchaseStatus.error:
@@ -82,40 +61,20 @@ class SubscriptionManager extends ChangeNotifier {
         notifyListeners();
         return;
       case PurchaseStatus.canceled:
+        _state = SubscriptionManagerStatus.free;
+        notifyListeners();
+        return;
     }
-    _state = SubscriptionManagerStatus.free;
-    notifyListeners();
-  }
-
-  /// Updates the state based on a purchase result.
-  Future<void> _handlePurchase(final PurchaseResult result) async {
-    if (!_isInitialized) return;
-    switch (result) {
-      case PurchaseSuccess(:final details):
-        if (details.isActive) {
-          await _confirmPurchase(details.toVerificationDto());
-        }
-      case PurchaseFailure():
-    }
-    _state = SubscriptionManagerStatus.free;
-    notifyListeners();
-  }
-
-  /// Updates the state based on an ad interaction result.
-  void updateStateFromAd(final AdResult result) {
-    if (!_isInitialized) return;
-    // TODO(arenukvern): description
-    notifyListeners();
   }
 
   Future<void> subscribe(final PurchaseProductDetails details) async {
-    if (!_isInitialized) return;
+    _state = SubscriptionManagerStatus.pending;
+    notifyListeners();
     final result = await purchaseManager.subscribe(details);
-    await _handlePurchase(result);
+    await _handleSubscriptionResult(result);
   }
 
   Future<void> cancel(final PurchaseProductDetails details) async {
-    if (!_isInitialized) return;
     final result = await purchaseManager.cancel(details);
     switch (result) {
       case CancelSuccess():
@@ -127,30 +86,37 @@ class SubscriptionManager extends ChangeNotifier {
   }
 
   Future<void> _confirmPurchase(final PurchaseVerificationDto details) async {
-    if (!_isInitialized) return;
     if (details.status
         case PurchaseStatus.error ||
             PurchaseStatus.purchased ||
-            PurchaseStatus.restored) return;
-    final result = await purchaseManager.completePurchase(details);
-    switch (result) {
-      case CompletePurchaseSuccess():
-        _state = SubscriptionManagerStatus.subscribed;
-      case CompletePurchaseFailure():
+            PurchaseStatus.restored) {
+      final result = await purchaseManager.completePurchase(details);
+      switch (result) {
+        case CompletePurchaseSuccess():
+          if (details.status
+              case (PurchaseStatus.purchased || PurchaseStatus.restored)) {
+            _state = SubscriptionManagerStatus.subscribed;
+          }
+        case CompletePurchaseFailure():
+          // Handle failure if needed
+          break;
+      }
+      notifyListeners();
     }
-    notifyListeners();
+  }
+
+  Future<void> _handleSubscriptionResult(final PurchaseResult result) async {
+    switch (result) {
+      case PurchaseSuccess(:final details):
+        await _confirmPurchase(details.toVerificationDto());
+      case PurchaseFailure():
+        _state = SubscriptionManagerStatus.free;
+        notifyListeners();
+    }
   }
 
   /// Checks if the user has access to premium features.
   bool hasActiveSubscription() => state == SubscriptionManagerStatus.subscribed;
-
-  /// Disposes of the KeeperManager and its resources.
-  @override
-  Future<void> dispose() async {
-    await _purchaseUpdateSubscription?.cancel();
-    await purchaseManager.dispose();
-    super.dispose();
-  }
 }
 
 /// Represents the result of an ad interaction.

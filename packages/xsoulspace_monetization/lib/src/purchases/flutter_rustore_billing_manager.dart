@@ -20,6 +20,13 @@ import 'purchase_manager.dart';
 /// [enableLogger] is the flag to enable logger.
 ///
 /// https://www.rustore.ru/help/en/sdk/payments/flutter/6-1-0
+///
+/// Testing || Sandbox Docs:
+///
+/// https://www.rustore.ru/help/developers/monetization/sandbox
+///
+/// Testing Bank Cards:
+/// https://www.rustore.ru/help/developers/monetization/sandbox/test-bank-cards
 /// {@endtemplate}
 class FlutterRustoreBillingManager implements PurchaseManager {
   FlutterRustoreBillingManager({

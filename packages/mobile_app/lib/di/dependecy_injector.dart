@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_states/app_settings_notifier.dart';
-import 'package:xsoulspace_monetization/xsoulspace_monetization.dart';
+import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 
 /// Shortcuts
 /// Should not be exposed
@@ -46,24 +45,50 @@ void _init({required final AnalyticsService analyticsService}) {
   r(AppSettingsNotifier());
   r(UserNotifier());
   r(AppStatusNotifier());
-
-  r(SubscriptionManager());
+  final PurchaseManager purchaseManager = switch (Envs.storeTarget) {
+    InstallPlatformTarget.rustore => FlutterRustoreBillingManager(
+        consoleApplicationId: Envs.rustoreApplicationId,
+        deeplinkScheme: Envs.appScheme,
+      ),
+    InstallPlatformTarget.appleStore ||
+    InstallPlatformTarget.googlePlay =>
+      NoopPurchaseManager(),
+    // TODO(arenukvern): description
+    // InAppPurchaseManager(),
+    _ => NoopPurchaseManager(),
+  };
+  final subscriptionManager = SubscriptionManager(
+    productIds: MonetizationProducts.subscriptions,
+    purchaseManager: purchaseManager,
+    monetizationType: switch (Envs.storeTarget) {
+      InstallPlatformTarget.rustore => MonetizationType.subscription,
+      _ => MonetizationType.free,
+    },
+  );
+  r(subscriptionManager);
+  r(
+    PurchaseInitializer(
+      purchaseManager: purchaseManager,
+      subscriptionManager: subscriptionManager,
+    ),
+  );
 }
 
 mixin HasLocalApis {
-  LocalDbI get localDb => _g<LocalDbI>();
-  AppSettingsLocalApi get appSettingsApi => _g<AppSettingsLocalApi>();
-  UserLocalApi get userLocalApi => _g<UserLocalApi>();
-  BudgetLocalApi get budgetLocalApi => _g<BudgetLocalApi>();
+  LocalDbI get localDb => _g();
+  AppSettingsLocalApi get appSettingsApi => _g();
+  UserLocalApi get userLocalApi => _g();
+  BudgetLocalApi get budgetLocalApi => _g();
 }
 mixin HasStates {
-  UserNotifier get userNotifier => _g<UserNotifier>();
-  AppStatusNotifier get appStatusNotifier => _g<AppStatusNotifier>();
-  UiLocaleNotifier get localeNotifier => _g<UiLocaleNotifier>();
-  SubscriptionManager get keeperManager => _g<SubscriptionManager>();
-  PurchaseManager get purchaseManager => _g<PurchaseManager>();
-  AppSettingsNotifier get appSettingsNotifier => _g<AppSettingsNotifier>();
+  UserNotifier get userNotifier => _g();
+  AppStatusNotifier get appStatusNotifier => _g();
+  UiLocaleNotifier get localeNotifier => _g();
+  SubscriptionManager get keeperManager => _g();
+  AppSettingsNotifier get appSettingsNotifier => _g();
+  PurchaseInitializer get purchaseIntializer => _g();
+  SubscriptionManager get subscriptionManager => _g();
 }
 mixin HasAnalyticsService {
-  AnalyticsService get analyticsService => _g<AnalyticsService>();
+  AnalyticsService get analyticsService => _g();
 }
