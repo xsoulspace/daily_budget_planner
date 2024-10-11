@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
+import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
 
 /// A localized map for money prefix symbols based on language.
 final kMoneyPrefix = LocalizedMap(
@@ -15,87 +16,38 @@ final kMoneyPrefix = LocalizedMap(
 /// {@template method_explanation_screen}
 /// An interactive screen that guides users through the budgeting method.
 /// {@endtemplate}
-class MethodExplanationScreen extends StatefulWidget {
+class MethodExplanationScreen extends HookWidget {
   /// {@macro method_explanation_screen}
   const MethodExplanationScreen({
     required this.isFirstOpening,
     super.key,
   });
+
   final bool isFirstOpening;
 
   @override
-  State<MethodExplanationScreen> createState() =>
-      _MethodExplanationScreenState();
-}
-
-class _MethodExplanationScreenState extends State<MethodExplanationScreen>
-    with HasStates {
-  final PageController _pageController = PageController();
-  double? currentBalance;
-  double? expenses;
-  DateTime? nextSalaryDate;
-  double? dailyBudget;
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  void _nextPage() {
-    if (_pageController.page! < 3) {
-      unawaited(
-        _pageController.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        ),
-      );
-    }
-  }
-
-  void _previousPage() {
-    if (_pageController.page! > 0) {
-      unawaited(
-        _pageController.previousPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        ),
-      );
-    } else {
-      Navigator.pop(context);
-    }
-  }
-
-  void _calculateDailyBudget() {
-    if (currentBalance != null && expenses != null && nextSalaryDate != null) {
-      final availableBalance = currentBalance! - expenses!;
-      final daysUntilSalary =
-          nextSalaryDate!.difference(DateTime.now()).inDays + 1;
-      setState(() {
-        dailyBudget = availableBalance / daysUntilSalary;
-      });
-    }
-  }
-
-  @override
   Widget build(final BuildContext context) {
-    final locale = useLocale(context);
+    final pageController = usePageController();
+    final currentBalance = useState<double?>(null);
+    final expenses = useState<double?>(null);
+    final nextSalaryDate = useState<DateTime?>(null);
+    final dailyBudget = useState<double?>(null);
+    final monthlyCubit = context.read<MonthlyCubit>();
+
+    void calculateDailyBudget() {
+      if (currentBalance.value != null &&
+          expenses.value != null &&
+          nextSalaryDate.value != null) {
+        final availableBalance = currentBalance.value! - expenses.value!;
+        final daysUntilSalary =
+            nextSalaryDate.value!.difference(DateTime.now()).inDays + 1;
+        dailyBudget.value = availableBalance / daysUntilSalary;
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        leading: () {
-          final back = CupertinoNavigationBarBackButton(
-            onPressed: _previousPage,
-          );
-          if (widget.isFirstOpening) {
-            if (_pageController.hasClients && _pageController.page! > 0) {
-              return back;
-            } else {
-              return SizedBox();
-            }
-          } else {
-            return back;
-          }
-        }(),
+        leading: _buildBackButton(context, pageController, isFirstOpening),
         title: Text(
           LocalizedMap(
             value: {
@@ -103,55 +55,106 @@ class _MethodExplanationScreenState extends State<MethodExplanationScreen>
               languages.ru: 'Магия бюджетирования',
               languages.it: 'Magia del Budgeting',
             },
-          ).getValue(locale),
+          ).getValue(useLocale(context)),
         ),
       ),
-      body: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          _BalancePage(
-            onNext: (final value) {
-              setState(() => currentBalance = value);
-              _nextPage();
-            },
-          ),
-          _ExpensesPage(
-            onNext: (final value) {
-              setState(() => expenses = value);
-              _nextPage();
-            },
-          ),
-          _SalaryDatePage(
-            onNext: (final value) {
-              setState(() => nextSalaryDate = value);
-              _calculateDailyBudget();
-              _nextPage();
-            },
-          ),
-          _ResultPage(
-            isFirstOpening: widget.isFirstOpening,
-            currentBalance: currentBalance,
-            expenses: expenses,
-            nextSalaryDate: nextSalaryDate,
-            dailyBudget: dailyBudget,
-            onFinish: () {
-              monthlyCubit
-                ..onAmountChange(currentBalance.toString())
-                ..onSavingsChange(expenses.toString())
-                ..onUpdateNextBudgetDay(nextSalaryDate);
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: PageView(
+            controller: pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              BalancePage(
+                onNext: (final value) {
+                  currentBalance.value = value;
+                  unawaited(
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    ),
+                  );
+                },
+              ),
+              ExpensesPage(
+                onNext: (final value) {
+                  expenses.value = value;
+                  unawaited(
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    ),
+                  );
+                },
+              ),
+              SalaryDatePage(
+                onNext: (final value) {
+                  nextSalaryDate.value = value;
+                  calculateDailyBudget();
+                  unawaited(
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    ),
+                  );
+                },
+              ),
+              ResultPage(
+                isFirstOpening: isFirstOpening,
+                currentBalance: currentBalance.value,
+                expenses: expenses.value,
+                nextSalaryDate: nextSalaryDate.value,
+                dailyBudget: dailyBudget.value,
+                onFinish: () {
+                  monthlyCubit
+                    ..onAmountChange(currentBalance.value.toString())
+                    ..onSavingsChange(expenses.value.toString())
+                    ..onUpdateNextBudgetDay(nextSalaryDate.value);
 
-              Navigator.of(context).pop();
-            },
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
+
+  Widget _buildBackButton(
+    final BuildContext context,
+    final PageController pageController,
+    final bool isFirstOpening,
+  ) {
+    final back = CupertinoNavigationBarBackButton(
+      onPressed: () {
+        if (pageController.page! > 0) {
+          unawaited(
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            ),
+          );
+        } else {
+          Navigator.pop(context);
+        }
+      },
+    );
+
+    if (isFirstOpening) {
+      if (pageController.hasClients && pageController.page! > 0) {
+        return back;
+      } else {
+        return const SizedBox();
+      }
+    } else {
+      return back;
+    }
+  }
 }
 
-class _BalancePage extends StatelessWidget {
-  const _BalancePage({required this.onNext});
+class BalancePage extends StatelessWidget {
+  const BalancePage({required this.onNext, super.key});
 
   final void Function(double) onNext;
 
@@ -159,7 +162,7 @@ class _BalancePage extends StatelessWidget {
   Widget build(final BuildContext context) {
     final controller = TextEditingController();
     final locale = useLocale(context);
-    return _GuidePage(
+    return GuidePage(
       title: LocalizedMap(
         value: {
           languages.en: "What's in Your Pocket?",
@@ -201,8 +204,8 @@ class _BalancePage extends StatelessWidget {
   }
 }
 
-class _ExpensesPage extends StatelessWidget {
-  const _ExpensesPage({required this.onNext});
+class ExpensesPage extends StatelessWidget {
+  const ExpensesPage({required this.onNext, super.key});
 
   final void Function(double) onNext;
 
@@ -210,7 +213,7 @@ class _ExpensesPage extends StatelessWidget {
   Widget build(final BuildContext context) {
     final controller = TextEditingController();
     final locale = useLocale(context);
-    return _GuidePage(
+    return GuidePage(
       title: LocalizedMap(
         value: {
           languages.en: 'Time for Some Adulting',
@@ -252,16 +255,16 @@ class _ExpensesPage extends StatelessWidget {
   }
 }
 
-class _SalaryDatePage extends StatelessWidget {
-  const _SalaryDatePage({required this.onNext});
+class SalaryDatePage extends HookWidget {
+  const SalaryDatePage({required this.onNext, super.key});
 
   final void Function(DateTime) onNext;
 
   @override
   Widget build(final BuildContext context) {
-    DateTime? selectedDate;
+    final selectedDate = useState<DateTime?>(null);
     final locale = useLocale(context);
-    return _GuidePage(
+    return GuidePage(
       title: LocalizedMap(
         value: {
           languages.en: 'When Does the Money Train Arrive?',
@@ -281,7 +284,7 @@ class _SalaryDatePage extends StatelessWidget {
       ).getValue(locale),
       content: ElevatedButton(
         child: Text(
-          selectedDate == null
+          selectedDate.value == null
               ? LocalizedMap(
                   value: {
                     languages.en: 'Select Next Salary Date',
@@ -289,7 +292,7 @@ class _SalaryDatePage extends StatelessWidget {
                     languages.it: 'Seleziona la data del prossimo stipendio',
                   },
                 ).getValue(locale)
-              : DateFormat('MMM d, y').format(selectedDate),
+              : DateFormat('MMM d, y').format(selectedDate.value!),
         ),
         onPressed: () async {
           final date = await showDatePicker(
@@ -299,7 +302,7 @@ class _SalaryDatePage extends StatelessWidget {
             lastDate: DateTime.now().add(const Duration(days: 365)),
           );
           if (date != null) {
-            selectedDate = date;
+            selectedDate.value = date;
             onNext(date);
           }
         },
@@ -309,14 +312,15 @@ class _SalaryDatePage extends StatelessWidget {
   }
 }
 
-class _ResultPage extends StatelessWidget {
-  const _ResultPage({
+class ResultPage extends StatelessWidget {
+  const ResultPage({
+    required this.isFirstOpening,
     required this.currentBalance,
     required this.expenses,
     required this.nextSalaryDate,
     required this.dailyBudget,
     required this.onFinish,
-    required this.isFirstOpening,
+    super.key,
   });
 
   final bool isFirstOpening;
@@ -573,12 +577,13 @@ class _ResultRow extends StatelessWidget {
       );
 }
 
-class _GuidePage extends StatelessWidget {
-  const _GuidePage({
+class GuidePage extends StatelessWidget {
+  const GuidePage({
     required this.title,
     required this.description,
     required this.content,
     required this.onNext,
+    super.key,
   });
 
   final String title;

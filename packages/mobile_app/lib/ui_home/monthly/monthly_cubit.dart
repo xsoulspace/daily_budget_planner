@@ -31,6 +31,9 @@ class MonthlyCubit extends ValueNotifier<LoadableContainer<MonthlyBudgetModel>>
       amount: doubleFromJson(amount),
     );
     value = value.copyWith(value: updatedBudget);
+    if (amountController.text != amount) {
+      amountController.text = amount;
+    }
     unawaited(budgetLocalApi.upsertMonthlyBudget(updatedBudget));
   }
 
@@ -39,6 +42,9 @@ class MonthlyCubit extends ValueNotifier<LoadableContainer<MonthlyBudgetModel>>
       savings: doubleFromJson(savings),
     );
     value = value.copyWith(value: updatedBudget);
+    if (savingsController.text != savings) {
+      savingsController.text = savings;
+    }
     unawaited(budgetLocalApi.upsertMonthlyBudget(updatedBudget));
   }
 
