@@ -127,7 +127,14 @@ class _MonthlyViewState extends State<MonthlyView>
             focusNode: monthlyCubit.amountFocusNode,
             onChanged: monthlyCubit.onAmountChange,
             onEditingComplete: _requestSavingsFocus,
-            icon: Icons.attach_money,
+            icon: Icons.account_balance_outlined,
+            tooltip: LocalizedMap(
+              value: {
+                languages.en: 'Enter your total monthly income here',
+                languages.ru: 'Введите здесь ваш общий ежемесячный доход',
+                languages.it: 'Inserisci qui il tuo reddito mensile totale',
+              },
+            ).getValue(locale),
           ),
           const SizedBox(height: 8),
           _buildInputField(
@@ -143,6 +150,14 @@ class _MonthlyViewState extends State<MonthlyView>
             onChanged: monthlyCubit.onSavingsChange,
             onEditingComplete: _requestAmountFocus,
             icon: Icons.savings,
+            tooltip: LocalizedMap(
+              value: {
+                languages.en: 'Enter additional expenses or savings here',
+                languages.ru:
+                    'Введите здесь дополнительные расходы или сбережения',
+                languages.it: 'Inserisci qui spese aggiuntive o risparmi',
+              },
+            ).getValue(locale),
           ),
           const SizedBox(height: 8),
           Row(
@@ -150,26 +165,38 @@ class _MonthlyViewState extends State<MonthlyView>
               Icon(Icons.calendar_today, size: 20),
               const SizedBox(width: 8),
               Expanded(
-                child: TextButton(
-                  onPressed: () async =>
-                      monthlyCubit.onChangeNextBudgetDay(context),
-                  child: Text(
-                    LocalizedMap(
-                          value: {
-                            languages.en: 'Next Budget Date: ',
-                            languages.ru: 'Следующая дата бюджета: ',
-                            languages.it: 'Prossima data di budget: ',
-                          },
-                        ).getValue(locale) +
-                        (monthlyCubit.budget.nextBudgetDay?.formatDdMmYyyy() ??
-                            LocalizedMap(
-                              value: {
-                                languages.en: 'Choose Date',
-                                languages.ru: 'Выберите дату',
-                                languages.it: 'Scegli la data',
-                              },
-                            ).getValue(locale)),
-                    style: context.textTheme.bodyMedium,
+                child: Tooltip(
+                  message: LocalizedMap(
+                    value: {
+                      languages.en: 'Select the date of your next budget cycle',
+                      languages.ru:
+                          'Выберите дату вашего следующего бюджетного цикла',
+                      languages.it:
+                          'Seleziona la data del tuo prossimo ciclo di budget',
+                    },
+                  ).getValue(locale),
+                  child: ElevatedButton(
+                    onPressed: () async =>
+                        monthlyCubit.onChangeNextBudgetDay(context),
+                    child: Text(
+                      LocalizedMap(
+                            value: {
+                              languages.en: 'Next Budget Date: ',
+                              languages.ru: 'Следующая дата бюджета: ',
+                              languages.it: 'Prossima data di budget: ',
+                            },
+                          ).getValue(locale) +
+                          (monthlyCubit.budget.nextBudgetDay
+                                  ?.formatDdMmYyyy() ??
+                              LocalizedMap(
+                                value: {
+                                  languages.en: 'Choose Date',
+                                  languages.ru: 'Выберите дату',
+                                  languages.it: 'Scegli la data',
+                                },
+                              ).getValue(locale)),
+                      style: context.textTheme.bodyMedium,
+                    ),
                   ),
                 ),
               ),
@@ -185,31 +212,36 @@ class _MonthlyViewState extends State<MonthlyView>
     required final Function(String) onChanged,
     required final VoidCallback onEditingComplete,
     required final IconData icon,
+    required final String tooltip,
   }) =>
       Row(
         children: [
           Icon(icon, size: 20),
           const SizedBox(width: 8),
           Expanded(
-            child: TextFormField(
-              controller: controller,
-              focusNode: focusNode,
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.next,
-              onChanged: onChanged,
-              onEditingComplete: onEditingComplete,
-              decoration: InputDecoration(
-                labelText: label,
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                isDense: true,
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear, size: 18),
-                  onPressed: () {
-                    controller.clear();
-                    onChanged('');
-                    focusNode.requestFocus();
-                  },
+            child: Tooltip(
+              message: tooltip,
+              child: TextFormField(
+                controller: controller,
+                focusNode: focusNode,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                onChanged: onChanged,
+                style: context.textTheme.titleLarge,
+                onEditingComplete: onEditingComplete,
+                decoration: InputDecoration(
+                  labelText: label,
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  // isDense: true,
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear, size: 18),
+                    onPressed: () {
+                      controller.clear();
+                      onChanged('');
+                      focusNode.requestFocus();
+                    },
+                  ),
                 ),
               ),
             ),
@@ -237,6 +269,7 @@ class _MonthlyViewState extends State<MonthlyView>
           ),
           const SizedBox(height: 8),
           _buildBudgetItem(
+            locale: locale,
             label: LocalizedMap(
               value: {
                 languages.en: 'Daily Budget',
@@ -246,8 +279,16 @@ class _MonthlyViewState extends State<MonthlyView>
             ).getValue(locale),
             value: monthlyCubit.dailyBudget,
             icon: Icons.today,
+            tooltip: LocalizedMap(
+              value: {
+                languages.en: 'Your available budget for each day',
+                languages.ru: 'Ваш доступный бюджет на каждый день',
+                languages.it: 'Il tuo budget disponibile per ogni giorno',
+              },
+            ).getValue(locale),
           ),
           _buildBudgetItem(
+            locale: locale,
             label: LocalizedMap(
               value: {
                 languages.en: 'Weekly Budget',
@@ -264,8 +305,16 @@ class _MonthlyViewState extends State<MonthlyView>
                 languages.it: 'Può essere meno se < 7 giorni',
               },
             ).getValue(locale),
+            tooltip: LocalizedMap(
+              value: {
+                languages.en: 'Your available budget for each week',
+                languages.ru: 'Ваш доступный бюджет на каждую неделю',
+                languages.it: 'Il tuo budget disponibile per ogni settimana',
+              },
+            ).getValue(locale),
           ),
           _buildBudgetItem(
+            locale: locale,
             label: LocalizedMap(
               value: {
                 languages.en: 'Days in Total',
@@ -275,6 +324,13 @@ class _MonthlyViewState extends State<MonthlyView>
             ).getValue(locale),
             value: monthlyCubit.daysCount.toString(),
             icon: Icons.date_range,
+            tooltip: LocalizedMap(
+              value: {
+                languages.en: 'Total number of days in your budget cycle',
+                languages.ru: 'Общее количество дней в вашем бюджетном цикле',
+                languages.it: 'Numero totale di giorni nel tuo ciclo di budget',
+              },
+            ).getValue(locale),
           ),
         ],
       );
@@ -283,45 +339,51 @@ class _MonthlyViewState extends State<MonthlyView>
     required final String label,
     required final String value,
     required final IconData icon,
+    required final String tooltip,
+    required final Locale locale,
     final String? subtitle,
+    final bool applyPrefix = true,
   }) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          children: [
-            Icon(icon, size: 20, color: context.theme.primaryColor),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(label, style: context.textTheme.bodyMedium),
-                  if (subtitle != null)
-                    Text(
-                      subtitle,
-                      style: context.textTheme.bodySmall,
-                    ),
-                ],
+        child: Tooltip(
+          message: tooltip,
+          child: Row(
+            children: [
+              Icon(icon, size: 20, color: context.theme.primaryColor),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(label, style: context.textTheme.bodyMedium),
+                    if (subtitle != null)
+                      Text(
+                        subtitle,
+                        style: context.textTheme.bodySmall,
+                      ),
+                  ],
+                ),
               ),
-            ),
-            Text(
-              value,
-              style: context.textTheme.bodyLarge?.copyWith(
-                color: context.theme.primaryColor,
-                fontWeight: FontWeight.bold,
+              UiTextCounter(
+                value: _parseValue(value),
+                style: context.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: context.colorScheme.primary,
+                ),
               ),
-            ).animate(
-              key: ValueKey(value),
-              effects: [
-                FadeEffect(duration: 300.ms),
-                ScaleEffect(duration: 300.ms),
-              ],
-            ),
-            const SizedBox(width: 4),
-            CopyButton(value: value),
-          ],
+              const SizedBox(width: 4),
+              CopyButton(value: value),
+            ],
+          ),
         ),
       );
+
+  int _parseValue(final String value) {
+    final numericValue =
+        double.tryParse(value.replaceAll(RegExp(r'[^\d.]'), ''));
+    return numericValue?.round() ?? 0;
+  }
 
   @override
   bool get wantKeepAlive => true;

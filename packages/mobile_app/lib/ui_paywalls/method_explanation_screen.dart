@@ -3,6 +3,15 @@ import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
 
+/// A localized map for money prefix symbols based on language.
+final kMoneyPrefix = LocalizedMap(
+  value: {
+    languages.en: r'$',
+    languages.ru: '₽',
+    languages.it: '€',
+  },
+);
+
 /// {@template method_explanation_screen}
 /// An interactive screen that guides users through the budgeting method.
 /// {@endtemplate}
@@ -18,14 +27,6 @@ class MethodExplanationScreen extends StatefulWidget {
   State<MethodExplanationScreen> createState() =>
       _MethodExplanationScreenState();
 }
-
-final _kMoneyPrefix = LocalizedMap(
-  value: {
-    languages.en: r'$',
-    languages.ru: '₽',
-    languages.it: '€',
-  },
-);
 
 class _MethodExplanationScreenState extends State<MethodExplanationScreen>
     with HasStates {
@@ -180,7 +181,7 @@ class _BalancePage extends StatelessWidget {
         controller: controller,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          prefixText: _kMoneyPrefix.getValue(locale),
+          prefixText: kMoneyPrefix.getValue(locale),
           hintText: LocalizedMap(
             value: {
               languages.en: 'Enter your current balance',
@@ -231,7 +232,7 @@ class _ExpensesPage extends StatelessWidget {
         controller: controller,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          prefixText: _kMoneyPrefix.getValue(locale),
+          prefixText: kMoneyPrefix.getValue(locale),
           hintText: LocalizedMap(
             value: {
               languages.en: 'Enter your total expenses',
@@ -498,7 +499,7 @@ class _ResultCard extends StatelessWidget {
                   languages.it: 'Saldo attuale:',
                 },
               ).getValue(locale),
-              '${_kMoneyPrefix.getValue(locale)}${currentBalance?.toStringAsFixed(2)}',
+              '${kMoneyPrefix.getValue(locale)}${currentBalance?.toStringAsFixed(2)}',
             ),
             _ResultRow(
               LocalizedMap(
@@ -508,7 +509,7 @@ class _ResultCard extends StatelessWidget {
                   languages.it: 'Spese necessarie:',
                 },
               ).getValue(useLocale(context)),
-              '${_kMoneyPrefix.getValue(locale)}${expenses?.toStringAsFixed(2)}',
+              '${kMoneyPrefix.getValue(locale)}${expenses?.toStringAsFixed(2)}',
             ),
             _ResultRow(
               LocalizedMap(
@@ -529,7 +530,7 @@ class _ResultCard extends StatelessWidget {
                   languages.it: 'Il tuo budget giornaliero:',
                 },
               ).getValue(locale),
-              '${_kMoneyPrefix.getValue(locale)}${dailyBudget?.toStringAsFixed(2)}',
+              '${kMoneyPrefix.getValue(locale)}${dailyBudget?.toStringAsFixed(2)}',
               isHighlighted: true,
             ),
           ],

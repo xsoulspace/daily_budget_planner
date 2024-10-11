@@ -38,15 +38,14 @@ class GlobalStateInitializer
       appSettingsNotifier.onLoad(),
     ]);
     final guideVisibility = GuideVisibility();
-    final hasSeenGuide = false;
-    // await guideVisibility.hasSeenGuide;
+    final hasSeenGuide = await guideVisibility.hasSeenGuide;
 
     WidgetsBinding.instance.addPostFrameCallback((final timeStamp) async {
       appStatusNotifier.value = AppStatus.online;
       AppPathsController.of(context).toHome();
       if (!hasSeenGuide) {
-        AppPathsController.of(context).toExplanation();
         guideVisibility.setGuideWasOpen();
+        AppPathsController.of(context).toExplanation(isFirstTimeOpening: true);
       }
       unawaited(
         Future.wait([

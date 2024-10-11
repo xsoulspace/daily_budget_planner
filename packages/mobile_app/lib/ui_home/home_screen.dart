@@ -36,47 +36,50 @@ class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-        body: Column(
-          children: [
-            const UiSafeArea.top(),
-            const Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 18, right: 18),
-                child: TabBarView(
+  Widget build(final BuildContext context) => PopScope(
+        canPop: false,
+        child: Scaffold(
+          body: Column(
+            children: [
+              const UiSafeArea.top(),
+              const Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 18, right: 18),
+                  child: TabBarView(
+                    children: [
+                      MonthlyView(),
+                      WeeklyView(),
+                    ],
+                  ),
+                ),
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 350),
+                child: Row(
                   children: [
-                    MonthlyView(),
-                    WeeklyView(),
+                    Expanded(
+                      child: TabBar(
+                        padding: EdgeInsets.zero,
+                        labelPadding: EdgeInsets.zero,
+                        tabs: [
+                          UiTab(
+                            iconData: Icons.calendar_month_rounded,
+                            label: context.s.monthly,
+                          ),
+                          UiTab(
+                            iconData: Icons.view_week_rounded,
+                            label: context.s.weekly,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SettingsIconButton(),
                   ],
                 ),
               ),
-            ),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 350),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TabBar(
-                      padding: EdgeInsets.zero,
-                      labelPadding: EdgeInsets.zero,
-                      tabs: [
-                        UiTab(
-                          iconData: Icons.calendar_month_rounded,
-                          label: context.s.monthly,
-                        ),
-                        UiTab(
-                          iconData: Icons.view_week_rounded,
-                          label: context.s.weekly,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SettingsIconButton(),
-                ],
-              ),
-            ),
-            const UiSafeArea.bottom(),
-          ],
+              const UiSafeArea.bottom(),
+            ],
+          ),
         ),
       );
 }

@@ -65,11 +65,14 @@ class AppPathsController {
   void toRoot() => go(ScreenPaths.root);
   void toHome() => go(ScreenPaths.home);
   void toPaywall() => go(ScreenPaths.paywall, routes: [ScreenPaths.home]);
-  void toExplanation() => go(
+  void toExplanation({
+    final bool isFirstTimeOpening = false,
+  }) =>
+      go(
         ScreenPaths.explanation,
         routes: [ScreenPaths.home],
         params: {
-          'isFirstOpening': 'true',
+          if (isFirstTimeOpening) 'isFirstOpening': 'true',
         },
       );
   void go(
