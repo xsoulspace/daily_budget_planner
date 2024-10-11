@@ -41,18 +41,8 @@ class PurchaseScreen extends StatelessWidget {
                   subtitle: Text('${purchase.price} ${purchase.currency}'),
                   trailing: ElevatedButton(
                     onPressed: () async {
-                      final result = await purchaseManager.buyNonConsumable(
+                      await purchaseManager.buyNonConsumable(
                         purchase,
-                      );
-                      result.when(
-                        success: (final _) =>
-                            ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Purchase successful!')),
-                        ),
-                        failure: (final error) =>
-                            ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Purchase failed: $error')),
-                        ),
                       );
                     },
                     child: const Text('Buy'),

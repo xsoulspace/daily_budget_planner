@@ -584,6 +584,7 @@ mixin _$PurchaseDetails {
 
   /// formatted price with currency
   String get formattedPrice => throw _privateConstructorUsedError;
+  PurchaseStatus get status => throw _privateConstructorUsedError;
 
   /// price without currency in smallest unit of currency
   double get price => throw _privateConstructorUsedError;
@@ -615,6 +616,7 @@ abstract class $PurchaseDetailsCopyWith<$Res> {
       ProductId productId,
       String name,
       String formattedPrice,
+      PurchaseStatus status,
       double price,
       String currency,
       DateTime purchaseDate,
@@ -643,6 +645,7 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
     Object? productId = null,
     Object? name = null,
     Object? formattedPrice = null,
+    Object? status = null,
     Object? price = null,
     Object? currency = null,
     Object? purchaseDate = null,
@@ -668,6 +671,10 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
           ? _value.formattedPrice
           : formattedPrice // ignore: cast_nullable_to_non_nullable
               as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PurchaseStatus,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -713,6 +720,7 @@ abstract class _$$PurchaseDetailsImplCopyWith<$Res>
       ProductId productId,
       String name,
       String formattedPrice,
+      PurchaseStatus status,
       double price,
       String currency,
       DateTime purchaseDate,
@@ -739,6 +747,7 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
     Object? productId = null,
     Object? name = null,
     Object? formattedPrice = null,
+    Object? status = null,
     Object? price = null,
     Object? currency = null,
     Object? purchaseDate = null,
@@ -764,6 +773,10 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
           ? _value.formattedPrice
           : formattedPrice // ignore: cast_nullable_to_non_nullable
               as String,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PurchaseStatus,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -804,6 +817,7 @@ class _$PurchaseDetailsImpl extends _PurchaseDetails {
       required this.productId,
       required this.name,
       required this.formattedPrice,
+      required this.status,
       required this.price,
       required this.currency,
       required this.purchaseDate,
@@ -826,6 +840,8 @@ class _$PurchaseDetailsImpl extends _PurchaseDetails {
   /// formatted price with currency
   @override
   final String formattedPrice;
+  @override
+  final PurchaseStatus status;
 
   /// price without currency in smallest unit of currency
   @override
@@ -847,7 +863,7 @@ class _$PurchaseDetailsImpl extends _PurchaseDetails {
 
   @override
   String toString() {
-    return 'PurchaseDetails(purchaseId: $purchaseId, productId: $productId, name: $name, formattedPrice: $formattedPrice, price: $price, currency: $currency, purchaseDate: $purchaseDate, purchaseType: $purchaseType, freeTrialDuration: $freeTrialDuration, duration: $duration, expiryDate: $expiryDate)';
+    return 'PurchaseDetails(purchaseId: $purchaseId, productId: $productId, name: $name, formattedPrice: $formattedPrice, status: $status, price: $price, currency: $currency, purchaseDate: $purchaseDate, purchaseType: $purchaseType, freeTrialDuration: $freeTrialDuration, duration: $duration, expiryDate: $expiryDate)';
   }
 
   @override
@@ -862,6 +878,7 @@ class _$PurchaseDetailsImpl extends _PurchaseDetails {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.formattedPrice, formattedPrice) ||
                 other.formattedPrice == formattedPrice) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
@@ -885,6 +902,7 @@ class _$PurchaseDetailsImpl extends _PurchaseDetails {
       productId,
       name,
       formattedPrice,
+      status,
       price,
       currency,
       purchaseDate,
@@ -916,6 +934,7 @@ abstract class _PurchaseDetails extends PurchaseDetails {
       required final ProductId productId,
       required final String name,
       required final String formattedPrice,
+      required final PurchaseStatus status,
       required final double price,
       required final String currency,
       required final DateTime purchaseDate,
@@ -938,6 +957,8 @@ abstract class _PurchaseDetails extends PurchaseDetails {
   /// formatted price with currency
   @override
   String get formattedPrice;
+  @override
+  PurchaseStatus get status;
 
   /// price without currency in smallest unit of currency
   @override
@@ -1370,198 +1391,6 @@ abstract class PurchaseFailure implements PurchaseResult {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PurchaseFailureImplCopyWith<_$PurchaseFailureImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-PurchaseUpdate _$PurchaseUpdateFromJson(Map<String, dynamic> json) {
-  return _PurchaseUpdate.fromJson(json);
-}
-
-/// @nodoc
-mixin _$PurchaseUpdate {
-  ProductId get productId => throw _privateConstructorUsedError;
-  PurchaseId get purchaseId => throw _privateConstructorUsedError;
-  PurchaseStatus get status => throw _privateConstructorUsedError;
-
-  /// Serializes this PurchaseUpdate to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of PurchaseUpdate
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PurchaseUpdateCopyWith<PurchaseUpdate> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PurchaseUpdateCopyWith<$Res> {
-  factory $PurchaseUpdateCopyWith(
-          PurchaseUpdate value, $Res Function(PurchaseUpdate) then) =
-      _$PurchaseUpdateCopyWithImpl<$Res, PurchaseUpdate>;
-  @useResult
-  $Res call(
-      {ProductId productId, PurchaseId purchaseId, PurchaseStatus status});
-}
-
-/// @nodoc
-class _$PurchaseUpdateCopyWithImpl<$Res, $Val extends PurchaseUpdate>
-    implements $PurchaseUpdateCopyWith<$Res> {
-  _$PurchaseUpdateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PurchaseUpdate
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? purchaseId = null,
-    Object? status = null,
-  }) {
-    return _then(_value.copyWith(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      purchaseId: null == purchaseId
-          ? _value.purchaseId
-          : purchaseId // ignore: cast_nullable_to_non_nullable
-              as PurchaseId,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as PurchaseStatus,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$PurchaseUpdateImplCopyWith<$Res>
-    implements $PurchaseUpdateCopyWith<$Res> {
-  factory _$$PurchaseUpdateImplCopyWith(_$PurchaseUpdateImpl value,
-          $Res Function(_$PurchaseUpdateImpl) then) =
-      __$$PurchaseUpdateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {ProductId productId, PurchaseId purchaseId, PurchaseStatus status});
-}
-
-/// @nodoc
-class __$$PurchaseUpdateImplCopyWithImpl<$Res>
-    extends _$PurchaseUpdateCopyWithImpl<$Res, _$PurchaseUpdateImpl>
-    implements _$$PurchaseUpdateImplCopyWith<$Res> {
-  __$$PurchaseUpdateImplCopyWithImpl(
-      _$PurchaseUpdateImpl _value, $Res Function(_$PurchaseUpdateImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PurchaseUpdate
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? productId = null,
-    Object? purchaseId = null,
-    Object? status = null,
-  }) {
-    return _then(_$PurchaseUpdateImpl(
-      productId: null == productId
-          ? _value.productId
-          : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
-      purchaseId: null == purchaseId
-          ? _value.purchaseId
-          : purchaseId // ignore: cast_nullable_to_non_nullable
-              as PurchaseId,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as PurchaseStatus,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$PurchaseUpdateImpl implements _PurchaseUpdate {
-  const _$PurchaseUpdateImpl(
-      {required this.productId,
-      required this.purchaseId,
-      required this.status});
-
-  factory _$PurchaseUpdateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PurchaseUpdateImplFromJson(json);
-
-  @override
-  final ProductId productId;
-  @override
-  final PurchaseId purchaseId;
-  @override
-  final PurchaseStatus status;
-
-  @override
-  String toString() {
-    return 'PurchaseUpdate(productId: $productId, purchaseId: $purchaseId, status: $status)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PurchaseUpdateImpl &&
-            (identical(other.productId, productId) ||
-                other.productId == productId) &&
-            (identical(other.purchaseId, purchaseId) ||
-                other.purchaseId == purchaseId) &&
-            (identical(other.status, status) || other.status == status));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, productId, purchaseId, status);
-
-  /// Create a copy of PurchaseUpdate
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PurchaseUpdateImplCopyWith<_$PurchaseUpdateImpl> get copyWith =>
-      __$$PurchaseUpdateImplCopyWithImpl<_$PurchaseUpdateImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PurchaseUpdateImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _PurchaseUpdate implements PurchaseUpdate {
-  const factory _PurchaseUpdate(
-      {required final ProductId productId,
-      required final PurchaseId purchaseId,
-      required final PurchaseStatus status}) = _$PurchaseUpdateImpl;
-
-  factory _PurchaseUpdate.fromJson(Map<String, dynamic> json) =
-      _$PurchaseUpdateImpl.fromJson;
-
-  @override
-  ProductId get productId;
-  @override
-  PurchaseId get purchaseId;
-  @override
-  PurchaseStatus get status;
-
-  /// Create a copy of PurchaseUpdate
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PurchaseUpdateImplCopyWith<_$PurchaseUpdateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2330,4 +2159,742 @@ abstract class CancelFailure implements CancelResult {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CancelFailureImplCopyWith<_$CancelFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+CompletePurchaseResult _$CompletePurchaseResultFromJson(
+    Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'success':
+      return CompletePurchaseSuccess.fromJson(json);
+    case 'failure':
+      return CompletePurchaseFailure.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(
+          json,
+          'runtimeType',
+          'CompletePurchaseResult',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
+/// @nodoc
+mixin _$CompletePurchaseResult {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() success,
+    required TResult Function(String error) failure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? success,
+    TResult? Function(String error)? failure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? success,
+    TResult Function(String error)? failure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CompletePurchaseSuccess value) success,
+    required TResult Function(CompletePurchaseFailure value) failure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CompletePurchaseSuccess value)? success,
+    TResult? Function(CompletePurchaseFailure value)? failure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CompletePurchaseSuccess value)? success,
+    TResult Function(CompletePurchaseFailure value)? failure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  /// Serializes this CompletePurchaseResult to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CompletePurchaseResultCopyWith<$Res> {
+  factory $CompletePurchaseResultCopyWith(CompletePurchaseResult value,
+          $Res Function(CompletePurchaseResult) then) =
+      _$CompletePurchaseResultCopyWithImpl<$Res, CompletePurchaseResult>;
+}
+
+/// @nodoc
+class _$CompletePurchaseResultCopyWithImpl<$Res,
+        $Val extends CompletePurchaseResult>
+    implements $CompletePurchaseResultCopyWith<$Res> {
+  _$CompletePurchaseResultCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CompletePurchaseResult
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$CompletePurchaseSuccessImplCopyWith<$Res> {
+  factory _$$CompletePurchaseSuccessImplCopyWith(
+          _$CompletePurchaseSuccessImpl value,
+          $Res Function(_$CompletePurchaseSuccessImpl) then) =
+      __$$CompletePurchaseSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CompletePurchaseSuccessImplCopyWithImpl<$Res>
+    extends _$CompletePurchaseResultCopyWithImpl<$Res,
+        _$CompletePurchaseSuccessImpl>
+    implements _$$CompletePurchaseSuccessImplCopyWith<$Res> {
+  __$$CompletePurchaseSuccessImplCopyWithImpl(
+      _$CompletePurchaseSuccessImpl _value,
+      $Res Function(_$CompletePurchaseSuccessImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CompletePurchaseResult
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CompletePurchaseSuccessImpl implements CompletePurchaseSuccess {
+  const _$CompletePurchaseSuccessImpl({final String? $type})
+      : $type = $type ?? 'success';
+
+  factory _$CompletePurchaseSuccessImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CompletePurchaseSuccessImplFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'CompletePurchaseResult.success()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompletePurchaseSuccessImpl);
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() success,
+    required TResult Function(String error) failure,
+  }) {
+    return success();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? success,
+    TResult? Function(String error)? failure,
+  }) {
+    return success?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? success,
+    TResult Function(String error)? failure,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CompletePurchaseSuccess value) success,
+    required TResult Function(CompletePurchaseFailure value) failure,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CompletePurchaseSuccess value)? success,
+    TResult? Function(CompletePurchaseFailure value)? failure,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CompletePurchaseSuccess value)? success,
+    TResult Function(CompletePurchaseFailure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CompletePurchaseSuccessImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class CompletePurchaseSuccess implements CompletePurchaseResult {
+  const factory CompletePurchaseSuccess() = _$CompletePurchaseSuccessImpl;
+
+  factory CompletePurchaseSuccess.fromJson(Map<String, dynamic> json) =
+      _$CompletePurchaseSuccessImpl.fromJson;
+}
+
+/// @nodoc
+abstract class _$$CompletePurchaseFailureImplCopyWith<$Res> {
+  factory _$$CompletePurchaseFailureImplCopyWith(
+          _$CompletePurchaseFailureImpl value,
+          $Res Function(_$CompletePurchaseFailureImpl) then) =
+      __$$CompletePurchaseFailureImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$CompletePurchaseFailureImplCopyWithImpl<$Res>
+    extends _$CompletePurchaseResultCopyWithImpl<$Res,
+        _$CompletePurchaseFailureImpl>
+    implements _$$CompletePurchaseFailureImplCopyWith<$Res> {
+  __$$CompletePurchaseFailureImplCopyWithImpl(
+      _$CompletePurchaseFailureImpl _value,
+      $Res Function(_$CompletePurchaseFailureImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CompletePurchaseResult
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = null,
+  }) {
+    return _then(_$CompletePurchaseFailureImpl(
+      null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CompletePurchaseFailureImpl implements CompletePurchaseFailure {
+  const _$CompletePurchaseFailureImpl(this.error, {final String? $type})
+      : $type = $type ?? 'failure';
+
+  factory _$CompletePurchaseFailureImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CompletePurchaseFailureImplFromJson(json);
+
+  @override
+  final String error;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'CompletePurchaseResult.failure(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompletePurchaseFailureImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of CompletePurchaseResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompletePurchaseFailureImplCopyWith<_$CompletePurchaseFailureImpl>
+      get copyWith => __$$CompletePurchaseFailureImplCopyWithImpl<
+          _$CompletePurchaseFailureImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() success,
+    required TResult Function(String error) failure,
+  }) {
+    return failure(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? success,
+    TResult? Function(String error)? failure,
+  }) {
+    return failure?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? success,
+    TResult Function(String error)? failure,
+    required TResult orElse(),
+  }) {
+    if (failure != null) {
+      return failure(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CompletePurchaseSuccess value) success,
+    required TResult Function(CompletePurchaseFailure value) failure,
+  }) {
+    return failure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CompletePurchaseSuccess value)? success,
+    TResult? Function(CompletePurchaseFailure value)? failure,
+  }) {
+    return failure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CompletePurchaseSuccess value)? success,
+    TResult Function(CompletePurchaseFailure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (failure != null) {
+      return failure(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CompletePurchaseFailureImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class CompletePurchaseFailure implements CompletePurchaseResult {
+  const factory CompletePurchaseFailure(final String error) =
+      _$CompletePurchaseFailureImpl;
+
+  factory CompletePurchaseFailure.fromJson(Map<String, dynamic> json) =
+      _$CompletePurchaseFailureImpl.fromJson;
+
+  String get error;
+
+  /// Create a copy of CompletePurchaseResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CompletePurchaseFailureImplCopyWith<_$CompletePurchaseFailureImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+PurchaseVerificationDto _$PurchaseVerificationDtoFromJson(
+    Map<String, dynamic> json) {
+  return _PurchaseVerificationDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PurchaseVerificationDto {
+  PurchaseId get purchaseId => throw _privateConstructorUsedError;
+  ProductId get productId => throw _privateConstructorUsedError;
+  PurchaseStatus get status => throw _privateConstructorUsedError;
+  PurchaseProductType get productType => throw _privateConstructorUsedError;
+  DateTime? get transactionDate => throw _privateConstructorUsedError;
+  String? get purchaseToken => throw _privateConstructorUsedError;
+
+  /// same as developerChallenge
+  String? get developerPayload => throw _privateConstructorUsedError;
+  String? get source => throw _privateConstructorUsedError;
+  String? get localVerificationData => throw _privateConstructorUsedError;
+  String? get serverVerificationData => throw _privateConstructorUsedError;
+
+  /// Serializes this PurchaseVerificationDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of PurchaseVerificationDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PurchaseVerificationDtoCopyWith<PurchaseVerificationDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurchaseVerificationDtoCopyWith<$Res> {
+  factory $PurchaseVerificationDtoCopyWith(PurchaseVerificationDto value,
+          $Res Function(PurchaseVerificationDto) then) =
+      _$PurchaseVerificationDtoCopyWithImpl<$Res, PurchaseVerificationDto>;
+  @useResult
+  $Res call(
+      {PurchaseId purchaseId,
+      ProductId productId,
+      PurchaseStatus status,
+      PurchaseProductType productType,
+      DateTime? transactionDate,
+      String? purchaseToken,
+      String? developerPayload,
+      String? source,
+      String? localVerificationData,
+      String? serverVerificationData});
+}
+
+/// @nodoc
+class _$PurchaseVerificationDtoCopyWithImpl<$Res,
+        $Val extends PurchaseVerificationDto>
+    implements $PurchaseVerificationDtoCopyWith<$Res> {
+  _$PurchaseVerificationDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of PurchaseVerificationDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? purchaseId = null,
+    Object? productId = null,
+    Object? status = null,
+    Object? productType = null,
+    Object? transactionDate = freezed,
+    Object? purchaseToken = freezed,
+    Object? developerPayload = freezed,
+    Object? source = freezed,
+    Object? localVerificationData = freezed,
+    Object? serverVerificationData = freezed,
+  }) {
+    return _then(_value.copyWith(
+      purchaseId: null == purchaseId
+          ? _value.purchaseId
+          : purchaseId // ignore: cast_nullable_to_non_nullable
+              as PurchaseId,
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as ProductId,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PurchaseStatus,
+      productType: null == productType
+          ? _value.productType
+          : productType // ignore: cast_nullable_to_non_nullable
+              as PurchaseProductType,
+      transactionDate: freezed == transactionDate
+          ? _value.transactionDate
+          : transactionDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      purchaseToken: freezed == purchaseToken
+          ? _value.purchaseToken
+          : purchaseToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      developerPayload: freezed == developerPayload
+          ? _value.developerPayload
+          : developerPayload // ignore: cast_nullable_to_non_nullable
+              as String?,
+      source: freezed == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String?,
+      localVerificationData: freezed == localVerificationData
+          ? _value.localVerificationData
+          : localVerificationData // ignore: cast_nullable_to_non_nullable
+              as String?,
+      serverVerificationData: freezed == serverVerificationData
+          ? _value.serverVerificationData
+          : serverVerificationData // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PurchaseVerificationDtoImplCopyWith<$Res>
+    implements $PurchaseVerificationDtoCopyWith<$Res> {
+  factory _$$PurchaseVerificationDtoImplCopyWith(
+          _$PurchaseVerificationDtoImpl value,
+          $Res Function(_$PurchaseVerificationDtoImpl) then) =
+      __$$PurchaseVerificationDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {PurchaseId purchaseId,
+      ProductId productId,
+      PurchaseStatus status,
+      PurchaseProductType productType,
+      DateTime? transactionDate,
+      String? purchaseToken,
+      String? developerPayload,
+      String? source,
+      String? localVerificationData,
+      String? serverVerificationData});
+}
+
+/// @nodoc
+class __$$PurchaseVerificationDtoImplCopyWithImpl<$Res>
+    extends _$PurchaseVerificationDtoCopyWithImpl<$Res,
+        _$PurchaseVerificationDtoImpl>
+    implements _$$PurchaseVerificationDtoImplCopyWith<$Res> {
+  __$$PurchaseVerificationDtoImplCopyWithImpl(
+      _$PurchaseVerificationDtoImpl _value,
+      $Res Function(_$PurchaseVerificationDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of PurchaseVerificationDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? purchaseId = null,
+    Object? productId = null,
+    Object? status = null,
+    Object? productType = null,
+    Object? transactionDate = freezed,
+    Object? purchaseToken = freezed,
+    Object? developerPayload = freezed,
+    Object? source = freezed,
+    Object? localVerificationData = freezed,
+    Object? serverVerificationData = freezed,
+  }) {
+    return _then(_$PurchaseVerificationDtoImpl(
+      purchaseId: null == purchaseId
+          ? _value.purchaseId
+          : purchaseId // ignore: cast_nullable_to_non_nullable
+              as PurchaseId,
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as ProductId,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PurchaseStatus,
+      productType: null == productType
+          ? _value.productType
+          : productType // ignore: cast_nullable_to_non_nullable
+              as PurchaseProductType,
+      transactionDate: freezed == transactionDate
+          ? _value.transactionDate
+          : transactionDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      purchaseToken: freezed == purchaseToken
+          ? _value.purchaseToken
+          : purchaseToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      developerPayload: freezed == developerPayload
+          ? _value.developerPayload
+          : developerPayload // ignore: cast_nullable_to_non_nullable
+              as String?,
+      source: freezed == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String?,
+      localVerificationData: freezed == localVerificationData
+          ? _value.localVerificationData
+          : localVerificationData // ignore: cast_nullable_to_non_nullable
+              as String?,
+      serverVerificationData: freezed == serverVerificationData
+          ? _value.serverVerificationData
+          : serverVerificationData // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PurchaseVerificationDtoImpl implements _PurchaseVerificationDto {
+  const _$PurchaseVerificationDtoImpl(
+      {required this.purchaseId,
+      required this.productId,
+      required this.status,
+      required this.productType,
+      this.transactionDate,
+      this.purchaseToken,
+      this.developerPayload,
+      this.source,
+      this.localVerificationData,
+      this.serverVerificationData});
+
+  factory _$PurchaseVerificationDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PurchaseVerificationDtoImplFromJson(json);
+
+  @override
+  final PurchaseId purchaseId;
+  @override
+  final ProductId productId;
+  @override
+  final PurchaseStatus status;
+  @override
+  final PurchaseProductType productType;
+  @override
+  final DateTime? transactionDate;
+  @override
+  final String? purchaseToken;
+
+  /// same as developerChallenge
+  @override
+  final String? developerPayload;
+  @override
+  final String? source;
+  @override
+  final String? localVerificationData;
+  @override
+  final String? serverVerificationData;
+
+  @override
+  String toString() {
+    return 'PurchaseVerificationDto(purchaseId: $purchaseId, productId: $productId, status: $status, productType: $productType, transactionDate: $transactionDate, purchaseToken: $purchaseToken, developerPayload: $developerPayload, source: $source, localVerificationData: $localVerificationData, serverVerificationData: $serverVerificationData)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PurchaseVerificationDtoImpl &&
+            (identical(other.purchaseId, purchaseId) ||
+                other.purchaseId == purchaseId) &&
+            (identical(other.productId, productId) ||
+                other.productId == productId) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.productType, productType) ||
+                other.productType == productType) &&
+            (identical(other.transactionDate, transactionDate) ||
+                other.transactionDate == transactionDate) &&
+            (identical(other.purchaseToken, purchaseToken) ||
+                other.purchaseToken == purchaseToken) &&
+            (identical(other.developerPayload, developerPayload) ||
+                other.developerPayload == developerPayload) &&
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.localVerificationData, localVerificationData) ||
+                other.localVerificationData == localVerificationData) &&
+            (identical(other.serverVerificationData, serverVerificationData) ||
+                other.serverVerificationData == serverVerificationData));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      purchaseId,
+      productId,
+      status,
+      productType,
+      transactionDate,
+      purchaseToken,
+      developerPayload,
+      source,
+      localVerificationData,
+      serverVerificationData);
+
+  /// Create a copy of PurchaseVerificationDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PurchaseVerificationDtoImplCopyWith<_$PurchaseVerificationDtoImpl>
+      get copyWith => __$$PurchaseVerificationDtoImplCopyWithImpl<
+          _$PurchaseVerificationDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PurchaseVerificationDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PurchaseVerificationDto implements PurchaseVerificationDto {
+  const factory _PurchaseVerificationDto(
+      {required final PurchaseId purchaseId,
+      required final ProductId productId,
+      required final PurchaseStatus status,
+      required final PurchaseProductType productType,
+      final DateTime? transactionDate,
+      final String? purchaseToken,
+      final String? developerPayload,
+      final String? source,
+      final String? localVerificationData,
+      final String? serverVerificationData}) = _$PurchaseVerificationDtoImpl;
+
+  factory _PurchaseVerificationDto.fromJson(Map<String, dynamic> json) =
+      _$PurchaseVerificationDtoImpl.fromJson;
+
+  @override
+  PurchaseId get purchaseId;
+  @override
+  ProductId get productId;
+  @override
+  PurchaseStatus get status;
+  @override
+  PurchaseProductType get productType;
+  @override
+  DateTime? get transactionDate;
+  @override
+  String? get purchaseToken;
+
+  /// same as developerChallenge
+  @override
+  String? get developerPayload;
+  @override
+  String? get source;
+  @override
+  String? get localVerificationData;
+  @override
+  String? get serverVerificationData;
+
+  /// Create a copy of PurchaseVerificationDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PurchaseVerificationDtoImplCopyWith<_$PurchaseVerificationDtoImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

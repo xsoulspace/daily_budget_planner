@@ -46,7 +46,8 @@ void _init({required final AnalyticsService analyticsService}) {
   r(AppSettingsNotifier());
   r(UserNotifier());
   r(AppStatusNotifier());
-  r(KeeperManager());
+
+  r(SubscriptionManager());
 }
 
 mixin HasLocalApis {
@@ -59,7 +60,7 @@ mixin HasStates {
   UserNotifier get userNotifier => _g<UserNotifier>();
   AppStatusNotifier get appStatusNotifier => _g<AppStatusNotifier>();
   UiLocaleNotifier get localeNotifier => _g<UiLocaleNotifier>();
-  KeeperManager get keeperManager => _g<KeeperManager>();
+  SubscriptionManager get keeperManager => _g<SubscriptionManager>();
   PurchaseManager get purchaseManager => _g<PurchaseManager>();
   AppSettingsNotifier get appSettingsNotifier => _g<AppSettingsNotifier>();
 }

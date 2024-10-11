@@ -43,7 +43,8 @@ class FlutterRustoreBillingManager implements PurchaseManager {
         deeplinkScheme,
         enableLogger,
       );
-      return true;
+
+      return isAvailable();
     } catch (e) {
       debugPrint('FlutterRustoreBillingManager.init: $e');
       return false;
@@ -73,15 +74,16 @@ class FlutterRustoreBillingManager implements PurchaseManager {
     final PurchaseProductType expectedType,
   ) async {
     final result = await _processPurchase(details, expectedType);
-    final update = PurchaseUpdate(
+    final update = PurchaseVerificationDto(
+      productType: expectedType,
       purchaseId: result.when(
         success: (final purchase) => purchase.purchaseId,
         failure: (final _) => PurchaseId(''),
       ),
       productId: details.productId,
       status: result.when(
-        success: (final _) => PurchaseStatus.completed,
-        failure: (final _) => PurchaseStatus.failed,
+        success: (final details) => details.status,
+        failure: (final _) => PurchaseStatus.error,
       ),
     );
     _purchasesController.add(update);
@@ -106,6 +108,12 @@ class FlutterRustoreBillingManager implements PurchaseManager {
       }
       return PurchaseResult.success(
         PurchaseDetails(
+          status: switch (expectedType) {
+            PurchaseProductType.consumable => PurchaseStatus.restored,
+            PurchaseProductType.nonConsumable ||
+            PurchaseProductType.subscription =>
+              PurchaseStatus.purchased,
+          },
           purchaseId: PurchaseId(purchase.successPurchase!.purchaseId),
           purchaseType: expectedType,
           productId: details.productId,
@@ -121,6 +129,28 @@ class FlutterRustoreBillingManager implements PurchaseManager {
       );
     } catch (e) {
       return PurchaseResult.failure(e.toString());
+    }
+  }
+
+  @override
+  Future<CompletePurchaseResult> completePurchase(
+    final PurchaseVerificationDto dto,
+  ) async {
+    try {
+      /// there is no confirmation for non-consumable purchases and subscriptions
+      if (dto.productType != PurchaseProductType.consumable) {
+        return const CompletePurchaseResult.success();
+      }
+      final result = await RustoreBillingClient.confirm(dto.purchaseId.value);
+      if (result.success) {
+        return const CompletePurchaseResult.success();
+      } else {
+        return CompletePurchaseResult.failure(
+          'Failed to complete purchase: ${result.errorMessage}',
+        );
+      }
+    } catch (e) {
+      return CompletePurchaseResult.failure(e.toString());
     }
   }
 
@@ -182,9 +212,11 @@ class FlutterRustoreBillingManager implements PurchaseManager {
     await launchUrlString('rustore://profile/subscriptions');
   }
 
-  final _purchasesController = StreamController<PurchaseUpdate>.broadcast();
+  final _purchasesController =
+      StreamController<PurchaseVerificationDto>.broadcast();
   @override
-  Stream<PurchaseUpdate> get purchasesStream => _purchasesController.stream;
+  Stream<PurchaseVerificationDto> get purchasesStream =>
+      _purchasesController.stream;
 
   @override
   Future<RestoreResult> restore() async {
@@ -204,6 +236,7 @@ class FlutterRustoreBillingManager implements PurchaseManager {
     );
     final duration = _getDurationFromId(purchase?.productId ?? '');
     return PurchaseDetails(
+      status: PurchaseStatus.fromRustoreState(purchase?.purchaseState),
       purchaseType: PurchaseProductType.fromRustoreJson(purchase?.productType),
       purchaseId: PurchaseId(purchase?.purchaseId ?? ''),
       productId: ProductId(purchase?.productId ?? ''),

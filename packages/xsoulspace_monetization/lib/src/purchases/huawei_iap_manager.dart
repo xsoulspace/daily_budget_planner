@@ -10,7 +10,7 @@ import 'purchase_manager.dart';
 /// {@endtemplate}
 class HuaweiIapManager implements PurchaseManager {
   HuaweiIapManager({
-    required this.isSandbox,
+    this.isSandbox = false,
     this.enableLogger = false,
   });
   final bool isSandbox;
@@ -49,6 +49,30 @@ class HuaweiIapManager implements PurchaseManager {
     } catch (e) {
       debugPrint('HuaweiIapManager.init: $e');
       return false;
+    }
+  }
+
+  @override
+  Future<CompletePurchaseResult> completePurchase(
+    final PurchaseVerificationDto dto,
+  ) async {
+    try {
+      final result = await IapClient.consumeOwnedPurchase(
+        ConsumeOwnedPurchaseReq(
+          developerChallenge: dto.developerPayload,
+          purchaseToken: dto.purchaseToken!,
+          // reservedInfor: dto.reservedInfor,
+        ),
+      );
+      if (result.returnCode == '0') {
+        return const CompletePurchaseResult.success();
+      } else {
+        return CompletePurchaseResult.failure(
+          'Failed to complete purchase: ${result.errMsg}',
+        );
+      }
+    } catch (e) {
+      return CompletePurchaseResult.failure(e.toString());
     }
   }
 
@@ -218,7 +242,7 @@ class HuaweiIapManager implements PurchaseManager {
   }
 
   @override
-  Stream<PurchaseUpdate> get purchasesStream {
+  Stream<PurchaseVerificationDto> get purchasesStream {
     // TODO: Implement purchase update stream for Huawei IAP
     throw UnimplementedError();
   }

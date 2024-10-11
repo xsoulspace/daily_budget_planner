@@ -69,6 +69,7 @@ _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
       productId: ProductId.fromJson(json['productId']),
       name: json['name'] as String,
       formattedPrice: json['formattedPrice'] as String,
+      status: $enumDecode(_$PurchaseStatusEnumMap, json['status']),
       price: (json['price'] as num).toDouble(),
       currency: json['currency'] as String,
       purchaseDate: DateTime.parse(json['purchaseDate'] as String),
@@ -92,6 +93,7 @@ Map<String, dynamic> _$$PurchaseDetailsImplToJson(
       'productId': instance.productId,
       'name': instance.name,
       'formattedPrice': instance.formattedPrice,
+      'status': _$PurchaseStatusEnumMap[instance.status]!,
       'price': instance.price,
       'currency': instance.currency,
       'purchaseDate': instance.purchaseDate.toIso8601String(),
@@ -100,6 +102,14 @@ Map<String, dynamic> _$$PurchaseDetailsImplToJson(
       'duration': instance.duration.inMicroseconds,
       'expiryDate': instance.expiryDate?.toIso8601String(),
     };
+
+const _$PurchaseStatusEnumMap = {
+  PurchaseStatus.pending: 'pending',
+  PurchaseStatus.purchased: 'purchased',
+  PurchaseStatus.error: 'error',
+  PurchaseStatus.restored: 'restored',
+  PurchaseStatus.canceled: 'canceled',
+};
 
 _$PurchaseSuccessImpl _$$PurchaseSuccessImplFromJson(
         Map<String, dynamic> json) =>
@@ -128,28 +138,6 @@ Map<String, dynamic> _$$PurchaseFailureImplToJson(
       'error': instance.error,
       'runtimeType': instance.$type,
     };
-
-_$PurchaseUpdateImpl _$$PurchaseUpdateImplFromJson(Map<String, dynamic> json) =>
-    _$PurchaseUpdateImpl(
-      productId: ProductId.fromJson(json['productId']),
-      purchaseId: PurchaseId.fromJson(json['purchaseId']),
-      status: $enumDecode(_$PurchaseStatusEnumMap, json['status']),
-    );
-
-Map<String, dynamic> _$$PurchaseUpdateImplToJson(
-        _$PurchaseUpdateImpl instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'purchaseId': instance.purchaseId,
-      'status': _$PurchaseStatusEnumMap[instance.status]!,
-    };
-
-const _$PurchaseStatusEnumMap = {
-  PurchaseStatus.pending: 'pending',
-  PurchaseStatus.completed: 'completed',
-  PurchaseStatus.cancelled: 'cancelled',
-  PurchaseStatus.failed: 'failed',
-};
 
 _$RestoreSuccessImpl _$$RestoreSuccessImplFromJson(Map<String, dynamic> json) =>
     _$RestoreSuccessImpl(
@@ -199,4 +187,63 @@ Map<String, dynamic> _$$CancelFailureImplToJson(_$CancelFailureImpl instance) =>
     <String, dynamic>{
       'error': instance.error,
       'runtimeType': instance.$type,
+    };
+
+_$CompletePurchaseSuccessImpl _$$CompletePurchaseSuccessImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CompletePurchaseSuccessImpl(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$CompletePurchaseSuccessImplToJson(
+        _$CompletePurchaseSuccessImpl instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+_$CompletePurchaseFailureImpl _$$CompletePurchaseFailureImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CompletePurchaseFailureImpl(
+      json['error'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$CompletePurchaseFailureImplToJson(
+        _$CompletePurchaseFailureImpl instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'runtimeType': instance.$type,
+    };
+
+_$PurchaseVerificationDtoImpl _$$PurchaseVerificationDtoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PurchaseVerificationDtoImpl(
+      purchaseId: PurchaseId.fromJson(json['purchaseId']),
+      productId: ProductId.fromJson(json['productId']),
+      status: $enumDecode(_$PurchaseStatusEnumMap, json['status']),
+      productType:
+          $enumDecode(_$PurchaseProductTypeEnumMap, json['productType']),
+      transactionDate: json['transactionDate'] == null
+          ? null
+          : DateTime.parse(json['transactionDate'] as String),
+      purchaseToken: json['purchaseToken'] as String?,
+      developerPayload: json['developerPayload'] as String?,
+      source: json['source'] as String?,
+      localVerificationData: json['localVerificationData'] as String?,
+      serverVerificationData: json['serverVerificationData'] as String?,
+    );
+
+Map<String, dynamic> _$$PurchaseVerificationDtoImplToJson(
+        _$PurchaseVerificationDtoImpl instance) =>
+    <String, dynamic>{
+      'purchaseId': instance.purchaseId,
+      'productId': instance.productId,
+      'status': _$PurchaseStatusEnumMap[instance.status]!,
+      'productType': instance.productType,
+      'transactionDate': instance.transactionDate?.toIso8601String(),
+      'purchaseToken': instance.purchaseToken,
+      'developerPayload': instance.developerPayload,
+      'source': instance.source,
+      'localVerificationData': instance.localVerificationData,
+      'serverVerificationData': instance.serverVerificationData,
     };

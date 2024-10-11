@@ -25,6 +25,30 @@ class InAppPurchaseManager implements PurchaseManager {
   }
 
   @override
+  Future<CompletePurchaseResult> completePurchase(
+    final PurchaseVerificationDto dto,
+  ) async {
+    try {
+      await _inAppPurchase.completePurchase(
+        iap.PurchaseDetails(
+          purchaseID: dto.purchaseId.value,
+          productID: dto.productId.value,
+          transactionDate: dto.transactionDate?.toIso8601String(),
+          status: dto.status.toFlutterIAPStatus(),
+          verificationData: iap.PurchaseVerificationData(
+            localVerificationData: dto.localVerificationData ?? '',
+            serverVerificationData: dto.serverVerificationData ?? '',
+            source: dto.source ?? '',
+          ),
+        ),
+      );
+      return const CompletePurchaseResult.success();
+    } catch (e) {
+      return CompletePurchaseResult.failure(e.toString());
+    }
+  }
+
+  @override
   Future<PurchaseResult> buyConsumable(
     final PurchaseProductDetails details,
   ) async {
@@ -32,8 +56,7 @@ class InAppPurchaseManager implements PurchaseManager {
       throw UnimplementedError();
       // final productDetails = await _getProductDetails(details.productId.value);
       // final purchaseParam = iap.PurchaseParam(productDetails: productDetails);
-      // final success =
-      //     await _inAppPurchase.buyConsumable(purchaseParam: purchaseParam);
+      // final success = await _inAppPurchase.con(purchaseParam: purchaseParam);
       // if (success) {
       //   return PurchaseResult.success(
       //     PurchaseDetails(
@@ -143,7 +166,6 @@ class InAppPurchaseManager implements PurchaseManager {
             productId: ProductId(product.id),
             formattedPrice: product.price,
             productType: PurchaseProductType.consumable,
-            duration: Duration.zero,
             name: product.title,
             price: product.rawPrice,
             currency: product.currencyCode,
@@ -163,7 +185,6 @@ class InAppPurchaseManager implements PurchaseManager {
           (final product) => PurchaseProductDetails(
             productId: ProductId(product.id),
             formattedPrice: product.price,
-            duration: Duration.zero,
             productType: PurchaseProductType.nonConsumable,
             name: product.title,
             price: product.rawPrice,
@@ -180,14 +201,17 @@ class InAppPurchaseManager implements PurchaseManager {
   }
 
   @override
-  Stream<PurchaseUpdate> get purchasesStream {
+  Stream<PurchaseVerificationDto> get purchasesStream {
     throw UnimplementedError();
     // return _inAppPurchase.purchaseStream.map(
-    //     (final purchaseDetails) => PurchaseUpdate(
+    //   (final purchaseDetails) {
+    //     return PurchaseUpdate(
     //       purchaseId: PurchaseId(purchaseDetails.purchaseID),
+    //       productId: ProductId(purchaseDetails.productID),
     //       status: _mapPurchaseStatus(purchaseDetails.status),
-    //     ),
-    //   );
+    //     );
+    //   },
+    // );
   }
 
   @override
@@ -245,13 +269,13 @@ class InAppPurchaseManager implements PurchaseManager {
       case iap.PurchaseStatus.pending:
         return PurchaseStatus.pending;
       case iap.PurchaseStatus.purchased:
-        return PurchaseStatus.completed;
+        return PurchaseStatus.purchased;
       case iap.PurchaseStatus.error:
-        return PurchaseStatus.failed;
+        return PurchaseStatus.error;
       case iap.PurchaseStatus.canceled:
-        return PurchaseStatus.cancelled;
+        return PurchaseStatus.canceled;
       case iap.PurchaseStatus.restored:
-        return PurchaseStatus.completed;
+        return PurchaseStatus.restored;
     }
   }
 

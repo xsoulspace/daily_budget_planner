@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'keeper_manager.dart';
+part of 'subscription_manager.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

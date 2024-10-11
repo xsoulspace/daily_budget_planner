@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:in_app_purchase/in_app_purchase.dart' as iap;
 
 part 'purchase_manager.freezed.dart';
 part 'purchase_manager.g.dart';
@@ -71,13 +72,19 @@ abstract class PurchaseManager {
   /// Initializes the purchase manager.
   Future<bool> init();
 
-  /// Purchases a consumable item.
+  /// Subscribes to a product.
+  ///
+  /// Use [purchasesStream] to get the purchase status.
   Future<PurchaseResult> buyConsumable(final PurchaseProductDetails details);
 
-  /// Purchases a non-consumable item.
+  /// Subscribes to a product.
+  ///
+  /// Use [purchasesStream] to get the purchase status.
   Future<PurchaseResult> buyNonConsumable(final PurchaseProductDetails details);
 
   /// Subscribes to a product.
+  ///
+  /// Use [purchasesStream] to get the purchase status.
   Future<PurchaseResult> subscribe(final PurchaseProductDetails details);
 
   /// Retrieves available subscriptions.
@@ -98,14 +105,45 @@ abstract class PurchaseManager {
   /// Opens the subscription management page.
   Future<void> openSubscriptionManagement();
 
-  /// Provides a stream of purchase updates.
-  Stream<PurchaseUpdate> get purchasesStream;
+  // TODO(arenukvern): adjust this to all implementations
+  /// Currently copied from in_app_purchase_manager.dart:
+  ///
+  /// Listen to this broadcast stream to get real time update for purchases.
+  /// This stream will never close as long as the app is active.
+  ///
+  /// Purchase updates can happen in several situations:
+  ///
+  /// When a purchase is triggered by user in the app.
+  /// When a purchase is triggered by user from the platform-specific
+  /// store front.
+  /// When a purchase is restored on the device by the user in the app.
+  /// If a purchase is not completed ([completePurchase] is not called
+  /// on the purchase object) from the last app session. Purchase updates
+  /// will happen when a new app session starts instead.
+  ///
+  /// IMPORTANT! You must subscribe to this stream as soon as your app
+  /// launches, preferably before returning your main App Widget in main().
+  /// Otherwise you will miss purchase updated made before this
+  /// stream is subscribed to.
+  ///
+  /// We also recommend listening to the stream with one subscription
+  /// at a given time. If you choose to have multiple subscription at the
+  /// same time, you should be careful at the fact that each subscription
+  /// will receive all the events after they start to listen.
+  Stream<PurchaseVerificationDto> get purchasesStream;
 
   /// Restores previously made purchases.
   Future<RestoreResult> restore();
 
   /// Cancels an subscription or consumable or non-consumable.
   Future<CancelResult> cancel(final PurchaseProductDetails details);
+
+  /// You should call this after receiving [PurchaseStatus.error] or
+  /// [PurchaseStatus.restored] or [PurchaseStatus.purchased]
+  /// to complete the purchase.
+  Future<CompletePurchaseResult> completePurchase(
+    final PurchaseVerificationDto dto,
+  );
 
   /// Disposes of the purchase manager.
   Future<void> dispose();
@@ -151,6 +189,7 @@ class PurchaseDetails with _$PurchaseDetails {
 
     /// formatted price with currency
     required final String formattedPrice,
+    required final PurchaseStatus status,
 
     /// price without currency in smallest unit of currency
     required final double price,
@@ -164,9 +203,25 @@ class PurchaseDetails with _$PurchaseDetails {
   const PurchaseDetails._();
   factory PurchaseDetails.fromJson(final Map<String, dynamic> json) =>
       _$PurchaseDetailsFromJson(json);
+
+  PurchaseVerificationDto toVerificationDto() => PurchaseVerificationDto(
+        purchaseId: purchaseId,
+        productId: productId,
+        status: status,
+        productType: purchaseType,
+      );
   bool get hasFreeTrial => freeTrialDuration.inDays > 0;
   bool get isOneTimePurchase => duration.inDays == 0;
   bool get isSubscription => !isOneTimePurchase;
+  bool get isActive {
+    if (purchaseType case PurchaseProductType.subscription) {
+      final expiryDate = this.expiryDate;
+      return status == PurchaseStatus.purchased &&
+          expiryDate != null &&
+          expiryDate.isAfter(DateTime.now());
+    }
+    return status == PurchaseStatus.purchased;
+  }
 }
 
 /// {@template purchase_result}
@@ -182,25 +237,39 @@ class PurchaseResult with _$PurchaseResult {
       _$PurchaseResultFromJson(json);
 }
 
-/// {@template purchase_update}
-/// Represents an update to a purchase.
-/// {@endtemplate}
-@freezed
-class PurchaseUpdate with _$PurchaseUpdate {
-  const factory PurchaseUpdate({
-    required final ProductId productId,
-    required final PurchaseId purchaseId,
-    required final PurchaseStatus status,
-  }) = _PurchaseUpdate;
-
-  factory PurchaseUpdate.fromJson(final Map<String, dynamic> json) =>
-      _$PurchaseUpdateFromJson(json);
-}
-
 /// {@template purchase_status}
 /// Represents the status of a purchase.
 /// {@endtemplate}
-enum PurchaseStatus { pending, completed, cancelled, failed }
+enum PurchaseStatus {
+  pending,
+  purchased,
+  error,
+
+  /// The purchase has been restored to the device and
+  /// pending server validation.
+  ///
+  /// You should validate the purchase and if valid deliver the content.
+  /// Once the content has been delivered or if the receipt is invalid
+  /// you should finish the purchase by calling the completePurchase method.
+  restored,
+  canceled;
+
+  iap.PurchaseStatus toFlutterIAPStatus() => switch (this) {
+        PurchaseStatus.pending => iap.PurchaseStatus.pending,
+        PurchaseStatus.purchased => iap.PurchaseStatus.purchased,
+        PurchaseStatus.error => iap.PurchaseStatus.error,
+        PurchaseStatus.restored => iap.PurchaseStatus.restored,
+        PurchaseStatus.canceled => iap.PurchaseStatus.canceled,
+      };
+  // https://www.rustore.ru/help/sdk/payments/flutter/6-1-0#handlingerrors
+  static PurchaseStatus fromRustoreState(final dynamic json) => switch (json) {
+        'CREATED' || 'INVOICE_CREATED' || 'PAUSED' => PurchaseStatus.pending,
+        'PAID' => PurchaseStatus.restored,
+        'CANCELLED' || 'CLOSED' || 'TERMINATED' => PurchaseStatus.canceled,
+        'CONSUMED' || 'CONFIRMED' => PurchaseStatus.purchased,
+        _ => throw Exception('Invalid purchase status: $json'),
+      };
+}
 
 /// {@template restore_result}
 /// Represents the result of a restore operation.
@@ -226,4 +295,41 @@ class CancelResult with _$CancelResult {
 
   factory CancelResult.fromJson(final Map<String, dynamic> json) =>
       _$CancelResultFromJson(json);
+}
+
+/// {@template complete_purchase_result}
+/// Represents the result of completing a purchase.
+/// {@endtemplate}
+@freezed
+class CompletePurchaseResult with _$CompletePurchaseResult {
+  const factory CompletePurchaseResult.success() = CompletePurchaseSuccess;
+  const factory CompletePurchaseResult.failure(final String error) =
+      CompletePurchaseFailure;
+
+  factory CompletePurchaseResult.fromJson(final Map<String, dynamic> json) =>
+      _$CompletePurchaseResultFromJson(json);
+}
+
+/// {@template complete_purchase_dto}
+/// Data Transfer Object for completing a purchase.
+/// {@endtemplate}
+@freezed
+class PurchaseVerificationDto with _$PurchaseVerificationDto {
+  const factory PurchaseVerificationDto({
+    required final PurchaseId purchaseId,
+    required final ProductId productId,
+    required final PurchaseStatus status,
+    required final PurchaseProductType productType,
+    final DateTime? transactionDate,
+    final String? purchaseToken,
+
+    /// same as developerChallenge
+    final String? developerPayload,
+    final String? source,
+    final String? localVerificationData,
+    final String? serverVerificationData,
+  }) = _PurchaseVerificationDto;
+
+  factory PurchaseVerificationDto.fromJson(final Map<String, dynamic> json) =>
+      _$PurchaseVerificationDtoFromJson(json);
 }
