@@ -371,11 +371,11 @@ class _ResultPage extends StatelessWidget {
             LocalizedMap(
               value: {
                 languages.en:
-                    "Now you know exactly how much you can spend each day without breaking the bank. Remember, this is a tool - some days you might spend less, others a bit more. The key is to stay aware and make informed choices. You've got this! 💪",
+                    "Now you know exactly how much you can spend each day without ending up with holey socks 🧦. Remember, this is a tool - some days you might spend less, others a bit more. The key is to stay aware and make informed decisions. You've got this! 💪",
                 languages.ru:
-                    'Теперь вы точно знаете, сколько можете тратить каждый день, не разоряясь. Помните, это инструмент - в некоторые дни вы можете тратить меньше, в другие - немного больше. Главное - оставаться в курсе и принимать обоснованные решения. У вас все получится! 💪',
+                    'Теперь вы точно знаете, сколько можете тратить каждый день, чтобы не дойти до дырявых носок 🧦. Помните, это инструмент - в некоторые дни вы можете тратить меньше, в другие - немного больше. Главное - оставаться в курсе и принимать обоснованные решения. У вас все получится! 💪',
                 languages.it:
-                    "Ora sai esattamente quanto puoi spendere ogni giorno senza mandare in rosso il conto. Ricorda, questo è uno strumento - alcuni giorni potresti spendere meno, altri un po' di più. La chiave è rimanere consapevoli e fare scelte informate. Ce la puoi fare! 💪",
+                    "Ora sai esattamente quanto puoi spendere ogni giorno senza ritrovarti con i calzini bucati 🧦. Ricorda, questo è uno strumento - alcuni giorni potresti spendere meno, altri un po' di più. La chiave è rimanere consapevoli e prendere decisioni informate. Ce la puoi fare! 💪",
               },
             ).getValue(locale),
             style: Theme.of(context).textTheme.bodyLarge,

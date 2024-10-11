@@ -2,7 +2,6 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/use_tab_controller_listener.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/ui_home/widgets/widgets.dart';
-import 'package:universal_io/io.dart';
 
 class MonthlyView extends StatefulHookWidget {
   const MonthlyView({super.key});
@@ -34,208 +33,295 @@ class _MonthlyViewState extends State<MonthlyView>
   Widget build(final BuildContext context) {
     super.build(context);
     final monthlyCubit = context.watch<MonthlyCubit>();
+    final locale = useLocale(context);
     useTabControllerListenerState(
       onTabChanged: _requestAmountFocusByIndex,
     );
+
+    final isLandscape = MediaQuery.of(context).size.width > 600;
+
     return Form(
-      child: ListView(
+      child: isLandscape
+          ? _buildLandscapeLayout(context, monthlyCubit, locale)
+          : _buildMobileLayout(context, monthlyCubit, locale),
+    );
+  }
+
+  Widget _buildLandscapeLayout(
+    final BuildContext context,
+    final MonthlyCubit monthlyCubit,
+    final Locale locale,
+  ) =>
+      ListView(
         shrinkWrap: true,
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.all(16),
         children: [
-          const Gap(12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(context.s.yourBudget),
-                    Gap(
-                      DeviceRuntimeType.isMobile ? 12 : 24,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            autofocus: true,
-                            focusNode: monthlyCubit.amountFocusNode,
-                            keyboardType: TextInputType.number,
-                            textInputAction: Platform.isAndroid
-                                ? TextInputAction.next
-                                : TextInputAction.done,
-                            controller: monthlyCubit.amountController,
-                            onChanged: monthlyCubit.onAmountChange,
-                            onEditingComplete: _requestSavingsFocus,
-                            onFieldSubmitted: (final value) =>
-                                _requestSavingsFocus(),
-                            decoration: const InputDecoration(filled: true),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            monthlyCubit.amountController.clear();
-                            monthlyCubit.onAmountChange('');
-                            _requestAmountFocus();
-                          },
-                          icon: const Icon(Icons.clear),
-                        ),
-                      ],
-                    ),
-                    const Gap(28),
-                    Text(context.s.extraCostsOrSaving),
-                    Text(
-                      context.s.willBeSubstructedFromYourBudget,
-                      style: context.textTheme.labelMedium,
-                    ),
-                    const Gap(12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            focusNode: monthlyCubit.savingsFocusNode,
-                            keyboardType: TextInputType.number,
-                            textInputAction: Platform.isAndroid
-                                ? TextInputAction.previous
-                                : TextInputAction.done,
-                            onEditingComplete: _requestAmountFocus,
-                            onFieldSubmitted: (final value) =>
-                                _requestAmountFocus(),
-                            controller: monthlyCubit.savingsController,
-                            onChanged: monthlyCubit.onSavingsChange,
-                            decoration: const InputDecoration(filled: true),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            monthlyCubit.savingsController.clear();
-                            monthlyCubit.onSavingsChange('');
-                            _requestSavingsFocus();
-                          },
-                          icon: const Icon(Icons.clear),
-                        ),
-                      ],
-                    ),
-                    const Gap(16),
-                    Text(context.s.nextBudgetDay),
-                    const Gap(4),
-                    TextButton(
-                      onPressed: () async =>
-                          monthlyCubit.onChangeNextBudgetDay(context),
-                      child: Text(
-                        monthlyCubit.budget.nextBudgetDay?.formatDdMmYyyy() ??
-                            context.s.chooseDate,
-                      ),
-                    ),
-                  ],
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: _buildInputSection(context, monthlyCubit, locale),
+                  ),
                 ),
               ),
-              const Gap(2),
-              const SizedBox(
-                height: 300,
-                child: VerticalDivider(thickness: 2),
-              ),
-              const Gap(6),
-              Flexible(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(context.s.dailyBudget),
-                    Row(
-                      children: [
-                        Text(
-                          monthlyCubit.dailyBudget,
-                          style: context.textTheme.titleLarge,
-                        ),
-                        const Spacer(),
-                        CopyButton(value: monthlyCubit.dailyBudget),
-                      ],
-                    ),
-                    const Gap(12),
-                    const Divider(),
-                    const Gap(12),
-                    Text(context.s.weeklyBudget),
-                    Text(
-                      context.s.canBeLessIfYouHaveLessThan7Days,
-                      style: context.textTheme.labelMedium,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          monthlyCubit.weeklyBudget,
-                          style: context.textTheme.titleLarge,
-                        ),
-                        const Spacer(),
-                        CopyButton(value: monthlyCubit.weeklyBudget),
-                      ],
-                    ),
-                    // const Gap(12),
-                    // const Text('This week Budget ( days)'),
-                    // Row(
-                    //   children: [
-                    //     Text(
-                    //       '${monthlyCubit.thisWeekBudget}',
-                    //       style: context.textTheme.titleLarge,
-                    //     ),
-                    //     const Spacer(),
-                    //     IconButton(
-                    //       onPressed: () async {
-                    //         final messenger = ScaffoldMessenger.of(context);
-                    //         await Clipboard.setData(
-                    //           ClipboardData(
-                    //             text: '${monthlyCubit.thisWeekBudget}',
-                    //           ),
-                    //         );
-                    //         messenger.showSnackBar(
-                    //           SnackBar(
-                    //             content: const Text('Copied'),
-                    //             action: SnackBarAction(
-                    //               onPressed: messenger.hideCurrentSnackBar,
-                    //               label: 'Ok',
-                    //             ),
-                    //           ),
-                    //         );
-                    //       },
-                    //       icon: const Icon(Icons.copy),
-                    //     )
-                    //   ],
-                    // ),
-                    const Gap(12),
-                    const Divider(),
-                    const Gap(24),
-                    // Row(
-                    //   children: [
-                    //     const Text('Days Left this week: '),
-                    //     const Gap(4),
-                    //     Text(monthlyCubit.daysLeftThisWeek.toString()),
-                    //   ],
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            context.s.daysInTotal,
-                            style: context.textTheme.bodyLarge,
-                          ),
-                        ),
-                        Text(
-                          monthlyCubit.daysCount.toString(),
-                          style: context.textTheme.titleLarge,
-                        ),
-                      ],
-                    ),
-                  ],
+              const SizedBox(width: 16),
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: _buildResultsSection(context, monthlyCubit, locale),
+                  ),
                 ),
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
+      );
+
+  Widget _buildMobileLayout(
+    final BuildContext context,
+    final MonthlyCubit monthlyCubit,
+    final Locale locale,
+  ) =>
+      ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        children: [
+          _buildInputSection(context, monthlyCubit, locale),
+          const SizedBox(height: 16),
+          _buildResultsSection(context, monthlyCubit, locale),
+        ],
+      );
+
+  Widget _buildInputSection(
+    final BuildContext context,
+    final MonthlyCubit monthlyCubit,
+    final Locale locale,
+  ) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            LocalizedMap(
+              value: {
+                languages.en: 'Your Budget',
+                languages.ru: 'Ваш бюджет',
+                languages.it: 'Il tuo budget',
+              },
+            ).getValue(locale),
+            style: context.textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          _buildInputField(
+            label: LocalizedMap(
+              value: {
+                languages.en: 'Monthly Income',
+                languages.ru: 'Ежемесячный доход',
+                languages.it: 'Reddito mensile',
+              },
+            ).getValue(locale),
+            controller: monthlyCubit.amountController,
+            focusNode: monthlyCubit.amountFocusNode,
+            onChanged: monthlyCubit.onAmountChange,
+            onEditingComplete: _requestSavingsFocus,
+            icon: Icons.attach_money,
+          ),
+          const SizedBox(height: 8),
+          _buildInputField(
+            label: LocalizedMap(
+              value: {
+                languages.en: 'Extra Costs/Savings',
+                languages.ru: 'Доп. расходы/сбережения',
+                languages.it: 'Costi extra/risparmi',
+              },
+            ).getValue(locale),
+            controller: monthlyCubit.savingsController,
+            focusNode: monthlyCubit.savingsFocusNode,
+            onChanged: monthlyCubit.onSavingsChange,
+            onEditingComplete: _requestAmountFocus,
+            icon: Icons.savings,
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(Icons.calendar_today, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: TextButton(
+                  onPressed: () async =>
+                      monthlyCubit.onChangeNextBudgetDay(context),
+                  child: Text(
+                    LocalizedMap(
+                          value: {
+                            languages.en: 'Next Budget Date: ',
+                            languages.ru: 'Следующая дата бюджета: ',
+                            languages.it: 'Prossima data di budget: ',
+                          },
+                        ).getValue(locale) +
+                        (monthlyCubit.budget.nextBudgetDay?.formatDdMmYyyy() ??
+                            LocalizedMap(
+                              value: {
+                                languages.en: 'Choose Date',
+                                languages.ru: 'Выберите дату',
+                                languages.it: 'Scegli la data',
+                              },
+                            ).getValue(locale)),
+                    style: context.textTheme.bodyMedium,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+
+  Widget _buildInputField({
+    required final String label,
+    required final TextEditingController controller,
+    required final FocusNode focusNode,
+    required final Function(String) onChanged,
+    required final VoidCallback onEditingComplete,
+    required final IconData icon,
+  }) =>
+      Row(
+        children: [
+          Icon(icon, size: 20),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextFormField(
+              controller: controller,
+              focusNode: focusNode,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              onChanged: onChanged,
+              onEditingComplete: onEditingComplete,
+              decoration: InputDecoration(
+                labelText: label,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                isDense: true,
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear, size: 18),
+                  onPressed: () {
+                    controller.clear();
+                    onChanged('');
+                    focusNode.requestFocus();
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildResultsSection(
+    final BuildContext context,
+    final MonthlyCubit monthlyCubit,
+    final Locale locale,
+  ) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            LocalizedMap(
+              value: {
+                languages.en: 'Budget Breakdown',
+                languages.ru: 'Разбивка бюджета',
+                languages.it: 'Ripartizione del budget',
+              },
+            ).getValue(locale),
+            style: context.textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          _buildBudgetItem(
+            label: LocalizedMap(
+              value: {
+                languages.en: 'Daily Budget',
+                languages.ru: 'Дневной бюджет',
+                languages.it: 'Budget giornaliero',
+              },
+            ).getValue(locale),
+            value: monthlyCubit.dailyBudget,
+            icon: Icons.today,
+          ),
+          _buildBudgetItem(
+            label: LocalizedMap(
+              value: {
+                languages.en: 'Weekly Budget',
+                languages.ru: 'Недельный бюджет',
+                languages.it: 'Budget settimanale',
+              },
+            ).getValue(locale),
+            value: monthlyCubit.weeklyBudget,
+            icon: Icons.view_week,
+            subtitle: LocalizedMap(
+              value: {
+                languages.en: 'Can be less if < 7 days',
+                languages.ru: 'Может быть меньше, если < 7 дней',
+                languages.it: 'Può essere meno se < 7 giorni',
+              },
+            ).getValue(locale),
+          ),
+          _buildBudgetItem(
+            label: LocalizedMap(
+              value: {
+                languages.en: 'Days in Total',
+                languages.ru: 'Всего дней',
+                languages.it: 'Giorni in totale',
+              },
+            ).getValue(locale),
+            value: monthlyCubit.daysCount.toString(),
+            icon: Icons.date_range,
+          ),
+        ],
+      );
+
+  Widget _buildBudgetItem({
+    required final String label,
+    required final String value,
+    required final IconData icon,
+    final String? subtitle,
+  }) =>
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            Icon(icon, size: 20, color: context.theme.primaryColor),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(label, style: context.textTheme.bodyMedium),
+                  if (subtitle != null)
+                    Text(
+                      subtitle,
+                      style: context.textTheme.bodySmall,
+                    ),
+                ],
+              ),
+            ),
+            Text(
+              value,
+              style: context.textTheme.bodyLarge?.copyWith(
+                color: context.theme.primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ).animate(
+              key: ValueKey(value),
+              effects: [
+                FadeEffect(duration: 300.ms),
+                ScaleEffect(duration: 300.ms),
+              ],
+            ),
+            const SizedBox(width: 4),
+            CopyButton(value: value),
+          ],
+        ),
+      );
 
   @override
   bool get wantKeepAlive => true;
