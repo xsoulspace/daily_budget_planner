@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';

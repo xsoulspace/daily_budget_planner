@@ -1,5 +1,4 @@
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_states/app_settings_notifier.dart';
 
 Future<void> showLanguageBottomSheet(final BuildContext context) async =>
     showModalBottomSheet(

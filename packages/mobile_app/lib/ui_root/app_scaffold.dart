@@ -1,6 +1,5 @@
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_states/app_settings_notifier.dart';
 
 class DBPApp extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -11,15 +10,19 @@ class DBPApp extends StatefulWidget {
 }
 
 class _DBPAppState extends State<DBPApp> {
+  bool _isDiLoaded = false;
   @override
   void initState() {
-    _loadDi();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((final _) {
+      unawaited(_loadDi());
+    });
   }
 
-  void _loadDi() {
+  Future<void> _loadDi() async {
     _initializeLocalization();
-    Di.init(analyticsService: widget.initializer.analyticsService);
+    await Di.init(analyticsService: widget.initializer.analyticsService);
+    setState(() => _isDiLoaded = true);
   }
 
   void _initializeLocalization() => LocalizationConfig.initialize(
@@ -39,9 +42,12 @@ class _DBPAppState extends State<DBPApp> {
   }
 
   @override
-  Widget build(final BuildContext context) => GlobalStateProviders(
-        builder: (final context) => const AppScaffoldBuilder(),
-      );
+  Widget build(final BuildContext context) {
+    if (!_isDiLoaded) return LoadingScreen();
+    return GlobalStateProviders(
+      builder: (final context) => const AppScaffoldBuilder(),
+    );
+  }
 }
 
 class AppScaffoldBuilder extends StatelessWidget {

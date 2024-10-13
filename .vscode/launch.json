@@ -6,14 +6,18 @@
       "request": "launch",
       "type": "dart",
       "toolArgs": [
-        "--dart-define",
-        "db-url=https://",
         "--web-port=3000",
-        "--dart-define",
-        // googlePlay, appleStore, rustore, huawai
-        "store-target=rustore",
-        "--dart-define",
-        "is-marketing-mode=false"
+        "--dart-define-from-file=configs/local.json"
+      ]
+    },
+    {
+      "name": "app-rustore-local",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define-from-file=configs/rustore_local.json",
+        "--web-port=3000"
       ]
     },
     {

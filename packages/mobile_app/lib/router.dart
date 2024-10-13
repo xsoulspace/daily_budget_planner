@@ -81,6 +81,7 @@ class AppPathsController {
     final Map<String, String> params = const {},
   }) {
     final pathWithRoutes =
+        // ignore: lines_longer_than_80_chars
         '${routes.isEmpty ? '' : '${routes.map((final e) => e.value).join('/')}/'}${path.value}';
     final uri = Uri(path: pathWithRoutes, queryParameters: params);
     to(uri.toString());

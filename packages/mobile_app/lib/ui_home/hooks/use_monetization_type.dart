@@ -11,15 +11,15 @@ IsSubscriptionMonetizationResult useIsSubscriptionMonetization(
   final BuildContext context,
 ) =>
     (
-      isSubscriptionMonetization: context.select<SubscriptionManager, bool>(
-        (final value) =>
-            value.monetizationType == MonetizationType.subscription,
+      isSubscriptionMonetization:
+          context.select<MonetizationTypeNotifier, bool>(
+        (final value) => value.type == MonetizationType.subscription,
       ),
     );
 
 /// Hook to check if the current monetization type is free
 IsFreeMonetizationResult useIsFreeMonetization(final BuildContext context) => (
-      isFreeMonetization: context.select<SubscriptionManager, bool>(
-        (final value) => value.monetizationType == MonetizationType.free,
+      isFreeMonetization: context.select<MonetizationTypeNotifier, bool>(
+        (final value) => value.type == MonetizationType.free,
       ),
     );

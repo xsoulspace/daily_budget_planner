@@ -392,34 +392,42 @@ class _Block extends StatelessWidget {
   final double dimension;
 
   @override
-  Widget build(final BuildContext context) => title.isNotEmpty
-      ? ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: dimension,
-          ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 24,
-              ),
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: context.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+  Widget build(final BuildContext context) {
+    if (title.isNotEmpty) {
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: dimension,
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 24,
+            ),
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: context.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-        )
-      : ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: dimension,
-          ),
-          child: FittedBox(
-            fit: BoxFit.fitHeight,
-            child: image?.image() ?? const SizedBox.shrink(),
-          ),
-        );
+        ),
+      );
+    }
+    if (image == null) return SizedBox();
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: dimension,
+      ),
+      child: FittedBox(
+        fit: BoxFit.fitHeight,
+        child: image?.image(
+          width: dimension,
+          height: dimension,
+        ),
+      ),
+    );
+  }
 }

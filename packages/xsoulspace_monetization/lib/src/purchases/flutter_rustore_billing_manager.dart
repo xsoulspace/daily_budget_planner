@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
+import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
@@ -43,15 +44,21 @@ class FlutterRustoreBillingManager implements PurchaseManager {
 
   @override
   Future<bool> init() async {
+    if (!Platform.isAndroid) return false;
     try {
       // https://www.rustore.ru/help/sdk/payments/flutter/6-1-0#deeplink
-      await RustoreBillingClient.initialize(
+      final str = await RustoreBillingClient.initialize(
         consoleApplicationId,
         deeplinkScheme,
         enableLogger,
       );
+      final available = await isAvailable();
+      if (!available) return false;
 
-      return isAvailable();
+      debugPrint(
+        'FlutterRustoreBillingManager.init: $str available:$available',
+      );
+      return available;
     } catch (e) {
       debugPrint('FlutterRustoreBillingManager.init: $e');
       return false;

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
@@ -11,23 +12,44 @@ part 'subscription_manager.g.dart';
 /// Represents the state of user access to premium features.
 enum SubscriptionManagerStatus { free, subscribed, pending }
 
+enum MonetizationStatus { loading, notAvailable, storeNotAuthorized, loaded }
+
+@stateDistributor
+class MonetizationTypeNotifier extends ChangeNotifier {
+  MonetizationTypeNotifier(this._type);
+  MonetizationType _type;
+  MonetizationType get type => _type;
+  void setType(final MonetizationType value) {
+    _type = value;
+    notifyListeners();
+  }
+
+  MonetizationStatus _status = MonetizationStatus.loading;
+  bool get isInitialized => _status == MonetizationStatus.loaded;
+  MonetizationStatus get status => _status;
+  void setStatus(final MonetizationStatus value) {
+    _status = value;
+    notifyListeners();
+  }
+}
+
 /// {@template subscription_manager}
 /// Manages the state of user subscription access to premium features.
 /// {@endtemplate}
 class SubscriptionManager extends ChangeNotifier {
   SubscriptionManager({
     required this.purchaseManager,
-    required this.monetizationType,
+    required this.monetizationTypeNotifier,
     required this.productIds,
   });
   final List<ProductId> productIds;
   final PurchaseManager purchaseManager;
-  final MonetizationType monetizationType;
+  final MonetizationTypeNotifier monetizationTypeNotifier;
   SubscriptionManagerStatus _state = SubscriptionManagerStatus.free;
 
   /// The current state of user access.
   SubscriptionManagerStatus get state =>
-      monetizationType == MonetizationType.free
+      monetizationTypeNotifier.type == MonetizationType.free
           ? SubscriptionManagerStatus.subscribed
           : _state;
 
@@ -38,10 +60,20 @@ class SubscriptionManager extends ChangeNotifier {
   }
 
   Future<void> getSubscriptions() async {
-    subscriptions = LoadableContainer.loaded(
-      await purchaseManager.getSubscriptions(productIds),
-    );
-    notifyListeners();
+    try {
+      subscriptions = LoadableContainer.loaded(
+        await purchaseManager.getSubscriptions(productIds),
+      );
+      notifyListeners();
+    } on PlatformException catch (e, stackTrace) {
+      debugPrint('Failed to get subscriptions: $e $stackTrace');
+      if (e.code == 'RuStoreUserUnauthorizedException') {
+        monetizationTypeNotifier
+            .setStatus(MonetizationStatus.storeNotAuthorized);
+      } else {
+        monetizationTypeNotifier.setStatus(MonetizationStatus.notAvailable);
+      }
+    }
   }
 
   /// Updates the state based on a purchase update.

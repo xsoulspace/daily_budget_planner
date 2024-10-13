@@ -4,9 +4,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-
-import '../interfaces/interfaces.dart';
-import '../utils/utils.dart';
+import 'package:mobile_app/data_services/analytics/interfaces/interfaces.dart';
+import 'package:mobile_app/data_services/analytics/utils/utils.dart';
 
 class AnalyticsServiceImpl implements AnalyticsService {
   AnalyticsServiceImpl({
@@ -31,7 +30,7 @@ class AnalyticsServiceImpl implements AnalyticsService {
   late final logger = Logger(
     filter: kDebugMode ? DevelopmentFilter() : ProductionFilter(),
     printer: PrettyPrinter(
-      printTime: true,
+      dateTimeFormat: DateTimeFormat.dateAndTime,
       colors: isTerminalUseAnsiEscapeSequences,
     ),
   );

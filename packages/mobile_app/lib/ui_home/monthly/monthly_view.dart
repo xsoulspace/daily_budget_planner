@@ -401,12 +401,7 @@ class _MonthlyViewState extends State<MonthlyView>
         ),
       );
 
-  double _parseValue(final String value) {
-    return double.tryParse(value) ?? 0;
-    // final numericValue =
-    //     double.tryParse(value.replaceAll(RegExp(r'[^\d.]'), ''));
-    // return numericValue?.round() ?? 0;
-  }
+  double _parseValue(final String value) => double.tryParse(value) ?? 0;
 
   @override
   bool get wantKeepAlive => true;

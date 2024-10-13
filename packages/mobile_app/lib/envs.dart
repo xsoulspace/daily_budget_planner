@@ -8,9 +8,13 @@ class Envs {
   static const logging = bool.fromEnvironment('LOGGING');
   static const rustoreApplicationId = '2045332927';
   static const isTestPayments = bool.fromEnvironment('TEST_PAYMENTS');
-  static final monetizationType = MonetizationType.fromJson(
-    String.fromEnvironment('MONETIZATION_TYPE', defaultValue: 'free'),
+  static const monetizationTypeJson = String.fromEnvironment(
+    'MONETIZATION',
+    defaultValue: 'free',
   );
+  static final monetizationType =
+      MonetizationType.fromJson(monetizationTypeJson);
+
   static final storeTarget = InstallPlatformTarget.fromString(
     const String.fromEnvironment('STORE', defaultValue: 'snapstore'),
   );

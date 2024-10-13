@@ -20,7 +20,8 @@ class Di {
 
 void _dispose() => unawaited(_getIt.reset());
 
-void _init({required final AnalyticsService analyticsService}) {
+Future<void> _init({required final AnalyticsService analyticsService}) async {
+  await _getIt.reset();
   final r = _getIt.registerSingleton;
 
   /// ********************************************
@@ -59,17 +60,20 @@ void _init({required final AnalyticsService analyticsService}) {
     // InAppPurchaseManager(),
     _ => NoopPurchaseManager(),
   };
+  print(Envs.storeTarget);
+  print(Envs.monetizationType);
+  final monetizationTypeNotifier =
+      MonetizationTypeNotifier(Envs.monetizationType);
+  r(monetizationTypeNotifier);
   final subscriptionManager = SubscriptionManager(
     productIds: MonetizationProducts.subscriptions,
     purchaseManager: purchaseManager,
-    monetizationType: switch (Envs.storeTarget) {
-      InstallPlatformTarget.rustore => MonetizationType.subscription,
-      _ => MonetizationType.free,
-    },
+    monetizationTypeNotifier: monetizationTypeNotifier,
   );
   r(subscriptionManager);
   r(
     PurchaseInitializer(
+      monetizationTypeNotifier: monetizationTypeNotifier,
       purchaseManager: purchaseManager,
       subscriptionManager: subscriptionManager,
     ),
