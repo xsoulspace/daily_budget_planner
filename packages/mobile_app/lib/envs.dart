@@ -14,7 +14,12 @@ class Envs {
   );
   static final monetizationType =
       MonetizationType.fromJson(monetizationTypeJson);
-
+  static final storeName = switch (storeTarget) {
+    InstallPlatformTarget.googlePlay => 'Google Play',
+    InstallPlatformTarget.rustore => 'RuStore',
+    InstallPlatformTarget.huawai => 'Huawei AppGallery',
+    InstallPlatformTarget.appleStore || _ => 'App Store',
+  };
   static final storeTarget = InstallPlatformTarget.fromString(
     const String.fromEnvironment('STORE', defaultValue: 'snapstore'),
   );

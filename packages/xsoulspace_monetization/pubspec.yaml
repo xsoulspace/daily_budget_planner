@@ -9,6 +9,7 @@ environment:
   flutter: ">=3.24.3"
 
 dependencies:
+  collection: ^1.18.0
   flutter:
     sdk: flutter
   flutter_rustore_billing: ^6.1.0

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -15,8 +16,8 @@ enum SubscriptionManagerStatus { free, subscribed, pending }
 enum MonetizationStatus { loading, notAvailable, storeNotAuthorized, loaded }
 
 @stateDistributor
-class MonetizationTypeNotifier extends ChangeNotifier {
-  MonetizationTypeNotifier(this._type);
+class MonetizationStatusNotifier extends ChangeNotifier {
+  MonetizationStatusNotifier(this._type);
   MonetizationType _type;
   MonetizationType get type => _type;
   void setType(final MonetizationType value) {
@@ -44,8 +45,10 @@ class SubscriptionManager extends ChangeNotifier {
   });
   final List<ProductId> productIds;
   final PurchaseManager purchaseManager;
-  final MonetizationTypeNotifier monetizationTypeNotifier;
+  final MonetizationStatusNotifier monetizationTypeNotifier;
   SubscriptionManagerStatus _state = SubscriptionManagerStatus.free;
+  PurchaseProductDetails? getSubscription(final ProductId id) =>
+      subscriptions.value.firstWhereOrNull((final e) => e.productId == id);
 
   /// The current state of user access.
   SubscriptionManagerStatus get state =>

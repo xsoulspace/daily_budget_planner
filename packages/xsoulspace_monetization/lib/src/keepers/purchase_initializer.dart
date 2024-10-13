@@ -9,7 +9,7 @@ class PurchaseInitializer {
     required this.subscriptionManager,
     required this.purchaseManager,
   });
-  final MonetizationTypeNotifier monetizationTypeNotifier;
+  final MonetizationStatusNotifier monetizationTypeNotifier;
   final PurchaseManager purchaseManager;
   final SubscriptionManager subscriptionManager;
 

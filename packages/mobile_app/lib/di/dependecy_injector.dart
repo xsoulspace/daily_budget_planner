@@ -63,7 +63,7 @@ Future<void> _init({required final AnalyticsService analyticsService}) async {
   print(Envs.storeTarget);
   print(Envs.monetizationType);
   final monetizationTypeNotifier =
-      MonetizationTypeNotifier(Envs.monetizationType);
+      MonetizationStatusNotifier(Envs.monetizationType);
   r(monetizationTypeNotifier);
   final subscriptionManager = SubscriptionManager(
     productIds: MonetizationProducts.subscriptions,

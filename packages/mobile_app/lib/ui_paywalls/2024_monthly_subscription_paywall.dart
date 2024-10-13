@@ -4,6 +4,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 
 /// A widget that displays a paywall for monthly subscription plans.
 ///
@@ -21,6 +22,10 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
         math.min(MediaQuery.sizeOf(context).width * 0.5, 100);
     void onBuyPressed() {}
     final textHeight = imageHeight * 0.5;
+    final monetizationStatusNotifier =
+        context.watch<MonetizationStatusNotifier>();
+    final subscriptionManager = context.watch<SubscriptionManager>();
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -158,95 +163,128 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
             const Gap(16),
             UiDivider.size1(),
             const Gap(16),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Row(
-                children: [
-                  const Gap(8),
-                  _SubsriptionCard(
-                    title: LocalizedMap(
-                      value: {
-                        languages.en: '1 month',
-                        languages.it: '1 mese',
-                        languages.ru: '1 месяц',
-                      },
-                    ).getValue(locale),
-                    price: r'$100',
-                    highlight: planIndex.value == 0,
-                    onPressed: () => planIndex.value = 0,
-                  ),
-                  const Gap(16),
-                  _SubsriptionCard(
-                    title: LocalizedMap(
-                      value: {
-                        languages.en: '3 months',
-                        languages.it: '3 mesi',
-                        languages.ru: '3 месяца',
-                      },
-                    ).getValue(locale),
-                    price: r'$100',
-                    highlight: planIndex.value == 1,
-                    onPressed: () => planIndex.value = 1,
-                  ),
-                  const Gap(16),
-                  _SubsriptionCard(
-                    title: LocalizedMap(
-                      value: {
-                        languages.en: '1 year',
-                        languages.it: '1 anno',
-                        languages.ru: '1 год',
-                      },
-                    ).getValue(locale),
-                    price: r'$100',
-                    highlight: planIndex.value == 2,
-                    onPressed: () => planIndex.value = 2,
-                  ),
-                  const Gap(8),
-                ],
-              ),
-            ),
-            const Gap(4),
-            UiTextButton(
-              onPressed: onBuyPressed,
-              title: Row(
-                children: [
-                  Spacer(),
-                  Text(
-                    LocalizedMap(
-                      value: {
-                        languages.en: 'SUBSCRIBE',
-                        languages.it: 'ISCRIVITI',
-                        languages.ru: 'ПОДПИСАТЬСЯ',
-                      },
-                    ).getValue(locale),
-                    style: context.textTheme.displaySmall?.copyWith(
-                      fontWeight: FontWeight.bold,
+            if (monetizationStatusNotifier.isInitialized) ...[
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  children: [
+                    const Gap(8),
+                    _SubscriptionCard(
+                      title: LocalizedMap(
+                        value: {
+                          languages.en: '1 month',
+                          languages.it: '1 mese',
+                          languages.ru: '1 месяц',
+                        },
+                      ),
+                      subscription: subscriptionManager.getSubscription(
+                        MonetizationProducts.s2024month1.productId,
+                      ),
+                      highlight: planIndex.value == 0,
+                      onPressed: () => planIndex.value = 0,
+                      locale: locale,
                     ),
-                  ),
-                  Gap(8),
-                  Assets.images.paywalls.goldSnowflake.image(
-                    height: 40,
-                    width: 40,
-                  ),
-                  Spacer(),
-                ],
+                    const Gap(16),
+                    _SubscriptionCard(
+                      title: LocalizedMap(
+                        value: {
+                          languages.en: '3 months',
+                          languages.it: '3 mesi',
+                          languages.ru: '3 месяца',
+                        },
+                      ),
+                      subscription: subscriptionManager.getSubscription(
+                        MonetizationProducts.s2024month3.productId,
+                      ),
+                      highlight: planIndex.value == 1,
+                      onPressed: () => planIndex.value = 1,
+                      locale: locale,
+                    ),
+                    const Gap(16),
+                    _SubscriptionCard(
+                      title: LocalizedMap(
+                        value: {
+                          languages.en: '1 year',
+                          languages.it: '1 anno',
+                          languages.ru: '1 год',
+                        },
+                      ),
+                      subscription: subscriptionManager.getSubscription(
+                        MonetizationProducts.s2024year.productId,
+                      ),
+                      highlight: planIndex.value == 2,
+                      onPressed: () => planIndex.value = 2,
+                      locale: locale,
+                    ),
+                    const Gap(8),
+                  ],
+                ),
               ),
-            ),
+              const Gap(4),
+              UiTextButton(
+                onPressed: onBuyPressed,
+                title: Row(
+                  children: [
+                    Spacer(),
+                    Text(
+                      LocalizedMap(
+                        value: {
+                          languages.en: 'SUBSCRIBE',
+                          languages.it: 'ISCRIVITI',
+                          languages.ru: 'ПОДПИСАТЬСЯ',
+                        },
+                      ).getValue(locale),
+                      style: context.textTheme.displaySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gap(8),
+                    Assets.images.paywalls.goldSnowflake.image(
+                      height: 40,
+                      width: 40,
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            ] else if (monetizationStatusNotifier.status
+                case MonetizationStatus.storeNotAuthorized) ...[
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  LocalizedMap(
+                    value: {
+                      languages.en:
+                          'Please log in to the ${Envs.storeName} to continue',
+                      languages.it:
+                          'Si prega di accedere al ${Envs.storeName} per continuare',
+                      languages.ru:
+                          'Пожалуйста, войдите в ${Envs.storeName}, чтобы продолжить',
+                    },
+                  ).getValue(locale),
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.displaySmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Flexible(
-                  child: UiTextButton(
-                    textTitle: LocalizedMap(
-                      value: {
-                        languages.en: 'Restore',
-                        languages.it: 'Ripristina',
-                        languages.ru: 'Восстановить',
-                      },
-                    ).getValue(locale),
-                    onPressed: () {},
+                if (monetizationStatusNotifier.isInitialized)
+                  Flexible(
+                    child: UiTextButton(
+                      textTitle: LocalizedMap(
+                        value: {
+                          languages.en: 'Restore',
+                          languages.it: 'Ripristina',
+                          languages.ru: 'Восстановить',
+                        },
+                      ).getValue(locale),
+                      onPressed: () {},
+                    ),
                   ),
-                ),
                 Flexible(
                   child: UiTextButton(
                     textTitle: LocalizedMap(
@@ -306,20 +344,25 @@ class UiTextButton extends StatelessWidget {
       );
 }
 
-class _SubsriptionCard extends StatelessWidget {
-  const _SubsriptionCard({
-    required this.title,
-    required this.price,
-    required this.onPressed,
+class _SubscriptionCard extends StatelessWidget {
+  const _SubscriptionCard({
+    required this.subscription,
     required this.highlight,
+    required this.onPressed,
+    required this.title,
+    required this.locale,
   });
-  final String title;
-  final String price;
-  final VoidCallback onPressed;
+
+  final PurchaseProductDetails? subscription;
   final bool highlight;
+  final VoidCallback onPressed;
+  final LocalizedMap title;
+  final Locale locale;
+
   @override
   Widget build(final BuildContext context) {
-    final locale = useLocale(context);
+    final subscription = this.subscription;
+    if (subscription == null) return const SizedBox();
     return UiBaseButton(
       onPressed: onPressed,
       builder: (final context, final focused, final onlyFocused) =>
@@ -351,7 +394,7 @@ class _SubsriptionCard extends StatelessWidget {
             children: [
               Gap(8),
               Text(
-                title.toUpperCase(),
+                title.getValue(locale).toUpperCase(),
                 style: context.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: highlight || focused
@@ -360,7 +403,7 @@ class _SubsriptionCard extends StatelessWidget {
                 ),
               ),
               Gap(32),
-              Text(price),
+              Text(subscription.formattedPrice),
               Gap(2),
               Text(
                 LocalizedMap(
