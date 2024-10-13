@@ -54,7 +54,6 @@ class GlobalStateInitializer
         ]),
       );
       await purchaseIntializer.init();
-      await subscriptionManager.init();
     });
   }
 

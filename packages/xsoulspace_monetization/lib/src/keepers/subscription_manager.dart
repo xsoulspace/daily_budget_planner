@@ -49,6 +49,7 @@ class SubscriptionManager extends ChangeNotifier {
   SubscriptionManagerStatus _state = SubscriptionManagerStatus.free;
   PurchaseProductDetails? getSubscription(final ProductId id) =>
       subscriptions.value.firstWhereOrNull((final e) => e.productId == id);
+  bool get isLoading => state == SubscriptionManagerStatus.pending;
 
   /// The current state of user access.
   SubscriptionManagerStatus get state =>

@@ -16,15 +16,25 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final subscriptions = [
+      MonetizationProducts.s2024month1,
+      MonetizationProducts.s2024month3,
+      MonetizationProducts.s2024year,
+    ];
     final planIndex = useState<int>(2);
     final locale = useLocale(context);
     final double imageHeight =
         math.min(MediaQuery.sizeOf(context).width * 0.5, 100);
-    void onBuyPressed() {}
     final textHeight = imageHeight * 0.5;
     final monetizationStatusNotifier =
         context.watch<MonetizationStatusNotifier>();
     final subscriptionManager = context.watch<SubscriptionManager>();
+
+    Future<void> onBuyPressed() async => subscriptionManager.subscribe(
+          subscriptionManager.getSubscription(
+            subscriptions[planIndex.value].productId,
+          )!,
+        );
 
     return Scaffold(
       body: SafeArea(
@@ -222,6 +232,7 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
               ),
               const Gap(4),
               UiTextButton(
+                isLoading: subscriptionManager.isLoading,
                 onPressed: onBuyPressed,
                 title: Row(
                   children: [
@@ -323,23 +334,25 @@ class UiTextButton extends StatelessWidget {
   const UiTextButton({
     required this.onPressed,
     this.textTitle = '',
+    this.isLoading = false,
     this.title,
     super.key,
   });
   final String textTitle;
+  final bool isLoading;
   final Widget? title;
   final VoidCallback onPressed;
 
   @override
   Widget build(final BuildContext context) => UiBaseButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? () {} : onPressed,
         builder: (final context, final focused, final onlyFocused) => Container(
           padding: EdgeInsets.symmetric(
             horizontal: 12,
             vertical: 12,
           ),
           color: Colors.transparent,
-          child: title ?? Text(textTitle),
+          child: isLoading ? UiCircularProgress() : (title ?? Text(textTitle)),
         ),
       );
 }
