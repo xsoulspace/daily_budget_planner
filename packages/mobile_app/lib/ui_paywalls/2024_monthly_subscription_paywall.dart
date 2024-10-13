@@ -20,6 +20,7 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
       MonetizationProducts.s2024month1,
       MonetizationProducts.s2024month3,
       MonetizationProducts.s2024year,
+      MonetizationProducts.s2024day1Test,
     ];
     final planIndex = useState<int>(2);
     final locale = useLocale(context);
@@ -224,6 +225,22 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                       ),
                       highlight: planIndex.value == 2,
                       onPressed: () => planIndex.value = 2,
+                      locale: locale,
+                    ),
+                    const Gap(16),
+                    _SubscriptionCard(
+                      title: LocalizedMap(
+                        value: {
+                          languages.en: '1 day',
+                          languages.it: '1 giorno',
+                          languages.ru: '1 день',
+                        },
+                      ),
+                      subscription: subscriptionManager.getSubscription(
+                        MonetizationProducts.s2024day1Test.productId,
+                      ),
+                      highlight: planIndex.value == 3,
+                      onPressed: () => planIndex.value = 3,
                       locale: locale,
                     ),
                     const Gap(8),

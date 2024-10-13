@@ -59,8 +59,12 @@ class SubscriptionManager extends ChangeNotifier {
 
   LoadableContainer<List<PurchaseProductDetails>> subscriptions =
       LoadableContainer(value: []);
+  bool _isInitialized = false;
+  bool get isInitialized => _isInitialized;
   Future<void> init() async {
+    if (_isInitialized) return;
     await getSubscriptions();
+    _isInitialized = true;
   }
 
   Future<void> getSubscriptions() async {
