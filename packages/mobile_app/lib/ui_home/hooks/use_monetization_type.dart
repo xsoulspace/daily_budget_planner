@@ -13,8 +13,10 @@ IsSubscriptionMonetizationResult useIsSubscriptionMonetization(
     (
       isSubscriptionMonetization:
           context.select<MonetizationStatusNotifier, bool>(
-        (final value) => value.type == MonetizationType.subscription,
-      ),
+        (final value) =>
+            value.type == MonetizationType.subscription &&
+            value.status != MonetizationStatus.notAvailable,
+      )
     );
 
 /// Hook to check if the current monetization type is free

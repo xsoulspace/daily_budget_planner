@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
 import 'package:mobile_app/ui_home/settings/language_bottom_sheet.dart';
@@ -62,7 +63,20 @@ class SettingsBottomPopup extends StatelessWidget {
               icon: CupertinoIcons.wand_stars,
             ),
             UiDivider.size1(),
-            if (isSubscriptionMonetization) ...[
+            if (isSubscriptionMonetization || kDebugMode) ...[
+              _ListTile(
+                onTap: () async =>
+                    AppPathsController.of(context).toManageSubscription(),
+                title: LocalizedMap(
+                  value: {
+                    languages.en: 'Manage subscription',
+                    languages.it: 'Gestisci abbonamento',
+                    languages.ru: 'Управление подпиской',
+                  },
+                ).getValue(locale),
+                icon: CupertinoIcons.star,
+              ),
+              UiDivider.size1(),
               _ListTile(
                 onTap: () async => AppPathsController.of(context).toPaywall(),
                 title: LocalizedMap(
@@ -72,7 +86,7 @@ class SettingsBottomPopup extends StatelessWidget {
                     languages.ru: 'Версия PRO',
                   },
                 ).getValue(locale),
-                icon: CupertinoIcons.star_fill,
+                icon: CupertinoIcons.star,
               ),
               UiDivider.size1(),
             ],

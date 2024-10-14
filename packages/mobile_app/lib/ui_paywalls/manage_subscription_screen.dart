@@ -74,7 +74,8 @@ class ManageSubscriptionScreen extends HookWidget {
     final PurchaseDetails subscription,
   ) {
     // Implement the logic to manage the subscription
-    // This could open a web page or navigate to a store-specific management screen
+    // This could open a web page or navigate to a store-specific
+    //management screen
     unawaited(
       context
           .read<SubscriptionManager>()

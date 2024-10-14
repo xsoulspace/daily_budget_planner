@@ -31,11 +31,16 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
         context.watch<MonetizationStatusNotifier>();
     final subscriptionManager = context.watch<SubscriptionManager>();
 
-    Future<void> onBuyPressed() async => subscriptionManager.subscribe(
-          subscriptionManager.getSubscription(
-            subscriptions[planIndex.value].productId,
-          )!,
-        );
+    Future<void> onBuyPressed() async {
+      final subscribed = await subscriptionManager.subscribe(
+        subscriptionManager.getSubscription(
+          subscriptions[planIndex.value].productId,
+        )!,
+      );
+      if (subscribed) {
+        AppPathsController.of(context).toThanksForSubscribing();
+      }
+    }
 
     return Scaffold(
       body: SafeArea(

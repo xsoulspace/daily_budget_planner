@@ -43,11 +43,11 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                 LocalizedMap(
                   value: {
                     languages.en:
-                        'Your contribution helps us improve this product and deliver more value to you.',
+                        'Your contribution helps to make this app better.',
                     languages.it:
-                        'Il tuo contributo ci aiuta a migliorare questo prodotto e offrirti più valore.',
+                        'Il tuo contributo ci aiuta a migliorare questo prodotto.',
                     languages.ru:
-                        'Ваш вклад помогает нам улучшать этот продукт и предоставлять вам больше ценности.',
+                        'Ваш вклад помогает делать это приложение лучше',
                   },
                 ).getValue(locale),
                 style: context.textTheme.bodyLarge,
@@ -82,9 +82,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
               const Gap(32),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate back to the main app
-                  Navigator.of(context)
-                      .popUntil((final route) => route.isFirst);
+                  AppPathsController.of(context).toHome();
                 },
                 style: ElevatedButton.styleFrom(
                   padding:
@@ -93,9 +91,9 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                 child: Text(
                   LocalizedMap(
                     value: {
-                      languages.en: 'Start Using PRO Features',
-                      languages.it: 'Inizia a usare le funzionalità PRO',
-                      languages.ru: 'Начать использовать PRO функции',
+                      languages.en: 'Start Using PRO Features!',
+                      languages.it: 'Inizia a usare le funzionalità PRO!',
+                      languages.ru: 'Начать использовать PRO функции!',
                     },
                   ).getValue(locale),
                   style: context.textTheme.titleLarge?.copyWith(

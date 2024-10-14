@@ -6,6 +6,8 @@ enum ScreenPaths {
   root('/'),
   home('/home'),
   paywall('paywall'),
+  manageSubscription('manage-subscription'),
+  thanksForSubscribing('subscribing-thanks'),
   explanation('explain');
 
   const ScreenPaths(this.value);
@@ -36,6 +38,10 @@ final router = GoRouter(
                     state.uri.queryParameters['isFirstOpening'] != null,
               ),
             ),
+            AppRoute(
+              ScreenPaths.manageSubscription.value,
+              (final context, final state) => const ManageSubscriptionScreen(),
+            ),
           ],
         ),
       ],
@@ -65,6 +71,10 @@ class AppPathsController {
   void toRoot() => go(ScreenPaths.root);
   void toHome() => go(ScreenPaths.home);
   void toPaywall() => go(ScreenPaths.paywall, routes: [ScreenPaths.home]);
+  void toThanksForSubscribing() =>
+      go(ScreenPaths.thanksForSubscribing, routes: [ScreenPaths.home]);
+  void toManageSubscription() =>
+      go(ScreenPaths.manageSubscription, routes: [ScreenPaths.home]);
   void toExplanation({
     final bool isFirstTimeOpening = false,
   }) =>

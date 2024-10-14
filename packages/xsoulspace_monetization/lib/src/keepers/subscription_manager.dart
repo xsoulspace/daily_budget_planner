@@ -120,11 +120,12 @@ class SubscriptionManager extends ChangeNotifier {
     }
   }
 
-  Future<void> subscribe(final PurchaseProductDetails details) async {
+  Future<bool> subscribe(final PurchaseProductDetails details) async {
+    if (_state == SubscriptionManagerStatus.subscribed) return false;
     _state = SubscriptionManagerStatus.pending;
     notifyListeners();
     final result = await purchaseManager.subscribe(details);
-    await _handleSubscriptionResult(result);
+    return _handleSubscriptionResult(result);
   }
 
   Future<void> cancel(final PurchaseProductDetails details) async {
@@ -138,7 +139,7 @@ class SubscriptionManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _confirmPurchase(final PurchaseVerificationDto details) async {
+  Future<bool> _confirmPurchase(final PurchaseVerificationDto details) async {
     if (details.status
         case PurchaseStatus.error ||
             PurchaseStatus.purchased ||
@@ -152,22 +153,26 @@ class SubscriptionManager extends ChangeNotifier {
                 await purchaseManager.getPurchaseInfo(details.purchaseId);
             setActiveSubscription(purchaseInfo);
             _state = SubscriptionManagerStatus.subscribed;
+            notifyListeners();
+            return true;
           }
         case CompletePurchaseFailure():
           // Handle failure if needed
-          break;
+          return false;
       }
-      notifyListeners();
     }
+    notifyListeners();
+    return false;
   }
 
-  Future<void> _handleSubscriptionResult(final PurchaseResult result) async {
+  Future<bool> _handleSubscriptionResult(final PurchaseResult result) async {
     switch (result) {
       case PurchaseSuccess(:final details):
-        await _confirmPurchase(details.toVerificationDto());
+        return _confirmPurchase(details.toVerificationDto());
       case PurchaseFailure():
         _setSubscriptionAsFree();
     }
+    return false;
   }
 
   /// Checks if the user has access to premium features.
