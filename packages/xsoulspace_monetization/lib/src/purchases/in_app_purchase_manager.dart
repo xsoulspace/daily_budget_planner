@@ -25,6 +25,13 @@ class InAppPurchaseManager implements PurchaseManager {
   }
 
   @override
+  Future<PurchaseDetails> getPurchaseInfo(final PurchaseId purchaseId) async {
+    // final purchase = await IapClient.getOwnedPurchase(purchaseId.value);
+    // return _mapToPurchaseDetails(purchase);
+    throw UnimplementedError();
+  }
+
+  @override
   Future<CompletePurchaseResult> completePurchase(
     final PurchaseVerificationDto dto,
   ) async {

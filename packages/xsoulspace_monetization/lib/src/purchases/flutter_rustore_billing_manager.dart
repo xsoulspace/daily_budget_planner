@@ -244,6 +244,14 @@ class FlutterRustoreBillingManager implements PurchaseManager {
     }
   }
 
+  @override
+  Future<PurchaseDetails> getPurchaseInfo(
+    final PurchaseId purchaseId,
+  ) async {
+    final purchase = await RustoreBillingClient.purchaseInfo(purchaseId.value);
+    return _mapToPurchaseDetails(purchase);
+  }
+
   PurchaseDetails _mapToPurchaseDetails(final Purchase? purchase) {
     final purchaseDate = DateTime.fromMillisecondsSinceEpoch(
       intFromJson(purchase?.purchaseTime ?? '0'),

@@ -46,7 +46,21 @@ class SubscriptionManager extends ChangeNotifier {
   final List<ProductId> productIds;
   final PurchaseManager purchaseManager;
   final MonetizationStatusNotifier monetizationTypeNotifier;
+
+  PurchaseDetails? _activeSubscription;
+  PurchaseDetails? get activeSubscription => _activeSubscription;
+  void setActiveSubscription(final PurchaseDetails? value) {
+    _activeSubscription = value;
+    notifyListeners();
+  }
+
   SubscriptionManagerStatus _state = SubscriptionManagerStatus.free;
+  void _setSubscriptionAsFree() {
+    _activeSubscription = null;
+    _state = SubscriptionManagerStatus.free;
+    notifyListeners();
+  }
+
   PurchaseProductDetails? getSubscription(final ProductId id) =>
       subscriptions.value.firstWhereOrNull((final e) => e.productId == id);
   bool get isLoading => state == SubscriptionManagerStatus.pending;
@@ -101,8 +115,7 @@ class SubscriptionManager extends ChangeNotifier {
         notifyListeners();
         return;
       case PurchaseStatus.canceled:
-        _state = SubscriptionManagerStatus.free;
-        notifyListeners();
+        _setSubscriptionAsFree();
         return;
     }
   }
@@ -118,7 +131,7 @@ class SubscriptionManager extends ChangeNotifier {
     final result = await purchaseManager.cancel(details);
     switch (result) {
       case CancelSuccess():
-        _state = SubscriptionManagerStatus.free;
+        _setSubscriptionAsFree();
       case CancelFailure():
       // Handle failure if needed
     }
@@ -135,6 +148,9 @@ class SubscriptionManager extends ChangeNotifier {
         case CompletePurchaseSuccess():
           if (details.status
               case (PurchaseStatus.purchased || PurchaseStatus.restored)) {
+            final purchaseInfo =
+                await purchaseManager.getPurchaseInfo(details.purchaseId);
+            setActiveSubscription(purchaseInfo);
             _state = SubscriptionManagerStatus.subscribed;
           }
         case CompletePurchaseFailure():
@@ -150,8 +166,7 @@ class SubscriptionManager extends ChangeNotifier {
       case PurchaseSuccess(:final details):
         await _confirmPurchase(details.toVerificationDto());
       case PurchaseFailure():
-        _state = SubscriptionManagerStatus.free;
-        notifyListeners();
+        _setSubscriptionAsFree();
     }
   }
 

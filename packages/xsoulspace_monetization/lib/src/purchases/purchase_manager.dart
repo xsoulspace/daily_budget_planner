@@ -105,6 +105,9 @@ abstract class PurchaseManager {
   /// Opens the subscription management page.
   Future<void> openSubscriptionManagement();
 
+  /// Retrieves purchase info.
+  Future<PurchaseDetails> getPurchaseInfo(final PurchaseId purchaseId);
+
   // TODO(arenukvern): adjust this to all implementations
   /// Currently copied from in_app_purchase_manager.dart:
   ///
