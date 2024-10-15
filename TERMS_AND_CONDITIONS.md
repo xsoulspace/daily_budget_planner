@@ -1,37 +1,76 @@
-**Terms & Conditions**
+**Privacy Policy**
 
-By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app. You’re not allowed to copy or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages or make derivative versions. The app itself, and all the trademarks, copyright, database rights, and other intellectual property rights related to it, still belong to Anton Malofeev, Irina Veter.
+This privacy policy is applicable to the DailyBu app (hereinafter referred to as "Application") for mobile devices, which was developed by IP Malofeev Anton Gennadevich (hereinafter referred to as "Service Provider") as a a Freemium service. This service is provided "AS IS".
 
-Anton Malofeev, Irina Veter is committed to ensuring that the app is as useful and efficient as possible. For that reason, we reserve the right to make changes to the app or to charge for its services, at any time and for any reason. We will never charge you for the app or its services without making it very clear to you exactly what you’re paying for.
+**What information does the Application obtain and how is it used?**  
+**User Provided Information**
 
-The Daily Budget Planner app stores and processes personal data that you have provided to us, to provide my Service. It’s your responsibility to keep your phone and access to the app secure. We therefore recommend that you do not jailbreak or root your phone, which is the process of removing software restrictions and limitations imposed by the official operating system of your device. It could make your phone vulnerable to malware/viruses/malicious programs, compromise your phone’s security features and it could mean that the Daily Budget Planner app won’t work properly or at all.
+The Application acquires the information you supply when you download and register the Application. Registration with the Service Provider is not mandatory. However, bear in mind that you might not be able to utilize some of the features offered by the Application unless you register with them.
 
-The app does use third-party services that declare their Terms and Conditions.
+The Service Provider may also use the information you provided them to contact you from time to time to provide you with important information, required notices and marketing promotions.
 
-Link to Terms and Conditions of third-party service providers used by the app
+**Automatically Collected Information**
 
-- [Google Play Services](https://policies.google.com/terms)
-- [Google Analytics for Firebase](https://firebase.google.com/terms/analytics)
-- [Firebase Crashlytics](https://firebase.google.com/terms/crashlytics)
+In addition, the Application may collect certain information automatically, including, but not limited to, the type of mobile device you use, your mobile devices unique device ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browsers you use, and information about the way you use the Application.
 
-You should be aware that there are certain things that Anton Malofeev, Irina Veter will not take responsibility for. Certain functions of the app will require the app to have an active internet connection. The connection can be Wi-Fi or provided by your mobile network provider, but Anton Malofeev, Irina Veter cannot take responsibility for the app not working at full functionality if you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
+**Does the Application collect precise real time location information of the device?**
 
-If you’re using the app outside of an area with Wi-Fi, you should remember that the terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third-party charges. In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.
+This Application does not gather precise information about the location of your mobile device.
 
-Along the same lines, Anton Malofeev, Irina Veter cannot always take responsibility for the way you use the app i.e. You need to make sure that your device stays charged – if it runs out of battery and you can’t turn it on to avail the Service, Anton Malofeev, Irina Veter cannot accept responsibility.
+This Application collects your device's location, which helps the Service Provider determine your approximate geographical location and make use of in below ways:
 
-With respect to Anton Malofeev, Irina Veter’s responsibility for your use of the app, when you’re using the app, it’s important to bear in mind that although we endeavor to ensure that it is updated and correct at all times, we do rely on third parties to provide information to us so that we can make it available to you. Anton Malofeev, Irina Veter accepts no liability for any loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app.
+- Geolocation Services: The Service Provider utilizes location data to provide features such as personalized content, relevant recommendations, and location-based services.
+- Analytics and Improvements: Aggregated and anonymized location data helps the Service Provider to analyze user behavior, identify trends, and improve the overall performance and functionality of the Application.
+- Third-Party Services: Periodically, the Service Provider may transmit anonymized location data to external services. These services assist them in enhancing the Application and optimizing their offerings.
 
-At some point, we may wish to update the app. The app is currently available on – the requirements for the system(and for any additional systems we decide to extend the availability of the app to) may change, and you’ll need to download the updates if you want to keep using the app. Anton Malofeev, Irina Veter does not promise that it will always update the app so that it is relevant to you and/or works with the version that you have installed on your device. However, you promise to always accept updates to the application when offered to you, We may also wish to stop providing the app, and may terminate use of it at any time without giving notice of termination to you. Unless we tell you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.
+**Do third parties see and/or have access to information obtained by the Application?**
 
-**Changes to This Terms and Conditions**
+Only aggregated, anonymized data is periodically transmitted to external services to aid the Service Provider in improving the Application and their service. The Service Provider may share your information with third parties in the ways that are described in this privacy statement.
 
-I may update our Terms and Conditions from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Terms and Conditions on this page.
+Please note that the Application utilizes third-party services that have their own Privacy Policy about handling data. Below are the links to the Privacy Policy of the third-party service providers used by the Application:
 
-These terms and conditions are effective as of 2022-08-01
+- [Google Play Services](https://www.google.com/policies/privacy/)
+- [Google Analytics for Firebase](https://firebase.google.com/support/privacy)
+- [Firebase Crashlytics](https://firebase.google.com/support/privacy/)
 
-**Contact Us**
+The Service Provider may disclose User Provided and Automatically Collected Information:
 
-If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at support@xsoulspace.dev.
+- as required by law, such as to comply with a subpoena, or similar legal process;
+- when they believe in good faith that disclosure is necessary to protect their rights, protect your safety or the safety of others, investigate fraud, or respond to a government request;
+- with their trusted services providers who work on their behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this privacy statement.
 
-This Terms and Conditions page was generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.nisrulz.com/)
+**What are my opt-out rights?**
+
+You can halt all collection of information by the Application easily by uninstalling the Application. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile application marketplace or network.
+
+**Data Retention Policy, Managing Your Information**
+
+The Service Provider will retain User Provided data for as long as you use the Application and for a reasonable time thereafter. The Service Provider will retain Automatically Collected information for up to 24 months and thereafter may store it in aggregate. If you'd like the Service Provider to delete User Provided Data that you have provided via the Application, please contact them at dailybu@xsoulspace.dev and we will respond in a reasonable time. Please note that some or all of the User Provided Data may be required in order for the Application to function properly.
+
+**Children**
+
+The Service Provider does not use the Application to knowingly solicit data from or market to children under the age of 13.
+
+The Application does not address anyone under the age of 13. The Service Provider does not knowingly collect personally identifiable information from children under 13 years of age. In the case the Service Provider discover that a child under 13 has provided personal information, the Service Provider will immediately delete this from their servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact the Service Provider (dailybu@xsoulspace.dev) so that they will be able to take the necessary actions.
+
+**Security**
+
+The Service Provider are concerned about safeguarding the confidentiality of your information. The Service Provider provide physical, electronic, and procedural safeguards to protect information we process and maintain. For example, we limit access to this information to authorized employees and contractors who need to know that information in order to operate, develop or improve their Application. Please be aware that, although we endeavor provide reasonable security for information we process and maintain, no security system can prevent all potential security breaches.
+
+**Changes**
+
+This Privacy Policy may be updated from time to time for any reason. The Service Provider will notify you of any changes to the Privacy Policy by updating this page with the new Privacy Policy. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.
+
+This privacy policy is effective as of 2023-05-01
+
+**Your Consent**
+
+By using the Application, you are giving your consent to the Service Provider processing of your information as set forth in this Privacy Policy now and as amended by us. "Processing,” means using cookies on a computer/hand held device or using or touching information in any way, including, but not limited to, collecting, storing, deleting, using, combining and disclosing information.
+
+**Contact us**
+
+If you have any questions regarding privacy while using the Application, or have questions about the practices, please contact the Service Provider via email at dailybu@xsoulspace.dev.
+
+---
+
+This privacy policy page was generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.nisrulz.com/)

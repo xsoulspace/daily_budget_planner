@@ -1,0 +1,36 @@
+name: xsoulspace_monetization
+description: A Flutter package for managing in-app purchases, subscriptions, and
+  advertisements across multiple platforms.
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.5.3 <4.0.0"
+  flutter: ">=3.24.3"
+
+dependencies:
+  collection: ^1.18.0
+  flutter:
+    sdk: flutter
+  flutter_rustore_billing: ^6.1.0
+  freezed_annotation: ^2.4.4
+  huawei_iap: ^6.13.0+302
+  in_app_purchase: ^3.2.0
+  intl: ^0.19.0
+  json_annotation: ^4.9.0
+  universal_io: ^2.2.2
+  url_launcher: ^6.3.1
+  xsoulspace_foundation: ^0.0.2
+  yandex_mobileads: ^7.4.0
+
+dev_dependencies:
+  build_runner: ^2.4.13
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  xsoulspace_lints: ^0.0.11
+
+dependency_overrides:
+  go_router: ^14.3.0
