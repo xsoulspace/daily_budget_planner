@@ -21,7 +21,7 @@ class _DBPAppState extends State<DBPApp> {
 
   Future<void> _loadDi() async {
     _initializeLocalization();
-    await Di.init(analyticsService: widget.initializer.analyticsService);
+    await Di.init(analyticsManager: widget.initializer.analyticsManager);
     setState(() => _isDiLoaded = true);
   }
 

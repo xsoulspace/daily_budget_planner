@@ -20,14 +20,16 @@ class Di {
 
 void _dispose() => unawaited(_getIt.reset());
 
-Future<void> _init({required final AnalyticsService analyticsService}) async {
+Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   await _getIt.reset();
   final r = _getIt.registerSingleton;
 
   /// ********************************************
   /// *      API
   /// ********************************************
-  r<AnalyticsService>(analyticsService);
+  r<AnalyticsManager>(analyticsManager);
+  r<CrashlyticsService>(analyticsManager.crashlyticsService);
+  r<AnalyticsService>(analyticsManager.analyticsService);
   r<LocalDbI>(PrefsDb());
   r(UserLocalApi());
   r(AppSettingsLocalApi());
@@ -94,6 +96,8 @@ mixin HasStates {
   WeeklyCubit get weeklyCubit => _g();
   MonthlyCubit get monthlyCubit => _g();
 }
-mixin HasAnalyticsService {
+mixin HasAnalytics {
+  AnalyticsManager get analyticsManager => _g();
   AnalyticsService get analyticsService => _g();
+  CrashlyticsService get crashlyticsService => _g();
 }

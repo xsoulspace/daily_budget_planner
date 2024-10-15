@@ -7,22 +7,51 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 
+final _kSubscriptions = [
+  MonetizationProducts.s2024month1,
+  MonetizationProducts.s2024month3,
+  MonetizationProducts.s2024year,
+  if (kDebugMode) MonetizationProducts.s2024day1Test,
+];
+
 /// A widget that displays a paywall for monthly subscription plans.
 ///
 /// This paywall showcases three subscription options: yearly, quarterly,
 /// and monthly. It uses a clean, appealing design that matches the app's style
 /// and includes bullet points highlighting the benefits of each plan.
-class Ui2024MonthlySubscriptionPaywall extends HookWidget {
+class Ui2024MonthlySubscriptionPaywall extends HookWidget
+    with HasStates, HasAnalytics {
   const Ui2024MonthlySubscriptionPaywall({super.key});
+  Future<void> onBuyPressed(
+    final BuildContext context,
+    final ValueNotifier<int> planIndex,
+  ) async {
+    final subscription = subscriptionManager.getSubscription(
+      _kSubscriptions[planIndex.value].productId,
+    );
+    if (subscription == null) throw Exception('Subscription not found');
+    final subscribed = await subscriptionManager.subscribe(subscription);
+    if (subscribed) {
+      final transactionId =
+          subscriptionManager.activeSubscription?.purchaseId.value;
+      if (transactionId == null) throw Exception('Purchase ID not found');
+      unawaited(
+        analyticsService.logEvent(
+          AnalyticsEvents.purchaseComplete(
+            value: subscription.price,
+            currency: subscription.currency,
+            transactionId: transactionId,
+          ),
+        ),
+      );
+      AppPathsController.of(context).toThanksForSubscribing();
+    }
+  }
 
   @override
   Widget build(final BuildContext context) {
-    final subscriptions = [
-      MonetizationProducts.s2024month1,
-      MonetizationProducts.s2024month3,
-      MonetizationProducts.s2024year,
-      if (kDebugMode) MonetizationProducts.s2024day1Test,
-    ];
+    useLogScreenView('2024 Monthly Subscription Paywall');
+
     final planIndex = useState<int>(2);
     final locale = useLocale(context);
     final double imageHeight =
@@ -31,17 +60,6 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
     final monetizationStatusNotifier =
         context.watch<MonetizationStatusNotifier>();
     final subscriptionManager = context.watch<SubscriptionManager>();
-
-    Future<void> onBuyPressed() async {
-      final subscribed = await subscriptionManager.subscribe(
-        subscriptionManager.getSubscription(
-          subscriptions[planIndex.value].productId,
-        )!,
-      );
-      if (subscribed) {
-        AppPathsController.of(context).toThanksForSubscribing();
-      }
-    }
 
     return Scaffold(
       body: SafeArea(
@@ -191,14 +209,15 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                     children: [
                       const Gap(8),
                       ...List.generate(
-                        subscriptions.length,
+                        _kSubscriptions.length,
                         (final index) {
-                          final productId = subscriptions[index].productId;
+                          final productId = _kSubscriptions[index].productId;
                           final subscription =
                               subscriptionManager.getSubscription(productId);
                           return Padding(
                             padding: EdgeInsets.only(
-                              right: index < subscriptions.length - 1 ? 16 : 8,
+                              right:
+                                  index < _kSubscriptions.length - 1 ? 16 : 8,
                             ),
                             child: _SubscriptionCard(
                               title: getSubscriptionPaywallTitle(
@@ -220,7 +239,7 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                 const Gap(4),
                 UiTextButton(
                   isLoading: subscriptionManager.isLoading,
-                  onPressed: onBuyPressed,
+                  onPressed: () async => onBuyPressed(context, planIndex),
                   title: Row(
                     children: [
                       Spacer(),
@@ -272,17 +291,27 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                 children: [
                   if (monetizationStatusNotifier.isInitialized)
                     Flexible(
-                      child: UiTextButton(
-                        textTitle: LocalizedMap(
-                          value: {
-                            languages.en: 'Restore',
-                            languages.it: 'Ripristina',
-                            languages.ru: 'Восстановить',
+                      child: UiLoader(
+                        builder: (
+                          final context,
+                          final isLoading,
+                          final setLoading,
+                        ) =>
+                            UiTextButton(
+                          isLoading: isLoading,
+                          textTitle: LocalizedMap(
+                            value: {
+                              languages.en: 'Restore',
+                              languages.it: 'Ripristina',
+                              languages.ru: 'Восстановить',
+                            },
+                          ).getValue(locale),
+                          onPressed: () async {
+                            setLoading(true);
+                            await context.read<PurchaseInitializer>().restore();
+                            setLoading(false);
                           },
-                        ).getValue(locale),
-                        // TODO(arenukvern): add loader
-                        onPressed: () async =>
-                            context.read<PurchaseInitializer>().restore(),
+                        ),
                       ),
                     ),
                   Flexible(

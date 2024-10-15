@@ -30,21 +30,14 @@ Future<void> _bootstrap({
   required final Widget Function(GlobalInitializerImpl) builder,
   required final AppBootstrapDto? dto,
 }) async {
-  final initializer = GlobalInitializerImpl(
-    firebaseOptions: dto?.firebaseOptions,
-  );
-  await initializer.loadAnalytics();
-  await runZonedGuarded(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  final initializer = GlobalInitializerImpl();
+  await initializer.load(firebaseOptions: dto?.firebaseOptions);
 
-      LicenseRegistry.addLicense(() async* {
-        final license = await rootBundle.loadString('google_fonts/OFL.txt');
-        yield LicenseEntryWithLineBreaks(['google_fonts'], license);
-      });
-      // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-      runApp(builder(initializer));
-    },
-    initializer.analyticsService.recordError,
-  );
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  runApp(builder(initializer));
 }

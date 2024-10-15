@@ -21,6 +21,16 @@
       ]
     },
     {
+      "name": "app-rustore-prod",
+      "program": "lib/main_prod.dart",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define-from-file=configs/rustore_prod.json",
+        "--web-port=3000"
+      ]
+    },
+    {
       "name": "mobile-app",
       "program": "packages/mobile_app/lib/main_dev.dart",
       "request": "launch",
