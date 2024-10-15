@@ -52,20 +52,7 @@ class SettingsBottomPopup extends StatelessWidget {
                 icon: Icons.privacy_tip_outlined,
               ),
               UiDivider.size5(),
-              _ListTile(
-                onTap: () async =>
-                    AppPathsController.of(context).toExplanation(),
-                title: LocalizedMap(
-                  value: {
-                    languages.en: 'How to use?',
-                    languages.it: 'Come usarlo?',
-                    languages.ru: 'Как пользоваться?',
-                  },
-                ).getValue(locale),
-                icon: CupertinoIcons.wand_stars,
-              ),
-              UiDivider.size1(),
-              if (activeSubscription != null) ...[
+              if (activeSubscription != null)
                 _ListTile(
                   onTap: () async =>
                       AppPathsController.of(context).toManageSubscription(),
@@ -77,9 +64,8 @@ class SettingsBottomPopup extends StatelessWidget {
                     },
                   ).getValue(locale),
                   icon: CupertinoIcons.star,
-                ),
-                UiDivider.size1(),
-              ] else ...[
+                )
+              else
                 _ListTile(
                   onTap: () async => AppPathsController.of(context).toPaywall(),
                   title: LocalizedMap(
@@ -91,9 +77,20 @@ class SettingsBottomPopup extends StatelessWidget {
                   ).getValue(locale),
                   icon: CupertinoIcons.star,
                 ),
-                UiDivider.size1(),
-              ],
+              UiDivider.size1(),
             ],
+            _ListTile(
+              onTap: () async => AppPathsController.of(context).toExplanation(),
+              title: LocalizedMap(
+                value: {
+                  languages.en: 'How to use?',
+                  languages.it: 'Come usarlo?',
+                  languages.ru: 'Как пользоваться?',
+                },
+              ).getValue(locale),
+              icon: CupertinoIcons.wand_stars,
+            ),
+            UiDivider.size1(),
             _ListTile(
               onTap: () {
                 onClose();
