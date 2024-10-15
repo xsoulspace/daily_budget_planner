@@ -43,7 +43,7 @@ class SubscriptionManager extends ChangeNotifier {
     required this.monetizationTypeNotifier,
     required this.productIds,
   });
-  final List<ProductId> productIds;
+  final List<PurchaseProductId> productIds;
   final PurchaseManager purchaseManager;
   final MonetizationStatusNotifier monetizationTypeNotifier;
 
@@ -61,7 +61,7 @@ class SubscriptionManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  PurchaseProductDetails? getSubscription(final ProductId id) =>
+  PurchaseProductDetails? getSubscription(final PurchaseProductId id) =>
       subscriptions.value.firstWhereOrNull((final e) => e.productId == id);
   bool get isLoading => state == SubscriptionManagerStatus.pending;
 

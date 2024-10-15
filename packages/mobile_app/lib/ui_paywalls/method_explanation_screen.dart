@@ -155,15 +155,22 @@ class MethodExplanationScreen extends HookWidget {
   }
 }
 
-class BalancePage extends StatelessWidget {
+class BalancePage extends HookWidget {
   const BalancePage({required this.onNext, super.key});
 
   final void Function(double) onNext;
 
   @override
   Widget build(final BuildContext context) {
-    final controller = TextEditingController();
+    final controller = useTextEditingController();
     final locale = useLocale(context);
+    void tryNext(final String value) {
+      final value = double.tryParse(controller.text);
+      if (value != null && value > 0) {
+        onNext(value);
+      }
+    }
+
     return GuidePage(
       title: LocalizedMap(
         value: {
@@ -182,8 +189,9 @@ class BalancePage extends StatelessWidget {
               'Iniziamo con quanto denaro hai in questo momento. Non preoccuparti, non lo diremo a nessuno! 🤫',
         },
       ).getValue(locale),
-      content: TextField(
+      content: TextFormField(
         controller: controller,
+        onFieldSubmitted: tryNext,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           prefixText: kMoneyPrefix.getValue(locale),
@@ -196,25 +204,27 @@ class BalancePage extends StatelessWidget {
           ).getValue(locale),
         ),
       ),
-      onNext: () {
-        final value = double.tryParse(controller.text);
-        if (value != null && value > 0) {
-          onNext(value);
-        }
-      },
+      onNext: () => tryNext(controller.text),
     );
   }
 }
 
-class ExpensesPage extends StatelessWidget {
+class ExpensesPage extends HookWidget {
   const ExpensesPage({required this.onNext, super.key});
 
   final void Function(double) onNext;
 
   @override
   Widget build(final BuildContext context) {
-    final controller = TextEditingController();
+    final controller = useTextEditingController();
     final locale = useLocale(context);
+    void tryNext(final String value) {
+      final value = double.tryParse(controller.text);
+      if (value != null && value >= 0) {
+        onNext(value);
+      }
+    }
+
     return GuidePage(
       title: LocalizedMap(
         value: {
@@ -233,8 +243,9 @@ class ExpensesPage extends StatelessWidget {
               "Ora, sommiamo tutte le cose noiose che devi pagare. Pensa all'affitto, agli abbonamenti, ai pagamenti dei prestiti - sai, le cose essenziali. 💸",
         },
       ).getValue(locale),
-      content: TextField(
+      content: TextFormField(
         controller: controller,
+        onFieldSubmitted: tryNext,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           prefixText: kMoneyPrefix.getValue(locale),
@@ -247,12 +258,7 @@ class ExpensesPage extends StatelessWidget {
           ).getValue(locale),
         ),
       ),
-      onNext: () {
-        final value = double.tryParse(controller.text);
-        if (value != null && value >= 0) {
-          onNext(value);
-        }
-      },
+      onNext: () => tryNext(controller.text),
     );
   }
 }
@@ -351,7 +357,7 @@ class ResultPage extends StatelessWidget {
               },
             ).getValue(locale),
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ).animate().fadeIn().slideX(),
+          ).animate().fadeIn(),
           const SizedBox(height: 16),
           Text(
             LocalizedMap(
@@ -365,7 +371,7 @@ class ResultPage extends StatelessWidget {
               },
             ).getValue(locale),
             style: Theme.of(context).textTheme.bodyLarge,
-          ).animate().fadeIn().slideX(),
+          ).animate().fadeIn(),
           const SizedBox(height: 24),
           _ResultCard(
             currentBalance: currentBalance,
@@ -386,7 +392,7 @@ class ResultPage extends StatelessWidget {
               },
             ).getValue(locale),
             style: Theme.of(context).textTheme.bodyLarge,
-          ).animate().fadeIn().slideX(),
+          ).animate().fadeIn(),
           const SizedBox(height: 24),
           if (isFirstOpening && isSubscriptionMonetization) ...[
             Text(
@@ -402,7 +408,7 @@ class ResultPage extends StatelessWidget {
               ).getValue(locale),
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
-            ).animate().fadeIn().slideX(),
+            ).animate().fadeIn(),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -418,7 +424,7 @@ class ResultPage extends StatelessWidget {
                       },
                     ).getValue(locale),
                   ),
-                ).animate().fadeIn().slideX(),
+                ).animate().fadeIn(),
                 ElevatedButton(
                   onPressed: () {
                     final controller = AppPathsController.of(context);
@@ -435,7 +441,7 @@ class ResultPage extends StatelessWidget {
                       },
                     ).getValue(locale),
                   ),
-                ).animate().fadeIn().slideX(),
+                ).animate().fadeIn(),
               ],
             ),
           ] else
@@ -451,7 +457,7 @@ class ResultPage extends StatelessWidget {
                     },
                   ).getValue(locale),
                 ),
-              ).animate().fadeIn().slideX(),
+              ).animate().fadeIn(),
             ),
           const SizedBox(height: 16),
           Text(
@@ -542,7 +548,7 @@ class _ResultCard extends StatelessWidget {
           ],
         ),
       ),
-    ).animate().fadeIn().scale();
+    ).animate().fadeIn();
   }
 }
 
@@ -602,14 +608,14 @@ class GuidePage extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ).animate().fadeIn().slideX(),
+            ).animate().fadeIn(),
             const SizedBox(height: 16),
             Text(
               description,
               style: Theme.of(context).textTheme.bodyLarge,
-            ).animate().fadeIn().slideX(),
+            ).animate().fadeIn(),
             const SizedBox(height: 24),
-            content.animate().fadeIn().scale(),
+            content.animate().fadeIn(),
             const SizedBox(height: 24),
             if (onNext != null)
               ElevatedButton(
@@ -623,7 +629,7 @@ class GuidePage extends StatelessWidget {
                     },
                   ).getValue(useLocale(context)),
                 ),
-              ).animate().fadeIn().slideX(),
+              ).animate().fadeIn(),
           ],
         ),
       );

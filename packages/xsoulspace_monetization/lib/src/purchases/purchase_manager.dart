@@ -7,15 +7,16 @@ part 'purchase_manager.g.dart';
 /// {@template product_id}
 /// Represents a unique identifier for a product.
 /// {@endtemplate}
-extension type ProductId(String value) {
-  factory ProductId.fromJson(final dynamic json) => ProductId(json.toString());
+extension type PurchaseProductId(String value) {
+  factory PurchaseProductId.fromJson(final dynamic json) =>
+      PurchaseProductId(json.toString());
   String toJson() => value;
 }
 
 /// {@template product_list_x}
 /// Extension on List<ProductId> to convert to JSON.
 /// {@endtemplate}
-extension ProductListX on List<ProductId> {
+extension ProductListX on List<PurchaseProductId> {
   List<String> toJson() =>
       map((final productId) => productId.toJson()).toSet().toList();
 }
@@ -52,13 +53,24 @@ enum PurchaseProductType {
   nonConsumable,
   subscription;
 
-  factory PurchaseProductType.fromRustoreJson(final dynamic json) =>
-      switch (json) {
-        'NON_CONSUMABLE' => PurchaseProductType.nonConsumable,
-        'CONSUMABLE' => PurchaseProductType.consumable,
-        'SUBSCRIPTION' => PurchaseProductType.subscription,
-        _ => throw Exception('Invalid purchase type: $json'),
-      };
+  static PurchaseProductType fromRustoreJson({
+    required final dynamic json,
+    required final PurchaseProductId productId,
+    required final PurchaseProductType? Function(PurchaseProductId productId)?
+        productTypeChecker,
+  }) {
+    if (json == null || json == '') {
+      final productType = productTypeChecker?.call(productId);
+      if (productType != null) return productType;
+    }
+    return switch (json) {
+      'NON_CONSUMABLE' => PurchaseProductType.nonConsumable,
+      'CONSUMABLE' => PurchaseProductType.consumable,
+      'SUBSCRIPTION' => PurchaseProductType.subscription,
+      _ => throw Exception('Invalid purchase type: $json'),
+    };
+  }
+
   String toJson() => name;
 }
 
@@ -89,17 +101,17 @@ abstract class PurchaseManager {
 
   /// Retrieves available subscriptions.
   Future<List<PurchaseProductDetails>> getSubscriptions(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   );
 
   /// Retrieves available consumable items.
   Future<List<PurchaseProductDetails>> getConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   );
 
   /// Retrieves available non-consumable items.
   Future<List<PurchaseProductDetails>> getNonConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   );
 
   /// Opens the subscription management page.
@@ -158,7 +170,7 @@ abstract class PurchaseManager {
 @freezed
 class PurchaseProductDetails with _$PurchaseProductDetails {
   const factory PurchaseProductDetails({
-    required final ProductId productId,
+    required final PurchaseProductId productId,
     required final PurchaseProductType productType,
     required final String name,
 
@@ -187,7 +199,7 @@ class PurchaseProductDetails with _$PurchaseProductDetails {
 class PurchaseDetails with _$PurchaseDetails {
   const factory PurchaseDetails({
     required final PurchaseId purchaseId,
-    required final ProductId productId,
+    required final PurchaseProductId productId,
     required final String name,
 
     /// formatted price with currency
@@ -216,6 +228,7 @@ class PurchaseDetails with _$PurchaseDetails {
   bool get hasFreeTrial => freeTrialDuration.inDays > 0;
   bool get isOneTimePurchase => duration.inDays == 0;
   bool get isSubscription => !isOneTimePurchase;
+  bool get isPending => status == PurchaseStatus.pending;
   bool get isActive {
     if (purchaseType case PurchaseProductType.subscription) {
       final expiryDate = this.expiryDate;
@@ -320,7 +333,7 @@ class CompletePurchaseResult with _$CompletePurchaseResult {
 class PurchaseVerificationDto with _$PurchaseVerificationDto {
   const factory PurchaseVerificationDto({
     required final PurchaseId purchaseId,
-    required final ProductId productId,
+    required final PurchaseProductId productId,
     required final PurchaseStatus status,
     required final PurchaseProductType productType,
     final DateTime? transactionDate,

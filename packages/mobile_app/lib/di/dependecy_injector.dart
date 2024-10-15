@@ -36,14 +36,7 @@ Future<void> _init({required final AnalyticsService analyticsService}) async {
   /// ********************************************
   /// *      STATES
   /// ********************************************
-  r<PurchaseManager>(
-    FlutterRustoreBillingManager(
-      consoleApplicationId: Envs.rustoreApplicationId,
-      // ignore: avoid_redundant_argument_values
-      enableLogger: Envs.logging,
-      deeplinkScheme: Envs.appScheme,
-    ),
-  );
+
   r(UiLocaleNotifier(Locales.fallback));
   r(AppSettingsNotifier());
   r(UserNotifier());
@@ -51,7 +44,10 @@ Future<void> _init({required final AnalyticsService analyticsService}) async {
   final PurchaseManager purchaseManager = switch (Envs.storeTarget) {
     InstallPlatformTarget.rustore => FlutterRustoreBillingManager(
         consoleApplicationId: Envs.rustoreApplicationId,
+        // ignore: avoid_redundant_argument_values
+        enableLogger: Envs.logging,
         deeplinkScheme: Envs.appScheme,
+        productTypeChecker: MonetizationProducts.productTypeChecker,
       ),
     InstallPlatformTarget.appleStore ||
     InstallPlatformTarget.googlePlay =>
@@ -60,8 +56,7 @@ Future<void> _init({required final AnalyticsService analyticsService}) async {
     // InAppPurchaseManager(),
     _ => NoopPurchaseManager(),
   };
-  print(Envs.storeTarget);
-  print(Envs.monetizationType);
+  r<PurchaseManager>(purchaseManager);
   final monetizationTypeNotifier =
       MonetizationStatusNotifier(Envs.monetizationType);
   r(monetizationTypeNotifier);

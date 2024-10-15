@@ -171,7 +171,7 @@ class HuaweiIapManager implements PurchaseManager {
 
   @override
   Future<List<PurchaseProductDetails>> getSubscriptions(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) async {
     try {
       throw UnimplementedError();
@@ -196,7 +196,7 @@ class HuaweiIapManager implements PurchaseManager {
 
   @override
   Future<List<PurchaseProductDetails>> getConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) async {
     try {
       throw UnimplementedError();
@@ -220,7 +220,7 @@ class HuaweiIapManager implements PurchaseManager {
 
   @override
   Future<List<PurchaseProductDetails>> getNonConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) async {
     try {
       throw UnimplementedError();

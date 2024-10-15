@@ -11,6 +11,8 @@ import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
 import 'purchase_manager.dart';
 
+typedef DurationFromProductId = Duration Function(PurchaseProductId);
+
 /// {@template flutter_rustore_billing_manager}
 /// Implementation of [PurchaseManager] using RuStore Billing.
 ///
@@ -19,6 +21,8 @@ import 'purchase_manager.dart';
 /// [deeplinkScheme] is the deeplink scheme of the application.
 /// "yourappscheme://iamback",
 /// [enableLogger] is the flag to enable logger.
+/// [productTypeChecker] is the function to check the product type
+/// if it is returned from Rustore.
 ///
 /// https://www.rustore.ru/help/en/sdk/payments/flutter/6-1-0
 ///
@@ -34,10 +38,19 @@ class FlutterRustoreBillingManager implements PurchaseManager {
     required this.consoleApplicationId,
     required this.deeplinkScheme,
     this.enableLogger = false,
-  });
+    this.productTypeChecker,
+    final DurationFromProductId getDurationFromProductId =
+        FlutterRustoreBillingManager.getDurationFromProductId,
+  }) : _getDurationFromProductId = getDurationFromProductId;
   final String consoleApplicationId;
   final String deeplinkScheme;
+  final DurationFromProductId _getDurationFromProductId;
   final bool enableLogger;
+
+  /// [productTypeChecker] is the function to check the product type
+  /// if it is returned from Rustore.
+  final PurchaseProductType? Function(PurchaseProductId productId)?
+      productTypeChecker;
 
   @override
   Future<bool> isAvailable() async => RustoreBillingClient.available();
@@ -170,44 +183,54 @@ class FlutterRustoreBillingManager implements PurchaseManager {
 
   @override
   Future<List<PurchaseProductDetails>> getSubscriptions(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) =>
       _getProducts(productIds, PurchaseProductType.subscription);
 
   @override
   Future<List<PurchaseProductDetails>> getConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) =>
       _getProducts(productIds, PurchaseProductType.consumable);
 
   @override
   Future<List<PurchaseProductDetails>> getNonConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) =>
       _getProducts(productIds, PurchaseProductType.nonConsumable);
 
   Future<List<PurchaseProductDetails>> _getProducts(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
     final PurchaseProductType type,
   ) async {
     final productsResponse =
         await RustoreBillingClient.products(productIds.toJson());
-    return productsResponse.products
+    return productsResponse.products.nonNulls
         .where(
           (final product) =>
-              PurchaseProductType.fromRustoreJson(product?.productType) == type,
+              PurchaseProductType.fromRustoreJson(
+                json: product.productType,
+                productId: PurchaseProductId(product.productId),
+                productTypeChecker: productTypeChecker,
+              ) ==
+              type,
         )
         .map(_mapToPurchaseProductDetails)
         .toList();
   }
 
-  PurchaseProductDetails _mapToPurchaseProductDetails(final Product? product) {
-    final duration = _getDurationFromId(product?.productId ?? '');
-    final freeTrialDuration = product?.subscription?.freeTrialPeriod;
-
+  PurchaseProductDetails _mapToPurchaseProductDetails(final Product product) {
+    final productId = PurchaseProductId(product.productId);
+    final duration = _getDurationFromProductId(productId);
+    final freeTrialDuration = product.subscription?.freeTrialPeriod;
+    final productType = PurchaseProductType.fromRustoreJson(
+      json: product.productType,
+      productId: productId,
+      productTypeChecker: productTypeChecker,
+    );
     return PurchaseProductDetails(
-      productId: ProductId(product!.productId),
-      productType: PurchaseProductType.fromRustoreJson(product.productType),
+      productId: productId,
+      productType: productType,
       name: product.title ?? '',
       formattedPrice: product.priceLabel ?? '',
       price: doubleFromJson(product.price ?? '0'),
@@ -236,8 +259,9 @@ class FlutterRustoreBillingManager implements PurchaseManager {
   Future<RestoreResult> restore() async {
     try {
       final purchasesResponse = await RustoreBillingClient.purchases();
-      final restoredPurchases =
-          purchasesResponse.purchases.map(_mapToPurchaseDetails).toList();
+      final restoredPurchases = purchasesResponse.purchases.nonNulls
+          .map(_mapToPurchaseDetails)
+          .toList();
       return RestoreResult.success(restoredPurchases);
     } catch (e) {
       return RestoreResult.failure(e.toString());
@@ -252,23 +276,28 @@ class FlutterRustoreBillingManager implements PurchaseManager {
     return _mapToPurchaseDetails(purchase);
   }
 
-  PurchaseDetails _mapToPurchaseDetails(final Purchase? purchase) {
-    final purchaseDate = DateTime.fromMillisecondsSinceEpoch(
-      intFromJson(purchase?.purchaseTime ?? '0'),
+  PurchaseDetails _mapToPurchaseDetails(final Purchase purchase) {
+    final productId = PurchaseProductId(purchase.productId ?? '');
+    final purchaseDate = _parsePurchaseDate(purchase.purchaseTime ?? '');
+    final duration = _getDurationFromProductId(productId);
+    final expiryDate = purchaseDate.add(duration);
+    final purchaseType = PurchaseProductType.fromRustoreJson(
+      json: purchase.productType,
+      productId: productId,
+      productTypeChecker: productTypeChecker,
     );
-    final duration = _getDurationFromId(purchase?.productId ?? '');
     return PurchaseDetails(
-      status: PurchaseStatus.fromRustoreState(purchase?.purchaseState),
-      purchaseType: PurchaseProductType.fromRustoreJson(purchase?.productType),
-      purchaseId: PurchaseId(purchase?.purchaseId ?? ''),
-      productId: ProductId(purchase?.productId ?? ''),
+      status: PurchaseStatus.fromRustoreState(purchase.purchaseState),
+      purchaseType: purchaseType,
+      purchaseId: PurchaseId(purchase.purchaseId ?? ''),
+      productId: productId,
       name: '',
-      formattedPrice: purchase?.amountLabel ?? '',
-      price: doubleFromJson(purchase?.amount ?? '0'),
-      currency: purchase?.currency ?? '',
+      formattedPrice: purchase.amountLabel ?? '',
+      price: doubleFromJson(purchase.amount ?? '0'),
+      currency: purchase.currency ?? '',
       purchaseDate: purchaseDate,
       duration: duration,
-      expiryDate: purchaseDate.add(duration),
+      expiryDate: expiryDate,
     );
   }
 
@@ -286,15 +315,96 @@ class FlutterRustoreBillingManager implements PurchaseManager {
     }
   }
 
-  Duration _getDurationFromId(final String id) {
-    if (id.endsWith('month_1')) return const Duration(days: 30);
-    if (id.endsWith('month_3')) return const Duration(days: 90);
-    if (id.endsWith('year_1')) return const Duration(days: 365);
-    return const Duration(days: 30); // Default to monthly
+  static Duration getDurationFromProductId(final PurchaseProductId id) {
+    final parts = id.value.split('_');
+    final unitIndex = parts
+        .indexWhere((final part) => ['day', 'month', 'year'].contains(part));
+
+    if (unitIndex == -1 || unitIndex + 1 >= parts.length) return Duration.zero;
+
+    final unit = parts[unitIndex];
+    final count = int.tryParse(parts[unitIndex + 1]) ?? 0;
+
+    if (count == 0) return Duration.zero;
+
+    return switch (unit) {
+      'day' => Duration(days: count),
+      'month' => Duration(days: count * 30),
+      'year' => Duration(days: count * 365),
+      _ => Duration.zero,
+    };
   }
 
   @override
   Future<void> dispose() async {
     await _purchasesController.close();
   }
+}
+
+DateTime _parsePurchaseDate(final String? dateString) {
+  if (dateString == null || dateString.isEmpty) {
+    return DateTime.now();
+  }
+
+  try {
+    // Check if the string is a numeric timestamp (milliseconds since epoch)
+    if (RegExp(r'^\d+$').hasMatch(dateString)) {
+      return DateTime.fromMillisecondsSinceEpoch(int.parse(dateString));
+    }
+    // Custom parsing for the specific format
+    final parts = dateString.split(' ');
+    if (parts.length == 6) {
+      final month = _parseMonth(parts[1]);
+      final day = int.parse(parts[2]);
+      final timeParts = parts[3].split(':');
+      final hour = int.parse(timeParts[0]);
+      final minute = int.parse(timeParts[1]);
+      final second = int.parse(timeParts[2]);
+      final year = int.parse(parts[5]);
+
+      // Parse timezone offset
+      final tzOffset = _parseTzOffset(parts[4]);
+
+      // Create DateTime in UTC
+      final dateTime = DateTime.utc(year, month, day, hour, minute, second);
+
+      // Adjust for timezone offset
+      return dateTime.add(tzOffset);
+    }
+
+    // If the format doesn't match, try standard ISO 8601 format
+    return DateTime.parse(dateString);
+  } catch (e) {
+    debugPrint('Error parsing date: $e');
+    return DateTime.now();
+  }
+}
+
+int _parseMonth(final String monthStr) {
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  return months.indexOf(monthStr) + 1;
+}
+
+Duration _parseTzOffset(final String tzString) {
+  final match = RegExp(r'GMT([+-])(\d{2}):(\d{2})').firstMatch(tzString);
+  if (match != null) {
+    final sign = match.group(1) == '+' ? 1 : -1;
+    final hours = int.parse(match.group(2)!);
+    final minutes = int.parse(match.group(3)!);
+    return Duration(hours: sign * hours, minutes: sign * minutes);
+  }
+  return Duration.zero;
 }

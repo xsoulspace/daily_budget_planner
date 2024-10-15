@@ -12,10 +12,17 @@ enum MonetizationProducts {
 
   const MonetizationProducts(this._productId);
   final String _productId;
-  ProductId get productId => ProductId(_productId);
+  PurchaseProductId get productId => PurchaseProductId(_productId);
 
-  static List<ProductId> get subscriptions => values
+  static final subscriptions = values
       .where((final e) => e.name.startsWith('s'))
       .map((final e) => e.productId)
       .toList();
+
+  static PurchaseProductType? productTypeChecker(
+    final PurchaseProductId productId,
+  ) =>
+      MonetizationProducts.subscriptions.contains(productId)
+          ? PurchaseProductType.subscription
+          : null;
 }

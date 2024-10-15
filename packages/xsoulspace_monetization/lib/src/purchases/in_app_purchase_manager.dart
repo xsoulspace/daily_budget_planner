@@ -142,7 +142,7 @@ class InAppPurchaseManager implements PurchaseManager {
 
   @override
   Future<List<PurchaseProductDetails>> getSubscriptions(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) async {
     final productDetails = await _getProductDetails(productIds);
     return productDetails
@@ -150,7 +150,7 @@ class InAppPurchaseManager implements PurchaseManager {
         .map(
           (final product) => PurchaseProductDetails(
             formattedPrice: product.price,
-            productId: ProductId(product.id),
+            productId: PurchaseProductId(product.id),
             productType: PurchaseProductType.subscription,
             name: product.title,
             price: product.rawPrice,
@@ -163,14 +163,14 @@ class InAppPurchaseManager implements PurchaseManager {
 
   @override
   Future<List<PurchaseProductDetails>> getConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) async {
     final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('consumable_'))
         .map(
           (final product) => PurchaseProductDetails(
-            productId: ProductId(product.id),
+            productId: PurchaseProductId(product.id),
             formattedPrice: product.price,
             productType: PurchaseProductType.consumable,
             name: product.title,
@@ -183,14 +183,14 @@ class InAppPurchaseManager implements PurchaseManager {
 
   @override
   Future<List<PurchaseProductDetails>> getNonConsumables(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) async {
     final productDetails = await _getProductDetails(productIds);
     return productDetails
         .where((final product) => product.id.startsWith('non_consumable_'))
         .map(
           (final product) => PurchaseProductDetails(
-            productId: ProductId(product.id),
+            productId: PurchaseProductId(product.id),
             formattedPrice: product.price,
             productType: PurchaseProductType.nonConsumable,
             name: product.title,
@@ -254,7 +254,7 @@ class InAppPurchaseManager implements PurchaseManager {
   }
 
   Future<List<iap.ProductDetails>> _getProductDetails(
-    final List<ProductId> productIds,
+    final List<PurchaseProductId> productIds,
   ) async {
     final productDetailResponse =
         await _inAppPurchase.queryProductDetails(productIds.toJson().toSet());

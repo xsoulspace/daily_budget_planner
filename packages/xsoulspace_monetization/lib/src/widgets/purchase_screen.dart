@@ -16,7 +16,7 @@ class PurchaseScreen extends StatelessWidget {
 
   /// The purchase manager to handle purchase operations.
   final PurchaseManager purchaseManager;
-  final List<ProductId> productIds;
+  final List<PurchaseProductId> productIds;
 
   @override
   Widget build(final BuildContext context) => Scaffold(

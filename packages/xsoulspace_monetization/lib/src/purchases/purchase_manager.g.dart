@@ -25,7 +25,7 @@ Map<String, dynamic> _$$PurchaseDurationImplToJson(
 _$PurchaseProductDetailsImpl _$$PurchaseProductDetailsImplFromJson(
         Map<String, dynamic> json) =>
     _$PurchaseProductDetailsImpl(
-      productId: ProductId.fromJson(json['productId']),
+      productId: PurchaseProductId.fromJson(json['productId']),
       productType:
           $enumDecode(_$PurchaseProductTypeEnumMap, json['productType']),
       name: json['name'] as String,
@@ -66,7 +66,7 @@ _$PurchaseDetailsImpl _$$PurchaseDetailsImplFromJson(
         Map<String, dynamic> json) =>
     _$PurchaseDetailsImpl(
       purchaseId: PurchaseId.fromJson(json['purchaseId']),
-      productId: ProductId.fromJson(json['productId']),
+      productId: PurchaseProductId.fromJson(json['productId']),
       name: json['name'] as String,
       formattedPrice: json['formattedPrice'] as String,
       status: $enumDecode(_$PurchaseStatusEnumMap, json['status']),
@@ -219,7 +219,7 @@ _$PurchaseVerificationDtoImpl _$$PurchaseVerificationDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$PurchaseVerificationDtoImpl(
       purchaseId: PurchaseId.fromJson(json['purchaseId']),
-      productId: ProductId.fromJson(json['productId']),
+      productId: PurchaseProductId.fromJson(json['productId']),
       status: $enumDecode(_$PurchaseStatusEnumMap, json['status']),
       productType:
           $enumDecode(_$PurchaseProductTypeEnumMap, json['productType']),

@@ -211,7 +211,7 @@ PurchaseProductDetails _$PurchaseProductDetailsFromJson(
 
 /// @nodoc
 mixin _$PurchaseProductDetails {
-  ProductId get productId => throw _privateConstructorUsedError;
+  PurchaseProductId get productId => throw _privateConstructorUsedError;
   PurchaseProductType get productType => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
@@ -242,7 +242,7 @@ abstract class $PurchaseProductDetailsCopyWith<$Res> {
       _$PurchaseProductDetailsCopyWithImpl<$Res, PurchaseProductDetails>;
   @useResult
   $Res call(
-      {ProductId productId,
+      {PurchaseProductId productId,
       PurchaseProductType productType,
       String name,
       String formattedPrice,
@@ -285,7 +285,7 @@ class _$PurchaseProductDetailsCopyWithImpl<$Res,
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
+              as PurchaseProductId,
       productType: null == productType
           ? _value.productType
           : productType // ignore: cast_nullable_to_non_nullable
@@ -342,7 +342,7 @@ abstract class _$$PurchaseProductDetailsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ProductId productId,
+      {PurchaseProductId productId,
       PurchaseProductType productType,
       String name,
       String formattedPrice,
@@ -385,7 +385,7 @@ class __$$PurchaseProductDetailsImplCopyWithImpl<$Res>
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
+              as PurchaseProductId,
       productType: null == productType
           ? _value.productType
           : productType // ignore: cast_nullable_to_non_nullable
@@ -441,7 +441,7 @@ class _$PurchaseProductDetailsImpl extends _PurchaseProductDetails {
       _$$PurchaseProductDetailsImplFromJson(json);
 
   @override
-  final ProductId productId;
+  final PurchaseProductId productId;
   @override
   final PurchaseProductType productType;
   @override
@@ -527,7 +527,7 @@ class _$PurchaseProductDetailsImpl extends _PurchaseProductDetails {
 
 abstract class _PurchaseProductDetails extends PurchaseProductDetails {
   const factory _PurchaseProductDetails(
-      {required final ProductId productId,
+      {required final PurchaseProductId productId,
       required final PurchaseProductType productType,
       required final String name,
       required final String formattedPrice,
@@ -542,7 +542,7 @@ abstract class _PurchaseProductDetails extends PurchaseProductDetails {
       _$PurchaseProductDetailsImpl.fromJson;
 
   @override
-  ProductId get productId;
+  PurchaseProductId get productId;
   @override
   PurchaseProductType get productType;
   @override
@@ -579,7 +579,7 @@ PurchaseDetails _$PurchaseDetailsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PurchaseDetails {
   PurchaseId get purchaseId => throw _privateConstructorUsedError;
-  ProductId get productId => throw _privateConstructorUsedError;
+  PurchaseProductId get productId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   /// formatted price with currency
@@ -613,7 +613,7 @@ abstract class $PurchaseDetailsCopyWith<$Res> {
   @useResult
   $Res call(
       {PurchaseId purchaseId,
-      ProductId productId,
+      PurchaseProductId productId,
       String name,
       String formattedPrice,
       PurchaseStatus status,
@@ -662,7 +662,7 @@ class _$PurchaseDetailsCopyWithImpl<$Res, $Val extends PurchaseDetails>
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
+              as PurchaseProductId,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -717,7 +717,7 @@ abstract class _$$PurchaseDetailsImplCopyWith<$Res>
   @useResult
   $Res call(
       {PurchaseId purchaseId,
-      ProductId productId,
+      PurchaseProductId productId,
       String name,
       String formattedPrice,
       PurchaseStatus status,
@@ -764,7 +764,7 @@ class __$$PurchaseDetailsImplCopyWithImpl<$Res>
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
+              as PurchaseProductId,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -833,7 +833,7 @@ class _$PurchaseDetailsImpl extends _PurchaseDetails {
   @override
   final PurchaseId purchaseId;
   @override
-  final ProductId productId;
+  final PurchaseProductId productId;
   @override
   final String name;
 
@@ -931,7 +931,7 @@ class _$PurchaseDetailsImpl extends _PurchaseDetails {
 abstract class _PurchaseDetails extends PurchaseDetails {
   const factory _PurchaseDetails(
       {required final PurchaseId purchaseId,
-      required final ProductId productId,
+      required final PurchaseProductId productId,
       required final String name,
       required final String formattedPrice,
       required final PurchaseStatus status,
@@ -950,7 +950,7 @@ abstract class _PurchaseDetails extends PurchaseDetails {
   @override
   PurchaseId get purchaseId;
   @override
-  ProductId get productId;
+  PurchaseProductId get productId;
   @override
   String get name;
 
@@ -2543,7 +2543,7 @@ PurchaseVerificationDto _$PurchaseVerificationDtoFromJson(
 /// @nodoc
 mixin _$PurchaseVerificationDto {
   PurchaseId get purchaseId => throw _privateConstructorUsedError;
-  ProductId get productId => throw _privateConstructorUsedError;
+  PurchaseProductId get productId => throw _privateConstructorUsedError;
   PurchaseStatus get status => throw _privateConstructorUsedError;
   PurchaseProductType get productType => throw _privateConstructorUsedError;
   DateTime? get transactionDate => throw _privateConstructorUsedError;
@@ -2573,7 +2573,7 @@ abstract class $PurchaseVerificationDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {PurchaseId purchaseId,
-      ProductId productId,
+      PurchaseProductId productId,
       PurchaseStatus status,
       PurchaseProductType productType,
       DateTime? transactionDate,
@@ -2619,7 +2619,7 @@ class _$PurchaseVerificationDtoCopyWithImpl<$Res,
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
+              as PurchaseProductId,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -2667,7 +2667,7 @@ abstract class _$$PurchaseVerificationDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {PurchaseId purchaseId,
-      ProductId productId,
+      PurchaseProductId productId,
       PurchaseStatus status,
       PurchaseProductType productType,
       DateTime? transactionDate,
@@ -2712,7 +2712,7 @@ class __$$PurchaseVerificationDtoImplCopyWithImpl<$Res>
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
-              as ProductId,
+              as PurchaseProductId,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -2770,7 +2770,7 @@ class _$PurchaseVerificationDtoImpl implements _PurchaseVerificationDto {
   @override
   final PurchaseId purchaseId;
   @override
-  final ProductId productId;
+  final PurchaseProductId productId;
   @override
   final PurchaseStatus status;
   @override
@@ -2855,7 +2855,7 @@ class _$PurchaseVerificationDtoImpl implements _PurchaseVerificationDto {
 abstract class _PurchaseVerificationDto implements PurchaseVerificationDto {
   const factory _PurchaseVerificationDto(
       {required final PurchaseId purchaseId,
-      required final ProductId productId,
+      required final PurchaseProductId productId,
       required final PurchaseStatus status,
       required final PurchaseProductType productType,
       final DateTime? transactionDate,
@@ -2871,7 +2871,7 @@ abstract class _PurchaseVerificationDto implements PurchaseVerificationDto {
   @override
   PurchaseId get purchaseId;
   @override
-  ProductId get productId;
+  PurchaseProductId get productId;
   @override
   PurchaseStatus get status;
   @override

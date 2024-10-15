@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
+import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
 
 class ManageSubscriptionScreen extends HookWidget {
   const ManageSubscriptionScreen({super.key});
@@ -7,8 +9,7 @@ class ManageSubscriptionScreen extends HookWidget {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
-    final subscriptionManager = context.watch<SubscriptionManager>();
-    final activeSubscription = subscriptionManager.activeSubscription;
+    final (:activeSubscription) = useActiveSubscription(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -121,7 +122,12 @@ class _SubscriptionInfoCard extends StatelessWidget {
                     languages.ru: 'План:',
                   },
                 ).getValue(locale),
-                value: subscription.name,
+                value: subscription.name.whenEmptyUse(
+                  getSubscriptionPaywallTitle(
+                    subscription.duration,
+                    locale,
+                  ),
+                ),
               ),
               _SubscriptionDetailItem(
                 title: LocalizedMap(

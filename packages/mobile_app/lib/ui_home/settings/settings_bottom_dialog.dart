@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
 import 'package:mobile_app/ui_home/settings/language_bottom_sheet.dart';
@@ -14,6 +13,7 @@ class SettingsBottomPopup extends StatelessWidget {
   Widget build(final BuildContext context) {
     final (:isSubscriptionMonetization) =
         useIsSubscriptionMonetization(context);
+    final (:activeSubscription) = useActiveSubscription(context);
     final locale = useLocale(context);
     return Card(
       child: Container(
@@ -23,72 +23,76 @@ class SettingsBottomPopup extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _ListTile(
-              onTap: () {
-                // TODO(arenukvern): description
-              },
-              title: LocalizedMap(
-                value: {
-                  languages.en: 'Terms of use',
-                  languages.it: 'Condizioni di utilizzo',
-                  languages.ru: 'Условия использования',
+            if (isSubscriptionMonetization) ...[
+              _ListTile(
+                onTap: () {
+                  // TODO(arenukvern): description
                 },
-              ).getValue(locale),
-              icon: CupertinoIcons.doc_plaintext,
-            ),
-            UiDivider.size1(),
-            _ListTile(
-              onTap: () {
-                // TODO(arenukvern): description
-              },
-              title: LocalizedMap(
-                value: {
-                  languages.en: 'Privacy policy',
-                  languages.it: 'Condizioni di utilizzo',
-                  languages.ru: 'Политика конфиденциальности',
+                title: LocalizedMap(
+                  value: {
+                    languages.en: 'Terms of use',
+                    languages.it: 'Condizioni di utilizzo',
+                    languages.ru: 'Условия использования',
+                  },
+                ).getValue(locale),
+                icon: CupertinoIcons.doc_plaintext,
+              ),
+              UiDivider.size1(),
+              _ListTile(
+                onTap: () {
+                  // TODO(arenukvern): description
                 },
-              ).getValue(locale),
-              icon: Icons.privacy_tip_outlined,
-            ),
-            UiDivider.size5(),
-            _ListTile(
-              onTap: () async => AppPathsController.of(context).toExplanation(),
-              title: LocalizedMap(
-                value: {
-                  languages.en: 'How to use?',
-                  languages.it: 'Come usarlo?',
-                  languages.ru: 'Как пользоваться?',
-                },
-              ).getValue(locale),
-              icon: CupertinoIcons.wand_stars,
-            ),
-            UiDivider.size1(),
-            if (isSubscriptionMonetization || kDebugMode) ...[
+                title: LocalizedMap(
+                  value: {
+                    languages.en: 'Privacy policy',
+                    languages.it: 'Condizioni di utilizzo',
+                    languages.ru: 'Политика конфиденциальности',
+                  },
+                ).getValue(locale),
+                icon: Icons.privacy_tip_outlined,
+              ),
+              UiDivider.size5(),
               _ListTile(
                 onTap: () async =>
-                    AppPathsController.of(context).toManageSubscription(),
+                    AppPathsController.of(context).toExplanation(),
                 title: LocalizedMap(
                   value: {
-                    languages.en: 'Manage subscription',
-                    languages.it: 'Gestisci abbonamento',
-                    languages.ru: 'Управление подпиской',
+                    languages.en: 'How to use?',
+                    languages.it: 'Come usarlo?',
+                    languages.ru: 'Как пользоваться?',
                   },
                 ).getValue(locale),
-                icon: CupertinoIcons.star,
+                icon: CupertinoIcons.wand_stars,
               ),
               UiDivider.size1(),
-              _ListTile(
-                onTap: () async => AppPathsController.of(context).toPaywall(),
-                title: LocalizedMap(
-                  value: {
-                    languages.en: 'PRO version',
-                    languages.it: 'Versione PRO',
-                    languages.ru: 'Версия PRO',
-                  },
-                ).getValue(locale),
-                icon: CupertinoIcons.star,
-              ),
-              UiDivider.size1(),
+              if (activeSubscription != null) ...[
+                _ListTile(
+                  onTap: () async =>
+                      AppPathsController.of(context).toManageSubscription(),
+                  title: LocalizedMap(
+                    value: {
+                      languages.en: 'Manage subscription',
+                      languages.it: 'Gestisci abbonamento',
+                      languages.ru: 'Управление подпиской',
+                    },
+                  ).getValue(locale),
+                  icon: CupertinoIcons.star,
+                ),
+                UiDivider.size1(),
+              ] else ...[
+                _ListTile(
+                  onTap: () async => AppPathsController.of(context).toPaywall(),
+                  title: LocalizedMap(
+                    value: {
+                      languages.en: 'PRO version',
+                      languages.it: 'Versione PRO',
+                      languages.ru: 'Версия PRO',
+                    },
+                  ).getValue(locale),
+                  icon: CupertinoIcons.star,
+                ),
+                UiDivider.size1(),
+              ],
             ],
             _ListTile(
               onTap: () {
