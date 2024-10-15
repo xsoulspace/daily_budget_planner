@@ -14,6 +14,7 @@ class PurchaseInitializer {
   final SubscriptionManager subscriptionManager;
 
   StreamSubscription<PurchaseVerificationDto>? _purchaseUpdateSubscription;
+  Future<void> restore() async => _restore();
 
   Future<void> init() async {
     monetizationTypeNotifier.setStatus(MonetizationStatus.loading);

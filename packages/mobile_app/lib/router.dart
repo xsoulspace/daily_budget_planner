@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_other/privacy_screen.dart';
+import 'package:mobile_app/ui_other/terms_screen.dart';
 import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 
 enum ScreenPaths {
@@ -8,6 +10,8 @@ enum ScreenPaths {
   paywall('paywall'),
   manageSubscription('manage-subscription'),
   thanksForSubscribing('subscribing-thanks'),
+  privacy('privacy'),
+  terms('terms'),
   explanation('explain');
 
   const ScreenPaths(this.value);
@@ -42,6 +46,14 @@ final router = GoRouter(
               ScreenPaths.manageSubscription.value,
               (final context, final state) => const ManageSubscriptionScreen(),
             ),
+            AppRoute(
+              ScreenPaths.privacy.value,
+              (final context, final state) => const PrivacyScreen(),
+            ),
+            AppRoute(
+              ScreenPaths.terms.value,
+              (final context, final state) => const TermsScreen(),
+            ),
           ],
         ),
       ],
@@ -68,13 +80,16 @@ String? _handleRootRedirect(
 class AppPathsController {
   AppPathsController.of(this.context);
   final BuildContext context;
+  final _homeRoutes = [ScreenPaths.home];
   void toRoot() => go(ScreenPaths.root);
   void toHome() => go(ScreenPaths.home);
-  void toPaywall() => go(ScreenPaths.paywall, routes: [ScreenPaths.home]);
+  void toPrivacy() => go(ScreenPaths.privacy, routes: _homeRoutes);
+  void toTerms() => go(ScreenPaths.terms, routes: _homeRoutes);
+  void toPaywall() => go(ScreenPaths.paywall, routes: _homeRoutes);
   void toThanksForSubscribing() =>
-      go(ScreenPaths.thanksForSubscribing, routes: [ScreenPaths.home]);
+      go(ScreenPaths.thanksForSubscribing, routes: _homeRoutes);
   void toManageSubscription() =>
-      go(ScreenPaths.manageSubscription, routes: [ScreenPaths.home]);
+      go(ScreenPaths.manageSubscription, routes: _homeRoutes);
   void toExplanation({
     final bool isFirstTimeOpening = false,
   }) =>

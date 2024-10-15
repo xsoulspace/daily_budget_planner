@@ -23,4 +23,6 @@ class Envs {
   static final storeTarget = InstallPlatformTarget.fromString(
     const String.fromEnvironment('STORE', defaultValue: 'snapstore'),
   );
+  static const privacyPolicyUrl = '';
+  static const termsUrl = '';
 }

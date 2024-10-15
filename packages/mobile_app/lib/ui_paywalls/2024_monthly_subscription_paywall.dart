@@ -280,7 +280,9 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                             languages.ru: 'Восстановить',
                           },
                         ).getValue(locale),
-                        onPressed: () {},
+                        // TODO(arenukvern): add loader
+                        onPressed: () async =>
+                            context.read<PurchaseInitializer>().restore(),
                       ),
                     ),
                   Flexible(
@@ -292,7 +294,8 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                           languages.ru: 'Условия',
                         },
                       ).getValue(locale),
-                      onPressed: () {},
+                      onPressed: () async =>
+                          AppPathsController.of(context).toTerms(),
                     ),
                   ),
                   Flexible(
@@ -304,7 +307,8 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget {
                           languages.ru: 'Конфиденциальность',
                         },
                       ).getValue(locale),
-                      onPressed: () {},
+                      onPressed: () async =>
+                          AppPathsController.of(context).toPrivacy(),
                     ),
                   ),
                 ],

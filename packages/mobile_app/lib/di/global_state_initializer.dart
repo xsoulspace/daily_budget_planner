@@ -1,4 +1,4 @@
-import 'package:life_hooks/life_hooks.dart' hide Disposable;
+import 'package:life_hooks/life_hooks.dart';
 import 'package:mobile_app/common_imports.dart';
 
 class PreloadingScreen extends StatefulWidget {

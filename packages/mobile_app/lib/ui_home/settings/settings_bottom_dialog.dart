@@ -25,9 +25,7 @@ class SettingsBottomPopup extends StatelessWidget {
           children: [
             if (isSubscriptionMonetization) ...[
               _ListTile(
-                onTap: () {
-                  // TODO(arenukvern): description
-                },
+                onTap: () async => AppPathsController.of(context).toTerms(),
                 title: LocalizedMap(
                   value: {
                     languages.en: 'Terms of use',
@@ -39,9 +37,7 @@ class SettingsBottomPopup extends StatelessWidget {
               ),
               UiDivider.size1(),
               _ListTile(
-                onTap: () {
-                  // TODO(arenukvern): description
-                },
+                onTap: () async => AppPathsController.of(context).toPrivacy(),
                 title: LocalizedMap(
                   value: {
                     languages.en: 'Privacy policy',
