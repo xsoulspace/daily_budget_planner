@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_annotating_with_dynamic
 
-import 'package:flutter/foundation.dart';
-import 'package:life_hooks/life_hooks.dart';
+import 'package:mobile_app/common_imports.dart';
 
 enum AnalyticEvents {
   usedInAndroid,
