@@ -23,6 +23,8 @@ class Envs {
   static final storeTarget = InstallPlatformTarget.fromString(
     const String.fromEnvironment('STORE', defaultValue: 'snapstore'),
   );
-  static const privacyPolicyUrl = '';
-  static const termsUrl = '';
+  static const privacyPolicyUrl =
+      'https://raw.githubusercontent.com/xsoulspace/daily_budget_planner/refs/heads/main/PRIVACY_POLICY.md';
+  static const termsUrl =
+      'https://raw.githubusercontent.com/xsoulspace/daily_budget_planner/refs/heads/main/TERMS_AND_CONDITIONS.md';
 }
