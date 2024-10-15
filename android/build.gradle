@@ -1,29 +1,43 @@
-buildscript {
-    ext.kotlin_version = '1.7.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
+    //  solved with  https://stackoverflow.com/a/77738936/9908821
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                if (namespace == null) {
+                    namespace project.group
+                }
+            }
+        }
+        // solved with https://stackoverflow.com/q/69033022/9908821
+        // if (project.plugins.hasPlugin("com.android.application") ||
+        //         project.plugins.hasPlugin("com.android.library")) {
+        //     project.android {
+        //         compileSdkVersion 35
+        //         buildToolsVersion "35.0.0"
+        //     }
+        // }
+    }
+    
+    // Default jvmTarget to the all projects
+    // Overrides kotlinOptions { jvmTarget = '...' } in 'app/build.gradle'
+    // tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    //     kotlinOptions {
+    //         jvmTarget = "1.8"
+    //     }
+    // }
+
 }
 
-rootProject.buildDir = '../build'
+rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {

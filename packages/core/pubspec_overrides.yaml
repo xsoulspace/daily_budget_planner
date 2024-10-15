@@ -1,7 +1,0 @@
-# melos_managed_dependency_overrides: ui_kit,ui_locale,intl
-dependency_overrides:
-  ui_kit:
-    path: ../ui_kit
-  ui_locale:
-    path: ../ui_locale
-  intl: ^0.18.0

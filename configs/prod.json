@@ -1,0 +1,6 @@
+{
+  "TEST_PAYMENTS": false,
+  "LOGGING": false,
+  "MONETIZATION": "free",
+  "STORE": "webSelfhost"
+}

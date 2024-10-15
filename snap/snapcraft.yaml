@@ -1,5 +1,5 @@
 name: daily-budget-planner
-version: 0.0.2+2
+version: 0.1.0+5
 summary: Give yourself quick insight of what amount of money can be spent in day / week
 description: |
   The app purpose - give quick insight of
@@ -35,6 +35,11 @@ apps:
 
     slots:
       - dbus-daily-budget-planner
+
+# https://forum.snapcraft.io/t/failed-to-install-or-refresh-a-snap-flutter-does-not-exist/25623
+architectures:
+  - build-on: amd64
+  - build-on: arm64
 
 parts:
   daily-budget-planner:
