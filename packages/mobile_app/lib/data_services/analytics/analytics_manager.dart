@@ -1,8 +1,6 @@
 // ignore_for_file:  avoid_annotating_with_dynamic
 
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_services/analytics/models/analytics_event.dart';
-import 'package:mobile_app/data_services/analytics/models/analytics_events.dart';
 
 class AnalyticsManager implements Loadable, Disposable {
   AnalyticsManager();

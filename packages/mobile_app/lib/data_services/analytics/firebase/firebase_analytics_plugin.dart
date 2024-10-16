@@ -1,7 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_services/analytics/models/analytics_event.dart';
-import 'package:mobile_app/data_services/analytics/models/analytics_events.dart';
 import 'package:universal_io/io.dart';
 
 class FirebaseAnalyticsPlugin implements AnalyticsService {
@@ -24,12 +22,15 @@ class FirebaseAnalyticsPlugin implements AnalyticsService {
   @override
   Future<void> logEvent(final AnalyticsEvent event) async {
     if (!_isEnabled) return;
-    final parameters = event.parameters as Map<String, Object>?;
+    final parameters = <String, Object>{
+      for (final entry in (event.parameters ?? {}).entries)
+        entry.key: entry.value,
+    };
     switch (event.name) {
       case AnalyticsEvents.kScreenView:
         await _analytics.logScreenView(
           screenName:
-              parameters?[AnalyticsEvents.kScreenViewScreenName] as String?,
+              parameters[AnalyticsEvents.kScreenViewScreenName] as String?,
           parameters: parameters,
         );
       case AnalyticsEvents.kButtonClick:
@@ -39,10 +40,10 @@ class FirebaseAnalyticsPlugin implements AnalyticsService {
         );
       case AnalyticsEvents.kPurchaseComplete:
         await _analytics.logPurchase(
-          value: doubleFromJson(parameters?[AnalyticsEvents.kPurchaseValue]),
-          currency: parameters?[AnalyticsEvents.kPurchaseCurrency] as String?,
+          value: doubleFromJson(parameters[AnalyticsEvents.kPurchaseValue]),
+          currency: parameters[AnalyticsEvents.kPurchaseCurrency] as String?,
           transactionId:
-              parameters?[AnalyticsEvents.kPurchaseTransactionId] as String?,
+              parameters[AnalyticsEvents.kPurchaseTransactionId] as String?,
           // TODO(arenukvern): add other parameters
           parameters: parameters,
         );
