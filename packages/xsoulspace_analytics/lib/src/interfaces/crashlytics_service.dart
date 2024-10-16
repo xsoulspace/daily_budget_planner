@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_annotating_with_dynamic
 
-import 'package:mobile_app/common_imports.dart';
+import 'package:flutter/foundation.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
 class NoopCrashlyticsService implements CrashlyticsService {
   @override

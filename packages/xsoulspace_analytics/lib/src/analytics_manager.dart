@@ -1,6 +1,10 @@
 // ignore_for_file:  avoid_annotating_with_dynamic
 
-import 'package:mobile_app/common_imports.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
+
+import 'firebase/firebase.dart';
+import 'interfaces/interfaces.dart';
+import 'models/models.dart';
 
 class AnalyticsManager implements Loadable, Disposable {
   AnalyticsManager();

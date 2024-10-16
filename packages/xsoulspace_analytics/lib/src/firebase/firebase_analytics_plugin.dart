@@ -1,15 +1,20 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:mobile_app/common_imports.dart';
 import 'package:universal_io/io.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
+
+import '../interfaces/interfaces.dart';
+import '../models/models.dart';
 
 class FirebaseAnalyticsPlugin implements AnalyticsService {
+  FirebaseAnalyticsPlugin();
+  final bool forceAnalytics = false;
   late final FirebaseAnalytics _analytics;
   bool _isEnabled = false;
 
   @override
   Future<void> onLoad() async {
     final isAllowed =
-        kTestingAnalytics || (!(Platform.isLinux || Platform.isWindows));
+        forceAnalytics || (!(Platform.isLinux || Platform.isWindows));
     _isEnabled = isAllowed;
     if (!isAllowed) return;
     _analytics = FirebaseAnalytics.instance;

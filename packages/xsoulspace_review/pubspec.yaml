@@ -1,0 +1,16 @@
+name: xsoulspace_review
+publish_to: none
+description: Useful tools for review for stores and user feedback
+
+version: 0.1.0
+
+environment:
+  sdk: ">=3.5.3 <4.0.0"
+
+dependencies:
+  wiredash: ^2.2.2
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  lint: ^2.3.0
+  xsoulspace_lints: ^0.0.11
