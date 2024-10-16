@@ -51,7 +51,6 @@ class GithubFetch with HasLocalApis {
   Future<String> fetchRaw({required final String url}) async {
     final prefs = localDb;
     final cacheKey = '$_cachePrefix$url';
-    await prefs.setString(key: cacheKey, value: '');
     final cachedData = await prefs.getString(key: cacheKey);
     final cachedTime = await prefs.getInt(key: '${cacheKey}_time');
 
