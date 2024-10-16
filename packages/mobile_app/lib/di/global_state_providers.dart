@@ -23,6 +23,7 @@ class GlobalStateProviders extends StatelessWidget {
         ChangeNotifierProvider<MonetizationStatusNotifier>.value(value: g()),
         Provider<AnalyticsManager>.value(value: g()),
         Provider<AnalyticsService>.value(value: g()),
+        ChangeNotifierProvider<StoreReviewRequester>.value(value: g()),
       ],
       child: builder(context),
     );

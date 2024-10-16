@@ -34,7 +34,7 @@ base class StoreReviewer {
   ///
   /// @ai Implement this method for any initialization logic specific to the
   /// reviewer.
-  Future<void> onLoad() async {}
+  Future<bool> onLoad() async => false;
 
   /// Requests a review from the user.
   ///

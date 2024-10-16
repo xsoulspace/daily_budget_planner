@@ -13,6 +13,9 @@ final class SnapStoreReviewer extends StoreReviewer {
   final ReviewerFallbackConsentBuilder fallbackConsentBuilder;
 
   @override
+  Future<bool> onLoad() async => true;
+
+  @override
   Future<void> requestReview(
     final BuildContext context, {
     final Locale? locale,

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:wiredash/wiredash.dart';
 
+export 'wiredash_custom_delegate.dart';
+
 class UserFeedbackWiredashDto {
   const UserFeedbackWiredashDto({
     required this.projectId,

@@ -11,6 +11,7 @@ class SettingsBottomPopup extends StatelessWidget {
   final VoidCallback onClose;
   @override
   Widget build(final BuildContext context) {
+    final storeReviewRequester = context.watch<StoreReviewRequester>();
     final (:isSubscriptionMonetization) =
         useIsSubscriptionMonetization(context);
     final (:activeSubscription) = useActiveSubscription(context);
@@ -46,6 +47,35 @@ class SettingsBottomPopup extends StatelessWidget {
               ).getValue(locale),
               icon: Icons.privacy_tip_outlined,
             ),
+            if (storeReviewRequester.isAvailable) ...[
+              UiDivider.size5(),
+              _ListTile(
+                onTap: () async =>
+                    AppPathsController.of(context).toExplanation(),
+                title: LocalizedMap(
+                  value: {
+                    languages.en: 'Leave Review',
+                    languages.it: 'Lascia un feedback',
+                    languages.ru: 'Оставить отзыв',
+                  },
+                ).getValue(locale),
+                icon: Icons.rate_review_outlined,
+              ),
+            ],
+            if (Envs.isWiredashAvailable) ...[
+              UiDivider.size1(),
+              _ListTile(
+                onTap: () async => UserFeedback.show(context),
+                title: LocalizedMap(
+                  value: {
+                    languages.en: 'Support & Suggest',
+                    languages.it: 'Supporto & Suggerimenti',
+                    languages.ru: 'Помощь и предложения',
+                  },
+                ).getValue(locale),
+                icon: CupertinoIcons.question_circle,
+              ),
+            ],
             UiDivider.size5(),
             if (isSubscriptionMonetization) ...[
               if (activeSubscription != null)

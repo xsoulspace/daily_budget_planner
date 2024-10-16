@@ -59,7 +59,7 @@ class AppScaffoldBuilder extends StatelessWidget {
     );
     final app = MaterialApp.router(
       routerConfig: router,
-      // builder: (final context, final child) => child!,
+
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
@@ -81,7 +81,10 @@ class AppScaffoldBuilder extends StatelessWidget {
         dto: UserFeedbackWiredashDto(
           projectId: Envs.wiredashProjectId,
           secret: Envs.wiredashSecret,
-          options: WiredashOptionsData(locale: locale),
+          options: WiredashOptionsData(
+            locale: locale,
+            localizationDelegate: const CustomWiredashTranslationsDelegate(),
+          ),
           feedbackOptions: _getWiredashOptions(locale),
           theme: WiredashThemeData.fromColor(
             primaryColor: AppThemeData.brandLight.primaryColor,

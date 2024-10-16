@@ -30,7 +30,7 @@ import 'store_reviewer.dart';
 /// Ensure proper initialization of [firstReviewPeriod], [reviewPeriod],
 /// [maxReviewCount], [storeReviewer], and [localDb].
 /// {@endtemplate}
-class StoreReviewRequester {
+class StoreReviewRequester extends ChangeNotifier {
   /// Creates an instance of [StoreReviewRequester].
   ///
   /// {@macro store_review_requester}
@@ -62,6 +62,12 @@ class StoreReviewRequester {
   Timer? _timer;
   static const String _lastReviewRequestKey = 'last_review_request';
   static const String _reviewCountKey = 'review_count';
+  bool _isAvailable = false;
+  bool get isAvailable => _isAvailable;
+  set isAvailable(final bool value) {
+    _isAvailable = value;
+    notifyListeners();
+  }
 
   /// Initializes the review requester by checking the last review request time
   /// and review count.
@@ -69,7 +75,8 @@ class StoreReviewRequester {
   /// If no previous request exists, it schedules the first review request.
   /// Otherwise, it schedules based on the elapsed time and review count.
   Future<void> onLoad() async {
-    await storeReviewer.onLoad();
+    isAvailable = await storeReviewer.onLoad();
+    if (!isAvailable) return;
 
     final lastReviewRequest = await localDb.getInt(key: _lastReviewRequestKey);
     final reviewCount = await localDb.getInt(key: _reviewCountKey);
@@ -95,6 +102,7 @@ class StoreReviewRequester {
 
   /// Schedules a review request after a specified delay.
   void _scheduleReviewRequest({final Duration? initialDelay}) {
+    if (!isAvailable) return;
     _timer?.cancel();
     _timer = Timer(initialDelay ?? reviewPeriod, requestReview);
   }
@@ -105,6 +113,7 @@ class StoreReviewRequester {
     final BuildContext? context,
     final Locale? locale,
   }) async {
+    if (!isAvailable) return;
     final isManual = context != null;
     final reviewCount = await localDb.getInt(key: _reviewCountKey);
     if (reviewCount >= maxReviewCount && !isManual) return;
@@ -136,7 +145,9 @@ class StoreReviewRequester {
   }
 
   /// Disposes of the timer to prevent memory leaks.
+  @override
   void dispose() {
     _timer?.cancel();
+    super.dispose();
   }
 }

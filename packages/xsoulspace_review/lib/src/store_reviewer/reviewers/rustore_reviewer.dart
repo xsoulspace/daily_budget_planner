@@ -5,8 +5,9 @@ import '../store_reviewer.dart';
 
 final class RuStoreReviewer extends StoreReviewer {
   @override
-  Future<void> onLoad() async {
+  Future<bool> onLoad() async {
     await RustoreReviewClient.initialize();
+    return true;
   }
 
   @override
