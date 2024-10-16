@@ -343,6 +343,7 @@ class ResultPage extends StatelessWidget {
     final locale = useLocale(context);
     final (:isSubscriptionMonetization) =
         useIsSubscriptionMonetization(context);
+    final (:activeSubscription) = useActiveSubscription(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -394,7 +395,9 @@ class ResultPage extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ).animate().fadeIn(),
           const SizedBox(height: 24),
-          if (isFirstOpening && isSubscriptionMonetization) ...[
+          if (isFirstOpening &&
+              isSubscriptionMonetization &&
+              activeSubscription == null) ...[
             Text(
               LocalizedMap(
                 value: {

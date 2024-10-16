@@ -1,4 +1,4 @@
-import 'package:life_hooks/life_hooks.dart' hide Disposable;
+import 'package:life_hooks/life_hooks.dart';
 import 'package:mobile_app/common_imports.dart';
 
 class PreloadingScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _PreloadingScreenState extends State<PreloadingScreen> {
 }
 
 class GlobalStateInitializer
-    with HasLocalApis, HasStates, HasAnalyticsService
+    with HasLocalApis, HasStates, HasAnalytics
     implements StateInitializer, Disposable {
   @override
   Future<void> onLoad(final BuildContext context) async {

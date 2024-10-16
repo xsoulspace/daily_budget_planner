@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_app/common_imports.dart';
 
+export 'markdown_screen.dart';
+
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
 

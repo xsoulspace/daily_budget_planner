@@ -13,13 +13,13 @@ allprojects {
             }
         }
         // solved with https://stackoverflow.com/q/69033022/9908821
-        // if (project.plugins.hasPlugin("com.android.application") ||
-        //         project.plugins.hasPlugin("com.android.library")) {
-        //     project.android {
-        //         compileSdkVersion 35
-        //         buildToolsVersion "35.0.0"
-        //     }
-        // }
+        if (project.plugins.hasPlugin("com.android.application") ||
+                project.plugins.hasPlugin("com.android.library")) {
+            project.android {
+                compileSdkVersion 35
+                buildToolsVersion "35.0.0"
+            }
+        }
     }
     
     // Default jvmTarget to the all projects
