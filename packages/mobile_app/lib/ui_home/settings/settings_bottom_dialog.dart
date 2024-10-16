@@ -76,17 +76,6 @@ class SettingsBottomPopup extends StatelessWidget {
               UiDivider.size1(),
             ],
             _ListTile(
-              onTap: () async => AppPathsController.of(context).toPaywall(),
-              title: LocalizedMap(
-                value: {
-                  languages.en: 'PRO version',
-                  languages.it: 'Versione PRO',
-                  languages.ru: 'Версия PRO',
-                },
-              ).getValue(locale),
-              icon: CupertinoIcons.star,
-            ),
-            _ListTile(
               onTap: () async => AppPathsController.of(context).toExplanation(),
               title: LocalizedMap(
                 value: {
