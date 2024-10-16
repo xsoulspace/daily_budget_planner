@@ -30,4 +30,6 @@ class Envs {
   static const wiredashProjectId =
       String.fromEnvironment('WIREDASH_PROJECT_ID');
   static const wiredashSecret = String.fromEnvironment('WIREDASH_API_KEY');
+  static final isWiredashAvailable =
+      wiredashSecret.isNotEmpty && wiredashProjectId.isNotEmpty;
 }
