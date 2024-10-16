@@ -1,6 +1,0 @@
-{
-  "TEST_PAYMENTS": true,
-  "LOGGING": true,
-  "MONETIZATION": "subscription",
-  "STORE": "rustore"
-}
