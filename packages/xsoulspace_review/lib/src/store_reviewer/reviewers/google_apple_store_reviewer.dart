@@ -7,7 +7,10 @@ final class GoogleAppleStoreReviewer extends StoreReviewer {
   final InAppReview _inAppReview = InAppReview.instance;
 
   @override
-  Future<void> requestReview(final BuildContext context) async {
+  Future<void> requestReview(
+    final BuildContext context, {
+    final Locale? locale,
+  }) async {
     if (await _inAppReview.isAvailable()) {
       await _inAppReview.requestReview();
     }

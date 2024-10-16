@@ -3,18 +3,28 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:wiredash/wiredash.dart';
 
-typedef UserFeedbackWiredashDto = ({
-  String projectId,
-  String secret,
-  FutureOr<CustomizableWiredashMetaData> Function(
+class UserFeedbackWiredashDto {
+  const UserFeedbackWiredashDto({
+    required this.projectId,
+    required this.secret,
+    this.collectMetaData,
+    this.feedbackOptions,
+    this.psOptions,
+    this.theme,
+    this.options,
+    this.padding,
+  });
+  final String projectId;
+  final String secret;
+  final FutureOr<CustomizableWiredashMetaData> Function(
     CustomizableWiredashMetaData metaData,
-  )? collectMetaData,
-  WiredashFeedbackOptions? feedbackOptions,
-  PsOptions? psOptions,
-  WiredashThemeData? theme,
-  WiredashOptionsData? options,
-  EdgeInsets? padding,
-});
+  )? collectMetaData;
+  final WiredashFeedbackOptions? feedbackOptions;
+  final PsOptions? psOptions;
+  final WiredashThemeData? theme;
+  final WiredashOptionsData? options;
+  final EdgeInsets? padding;
+}
 
 class UserFeedback extends StatelessWidget {
   const UserFeedback.wiredash({

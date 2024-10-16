@@ -10,7 +10,10 @@ final class RuStoreReviewer extends StoreReviewer {
   }
 
   @override
-  Future<void> requestReview(final BuildContext context) async {
+  Future<void> requestReview(
+    final BuildContext context, {
+    final Locale? locale,
+  }) async {
     await RustoreReviewClient.request();
     await RustoreReviewClient.review();
   }

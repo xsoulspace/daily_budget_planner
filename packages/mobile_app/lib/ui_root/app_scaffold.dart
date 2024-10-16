@@ -57,24 +57,30 @@ class AppScaffoldBuilder extends StatelessWidget {
     final locale = context.select<AppSettingsNotifier, Locale>(
       (final c) => c.locale.value,
     );
-    return MaterialApp.router(
-      routerConfig: router,
-      // builder: (final context, final child) => child!,
-      themeMode: ThemeMode.light,
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        ...S.localizationsDelegates,
-        FormBuilderLocalizations.delegate,
-      ],
+    return UserFeedback.wiredash(
+      dto: UserFeedbackWiredashDto(
+        projectId: Envs.wiredashProjectId,
+        secret: Envs.wiredashSecret,
+      ),
+      child: MaterialApp.router(
+        routerConfig: router,
+        // builder: (final context, final child) => child!,
+        themeMode: ThemeMode.light,
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          ...S.localizationsDelegates,
+          FormBuilderLocalizations.delegate,
+        ],
 
-      /// Providing a restorationScopeId allows the Navigator built by
-      /// the MaterialApp to restore the navigation stack when a user
-      /// leaves and returns to the app after it has been killed while
-      /// running in the background.
-      restorationScopeId: 'app',
-      locale: locale,
-      supportedLocales: Locales.values,
-      theme: AppThemeData.brandLight,
+        /// Providing a restorationScopeId allows the Navigator built by
+        /// the MaterialApp to restore the navigation stack when a user
+        /// leaves and returns to the app after it has been killed while
+        /// running in the background.
+        restorationScopeId: 'app',
+        locale: locale,
+        supportedLocales: Locales.values,
+        theme: AppThemeData.brandLight,
+      ),
     );
   }
 }

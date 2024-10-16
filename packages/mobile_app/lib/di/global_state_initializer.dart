@@ -51,6 +51,7 @@ class GlobalStateInitializer
         Future.wait([
           weeklyCubit.onLoad(),
           monthlyCubit.onLoad(),
+          storeReviewRequester.onLoad(),
         ]),
       );
       await purchaseIntializer.init();

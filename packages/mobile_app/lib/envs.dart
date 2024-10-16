@@ -29,5 +29,5 @@ class Envs {
       'https://raw.githubusercontent.com/xsoulspace/daily_budget_planner/refs/heads/main/TERMS_AND_CONDITIONS.md';
   static const wiredashProjectId =
       String.fromEnvironment('WIREDASH_PROJECT_ID');
-  static const wiredashApiKey = String.fromEnvironment('WIREDASH_API_KEY');
+  static const wiredashSecret = String.fromEnvironment('WIREDASH_API_KEY');
 }
