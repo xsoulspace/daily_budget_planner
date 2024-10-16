@@ -12,8 +12,14 @@ class GlobalInitializerImpl {
       ..firebaseInitializer = FirebaseInitializer(
         firebaseOptions: firebaseOptions,
       )
-      ..analyticsService = FirebaseAnalyticsPlugin()
-      ..crashlyticsService = FirebaseCrashlyticsPlugin();
+      ..analyticsService = FirebaseAnalyticsPlugin(
+        // ignore: avoid_redundant_argument_values
+        forceAnalytics: kTestingAnalytics,
+      )
+      ..crashlyticsService = FirebaseCrashlyticsPlugin(
+        // ignore: avoid_redundant_argument_values
+        forceCrashlytics: kTestingCrashlytics,
+      );
     await analyticsManager.onLoad();
   }
 

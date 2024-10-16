@@ -6,8 +6,10 @@ import '../interfaces/interfaces.dart';
 import '../models/models.dart';
 
 class FirebaseAnalyticsPlugin implements AnalyticsService {
-  FirebaseAnalyticsPlugin();
-  final bool forceAnalytics = false;
+  FirebaseAnalyticsPlugin({
+    this.forceAnalytics = false,
+  });
+  final bool forceAnalytics;
   late final FirebaseAnalytics _analytics;
   bool _isEnabled = false;
 
