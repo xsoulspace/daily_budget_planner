@@ -23,31 +23,31 @@ class SettingsBottomPopup extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            _ListTile(
+              onTap: () async => AppPathsController.of(context).toTerms(),
+              title: LocalizedMap(
+                value: {
+                  languages.en: 'Terms of use',
+                  languages.it: 'Condizioni di utilizzo',
+                  languages.ru: 'Условия использования',
+                },
+              ).getValue(locale),
+              icon: CupertinoIcons.doc_plaintext,
+            ),
+            UiDivider.size1(),
+            _ListTile(
+              onTap: () async => AppPathsController.of(context).toPrivacy(),
+              title: LocalizedMap(
+                value: {
+                  languages.en: 'Privacy policy',
+                  languages.it: 'Condizioni di utilizzo',
+                  languages.ru: 'Политика конфиденциальности',
+                },
+              ).getValue(locale),
+              icon: Icons.privacy_tip_outlined,
+            ),
+            UiDivider.size5(),
             if (isSubscriptionMonetization) ...[
-              _ListTile(
-                onTap: () async => AppPathsController.of(context).toTerms(),
-                title: LocalizedMap(
-                  value: {
-                    languages.en: 'Terms of use',
-                    languages.it: 'Condizioni di utilizzo',
-                    languages.ru: 'Условия использования',
-                  },
-                ).getValue(locale),
-                icon: CupertinoIcons.doc_plaintext,
-              ),
-              UiDivider.size1(),
-              _ListTile(
-                onTap: () async => AppPathsController.of(context).toPrivacy(),
-                title: LocalizedMap(
-                  value: {
-                    languages.en: 'Privacy policy',
-                    languages.it: 'Condizioni di utilizzo',
-                    languages.ru: 'Политика конфиденциальности',
-                  },
-                ).getValue(locale),
-                icon: Icons.privacy_tip_outlined,
-              ),
-              UiDivider.size5(),
               if (activeSubscription != null)
                 _ListTile(
                   onTap: () async =>
