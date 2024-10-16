@@ -2,18 +2,18 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/common_imports.dart';
 
-class MdScreen extends StatefulWidget {
-  const MdScreen({
+class MarkdownScreen extends StatefulWidget {
+  const MarkdownScreen({
     required this.markdownUrlSource,
     super.key,
   });
   final String markdownUrlSource;
 
   @override
-  State<MdScreen> createState() => _MdScreenState();
+  State<MarkdownScreen> createState() => _MarkdownScreenState();
 }
 
-class _MdScreenState extends State<MdScreen> {
+class _MarkdownScreenState extends State<MarkdownScreen> {
   bool _loading = true;
   String _markdownString = '';
   @override
@@ -23,8 +23,8 @@ class _MdScreenState extends State<MdScreen> {
   }
 
   Future<void> _onLoad() async {
-    _markdownString = await GithubFetch.fetchRaw(url: widget.markdownUrlSource);
-
+    final githubFetch = GithubFetch._();
+    _markdownString = await githubFetch.fetchRaw(url: widget.markdownUrlSource);
     setState(() => _loading = false);
   }
 
@@ -42,14 +42,35 @@ class _MdScreenState extends State<MdScreen> {
       );
 }
 
-// TODO(arenukvern): cache for one day
-// TODO(arenukvern): replace to Github API
-class GithubFetch {
+class GithubFetch with HasLocalApis {
   GithubFetch._();
-  static Future<String> fetchRaw({
-    required final String url,
-  }) async {
+
+  static const _cachePrefix = 'github_fetch_';
+  static const _cacheDuration = Duration(days: 1);
+
+  Future<String> fetchRaw({required final String url}) async {
+    final prefs = localDb;
+    final cacheKey = '$_cachePrefix$url';
+    await prefs.setString(key: cacheKey, value: '');
+    final cachedData = await prefs.getString(key: cacheKey);
+    final cachedTime = await prefs.getInt(key: '${cacheKey}_time');
+
+    final cacheAge = DateTime.now().difference(
+      DateTime.fromMillisecondsSinceEpoch(cachedTime),
+    );
+    if (cachedData.isNotEmpty && cacheAge < _cacheDuration) {
+      return cachedData;
+    }
+
     final response = await http.get(Uri.parse(url));
-    return response.body;
+    final fetchedData = response.body;
+
+    await prefs.setString(key: cacheKey, value: fetchedData);
+    await prefs.setInt(
+      key: '${cacheKey}_time',
+      value: DateTime.now().millisecondsSinceEpoch,
+    );
+
+    return fetchedData;
   }
 }

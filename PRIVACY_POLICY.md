@@ -1,6 +1,6 @@
 **Privacy Policy**
 
-This privacy policy is applicable to the DailyBu app (hereinafter referred to as "Application") for mobile devices, which was developed by IP Malofeev Anton Gennadevich (hereinafter referred to as "Service Provider") as a a Freemium service. This service is provided "AS IS".
+This privacy policy is applicable to the DailyBu (earlier called "Daily Budget Planner") app (hereinafter referred to as "Application") for devices, which was developed by IP Malofeev Anton Gennadevich (hereinafter referred to as "Service Provider") as a a Freemium service. This service is provided "AS IS".
 
 **What information does the Application obtain and how is it used?**  
 **User Provided Information**
@@ -11,11 +11,11 @@ The Service Provider may also use the information you provided them to contact y
 
 **Automatically Collected Information**
 
-In addition, the Application may collect certain information automatically, including, but not limited to, the type of mobile device you use, your mobile devices unique device ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browsers you use, and information about the way you use the Application.
+In addition, the Application may collect certain information automatically, including, but not limited to, the type of device you use, your devices unique device ID, the IP address of your device, your operating system, the type of Internet browsers you use, and information about the way you use the Application.
 
 **Does the Application collect precise real time location information of the device?**
 
-This Application does not gather precise information about the location of your mobile device.
+This Application does not gather precise information about the location of your device.
 
 This Application collects your device's location, which helps the Service Provider determine your approximate geographical location and make use of in below ways:
 
@@ -43,7 +43,7 @@ The Service Provider may disclose User Provided and Automatically Collected Info
 
 **What are my opt-out rights?**
 
-You can halt all collection of information by the Application easily by uninstalling the Application. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile application marketplace or network.
+You can halt all collection of information by the Application easily by uninstalling the Application. You may use the standard uninstall processes as may be available as part of your device or via the application marketplace or network.
 
 **Data Retention Policy, Managing Your Information**
 

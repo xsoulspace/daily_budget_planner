@@ -4,12 +4,24 @@ class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
 
   @override
-  Widget build(final BuildContext context) => UiScaffold(
-        appBar: AppBar(
-          leading: UiBackButton(),
+  Widget build(final BuildContext context) {
+    final locale = useLocale(context);
+    return UiScaffold(
+      appBar: AppBar(
+        leading: UiBackButton(),
+        title: Text(
+          LocalizedMap(
+            value: {
+              languages.en: 'Privacy Policy',
+              languages.it: 'Politica sulla privacy',
+              languages.ru: 'Политика конфиденциальности',
+            },
+          ).getValue(locale),
         ),
-        body: MdScreen(
-          markdownUrlSource: Envs.privacyPolicyUrl,
-        ),
-      );
+      ),
+      body: MarkdownScreen(
+        markdownUrlSource: Envs.privacyPolicyUrl,
+      ),
+    );
+  }
 }
