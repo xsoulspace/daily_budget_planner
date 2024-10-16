@@ -4,6 +4,8 @@ build-web-prod:
 	fvm flutter build web --csp --dart-define-from-file=configs/prod.json  --target=lib/main_prod.dart
 build-rustore-prod:
 	fvm flutter build apk --dart-define-from-file=configs/rustore_prod.json --target=lib/main_prod.dart
+build-rustore-free:
+	fvm flutter build apk --dart-define-from-file=configs/rustore_prod_free.json --target=lib/main_prod.dart
 build-rustore-local:
 	fvm flutter build apk --dart-define-from-file=configs/rustore_local.json 
 build-google-prod:
