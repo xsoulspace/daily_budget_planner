@@ -2,5 +2,7 @@
   "TEST_PAYMENTS": false,
   "LOGGING": false,
   "MONETIZATION": "subscription",
-  "STORE": "rustore"
+  "STORE": "rustore",
+  "WIREDASH_PROJECT_ID": "",
+  "WIREDASH_API_KEY": ""
 }

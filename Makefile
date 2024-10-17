@@ -10,3 +10,5 @@ build-rustore-local:
 	fvm flutter build apk --dart-define-from-file=configs/rustore_local.json 
 build-google-prod:
 	fvm flutter build appbundle --dart-define-from-file=configs/google_play_prod.json  --target=lib/main_prod.dart
+build-google-free:
+	fvm flutter build appbundle --dart-define-from-file=configs/google_play_prod_free.json  --target=lib/main_prod.dart
