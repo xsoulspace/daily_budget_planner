@@ -246,6 +246,7 @@ class FlutterRustoreBillingManager implements PurchaseManager {
 
   @override
   Future<void> openSubscriptionManagement() async {
+    // https://www.rustore.ru/help/sdk/rustore-deeplinks
     await launchUrlString('rustore://profile/subscriptions');
   }
 

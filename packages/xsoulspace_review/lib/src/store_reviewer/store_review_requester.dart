@@ -28,20 +28,20 @@ import 'store_reviewer.dart';
 /// [StoreReviewer.onLoad] will be called during [onLoad]
 ///
 /// Ensure proper initialization of [firstReviewPeriod], [reviewPeriod],
-/// [maxReviewCount], [storeReviewer], and [localDb].
+/// [maxReviewCount], [_storeReviewer], and [localDb].
 /// {@endtemplate}
 class StoreReviewRequester extends ChangeNotifier {
   /// Creates an instance of [StoreReviewRequester].
   ///
   /// {@macro store_review_requester}
   StoreReviewRequester({
-    required this.storeReviewer,
     required this.localDb,
+    final StoreReviewer storeReviewer = const StoreReviewer(),
     this.firstReviewPeriod = const Duration(days: 1),
     this.reviewPeriod = const Duration(days: 15),
     this.maxReviewCount = 3,
     this.getLocale,
-  });
+  }) : _storeReviewer = storeReviewer;
   final ValueGetter<Locale>? getLocale;
 
   /// The duration before the first review request.
@@ -54,7 +54,7 @@ class StoreReviewRequester extends ChangeNotifier {
   final int maxReviewCount;
 
   /// The [StoreReviewer] instance used to request reviews.
-  final StoreReviewer storeReviewer;
+  StoreReviewer _storeReviewer;
 
   /// The local database interface for storing review request data.
   final LocalDbI localDb;
@@ -75,7 +75,8 @@ class StoreReviewRequester extends ChangeNotifier {
   /// If no previous request exists, it schedules the first review request.
   /// Otherwise, it schedules based on the elapsed time and review count.
   Future<void> onLoad() async {
-    isAvailable = await storeReviewer.onLoad();
+    _storeReviewer = await StoreReviewerFactory.create();
+    isAvailable = await _storeReviewer.onLoad();
     if (!isAvailable) return;
 
     final lastReviewRequest = await localDb.getInt(key: _lastReviewRequestKey);
@@ -120,9 +121,10 @@ class StoreReviewRequester extends ChangeNotifier {
 
     final effectiveContext = context ?? WidgetsBinding.instance.rootElement;
     if (effectiveContext != null) {
-      await storeReviewer.requestReview(
+      await _storeReviewer.requestReview(
         effectiveContext,
         locale: locale ?? getLocale?.call(),
+        force: isManual,
       );
       await _updateLastReviewRequestTime();
       await _incrementReviewCount();

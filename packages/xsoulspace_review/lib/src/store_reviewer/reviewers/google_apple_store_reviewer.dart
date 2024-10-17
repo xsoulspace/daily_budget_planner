@@ -12,6 +12,7 @@ final class GoogleAppleStoreReviewer extends StoreReviewer {
   Future<void> requestReview(
     final BuildContext context, {
     final Locale? locale,
+    final bool force = false,
   }) async {
     if (await _inAppReview.isAvailable()) {
       await _inAppReview.requestReview();

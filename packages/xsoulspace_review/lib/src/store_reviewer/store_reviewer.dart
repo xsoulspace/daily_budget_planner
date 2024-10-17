@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
 import 'consent_screen.dart';
@@ -28,6 +29,22 @@ typedef ReviewerFallbackConsentBuilder = Future<bool> Function(
 ///
 /// @ai When extending this class, ensure to override [requestReview] method.
 base class StoreReviewer {
+  const StoreReviewer({
+    this.consentBuilder = defaultFallbackConsentBuilder,
+    this.defaultLocale = const Locale('en'),
+    this.packageName = '',
+  });
+  final Locale defaultLocale;
+  final String packageName;
+
+  /// A builder for the consent screen.
+  ///
+  /// This builder is used to show a consent screen before redirecting to the
+  /// store in case the store does not support native in-app review prompt
+  /// or store review limit is reached and [force] is set to `true` i.e.
+  /// manually triggered by the user.
+  final ReviewerFallbackConsentBuilder consentBuilder;
+
   /// Initializes the reviewer.
   ///
   /// Override this method to perform any necessary setup.
@@ -47,7 +64,19 @@ base class StoreReviewer {
   Future<void> requestReview(
     final BuildContext context, {
     final Locale? locale,
+    final bool force = false,
   }) async {}
+
+  /// Launches a scheme.
+  ///
+  /// This method is used to launch a scheme in the app.
+  ///
+  /// @ai Use this method to launch a scheme in the app.
+  Future<void> launchScheme(final String scheme) async {
+    if (await canLaunchUrl(Uri.parse(scheme))) {
+      await launchUrl(Uri.parse(scheme));
+    }
+  }
 }
 
 /// Factory class for creating [StoreReviewer] instances.
@@ -72,13 +101,17 @@ class StoreReviewerFactory {
   /// Linux platforms.
   static Future<StoreReviewer> create({
     final String snapPackageName = '',
+    final String androidPackageName = '',
     final ReviewerFallbackConsentBuilder fallbackConsentBuilder =
         defaultFallbackConsentBuilder,
   }) async {
     final appStoreUtils = AppStoreUtils();
     final installSource = await appStoreUtils.getInstallationSource();
     return switch (installSource) {
-      InstallSource.androidRustore => RuStoreReviewer(),
+      InstallSource.androidRustore => RuStoreReviewer(
+          consentBuilder: fallbackConsentBuilder,
+          packageName: androidPackageName,
+        ),
       InstallSource.androidHuawaiAppGallery => HuaweiStoreReviewer(),
       InstallSource.androidApk ||
       InstallSource.androidGooglePlay ||
@@ -89,7 +122,7 @@ class StoreReviewerFactory {
       _ when installSource.isLinux =>
         SnapStoreReviewer(
           packageName: snapPackageName,
-          fallbackConsentBuilder: fallbackConsentBuilder,
+          consentBuilder: fallbackConsentBuilder,
         ),
       _ when installSource.isWeb => WebStoreReviewer(),
       // TODO(arenukvern): add other platforms

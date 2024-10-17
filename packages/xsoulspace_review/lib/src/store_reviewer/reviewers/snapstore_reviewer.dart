@@ -1,16 +1,13 @@
 import 'package:flutter/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../consent_screen.dart';
 import '../store_reviewer.dart';
 
 final class SnapStoreReviewer extends StoreReviewer {
   SnapStoreReviewer({
-    required this.packageName,
-    this.fallbackConsentBuilder = defaultFallbackConsentBuilder,
+    required super.packageName,
+    super.consentBuilder,
+    super.defaultLocale,
   });
-  final String packageName;
-  final ReviewerFallbackConsentBuilder fallbackConsentBuilder;
 
   @override
   Future<bool> onLoad() async => true;
@@ -19,14 +16,11 @@ final class SnapStoreReviewer extends StoreReviewer {
   Future<void> requestReview(
     final BuildContext context, {
     final Locale? locale,
+    final bool force = false,
   }) async {
-    final isConsent =
-        await fallbackConsentBuilder(context, locale ?? const Locale('en'));
+    final isConsent = await consentBuilder(context, locale ?? defaultLocale);
     if (!isConsent) return;
 
-    final url = Uri.parse('snap://review/$packageName');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    }
+    await launchScheme('snap://review/$packageName');
   }
 }

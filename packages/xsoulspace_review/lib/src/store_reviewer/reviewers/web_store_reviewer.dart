@@ -7,6 +7,7 @@ final class WebStoreReviewer extends StoreReviewer {
   Future<void> requestReview(
     final BuildContext context, {
     final Locale? locale,
+    final bool force = false,
   }) async {
     // TODO(arenukvern): add review request for web
   }

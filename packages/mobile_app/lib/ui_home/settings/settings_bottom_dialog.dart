@@ -42,28 +42,35 @@ class SettingsBottomPopup extends StatelessWidget {
                 value: {
                   languages.en: 'Privacy policy',
                   languages.it: 'Condizioni di utilizzo',
-                  languages.ru: 'Политика конфиденциальности',
+                  languages.ru: 'Приватность',
                 },
               ).getValue(locale),
               icon: Icons.privacy_tip_outlined,
             ),
+            UiDivider.size5(),
             if (storeReviewRequester.isAvailable) ...[
-              UiDivider.size5(),
-              _ListTile(
-                onTap: () async =>
-                    AppPathsController.of(context).toExplanation(),
-                title: LocalizedMap(
-                  value: {
-                    languages.en: 'Leave Review',
-                    languages.it: 'Lascia un feedback',
-                    languages.ru: 'Оставить отзыв',
+              UiLoader(
+                builder: (final context, final isLoading, final setLoading) =>
+                    _ListTile(
+                  isLoading: isLoading,
+                  onTap: () async {
+                    setLoading(true);
+                    await storeReviewRequester.requestReview(context: context);
+                    setLoading(false);
                   },
-                ).getValue(locale),
-                icon: Icons.rate_review_outlined,
+                  title: LocalizedMap(
+                    value: {
+                      languages.en: 'Leave Review',
+                      languages.it: 'Lascia un feedback',
+                      languages.ru: 'Оставить отзыв',
+                    },
+                  ).getValue(locale),
+                  icon: Icons.rate_review_outlined,
+                ),
               ),
+              UiDivider.size1(),
             ],
             if (Envs.isWiredashAvailable) ...[
-              UiDivider.size1(),
               _ListTile(
                 onTap: () async => UserFeedback.show(context),
                 title: LocalizedMap(
@@ -75,8 +82,8 @@ class SettingsBottomPopup extends StatelessWidget {
                 ).getValue(locale),
                 icon: CupertinoIcons.question_circle,
               ),
+              UiDivider.size5(),
             ],
-            UiDivider.size5(),
             if (isSubscriptionMonetization) ...[
               if (activeSubscription != null)
                 _ListTile(
@@ -137,18 +144,21 @@ class _ListTile extends StatelessWidget {
     required this.onTap,
     required this.title,
     required this.icon,
+    this.isLoading = false,
   });
   final VoidCallback onTap;
   final String title;
   final IconData icon;
+  final bool isLoading;
 
   @override
   Widget build(final BuildContext context) => ListTile(
-        onTap: onTap,
+        onTap: isLoading ? () {} : onTap,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
         title: Text(title),
-        trailing: Icon(icon),
+        trailing:
+            isLoading ? const UiCircularProgress.uncentered() : Icon(icon),
       );
 }

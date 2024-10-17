@@ -18,10 +18,14 @@ class LoadingScreen extends StatelessWidget {
 }
 
 class UiCircularProgress extends StatelessWidget {
-  const UiCircularProgress({super.key});
-
+  const UiCircularProgress({super.key}) : centered = true;
+  const UiCircularProgress.uncentered({super.key}) : centered = false;
+  final bool centered;
   @override
-  Widget build(final BuildContext context) => Center(
-        child: CupertinoActivityIndicator(color: context.colorScheme.primary),
-      );
+  Widget build(final BuildContext context) {
+    final child = CupertinoActivityIndicator(
+      color: context.colorScheme.primary,
+    );
+    return centered ? Center(child: child) : child;
+  }
 }

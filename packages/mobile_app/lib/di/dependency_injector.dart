@@ -72,7 +72,6 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   r(subscriptionManager);
   r(
     StoreReviewRequester(
-      storeReviewer: StoreReviewer(),
       localDb: localDb,
       getLocale: () => localeNotifier.value,
     ),

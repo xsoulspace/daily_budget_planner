@@ -79,6 +79,7 @@ class SubscriptionManager extends ChangeNotifier {
     if (_isInitialized) return;
     await getSubscriptions();
     _isInitialized = true;
+    notifyListeners();
   }
 
   Future<void> getSubscriptions() async {
