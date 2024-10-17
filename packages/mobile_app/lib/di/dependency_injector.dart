@@ -30,7 +30,8 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   r<AnalyticsManager>(analyticsManager);
   r<CrashlyticsService>(analyticsManager.crashlyticsService);
   r<AnalyticsService>(analyticsManager.analyticsService);
-  r<LocalDbI>(PrefsDb());
+  final localDb = PrefsDb();
+  r<LocalDbI>(localDb);
   r(UserLocalApi());
   r(AppSettingsLocalApi());
   r(BudgetLocalApi());
@@ -38,11 +39,12 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   /// ********************************************
   /// *      STATES
   /// ********************************************
-
-  r(UiLocaleNotifier(Locales.fallback));
+  final localeNotifier = UiLocaleNotifier(Locales.fallback);
+  r(localeNotifier);
   r(AppSettingsNotifier());
   r(UserNotifier());
   r(AppStatusNotifier());
+  // TODO(arenukvern): create a factory for this
   final PurchaseManager purchaseManager = switch (Envs.storeTarget) {
     InstallPlatformTarget.rustore => FlutterRustoreBillingManager(
         consoleApplicationId: Envs.rustoreApplicationId,
@@ -68,6 +70,12 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
     monetizationTypeNotifier: monetizationTypeNotifier,
   );
   r(subscriptionManager);
+  r(
+    StoreReviewRequester(
+      localDb: localDb,
+      getLocale: () => localeNotifier.value,
+    ),
+  );
   r(
     PurchaseInitializer(
       monetizationTypeNotifier: monetizationTypeNotifier,
@@ -95,6 +103,7 @@ mixin HasStates {
   SubscriptionManager get subscriptionManager => _g();
   WeeklyCubit get weeklyCubit => _g();
   MonthlyCubit get monthlyCubit => _g();
+  StoreReviewRequester get storeReviewRequester => _g();
 }
 mixin HasAnalytics {
   AnalyticsManager get analyticsManager => _g();

@@ -4,15 +4,21 @@ import 'dart:isolate';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile_app/common_imports.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
+
+import '../interfaces/interfaces.dart';
 
 class FirebaseCrashlyticsPlugin implements CrashlyticsService {
+  FirebaseCrashlyticsPlugin({
+    this.forceCrashlytics = false,
+  });
+  final bool forceCrashlytics;
   late final FirebaseCrashlytics _crashlytics;
   bool _isEnabled = false;
 
   @override
   Future<void> onLoad() async {
-    _isEnabled = kTestingCrashlytics || DeviceRuntimeType.isNativeMobile;
+    _isEnabled = forceCrashlytics || DeviceRuntimeType.isNativeMobile;
     if (!_isEnabled) return;
     _crashlytics = FirebaseCrashlytics.instance;
     await _crashlytics.setCrashlyticsCollectionEnabled(true);

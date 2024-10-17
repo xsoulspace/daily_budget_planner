@@ -1,5 +1,6 @@
-import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/data_services/analytics/models/analytics_event.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
+
+import '../models/models.dart';
 
 /// A no-operation implementation of [AnalyticsService].
 ///

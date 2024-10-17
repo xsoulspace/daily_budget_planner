@@ -1,4 +1,4 @@
-import 'package:mobile_app/data_services/analytics/models/analytics_event.dart';
+import 'analytics_event.dart';
 
 class AnalyticsEvents {
   AnalyticsEvents._();

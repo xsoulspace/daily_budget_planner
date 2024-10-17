@@ -74,96 +74,6 @@ enum PurchaseProductType {
   String toJson() => name;
 }
 
-/// {@template abstract_purchase_manager}
-/// An abstract class defining the interface for purchase management.
-/// {@endtemplate}
-abstract class PurchaseManager {
-  /// Checks if in-app purchases are available on the device.
-  Future<bool> isAvailable();
-
-  /// Initializes the purchase manager.
-  Future<bool> init();
-
-  /// Subscribes to a product.
-  ///
-  /// Use [purchasesStream] to get the purchase status.
-  Future<PurchaseResult> buyConsumable(final PurchaseProductDetails details);
-
-  /// Subscribes to a product.
-  ///
-  /// Use [purchasesStream] to get the purchase status.
-  Future<PurchaseResult> buyNonConsumable(final PurchaseProductDetails details);
-
-  /// Subscribes to a product.
-  ///
-  /// Use [purchasesStream] to get the purchase status.
-  Future<PurchaseResult> subscribe(final PurchaseProductDetails details);
-
-  /// Retrieves available subscriptions.
-  Future<List<PurchaseProductDetails>> getSubscriptions(
-    final List<PurchaseProductId> productIds,
-  );
-
-  /// Retrieves available consumable items.
-  Future<List<PurchaseProductDetails>> getConsumables(
-    final List<PurchaseProductId> productIds,
-  );
-
-  /// Retrieves available non-consumable items.
-  Future<List<PurchaseProductDetails>> getNonConsumables(
-    final List<PurchaseProductId> productIds,
-  );
-
-  /// Opens the subscription management page.
-  Future<void> openSubscriptionManagement();
-
-  /// Retrieves purchase info.
-  Future<PurchaseDetails> getPurchaseInfo(final PurchaseId purchaseId);
-
-  // TODO(arenukvern): adjust this to all implementations
-  /// Currently copied from in_app_purchase_manager.dart:
-  ///
-  /// Listen to this broadcast stream to get real time update for purchases.
-  /// This stream will never close as long as the app is active.
-  ///
-  /// Purchase updates can happen in several situations:
-  ///
-  /// When a purchase is triggered by user in the app.
-  /// When a purchase is triggered by user from the platform-specific
-  /// store front.
-  /// When a purchase is restored on the device by the user in the app.
-  /// If a purchase is not completed ([completePurchase] is not called
-  /// on the purchase object) from the last app session. Purchase updates
-  /// will happen when a new app session starts instead.
-  ///
-  /// IMPORTANT! You must subscribe to this stream as soon as your app
-  /// launches, preferably before returning your main App Widget in main().
-  /// Otherwise you will miss purchase updated made before this
-  /// stream is subscribed to.
-  ///
-  /// We also recommend listening to the stream with one subscription
-  /// at a given time. If you choose to have multiple subscription at the
-  /// same time, you should be careful at the fact that each subscription
-  /// will receive all the events after they start to listen.
-  Stream<PurchaseVerificationDto> get purchasesStream;
-
-  /// Restores previously made purchases.
-  Future<RestoreResult> restore();
-
-  /// Cancels an subscription or consumable or non-consumable.
-  Future<CancelResult> cancel(final PurchaseProductDetails details);
-
-  /// You should call this after receiving [PurchaseStatus.error] or
-  /// [PurchaseStatus.restored] or [PurchaseStatus.purchased]
-  /// to complete the purchase.
-  Future<CompletePurchaseResult> completePurchase(
-    final PurchaseVerificationDto dto,
-  );
-
-  /// Disposes of the purchase manager.
-  Future<void> dispose();
-}
-
 /// {@template purchase_product_details}
 /// Represents the details of a purchasable product.
 /// {@endtemplate}
@@ -348,4 +258,94 @@ class PurchaseVerificationDto with _$PurchaseVerificationDto {
 
   factory PurchaseVerificationDto.fromJson(final Map<String, dynamic> json) =>
       _$PurchaseVerificationDtoFromJson(json);
+}
+
+/// {@template abstract_purchase_manager}
+/// An abstract class defining the interface for purchase management.
+/// {@endtemplate}
+abstract class PurchaseManager {
+  /// Checks if in-app purchases are available on the device.
+  Future<bool> isAvailable();
+
+  /// Initializes the purchase manager.
+  Future<bool> init();
+
+  /// Subscribes to a product.
+  ///
+  /// Use [purchasesStream] to get the purchase status.
+  Future<PurchaseResult> buyConsumable(final PurchaseProductDetails details);
+
+  /// Subscribes to a product.
+  ///
+  /// Use [purchasesStream] to get the purchase status.
+  Future<PurchaseResult> buyNonConsumable(final PurchaseProductDetails details);
+
+  /// Subscribes to a product.
+  ///
+  /// Use [purchasesStream] to get the purchase status.
+  Future<PurchaseResult> subscribe(final PurchaseProductDetails details);
+
+  /// Retrieves available subscriptions.
+  Future<List<PurchaseProductDetails>> getSubscriptions(
+    final List<PurchaseProductId> productIds,
+  );
+
+  /// Retrieves available consumable items.
+  Future<List<PurchaseProductDetails>> getConsumables(
+    final List<PurchaseProductId> productIds,
+  );
+
+  /// Retrieves available non-consumable items.
+  Future<List<PurchaseProductDetails>> getNonConsumables(
+    final List<PurchaseProductId> productIds,
+  );
+
+  /// Opens the subscription management page.
+  Future<void> openSubscriptionManagement();
+
+  /// Retrieves purchase info.
+  Future<PurchaseDetails> getPurchaseInfo(final PurchaseId purchaseId);
+
+  // TODO(arenukvern): adjust this to all implementations
+  /// Currently copied from in_app_purchase_manager.dart:
+  ///
+  /// Listen to this broadcast stream to get real time update for purchases.
+  /// This stream will never close as long as the app is active.
+  ///
+  /// Purchase updates can happen in several situations:
+  ///
+  /// When a purchase is triggered by user in the app.
+  /// When a purchase is triggered by user from the platform-specific
+  /// store front.
+  /// When a purchase is restored on the device by the user in the app.
+  /// If a purchase is not completed ([completePurchase] is not called
+  /// on the purchase object) from the last app session. Purchase updates
+  /// will happen when a new app session starts instead.
+  ///
+  /// IMPORTANT! You must subscribe to this stream as soon as your app
+  /// launches, preferably before returning your main App Widget in main().
+  /// Otherwise you will miss purchase updated made before this
+  /// stream is subscribed to.
+  ///
+  /// We also recommend listening to the stream with one subscription
+  /// at a given time. If you choose to have multiple subscription at the
+  /// same time, you should be careful at the fact that each subscription
+  /// will receive all the events after they start to listen.
+  Stream<PurchaseVerificationDto> get purchasesStream;
+
+  /// Restores previously made purchases.
+  Future<RestoreResult> restore();
+
+  /// Cancels an subscription or consumable or non-consumable.
+  Future<CancelResult> cancel(final PurchaseProductDetails details);
+
+  /// You should call this after receiving [PurchaseStatus.error] or
+  /// [PurchaseStatus.restored] or [PurchaseStatus.purchased]
+  /// to complete the purchase.
+  Future<CompletePurchaseResult> completePurchase(
+    final PurchaseVerificationDto dto,
+  );
+
+  /// Disposes of the purchase manager.
+  Future<void> dispose();
 }

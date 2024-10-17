@@ -57,9 +57,9 @@ class AppScaffoldBuilder extends StatelessWidget {
     final locale = context.select<AppSettingsNotifier, Locale>(
       (final c) => c.locale.value,
     );
-    return MaterialApp.router(
+    final app = MaterialApp.router(
       routerConfig: router,
-      // builder: (final context, final child) => child!,
+
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
@@ -76,5 +76,70 @@ class AppScaffoldBuilder extends StatelessWidget {
       supportedLocales: Locales.values,
       theme: AppThemeData.brandLight,
     );
+    if (Envs.isWiredashAvailable) {
+      return UserFeedback.wiredash(
+        dto: UserFeedbackWiredashDto(
+          projectId: Envs.wiredashProjectId,
+          secret: Envs.wiredashSecret,
+          options: WiredashOptionsData(
+            locale: locale,
+            localizationDelegate: const CustomWiredashTranslationsDelegate(),
+          ),
+          feedbackOptions: _getWiredashOptions(locale),
+          theme: WiredashThemeData.fromColor(
+            primaryColor: AppThemeData.brandLight.primaryColor,
+            brightness: Brightness.light,
+          ),
+        ),
+        child: app,
+      );
+    }
+    return app;
   }
+
+  WiredashFeedbackOptions _getWiredashOptions(final Locale locale) =>
+      WiredashFeedbackOptions(
+        labels: [
+          Label(
+            id: 'label-jcgd4lyfk9',
+            title: LocalizedMap(
+              value: {
+                languages.en: 'Bug report',
+                languages.ru: 'Сообщить об ошибке',
+                languages.it: 'Segnala un bug',
+              },
+            ).getValue(locale),
+          ),
+          Label(
+            id: 'label-dqi42ue2re',
+            title: LocalizedMap(
+              value: {
+                languages.en: 'Feature request',
+                languages.ru: 'Предложить функцию',
+                languages.it: 'Proponi una funzione',
+              },
+            ).getValue(locale),
+          ),
+          Label(
+            id: 'label-n63w8nqhcn',
+            title: LocalizedMap(
+              value: {
+                languages.en: 'Payment issue',
+                languages.ru: 'Проблема с оплатой',
+                languages.it: 'Problema con il pagamento',
+              },
+            ).getValue(locale),
+          ),
+          Label(
+            id: 'label-8tnmqrfat4',
+            title: LocalizedMap(
+              value: {
+                languages.en: 'Other',
+                languages.ru: 'Другое',
+                languages.it: 'Altro',
+              },
+            ).getValue(locale),
+          ),
+        ],
+      );
 }

@@ -8,8 +8,10 @@ export 'package:gap/gap.dart';
 export 'package:go_router/go_router.dart';
 export 'package:provider/provider.dart' hide Dispose;
 export 'package:ui_locale/ui_locale.dart';
+export 'package:xsoulspace_analytics/xsoulspace_analytics.dart';
 export 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 export 'package:xsoulspace_monetization/xsoulspace_monetization.dart';
+export 'package:xsoulspace_review/xsoulspace_review.dart';
 
 export 'core/core.dart';
 export 'data_local_api/data_local_api.dart';

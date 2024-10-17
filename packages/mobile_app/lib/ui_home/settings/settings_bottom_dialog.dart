@@ -11,6 +11,7 @@ class SettingsBottomPopup extends StatelessWidget {
   final VoidCallback onClose;
   @override
   Widget build(final BuildContext context) {
+    final storeReviewRequester = context.watch<StoreReviewRequester>();
     final (:isSubscriptionMonetization) =
         useIsSubscriptionMonetization(context);
     final (:activeSubscription) = useActiveSubscription(context);
@@ -41,12 +42,48 @@ class SettingsBottomPopup extends StatelessWidget {
                 value: {
                   languages.en: 'Privacy policy',
                   languages.it: 'Condizioni di utilizzo',
-                  languages.ru: 'Политика конфиденциальности',
+                  languages.ru: 'Приватность',
                 },
               ).getValue(locale),
               icon: Icons.privacy_tip_outlined,
             ),
             UiDivider.size5(),
+            if (storeReviewRequester.isAvailable) ...[
+              UiLoader(
+                builder: (final context, final isLoading, final setLoading) =>
+                    _ListTile(
+                  isLoading: isLoading,
+                  onTap: () async {
+                    setLoading(true);
+                    await storeReviewRequester.requestReview(context: context);
+                    setLoading(false);
+                  },
+                  title: LocalizedMap(
+                    value: {
+                      languages.en: 'Leave Review',
+                      languages.it: 'Lascia un feedback',
+                      languages.ru: 'Оставить отзыв',
+                    },
+                  ).getValue(locale),
+                  icon: Icons.rate_review_outlined,
+                ),
+              ),
+              UiDivider.size1(),
+            ],
+            if (Envs.isWiredashAvailable) ...[
+              _ListTile(
+                onTap: () async => UserFeedback.show(context),
+                title: LocalizedMap(
+                  value: {
+                    languages.en: 'Support & Suggest',
+                    languages.it: 'Supporto & Suggerimenti',
+                    languages.ru: 'Помощь и предложения',
+                  },
+                ).getValue(locale),
+                icon: CupertinoIcons.question_circle,
+              ),
+              UiDivider.size5(),
+            ],
             if (isSubscriptionMonetization) ...[
               if (activeSubscription != null)
                 _ListTile(
@@ -107,18 +144,21 @@ class _ListTile extends StatelessWidget {
     required this.onTap,
     required this.title,
     required this.icon,
+    this.isLoading = false,
   });
   final VoidCallback onTap;
   final String title;
   final IconData icon;
+  final bool isLoading;
 
   @override
   Widget build(final BuildContext context) => ListTile(
-        onTap: onTap,
+        onTap: isLoading ? () {} : onTap,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
         title: Text(title),
-        trailing: Icon(icon),
+        trailing:
+            isLoading ? const UiCircularProgress.uncentered() : Icon(icon),
       );
 }
