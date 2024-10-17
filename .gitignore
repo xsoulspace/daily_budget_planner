@@ -70,3 +70,4 @@ configs/rustore_local.json
 configs/web_local.json
 configs/web_prod.json
 configs/rustore_prod.json
+configs/google_play_prod_free.json
