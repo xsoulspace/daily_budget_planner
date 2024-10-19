@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
 import 'package:skeletonizer/skeletonizer.dart'; // Make sure to add this package to your pubspec.yaml
 
 enum PresentationType { day, month, year }
@@ -133,8 +134,24 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              '${_getFormattedDate(_dates[_selectedIndex])}${_isCurrentDate(_dates[_selectedIndex]) ? ' (today)' : ''}',
+            Icon(
+              Icons.arrow_drop_up_rounded,
+              color: Theme.of(context).primaryColor,
+            ),
+            UiTextButton(
+              onPressed: () => _onItemTap(_selectedIndex),
+              padding: EdgeInsets.zero,
+              title: Text(
+                '${_getFormattedDate(_dates[_selectedIndex])}'
+                '${_isCurrentDate(_dates[_selectedIndex]) ? ' (today)' : ''}',
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.8),
+                    ),
+              ),
             ),
           ],
         );
