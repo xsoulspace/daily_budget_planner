@@ -1,12 +1,21 @@
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
+import 'package:mobile_app/ui_prediction/ui_prediction_timeline.dart';
 
-class UiPredictionScreen extends StatelessWidget {
+class UiPredictionScreen extends StatefulWidget {
   const UiPredictionScreen({super.key});
+
   static Future<void> show(final BuildContext context) async => Navigator.push(
         context,
         MaterialPageRoute(builder: (final context) => UiPredictionScreen()),
       );
+
+  @override
+  _UiPredictionScreenState createState() => _UiPredictionScreenState();
+}
+
+class _UiPredictionScreenState extends State<UiPredictionScreen> {
+  DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(final BuildContext context) => UiScaffold(
@@ -166,26 +175,15 @@ class UiPredictionScreen extends StatelessWidget {
                           ),
                         ),
                         Gap(24),
-                        SizedBox(
-                          height: 50,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              /// Can be days, weeks, months, years.
-                              UiPredictionDay(day: 'S'),
-                              UiPredictionDay(day: 'M'),
-                              UiPredictionDay(day: 'T'),
-                              UiPredictionDay(day: 'W'),
-                              UiPredictionDay(day: 'T'),
-                              UiPredictionDay(day: 'F'),
-                              UiPredictionDay(day: 'S'),
-                              UiPredictionDay(day: 'S'),
-                            ],
-                          ),
+                        UiPredictionTimeline(
+                          presentationType: PresentationType.day,
+                          initialDate: _selectedDate,
+                          onDateChanged: (final newDate) {
+                            setState(() => _selectedDate = newDate);
+                            // TODO: Update predictions based on new date
+                          },
                         ),
-                        Icon(Icons.arrow_drop_up_rounded),
-                        Text('Tuesday, 20 October'),
-                        Gap(12),
+                        const SizedBox(height: 12),
                       ],
                     ),
                   ),
