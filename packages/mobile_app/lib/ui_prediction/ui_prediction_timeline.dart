@@ -117,11 +117,7 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
               color: Theme.of(context).primaryColor,
             ),
             UiTextButton(
-              onPressed: () async => _pageController.animateToPage(
-                _selectedIndex,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              ),
+              onPressed: _scrollToCurrentDate,
               padding: EdgeInsets.zero,
               title: Text(
                 '${_getFormattedDate(_dates[_selectedIndex])}'
@@ -200,6 +196,32 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _scrollToCurrentDate() {
+    final now = DateTime.now();
+    final currentDateIndex = _dates.indexWhere((final date) {
+      switch (widget.presentationType) {
+        case PresentationType.day:
+          return date.year == now.year &&
+              date.month == now.month &&
+              date.day == now.day;
+        case PresentationType.month:
+          return date.year == now.year && date.month == now.month;
+        case PresentationType.year:
+          return date.year == now.year;
+      }
+    });
+
+    if (currentDateIndex != -1) {
+      unawaited(
+        _pageController.animateToPage(
+          currentDateIndex,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        ),
+      );
+    }
   }
 }
 
