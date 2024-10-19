@@ -3,6 +3,8 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
 import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
+import 'package:mobile_app/ui_prediction/wip/expenses_prediction_notifier.dart';
+import 'package:mobile_app/ui_prediction/wip/expenses_prediction_service.dart';
 
 /// Shortcuts
 /// Should not be exposed
@@ -61,6 +63,7 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
     _ => NoopPurchaseManager(),
   };
   r<PurchaseManager>(purchaseManager);
+  r(ExpensesPredictionNotifier(ExpensesPredictionService()));
   final monetizationTypeNotifier =
       MonetizationStatusNotifier(Envs.monetizationType);
   r(monetizationTypeNotifier);

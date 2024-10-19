@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/ui_prediction/expensess_prediction_models.dart';
+import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class RegularExpenseInputForm extends StatefulWidget {
   const RegularExpenseInputForm({required this.onSubmit, super.key});
@@ -13,7 +13,6 @@ class RegularExpenseInputForm extends StatefulWidget {
 class _RegularExpenseInputFormState extends State<RegularExpenseInputForm> {
   final _formKey = GlobalKey<FormState>();
   double _amount = 0;
-  String _category = '';
   Period _period = Period.daily;
 
   @override
@@ -31,16 +30,6 @@ class _RegularExpenseInputFormState extends State<RegularExpenseInputForm> {
                 return null;
               },
               onSaved: (final value) => _amount = double.parse(value!),
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Category'),
-              validator: (final value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a category';
-                }
-                return null;
-              },
-              onSaved: (final value) => _category = value!,
             ),
             DropdownButtonFormField<Period>(
               decoration: InputDecoration(labelText: 'Period'),
@@ -76,8 +65,8 @@ class _RegularExpenseInputFormState extends State<RegularExpenseInputForm> {
       _formKey.currentState!.save();
       final regularExpense = RegularExpense(
         amount: _amount,
-        category: _category,
         period: _period,
+        category: '',
       );
       widget.onSubmit(regularExpense);
     }

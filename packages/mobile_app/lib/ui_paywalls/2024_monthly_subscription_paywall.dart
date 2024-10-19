@@ -424,21 +424,23 @@ class UiTextButton extends StatelessWidget {
     this.textTitle = '',
     this.isLoading = false,
     this.title,
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: 12,
+      vertical: 12,
+    ),
     super.key,
   });
   final String textTitle;
   final bool isLoading;
   final Widget? title;
   final VoidCallback onPressed;
+  final EdgeInsets padding;
 
   @override
   Widget build(final BuildContext context) => UiBaseButton(
         onPressed: isLoading ? () {} : onPressed,
         builder: (final context, final focused, final onlyFocused) => Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 12,
-          ),
+          padding: padding,
           color: Colors.transparent,
           child: Row(
             mainAxisSize: MainAxisSize.min,

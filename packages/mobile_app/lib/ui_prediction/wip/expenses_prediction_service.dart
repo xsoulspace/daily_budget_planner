@@ -1,4 +1,4 @@
-import 'package:mobile_app/ui_prediction/expensess_prediction_models.dart';
+import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class ExpensesPredictionService {
   double calculateAverageDailyBudget(

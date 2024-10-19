@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:mobile_app/ui_prediction/expenses_prediction_service.dart';
-import 'package:mobile_app/ui_prediction/expensess_prediction_models.dart';
+import 'package:mobile_app/ui_prediction/wip/expenses_prediction_service.dart';
+import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class ExpensesPredictionNotifier extends ChangeNotifier {
   ExpensesPredictionNotifier(this._service);
@@ -16,6 +16,15 @@ class ExpensesPredictionNotifier extends ChangeNotifier {
   PredictionType budgetPrediction = PredictionType.neutral;
   PredictionType expensesPrediction = PredictionType.neutral;
   Period currentPeriod = Period.daily;
+  void addRegularExpense(final RegularExpense expense) {
+    regularExpenses.add(expense);
+    _recalculate();
+  }
+
+  void removeRegularExpense(final RegularExpense expense) {
+    regularExpenses.remove(expense);
+    _recalculate();
+  }
 
   void updateRegularExpenses(final List<RegularExpense> newExpenses) {
     regularExpenses = newExpenses;

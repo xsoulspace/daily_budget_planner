@@ -1,5 +1,5 @@
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_prediction/expensess_prediction_models.dart';
+import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class ExpensesPredictionRepository with HasLocalApis {
   static const _regularExpensesKey = 'regular_expenses';
