@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
@@ -10,12 +11,18 @@ class UiPredictionTimeline extends StatefulWidget {
     required this.presentationType,
     required this.initialDate,
     required this.onDateChanged,
+    this.enableMouseControls = true,
+    this.showArrowButtons = true,
+    this.enableMouseWheelScroll = false,
     super.key,
   });
 
   final PresentationType presentationType;
   final DateTime initialDate;
   final ValueChanged<DateTime> onDateChanged;
+  final bool enableMouseControls;
+  final bool showArrowButtons;
+  final bool enableMouseWheelScroll;
 
   @override
   _UiPredictionTimelineState createState() => _UiPredictionTimelineState();
@@ -27,6 +34,7 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   late int _selectedIndex;
   final _itemExtent = 58.0;
   bool _isLoading = true;
+  late int _visibleItemCount;
 
   @override
   void initState() {
@@ -37,15 +45,23 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   Future<void> _load() async {
     await Future.microtask(() {
       _initializeDates();
+      _visibleItemCount = _calculateVisibleItemCount();
       _pageController = PageController(
         initialPage: _selectedIndex,
-        viewportFraction: _itemExtent / MediaQuery.sizeOf(context).width,
+        viewportFraction:
+            widget.enableMouseControls ? 1 / _visibleItemCount : 1,
       );
     });
 
     if (mounted) {
       setState(() => _isLoading = false);
     }
+  }
+
+  int _calculateVisibleItemCount() {
+    if (!widget.enableMouseControls) return 1;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    return (screenWidth / _itemExtent).floor().clamp(5, 15);
   }
 
   void _initializeDates() {
@@ -84,34 +100,86 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
     widget.onDateChanged(_dates[_selectedIndex]);
   }
 
+  void _handleMouseScroll(final PointerSignalEvent event) {
+    if (widget.enableMouseWheelScroll && event is PointerScrollEvent) {
+      final delta = event.scrollDelta.dy;
+      _pageController.jumpTo(_pageController.offset + delta);
+    }
+  }
+
   @override
   Widget build(final BuildContext context) => _isLoading
       ? _buildSkeletonLoader()
       : Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 50,
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: _onPageChanged,
-                itemCount: _dates.length,
-                itemBuilder: (final context, final index) => UiBaseButton(
-                  onPressed: () async => _pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
+            Stack(
+              children: [
+                _buildPageView(),
+                if (widget.showArrowButtons)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: context.colorScheme.surface,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(100),
+                          bottomRight: Radius.circular(100),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            size: 16,
+                            color: context.colorScheme.onSurface.withOpacity(
+                              0.6,
+                            ),
+                          ),
+                          onPressed: () async => _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  builder: (final context, final focused, final onlyFocused) =>
-                      UiPredictionDay(
-                    day: _getDisplayText(_dates[index]),
-                    isSelected: index == _selectedIndex,
-                    isCurrentDate: _isCurrentDate(_dates[index]),
+                if (widget.showArrowButtons)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: context.colorScheme.surface,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(100),
+                          bottomLeft: Radius.circular(100),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 16,
+                            color: context.colorScheme.onSurface.withOpacity(
+                              0.6,
+                            ),
+                          ),
+                          onPressed: () async => _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+              ],
             ),
-            const SizedBox(height: 8),
             Icon(
               Icons.arrow_drop_up_rounded,
               color: Theme.of(context).primaryColor,
@@ -133,6 +201,44 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
             ),
           ],
         );
+
+  Widget _buildPageView() => widget.enableMouseWheelScroll
+      ? Listener(
+          onPointerSignal: _handleMouseScroll,
+          child: _buildPageViewContent(),
+        )
+      : _buildPageViewContent();
+
+  Widget _buildPageViewContent() => SizedBox(
+        height: 50,
+        child: PageView.builder(
+          controller: _pageController,
+          onPageChanged: _onPageChanged,
+          itemCount: _dates.length,
+          itemBuilder: (final context, final index) => _buildDateItem(index),
+        ),
+      );
+
+  Widget _buildDateItem(final int index) => widget.enableMouseControls
+      ? MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: _buildDateButton(index),
+        )
+      : _buildDateButton(index);
+
+  Widget _buildDateButton(final int index) => UiBaseButton(
+        onPressed: () async => _pageController.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        ),
+        builder: (final context, final focused, final onlyFocused) =>
+            UiPredictionDay(
+          day: _getDisplayText(_dates[index]),
+          isSelected: index == _selectedIndex,
+          isCurrentDate: _isCurrentDate(_dates[index]),
+        ),
+      );
 
   Widget _buildSkeletonLoader() => Skeletonizer(
         child: Column(
@@ -242,7 +348,7 @@ class UiPredictionDay extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         width: 50,
         height: 50,
-        margin: const EdgeInsets.symmetric(horizontal: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
