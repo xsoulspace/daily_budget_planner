@@ -22,7 +22,7 @@ class UiPredictionTimeline extends StatefulWidget {
 }
 
 class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
-  late final ScrollController _scrollController;
+  late final PageController _pageController;
   late final List<DateTime> _dates;
   late int _selectedIndex;
   final _itemExtent = 58.0;
@@ -37,14 +37,12 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   Future<void> _load() async {
     await Future.microtask(() {
       _initializeDates();
-      _scrollController = ScrollController(
-        initialScrollOffset: _selectedIndex * _itemExtent -
-            MediaQuery.sizeOf(context).width / 2 +
-            _itemExtent / 2,
+      _pageController = PageController(
+        initialPage: _selectedIndex,
+        viewportFraction: _itemExtent / MediaQuery.sizeOf(context).width,
       );
     });
 
-    _setUpScrollListener();
     if (mounted) {
       setState(() => _isLoading = false);
     }
@@ -81,32 +79,9 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
     );
   }
 
-  void _setUpScrollListener() {
-    _scrollController.addListener(() {
-      final middleOffset =
-          _scrollController.offset + MediaQuery.sizeOf(context).width / 2;
-      final middleIndex = (middleOffset / _itemExtent).round();
-      if (middleIndex != _selectedIndex &&
-          middleIndex >= 0 &&
-          middleIndex < _dates.length) {
-        setState(() => _selectedIndex = middleIndex);
-        widget.onDateChanged(_dates[_selectedIndex]);
-      }
-    });
-  }
-
-  void _onItemTap(final int index) {
+  void _onPageChanged(final int index) {
     setState(() => _selectedIndex = index);
     widget.onDateChanged(_dates[_selectedIndex]);
-    unawaited(
-      _scrollController.animateTo(
-        index * _itemExtent -
-            MediaQuery.sizeOf(context).width / 2 +
-            _itemExtent / 2,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      ),
-    );
   }
 
   @override
@@ -117,13 +92,16 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
           children: [
             SizedBox(
               height: 50,
-              child: ListView.builder(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                itemExtent: _itemExtent,
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: _onPageChanged,
                 itemCount: _dates.length,
                 itemBuilder: (final context, final index) => UiBaseButton(
-                  onPressed: () => _onItemTap(index),
+                  onPressed: () async => _pageController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  ),
                   builder: (final context, final focused, final onlyFocused) =>
                       UiPredictionDay(
                     day: _getDisplayText(_dates[index]),
@@ -139,7 +117,11 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
               color: Theme.of(context).primaryColor,
             ),
             UiTextButton(
-              onPressed: () => _onItemTap(_selectedIndex),
+              onPressed: () async => _pageController.animateToPage(
+                _selectedIndex,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              ),
               padding: EdgeInsets.zero,
               title: Text(
                 '${_getFormattedDate(_dates[_selectedIndex])}'
@@ -216,7 +198,7 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 }
