@@ -34,7 +34,7 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   late int _selectedIndex;
   final _itemExtent = 58.0;
   bool _isLoading = true;
-  late int _visibleItemCount;
+  int _visibleItemCount = 5;
 
   @override
   void initState() {
@@ -45,7 +45,6 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   Future<void> _load() async {
     await Future.microtask(() {
       _initializeDates();
-      _visibleItemCount = _calculateVisibleItemCount();
       _pageController = PageController(
         initialPage: _selectedIndex,
         viewportFraction:
@@ -61,7 +60,7 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   int _calculateVisibleItemCount() {
     if (!widget.enableMouseControls) return 1;
     final screenWidth = MediaQuery.sizeOf(context).width;
-    return (screenWidth / _itemExtent).floor().clamp(5, 15);
+    return (screenWidth / _itemExtent).floor().clamp(5, 20);
   }
 
   void _initializeDates() {
@@ -108,99 +107,104 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
   }
 
   @override
-  Widget build(final BuildContext context) => _isLoading
-      ? _buildSkeletonLoader()
-      : Column(
-          mainAxisSize: MainAxisSize.min,
+  Widget build(final BuildContext context) {
+    final itemCount = _calculateVisibleItemCount();
+    if (_visibleItemCount != itemCount) {
+      _visibleItemCount = itemCount;
+    }
+
+    if (_isLoading) return _buildSkeletonLoader();
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
           children: [
-            Stack(
-              children: [
-                _buildPageView(),
-                if (widget.showArrowButtons)
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: context.colorScheme.surface,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(100),
-                          bottomRight: Radius.circular(100),
+            _buildPageView(),
+            if (widget.showArrowButtons)
+              Positioned(
+                top: 0,
+                left: 0,
+                bottom: 0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.surface,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(100),
+                      bottomRight: Radius.circular(100),
+                    ),
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        size: 16,
+                        color: context.colorScheme.onSurface.withOpacity(
+                          0.6,
                         ),
                       ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            size: 16,
-                            color: context.colorScheme.onSurface.withOpacity(
-                              0.6,
-                            ),
-                          ),
-                          onPressed: () async => _pageController.previousPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          ),
-                        ),
+                      onPressed: () async => _pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
                       ),
                     ),
                   ),
-                if (widget.showArrowButtons)
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: context.colorScheme.surface,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(100),
-                          bottomLeft: Radius.circular(100),
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 16,
-                            color: context.colorScheme.onSurface.withOpacity(
-                              0.6,
-                            ),
-                          ),
-                          onPressed: () async => _pageController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            Icon(
-              Icons.arrow_drop_up_rounded,
-              color: Theme.of(context).primaryColor,
-            ),
-            UiTextButton(
-              onPressed: _scrollToCurrentDate,
-              padding: EdgeInsets.zero,
-              title: Text(
-                '${_getFormattedDate(_dates[_selectedIndex])}'
-                '${_isCurrentDate(_dates[_selectedIndex]) ? ' (today)' : ''}',
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.8),
-                    ),
+                ),
               ),
-            ),
+            if (widget.showArrowButtons)
+              Positioned(
+                top: 0,
+                right: 0,
+                bottom: 0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.surface,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(100),
+                      bottomLeft: Radius.circular(100),
+                    ),
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 16,
+                        color: context.colorScheme.onSurface.withOpacity(
+                          0.6,
+                        ),
+                      ),
+                      onPressed: () async => _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
-        );
+        ),
+        Icon(
+          Icons.arrow_drop_up_rounded,
+          color: Theme.of(context).primaryColor,
+        ),
+        UiTextButton(
+          onPressed: _scrollToCurrentDate,
+          padding: EdgeInsets.zero,
+          title: Text(
+            '${_getFormattedDate(_dates[_selectedIndex])}'
+            '${_isCurrentDate(_dates[_selectedIndex]) ? ' (today)' : ''}',
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                ),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget _buildPageView() => widget.enableMouseWheelScroll
       ? Listener(
