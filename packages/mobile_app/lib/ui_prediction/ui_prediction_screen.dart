@@ -27,7 +27,6 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
     final locale = useLocale(context);
     final uiPredictionNotifier = context.watch<UiPredictionNotifier>();
     final state = uiPredictionNotifier.value;
-    final isPredictionAvailable = false;
     return UiScaffold(
       body: Column(
         children: [
@@ -105,11 +104,14 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                       ),
                                     ),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(Icons.arrow_drop_down_rounded),
                                         Text(
                                           '\$${state.regularExpensesSum.toStringAsFixed(2)}',
                                           style: context.textTheme.titleLarge,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ],
                                     ),
@@ -133,11 +135,14 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                       textAlign: TextAlign.center,
                                     ),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(Icons.arrow_drop_up_rounded),
                                         Text(
                                           '\$${state.regularIncomesSum.toStringAsFixed(2)}',
                                           style: context.textTheme.titleLarge,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ],
                                     ),
@@ -258,6 +263,10 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                               children: [
                                 Text(
                                   '-\$${uiPredictionNotifier.getExpenseFor(_selectedDate).expense.toStringAsFixed(2)}',
+                                  style:
+                                      context.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 Text(
                                   LocalizedMap(
@@ -267,7 +276,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                       languages.ru: 'Расходы',
                                     },
                                   ).getValue(locale),
-                                  style: context.textTheme.titleSmall,
+                                  style: context.textTheme.labelSmall,
                                 ),
                               ],
                             ),
@@ -290,6 +299,10 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                               children: [
                                 Text(
                                   '+\$${uiPredictionNotifier.getExpenseFor(_selectedDate).income.toStringAsFixed(2)}',
+                                  style:
+                                      context.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 Text(
                                   LocalizedMap(
@@ -299,7 +312,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                       languages.ru: 'Доходы',
                                     },
                                   ).getValue(locale),
-                                  style: context.textTheme.titleSmall,
+                                  style: context.textTheme.labelSmall,
                                 ),
                               ],
                             ),
@@ -322,6 +335,10 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                               children: [
                                 Text(
                                   '\$${uiPredictionNotifier.getExpenseFor(_selectedDate).balance.toStringAsFixed(2)}',
+                                  style:
+                                      context.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 Text(
                                   LocalizedMap(
@@ -331,7 +348,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                       languages.ru: 'Остаток на конец дня',
                                     },
                                   ).getValue(locale),
-                                  style: context.textTheme.titleSmall,
+                                  style: context.textTheme.labelSmall,
                                 ),
                               ],
                             ),
@@ -451,7 +468,10 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
+    final screenWidth = MediaQuery.sizeOf(context).width;
     return AlertDialog(
+      insetPadding:
+          screenWidth < 400 ? EdgeInsets.symmetric(horizontal: 4) : null,
       title: Text(
         LocalizedMap(
           value: {
@@ -492,7 +512,8 @@ class _AddBudgetDialogState extends State<AddBudgetDialog> {
               },
             ),
             const Gap(16),
-            Row(
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
                   LocalizedMap(

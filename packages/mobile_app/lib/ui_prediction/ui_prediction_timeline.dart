@@ -123,14 +123,20 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
           onPressed: _scrollToCurrentDate,
           padding: EdgeInsets.zero,
           title: Text(
-            '${_getFormattedDate(_dates[_selectedIndex], locale)}'
-            '${_isCurrentDate(_dates[_selectedIndex]) ? ' ${LocalizedMap(
+            '${_getFormattedDate(_dates[_selectedIndex], locale)} '
+            '${_isCurrentDate(_dates[_selectedIndex]) ? LocalizedMap(
                 value: {
                   languages.en: '(today)',
                   languages.it: '(oggi)',
                   languages.ru: '(сегодня)',
                 },
-              ).getValue(locale)}' : ''}',
+              ).getValue(locale) : LocalizedMap(
+                value: {
+                  languages.en: '(go to today)',
+                  languages.it: '(vai a oggi)',
+                  languages.ru: '(перейти к сегодня)',
+                },
+              ).getValue(locale)}',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color:
