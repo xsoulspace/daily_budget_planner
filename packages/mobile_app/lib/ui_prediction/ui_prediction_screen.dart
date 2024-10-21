@@ -1,9 +1,11 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_timeline.dart';
+import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class UiPredictionScreen extends StatefulWidget {
   const UiPredictionScreen({super.key});
@@ -25,6 +27,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
     final locale = useLocale(context);
     final uiPredictionNotifier = context.watch<UiPredictionNotifier>();
     final state = uiPredictionNotifier.value;
+    final isPredictionAvailable = false;
     return UiScaffold(
       body: Column(
         children: [
@@ -170,15 +173,27 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                       ),
                     ),
                     Gap(6),
-                    Text(
-                      '\$${state.dailyBudget.toStringAsFixed(2)} ${LocalizedMap(
-                        value: {
-                          languages.en: ' - left',
-                          languages.it: ' - rimanenti',
-                          languages.ru: ' - осталось',
-                        },
-                      ).getValue(locale)}',
-                      style: context.textTheme.titleLarge,
+                    UiBaseButton(
+                      onPressed: () async => BudgetBottomSheet.show(context),
+                      builder:
+                          (final context, final isPressed, final isHovered) =>
+                              Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.history),
+                          Gap(8),
+                          Text(
+                            '\$${uiPredictionNotifier.recentBudget.amount.toStringAsFixed(2)} ${LocalizedMap(
+                              value: {
+                                languages.en: ' - left',
+                                languages.it: ' - rimanenti',
+                                languages.ru: ' - осталось',
+                              },
+                            ).getValue(locale)}',
+                            style: context.textTheme.titleLarge,
+                          ),
+                        ],
+                      ),
                     ),
                     Gap(24),
                     Row(
@@ -215,46 +230,111 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                       },
                     ),
                     Gap(24),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: context.colorScheme.surface,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color:
-                              context.colorScheme.onSurface.withOpacity(0.05),
-                        ),
+                    Gap(4),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: 300,
                       ),
-                      child: Column(
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        alignment: WrapAlignment.center,
                         children: [
-                          Text(
-                            '${LocalizedMap(
-                              value: {
-                                languages.en: 'Predicted - ',
-                                languages.it: 'Previsto - ',
-                                languages.ru: 'Прогноз - ',
-                              },
-                            ).getValue(locale)} '
-                            '\$${uiPredictionNotifier.getExpensePredictionFor(_selectedDate).toStringAsFixed(2)} | '
-                            '${LocalizedMap(
-                              value: {
-                                languages.en: 'Actual - ',
-                                languages.it: 'Effettivo - ',
-                                languages.ru: 'Факт - ',
-                              },
-                            ).getValue(locale)} \$${uiPredictionNotifier.getExpenseFor(_selectedDate).toStringAsFixed(2)}',
-                            style: context.textTheme.titleSmall,
+                          AnimatedContainer(
+                            duration: 200.milliseconds,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: context.colorScheme.surface,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: context.colorScheme.onSurface
+                                    .withOpacity(0.05),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '-\$${uiPredictionNotifier.getExpenseFor(_selectedDate).expense.toStringAsFixed(2)}',
+                                ),
+                                Text(
+                                  LocalizedMap(
+                                    value: {
+                                      languages.en: 'Expenses',
+                                      languages.it: 'Spese',
+                                      languages.ru: 'Расходы',
+                                    },
+                                  ).getValue(locale),
+                                  style: context.textTheme.titleSmall,
+                                ),
+                              ],
+                            ),
                           ),
-                          Text(
-                            LocalizedMap(
-                              value: {
-                                languages.en: 'expenses',
-                                languages.it: 'spese',
-                                languages.ru: 'расходы',
-                              },
-                            ).getValue(locale),
-                            style: context.textTheme.labelSmall,
+                          AnimatedContainer(
+                            duration: 200.milliseconds,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: context.colorScheme.surface,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: context.colorScheme.onSurface
+                                    .withOpacity(0.05),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '+\$${uiPredictionNotifier.getExpenseFor(_selectedDate).income.toStringAsFixed(2)}',
+                                ),
+                                Text(
+                                  LocalizedMap(
+                                    value: {
+                                      languages.en: 'Income',
+                                      languages.it: 'Entrate',
+                                      languages.ru: 'Доходы',
+                                    },
+                                  ).getValue(locale),
+                                  style: context.textTheme.titleSmall,
+                                ),
+                              ],
+                            ),
+                          ),
+                          AnimatedContainer(
+                            duration: 200.milliseconds,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: context.colorScheme.surface,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: context.colorScheme.onSurface
+                                    .withOpacity(0.05),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '\$${uiPredictionNotifier.getExpenseFor(_selectedDate).balance.toStringAsFixed(2)}',
+                                ),
+                                Text(
+                                  LocalizedMap(
+                                    value: {
+                                      languages.en: 'End of Day Balance',
+                                      languages.it: 'Saldo finale',
+                                      languages.ru: 'Остаток на конец дня',
+                                    },
+                                  ).getValue(locale),
+                                  style: context.textTheme.titleSmall,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -288,7 +368,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                     UiCloseButton(),
                     Spacer(),
                     UiTextButton(
-                      onPressed: () {},
+                      onPressed: () async => AddBudgetDialog.show(context),
                       textTitle: LocalizedMap(
                         value: {
                           languages.en: 'Update Budget',
@@ -343,4 +423,244 @@ class UiPredictionDay extends StatelessWidget {
           child: Text(day),
         ),
       );
+}
+
+class AddBudgetDialog extends StatefulWidget {
+  const AddBudgetDialog({super.key});
+
+  static Future<void> show(final BuildContext context) => showDialog(
+        context: context,
+        builder: (final context) => const AddBudgetDialog(),
+      );
+
+  @override
+  State<AddBudgetDialog> createState() => _AddBudgetDialogState();
+}
+
+class _AddBudgetDialogState extends State<AddBudgetDialog> {
+  final _formKey = GlobalKey<FormState>();
+  final _amountController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    final locale = useLocale(context);
+    return AlertDialog(
+      title: Text(
+        LocalizedMap(
+          value: {
+            languages.en: 'Add New Budget',
+            languages.it: 'Aggiungi Nuovo Budget',
+            languages.ru: 'Добавить Новый Бюджет',
+          },
+        ).getValue(locale),
+      ),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: _amountController,
+              decoration: InputDecoration(
+                labelText: LocalizedMap(
+                  value: {
+                    languages.en: 'Amount',
+                    languages.it: 'Importo',
+                    languages.ru: 'Сумма',
+                  },
+                ).getValue(locale),
+              ),
+              keyboardType: TextInputType.number,
+              validator: (final value) {
+                if (value == null || value.isEmpty) {
+                  return LocalizedMap(
+                    value: {
+                      languages.en: 'Please enter an amount',
+                      languages.it: 'Inserisci un importo',
+                      languages.ru: 'Пожалуйста, введите сумму',
+                    },
+                  ).getValue(locale);
+                }
+                return null;
+              },
+            ),
+            const Gap(16),
+            Row(
+              children: [
+                Text(
+                  LocalizedMap(
+                    value: {
+                      languages.en: 'Date: ',
+                      languages.it: 'Data: ',
+                      languages.ru: 'Дата: ',
+                    },
+                  ).getValue(locale),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    final pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: _selectedDate,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                    );
+                    if (pickedDate == null) return;
+                    final pickedTime = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.fromDateTime(_selectedDate),
+                    );
+                    if (pickedTime == null) return;
+                    setState(() {
+                      _selectedDate = DateTime(
+                        pickedDate.year,
+                        pickedDate.month,
+                        pickedDate.day,
+                        pickedTime.hour,
+                        pickedTime.minute,
+                      );
+                    });
+                  },
+                  child:
+                      Text(DateFormat.yMMMd().add_Hm().format(_selectedDate)),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            LocalizedMap(
+              value: {
+                languages.en: 'Cancel',
+                languages.it: 'Annulla',
+                languages.ru: 'Отмена',
+              },
+            ).getValue(locale),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              final amount = double.parse(_amountController.text);
+              final newBudget = Budget(
+                id: BudgetId(createId()),
+                amount: amount,
+                date: _selectedDate,
+              );
+              unawaited(
+                context
+                    .read<UiPredictionNotifier>()
+                    .upsertBudget(newBudget, isNew: true),
+              );
+              Navigator.of(context).pop();
+            }
+          },
+          child: Text(
+            LocalizedMap(
+              value: {
+                languages.en: 'Add',
+                languages.it: 'Aggiungi',
+                languages.ru: 'Добавить',
+              },
+            ).getValue(locale),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class BudgetBottomSheet extends HookWidget {
+  const BudgetBottomSheet({super.key});
+
+  static Future<void> show(final BuildContext context) async =>
+      showModalBottomSheet(
+        useRootNavigator: true,
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (final context) => DraggableScrollableSheet(
+          minChildSize: 0.2,
+          maxChildSize: 0.9,
+          expand: false,
+          builder: (final _, final controller) => BudgetBottomSheet(),
+        ),
+      );
+
+  @override
+  Widget build(final BuildContext context) {
+    final uiPredictionNotifier = context.watch<UiPredictionNotifier>();
+    final state = uiPredictionNotifier.value;
+    final locale = useLocale(context);
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colorScheme.surface,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          UiIOSDragHandle(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            child: Text(
+              LocalizedMap(
+                value: {
+                  languages.en: 'Budgets History',
+                  languages.it: 'Storico Budget',
+                  languages.ru: 'История Бюджетов',
+                },
+              ).getValue(locale),
+              style: context.textTheme.titleLarge,
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: state.budgets.length,
+              itemBuilder: (final context, final index) {
+                final budget = state.budgets[index];
+                return ListTile(
+                  title: Text('\$${budget.amount.toStringAsFixed(2)}'),
+                  subtitle: Text(
+                    DateFormat('EEEE, d MMMM yyyy, h:mm a').format(budget.date),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () async =>
+                        uiPredictionNotifier.removeBudget(budget.id),
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: ElevatedButton(
+              onPressed: () async => AddBudgetDialog.show(context),
+              child: Text(
+                LocalizedMap(
+                  value: {
+                    languages.en: 'Add New Budget',
+                    languages.it: 'Aggiungi Nuovo Budget',
+                    languages.ru: 'Добавить Новый Бюджет',
+                  },
+                ).getValue(locale),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
