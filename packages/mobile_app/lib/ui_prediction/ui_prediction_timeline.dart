@@ -108,6 +108,7 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
 
   @override
   Widget build(final BuildContext context) {
+    final locale = useLocale(context);
     final itemCount = _calculateVisibleItemCount();
     if (_visibleItemCount != itemCount) {
       _visibleItemCount = itemCount;
@@ -118,6 +119,29 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        UiTextButton(
+          onPressed: _scrollToCurrentDate,
+          padding: EdgeInsets.zero,
+          title: Text(
+            '${_getFormattedDate(_dates[_selectedIndex], locale)}'
+            '${_isCurrentDate(_dates[_selectedIndex]) ? ' ${LocalizedMap(
+                value: {
+                  languages.en: '(today)',
+                  languages.it: '(oggi)',
+                  languages.ru: '(сегодня)',
+                },
+              ).getValue(locale)}' : ''}',
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                ),
+          ),
+        ),
+        Icon(
+          Icons.arrow_drop_down_rounded,
+          color: Theme.of(context).primaryColor,
+        ),
         Stack(
           children: [
             _buildPageView(),
@@ -184,23 +208,6 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
                 ),
               ),
           ],
-        ),
-        Icon(
-          Icons.arrow_drop_up_rounded,
-          color: Theme.of(context).primaryColor,
-        ),
-        UiTextButton(
-          onPressed: _scrollToCurrentDate,
-          padding: EdgeInsets.zero,
-          title: Text(
-            '${_getFormattedDate(_dates[_selectedIndex])}'
-            '${_isCurrentDate(_dates[_selectedIndex]) ? ' (today)' : ''}',
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
-                ),
-          ),
         ),
       ],
     );
@@ -282,21 +289,32 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
     }
   }
 
-  String _getDisplayText(final DateTime date) {
-    final displayText = switch (widget.presentationType) {
-      PresentationType.day => DateFormat('E').format(date)[0],
-      PresentationType.month => DateFormat('MMM').format(date)[0],
-      PresentationType.year => date.year.toString().substring(2),
-    };
-    return displayText;
+  String _getDisplayText(
+    final DateTime date, {
+    final bool useNumbers = true,
+  }) {
+    if (!useNumbers) {
+      return switch (widget.presentationType) {
+        PresentationType.day => DateFormat('E').format(date)[0],
+        PresentationType.month => DateFormat('MMM').format(date)[0],
+        PresentationType.year => date.year.toString().substring(2),
+      };
+    } else {
+      return switch (widget.presentationType) {
+        PresentationType.day => DateFormat('d').format(date),
+        PresentationType.month => DateFormat('MMM').format(date)[0],
+        PresentationType.year => date.year.toString().substring(2),
+      };
+    }
   }
 
-  String _getFormattedDate(final DateTime date) {
+  String _getFormattedDate(final DateTime date, final Locale locale) {
     switch (widget.presentationType) {
       case PresentationType.day:
-        return DateFormat('EEEE, d MMMM yyyy').format(date);
+        return DateFormat('EEEE, d MMMM yyyy', locale.languageCode)
+            .format(date);
       case PresentationType.month:
-        return DateFormat('MMMM yyyy').format(date);
+        return DateFormat('MMMM yyyy', locale.languageCode).format(date);
       case PresentationType.year:
         return date.year.toString();
     }

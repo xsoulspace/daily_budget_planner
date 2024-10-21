@@ -3,7 +3,7 @@ import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class RegularExpenseInputForm extends StatefulWidget {
   const RegularExpenseInputForm({required this.onSubmit, super.key});
-  final Function(RegularExpense) onSubmit;
+  final Function(Expense) onSubmit;
 
   @override
   _RegularExpenseInputFormState createState() =>
@@ -63,10 +63,10 @@ class _RegularExpenseInputFormState extends State<RegularExpenseInputForm> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      final regularExpense = RegularExpense(
+      final regularExpense = Expense(
         amount: _amount,
-        period: _period,
-        category: '',
+        date: DateTime.now(),
+        category: ExpenseCategoryId(''),
       );
       widget.onSubmit(regularExpense);
     }

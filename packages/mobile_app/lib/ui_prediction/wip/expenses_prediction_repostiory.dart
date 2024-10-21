@@ -7,7 +7,7 @@ class ExpensesPredictionRepository with HasLocalApis {
   static const _expensesKey = 'expenses';
   static const _salaryInfoKey = 'salary_info';
 
-  Future<void> saveRegularExpenses(final List<RegularExpense> expenses) async {
+  Future<void> saveRegularExpenses(final List<Expense> expenses) async {
     await localDb.setItemsList(
       key: _regularExpensesKey,
       value: expenses,
@@ -15,10 +15,10 @@ class ExpensesPredictionRepository with HasLocalApis {
     );
   }
 
-  Future<List<RegularExpense>> loadRegularExpenses() async {
+  Future<List<Expense>> loadRegularExpenses() async {
     final iterable = await localDb.getItemsIterable(
       key: _regularExpensesKey,
-      fromJson: RegularExpense.fromJson,
+      fromJson: Expense.fromJson,
     );
     return iterable.toList();
   }
@@ -55,7 +55,7 @@ class ExpensesPredictionRepository with HasLocalApis {
     return iterable.toList();
   }
 
-  Future<void> saveSalaryInfo(final SalaryInfo salaryInfo) async {
+  Future<void> saveSalaryInfo(final IncomeInfo salaryInfo) async {
     await localDb.setItem(
       key: _salaryInfoKey,
       value: salaryInfo,
@@ -63,9 +63,9 @@ class ExpensesPredictionRepository with HasLocalApis {
     );
   }
 
-  Future<SalaryInfo?> loadSalaryInfo() async => localDb.getItem(
+  Future<IncomeInfo?> loadSalaryInfo() async => localDb.getItem(
         key: _salaryInfoKey,
-        fromJson: SalaryInfo.fromJson,
+        fromJson: IncomeInfo.fromJson,
         defaultValue: null,
       );
 }

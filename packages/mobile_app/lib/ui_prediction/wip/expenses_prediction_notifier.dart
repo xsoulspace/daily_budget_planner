@@ -7,26 +7,26 @@ class ExpensesPredictionNotifier extends ChangeNotifier {
 
   final ExpensesPredictionService _service;
 
-  List<RegularExpense> regularExpenses = [];
+  List<Expense> regularExpenses = [];
   List<Budget> budgets = [];
   List<Expense> expenses = [];
-  SalaryInfo? salaryInfo;
+  IncomeInfo? salaryInfo;
   double averageDailyBudget = 0;
   double averageDailyExpense = 0;
   PredictionType budgetPrediction = PredictionType.neutral;
   PredictionType expensesPrediction = PredictionType.neutral;
   Period currentPeriod = Period.daily;
-  void addRegularExpense(final RegularExpense expense) {
+  void addRegularExpense(final Expense expense) {
     regularExpenses.add(expense);
     _recalculate();
   }
 
-  void removeRegularExpense(final RegularExpense expense) {
+  void removeRegularExpense(final Expense expense) {
     regularExpenses.remove(expense);
     _recalculate();
   }
 
-  void updateRegularExpenses(final List<RegularExpense> newExpenses) {
+  void updateRegularExpenses(final List<Expense> newExpenses) {
     regularExpenses = newExpenses;
     _recalculate();
   }
@@ -41,7 +41,7 @@ class ExpensesPredictionNotifier extends ChangeNotifier {
     _recalculate();
   }
 
-  void updateSalaryInfo(final SalaryInfo newSalaryInfo) {
+  void updateSalaryInfo(final IncomeInfo newSalaryInfo) {
     salaryInfo = newSalaryInfo;
     _recalculate();
   }

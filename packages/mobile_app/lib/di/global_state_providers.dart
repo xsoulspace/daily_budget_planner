@@ -1,7 +1,7 @@
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_cubit.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_cubit.dart';
-import 'package:mobile_app/ui_prediction/wip/expenses_prediction_notifier.dart';
+import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
 
 class GlobalStateProviders extends StatelessWidget {
   const GlobalStateProviders({required this.builder, super.key});
@@ -14,7 +14,7 @@ class GlobalStateProviders extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ExpensesPredictionNotifier>.value(value: g()),
+        ChangeNotifierProvider<UiPredictionNotifier>.value(value: g()),
         ChangeNotifierProvider<UserNotifier>.value(value: g()),
         ChangeNotifierProvider<UiLocaleNotifier>.value(value: g()),
         ChangeNotifierProvider<AppStatusNotifier>.value(value: g()),

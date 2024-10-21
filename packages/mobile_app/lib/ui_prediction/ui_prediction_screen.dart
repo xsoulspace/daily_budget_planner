@@ -1,5 +1,8 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
+import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_timeline.dart';
 
 class UiPredictionScreen extends StatefulWidget {
@@ -20,6 +23,8 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
+    final uiPredictionNotifier = context.watch<UiPredictionNotifier>();
+    final state = uiPredictionNotifier.value;
     return UiScaffold(
       body: Column(
         children: [
@@ -100,7 +105,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                       children: [
                                         Icon(Icons.arrow_drop_down_rounded),
                                         Text(
-                                          r'$100',
+                                          '\$${state.regularExpensesSum.toStringAsFixed(2)}',
                                           style: context.textTheme.titleLarge,
                                         ),
                                       ],
@@ -116,9 +121,9 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                     Text(
                                       LocalizedMap(
                                         value: {
-                                          languages.en: 'income',
-                                          languages.it: 'entrate',
-                                          languages.ru: 'доход',
+                                          languages.en: 'regular income',
+                                          languages.it: 'entrate regolari',
+                                          languages.ru: 'регулярные доходы',
                                         },
                                       ).getValue(locale),
                                       style: context.textTheme.labelSmall,
@@ -128,7 +133,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                                       children: [
                                         Icon(Icons.arrow_drop_up_rounded),
                                         Text(
-                                          r'$100',
+                                          '\$${state.regularIncomesSum.toStringAsFixed(2)}',
                                           style: context.textTheme.titleLarge,
                                         ),
                                       ],
@@ -166,13 +171,13 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                     ),
                     Gap(6),
                     Text(
-                      LocalizedMap(
+                      '\$${state.dailyBudget.toStringAsFixed(2)} ${LocalizedMap(
                         value: {
-                          languages.en: r'$1000 - left',
-                          languages.it: r'$1000 - rimanenti',
-                          languages.ru: r'$1000 - осталось',
+                          languages.en: ' - left',
+                          languages.it: ' - rimanenti',
+                          languages.ru: ' - осталось',
                         },
-                      ).getValue(locale),
+                      ).getValue(locale)}',
                       style: context.textTheme.titleLarge,
                     ),
                     Gap(24),
@@ -180,7 +185,7 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          r'$100',
+                          '\$${state.dailyBudget.toStringAsFixed(2)}',
                           style: context.textTheme.displayLarge,
                         ),
                         Gap(4),
@@ -201,6 +206,15 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                       style: context.textTheme.labelLarge,
                     ),
                     Gap(24),
+                    UiPredictionTimeline(
+                      presentationType: PresentationType.day,
+                      initialDate: _selectedDate,
+                      onDateChanged: (final newDate) {
+                        setState(() => _selectedDate = newDate);
+                        // TODO: Update predictions based on new date
+                      },
+                    ),
+                    Gap(24),
                     Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -215,15 +229,21 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                       child: Column(
                         children: [
                           Text(
-                            LocalizedMap(
+                            '${LocalizedMap(
                               value: {
-                                languages.en:
-                                    r'Predicted - $850 | Actual - $800',
-                                languages.it:
-                                    r'Previsto - $850 | Effettivo - $800',
-                                languages.ru: r'Прогноз - $850 | Факт - $800',
+                                languages.en: 'Predicted - ',
+                                languages.it: 'Previsto - ',
+                                languages.ru: 'Прогноз - ',
                               },
-                            ).getValue(locale),
+                            ).getValue(locale)} '
+                            '\$${uiPredictionNotifier.getExpensePredictionFor(_selectedDate).toStringAsFixed(2)} | '
+                            '${LocalizedMap(
+                              value: {
+                                languages.en: 'Actual - ',
+                                languages.it: 'Effettivo - ',
+                                languages.ru: 'Факт - ',
+                              },
+                            ).getValue(locale)} \$${uiPredictionNotifier.getExpenseFor(_selectedDate).toStringAsFixed(2)}',
                             style: context.textTheme.titleSmall,
                           ),
                           Text(
@@ -239,16 +259,6 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                         ],
                       ),
                     ),
-                    Gap(24),
-                    UiPredictionTimeline(
-                      presentationType: PresentationType.day,
-                      initialDate: _selectedDate,
-                      onDateChanged: (final newDate) {
-                        setState(() => _selectedDate = newDate);
-                        // TODO: Update predictions based on new date
-                      },
-                    ),
-                    const SizedBox(height: 12),
                   ],
                 ).toSliver(),
               ],

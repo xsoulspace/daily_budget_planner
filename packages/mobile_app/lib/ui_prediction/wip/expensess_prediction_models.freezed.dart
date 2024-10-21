@@ -14,201 +14,15 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-RegularExpense _$RegularExpenseFromJson(Map<String, dynamic> json) {
-  return _RegularExpense.fromJson(json);
-}
-
-/// @nodoc
-mixin _$RegularExpense {
-  double get amount => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
-  Period get period => throw _privateConstructorUsedError;
-
-  /// Serializes this RegularExpense to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of RegularExpense
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $RegularExpenseCopyWith<RegularExpense> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $RegularExpenseCopyWith<$Res> {
-  factory $RegularExpenseCopyWith(
-          RegularExpense value, $Res Function(RegularExpense) then) =
-      _$RegularExpenseCopyWithImpl<$Res, RegularExpense>;
-  @useResult
-  $Res call({double amount, String category, Period period});
-}
-
-/// @nodoc
-class _$RegularExpenseCopyWithImpl<$Res, $Val extends RegularExpense>
-    implements $RegularExpenseCopyWith<$Res> {
-  _$RegularExpenseCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of RegularExpense
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? amount = null,
-    Object? category = null,
-    Object? period = null,
-  }) {
-    return _then(_value.copyWith(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String,
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as Period,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$RegularExpenseImplCopyWith<$Res>
-    implements $RegularExpenseCopyWith<$Res> {
-  factory _$$RegularExpenseImplCopyWith(_$RegularExpenseImpl value,
-          $Res Function(_$RegularExpenseImpl) then) =
-      __$$RegularExpenseImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({double amount, String category, Period period});
-}
-
-/// @nodoc
-class __$$RegularExpenseImplCopyWithImpl<$Res>
-    extends _$RegularExpenseCopyWithImpl<$Res, _$RegularExpenseImpl>
-    implements _$$RegularExpenseImplCopyWith<$Res> {
-  __$$RegularExpenseImplCopyWithImpl(
-      _$RegularExpenseImpl _value, $Res Function(_$RegularExpenseImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of RegularExpense
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? amount = null,
-    Object? category = null,
-    Object? period = null,
-  }) {
-    return _then(_$RegularExpenseImpl(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String,
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as Period,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$RegularExpenseImpl implements _RegularExpense {
-  const _$RegularExpenseImpl(
-      {required this.amount, required this.category, required this.period});
-
-  factory _$RegularExpenseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RegularExpenseImplFromJson(json);
-
-  @override
-  final double amount;
-  @override
-  final String category;
-  @override
-  final Period period;
-
-  @override
-  String toString() {
-    return 'RegularExpense(amount: $amount, category: $category, period: $period)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RegularExpenseImpl &&
-            (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
-            (identical(other.period, period) || other.period == period));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, amount, category, period);
-
-  /// Create a copy of RegularExpense
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RegularExpenseImplCopyWith<_$RegularExpenseImpl> get copyWith =>
-      __$$RegularExpenseImplCopyWithImpl<_$RegularExpenseImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$RegularExpenseImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _RegularExpense implements RegularExpense {
-  const factory _RegularExpense(
-      {required final double amount,
-      required final String category,
-      required final Period period}) = _$RegularExpenseImpl;
-
-  factory _RegularExpense.fromJson(Map<String, dynamic> json) =
-      _$RegularExpenseImpl.fromJson;
-
-  @override
-  double get amount;
-  @override
-  String get category;
-  @override
-  Period get period;
-
-  /// Create a copy of RegularExpense
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RegularExpenseImplCopyWith<_$RegularExpenseImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
 Budget _$BudgetFromJson(Map<String, dynamic> json) {
   return _Budget.fromJson(json);
 }
 
 /// @nodoc
 mixin _$Budget {
-  double get amount => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
+  BudgetId get id => throw _privateConstructorUsedError;
+  double get amount => throw _privateConstructorUsedError;
 
   /// Serializes this Budget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -224,7 +38,7 @@ abstract class $BudgetCopyWith<$Res> {
   factory $BudgetCopyWith(Budget value, $Res Function(Budget) then) =
       _$BudgetCopyWithImpl<$Res, Budget>;
   @useResult
-  $Res call({double amount, DateTime date});
+  $Res call({DateTime date, BudgetId id, double amount});
 }
 
 /// @nodoc
@@ -242,18 +56,23 @@ class _$BudgetCopyWithImpl<$Res, $Val extends Budget>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amount = null,
     Object? date = null,
+    Object? id = null,
+    Object? amount = null,
   }) {
     return _then(_value.copyWith(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as BudgetId,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -265,7 +84,7 @@ abstract class _$$BudgetImplCopyWith<$Res> implements $BudgetCopyWith<$Res> {
       __$$BudgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double amount, DateTime date});
+  $Res call({DateTime date, BudgetId id, double amount});
 }
 
 /// @nodoc
@@ -281,18 +100,23 @@ class __$$BudgetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amount = null,
     Object? date = null,
+    Object? id = null,
+    Object? amount = null,
   }) {
     return _then(_$BudgetImpl(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as BudgetId,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -300,19 +124,24 @@ class __$$BudgetImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$BudgetImpl implements _Budget {
-  const _$BudgetImpl({required this.amount, required this.date});
+  const _$BudgetImpl(
+      {required this.date, this.id = BudgetId.empty, this.amount = 0});
 
   factory _$BudgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$BudgetImplFromJson(json);
 
   @override
-  final double amount;
-  @override
   final DateTime date;
+  @override
+  @JsonKey()
+  final BudgetId id;
+  @override
+  @JsonKey()
+  final double amount;
 
   @override
   String toString() {
-    return 'Budget(amount: $amount, date: $date)';
+    return 'Budget(date: $date, id: $id, amount: $amount)';
   }
 
   @override
@@ -320,13 +149,14 @@ class _$BudgetImpl implements _Budget {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BudgetImpl &&
-            (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.date, date) || other.date == date));
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, amount, date);
+  int get hashCode => Object.hash(runtimeType, date, id, amount);
 
   /// Create a copy of Budget
   /// with the given fields replaced by the non-null parameter values.
@@ -346,15 +176,18 @@ class _$BudgetImpl implements _Budget {
 
 abstract class _Budget implements Budget {
   const factory _Budget(
-      {required final double amount,
-      required final DateTime date}) = _$BudgetImpl;
+      {required final DateTime date,
+      final BudgetId id,
+      final double amount}) = _$BudgetImpl;
 
   factory _Budget.fromJson(Map<String, dynamic> json) = _$BudgetImpl.fromJson;
 
   @override
-  double get amount;
-  @override
   DateTime get date;
+  @override
+  BudgetId get id;
+  @override
+  double get amount;
 
   /// Create a copy of Budget
   /// with the given fields replaced by the non-null parameter values.
@@ -370,9 +203,11 @@ Expense _$ExpenseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Expense {
-  double get amount => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
+  TransactionId get id => throw _privateConstructorUsedError;
+  ExpenseCategoryId get category => throw _privateConstructorUsedError;
+  double get amount => throw _privateConstructorUsedError;
+  Period? get period => throw _privateConstructorUsedError;
 
   /// Serializes this Expense to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -388,7 +223,12 @@ abstract class $ExpenseCopyWith<$Res> {
   factory $ExpenseCopyWith(Expense value, $Res Function(Expense) then) =
       _$ExpenseCopyWithImpl<$Res, Expense>;
   @useResult
-  $Res call({double amount, DateTime date, String? category});
+  $Res call(
+      {DateTime date,
+      TransactionId id,
+      ExpenseCategoryId category,
+      double amount,
+      Period? period});
 }
 
 /// @nodoc
@@ -406,23 +246,33 @@ class _$ExpenseCopyWithImpl<$Res, $Val extends Expense>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amount = null,
     Object? date = null,
-    Object? category = freezed,
+    Object? id = null,
+    Object? category = null,
+    Object? amount = null,
+    Object? period = freezed,
   }) {
     return _then(_value.copyWith(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      category: freezed == category
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as TransactionId,
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as ExpenseCategoryId,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as Period?,
     ) as $Val);
   }
 }
@@ -434,7 +284,12 @@ abstract class _$$ExpenseImplCopyWith<$Res> implements $ExpenseCopyWith<$Res> {
       __$$ExpenseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double amount, DateTime date, String? category});
+  $Res call(
+      {DateTime date,
+      TransactionId id,
+      ExpenseCategoryId category,
+      double amount,
+      Period? period});
 }
 
 /// @nodoc
@@ -450,46 +305,68 @@ class __$$ExpenseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amount = null,
     Object? date = null,
-    Object? category = freezed,
+    Object? id = null,
+    Object? category = null,
+    Object? amount = null,
+    Object? period = freezed,
   }) {
     return _then(_$ExpenseImpl(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      category: freezed == category
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as TransactionId,
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as ExpenseCategoryId,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as Period?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ExpenseImpl implements _Expense {
+class _$ExpenseImpl extends _Expense {
   const _$ExpenseImpl(
-      {required this.amount, required this.date, this.category});
+      {required this.date,
+      this.id = TransactionId.empty,
+      this.category = ExpenseCategoryId.empty,
+      this.amount = 0,
+      this.period})
+      : super._();
 
   factory _$ExpenseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExpenseImplFromJson(json);
 
   @override
-  final double amount;
-  @override
   final DateTime date;
   @override
-  final String? category;
+  @JsonKey()
+  final TransactionId id;
+  @override
+  @JsonKey()
+  final ExpenseCategoryId category;
+  @override
+  @JsonKey()
+  final double amount;
+  @override
+  final Period? period;
 
   @override
   String toString() {
-    return 'Expense(amount: $amount, date: $date, category: $category)';
+    return 'Expense(date: $date, id: $id, category: $category, amount: $amount, period: $period)';
   }
 
   @override
@@ -497,15 +374,18 @@ class _$ExpenseImpl implements _Expense {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ExpenseImpl &&
-            (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.date, date) || other.date == date) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.category, category) ||
-                other.category == category));
+                other.category == category) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.period, period) || other.period == period));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, amount, date, category);
+  int get hashCode =>
+      Object.hash(runtimeType, date, id, category, amount, period);
 
   /// Create a copy of Expense
   /// with the given fields replaced by the non-null parameter values.
@@ -523,20 +403,27 @@ class _$ExpenseImpl implements _Expense {
   }
 }
 
-abstract class _Expense implements Expense {
+abstract class _Expense extends Expense {
   const factory _Expense(
-      {required final double amount,
-      required final DateTime date,
-      final String? category}) = _$ExpenseImpl;
+      {required final DateTime date,
+      final TransactionId id,
+      final ExpenseCategoryId category,
+      final double amount,
+      final Period? period}) = _$ExpenseImpl;
+  const _Expense._() : super._();
 
   factory _Expense.fromJson(Map<String, dynamic> json) = _$ExpenseImpl.fromJson;
 
   @override
-  double get amount;
-  @override
   DateTime get date;
   @override
-  String? get category;
+  TransactionId get id;
+  @override
+  ExpenseCategoryId get category;
+  @override
+  double get amount;
+  @override
+  Period? get period;
 
   /// Create a copy of Expense
   /// with the given fields replaced by the non-null parameter values.
@@ -546,169 +433,242 @@ abstract class _Expense implements Expense {
       throw _privateConstructorUsedError;
 }
 
-SalaryInfo _$SalaryInfoFromJson(Map<String, dynamic> json) {
-  return _SalaryInfo.fromJson(json);
+IncomeInfo _$IncomeInfoFromJson(Map<String, dynamic> json) {
+  return _IncomeInfo.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SalaryInfo {
-  double get amount => throw _privateConstructorUsedError;
+mixin _$IncomeInfo {
   DateTime get date => throw _privateConstructorUsedError;
+  double get amount => throw _privateConstructorUsedError;
+  TransactionId get id => throw _privateConstructorUsedError;
+  IncomeCategoryId get category => throw _privateConstructorUsedError;
+  Period? get period => throw _privateConstructorUsedError;
 
-  /// Serializes this SalaryInfo to a JSON map.
+  /// Serializes this IncomeInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of SalaryInfo
+  /// Create a copy of IncomeInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SalaryInfoCopyWith<SalaryInfo> get copyWith =>
+  $IncomeInfoCopyWith<IncomeInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SalaryInfoCopyWith<$Res> {
-  factory $SalaryInfoCopyWith(
-          SalaryInfo value, $Res Function(SalaryInfo) then) =
-      _$SalaryInfoCopyWithImpl<$Res, SalaryInfo>;
+abstract class $IncomeInfoCopyWith<$Res> {
+  factory $IncomeInfoCopyWith(
+          IncomeInfo value, $Res Function(IncomeInfo) then) =
+      _$IncomeInfoCopyWithImpl<$Res, IncomeInfo>;
   @useResult
-  $Res call({double amount, DateTime date});
+  $Res call(
+      {DateTime date,
+      double amount,
+      TransactionId id,
+      IncomeCategoryId category,
+      Period? period});
 }
 
 /// @nodoc
-class _$SalaryInfoCopyWithImpl<$Res, $Val extends SalaryInfo>
-    implements $SalaryInfoCopyWith<$Res> {
-  _$SalaryInfoCopyWithImpl(this._value, this._then);
+class _$IncomeInfoCopyWithImpl<$Res, $Val extends IncomeInfo>
+    implements $IncomeInfoCopyWith<$Res> {
+  _$IncomeInfoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SalaryInfo
+  /// Create a copy of IncomeInfo
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amount = null,
     Object? date = null,
+    Object? amount = null,
+    Object? id = null,
+    Object? category = null,
+    Object? period = freezed,
   }) {
     return _then(_value.copyWith(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as TransactionId,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as IncomeCategoryId,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as Period?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$SalaryInfoImplCopyWith<$Res>
-    implements $SalaryInfoCopyWith<$Res> {
-  factory _$$SalaryInfoImplCopyWith(
-          _$SalaryInfoImpl value, $Res Function(_$SalaryInfoImpl) then) =
-      __$$SalaryInfoImplCopyWithImpl<$Res>;
+abstract class _$$IncomeInfoImplCopyWith<$Res>
+    implements $IncomeInfoCopyWith<$Res> {
+  factory _$$IncomeInfoImplCopyWith(
+          _$IncomeInfoImpl value, $Res Function(_$IncomeInfoImpl) then) =
+      __$$IncomeInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double amount, DateTime date});
+  $Res call(
+      {DateTime date,
+      double amount,
+      TransactionId id,
+      IncomeCategoryId category,
+      Period? period});
 }
 
 /// @nodoc
-class __$$SalaryInfoImplCopyWithImpl<$Res>
-    extends _$SalaryInfoCopyWithImpl<$Res, _$SalaryInfoImpl>
-    implements _$$SalaryInfoImplCopyWith<$Res> {
-  __$$SalaryInfoImplCopyWithImpl(
-      _$SalaryInfoImpl _value, $Res Function(_$SalaryInfoImpl) _then)
+class __$$IncomeInfoImplCopyWithImpl<$Res>
+    extends _$IncomeInfoCopyWithImpl<$Res, _$IncomeInfoImpl>
+    implements _$$IncomeInfoImplCopyWith<$Res> {
+  __$$IncomeInfoImplCopyWithImpl(
+      _$IncomeInfoImpl _value, $Res Function(_$IncomeInfoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SalaryInfo
+  /// Create a copy of IncomeInfo
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amount = null,
     Object? date = null,
+    Object? amount = null,
+    Object? id = null,
+    Object? category = null,
+    Object? period = freezed,
   }) {
-    return _then(_$SalaryInfoImpl(
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
+    return _then(_$IncomeInfoImpl(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      amount: null == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as TransactionId,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as IncomeCategoryId,
+      period: freezed == period
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as Period?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SalaryInfoImpl implements _SalaryInfo {
-  const _$SalaryInfoImpl({required this.amount, required this.date});
+class _$IncomeInfoImpl extends _IncomeInfo {
+  const _$IncomeInfoImpl(
+      {required this.date,
+      this.amount = 0,
+      this.id = TransactionId.empty,
+      this.category = IncomeCategoryId.empty,
+      this.period})
+      : super._();
 
-  factory _$SalaryInfoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SalaryInfoImplFromJson(json);
+  factory _$IncomeInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IncomeInfoImplFromJson(json);
 
-  @override
-  final double amount;
   @override
   final DateTime date;
+  @override
+  @JsonKey()
+  final double amount;
+  @override
+  @JsonKey()
+  final TransactionId id;
+  @override
+  @JsonKey()
+  final IncomeCategoryId category;
+  @override
+  final Period? period;
 
   @override
   String toString() {
-    return 'SalaryInfo(amount: $amount, date: $date)';
+    return 'IncomeInfo(date: $date, amount: $amount, id: $id, category: $category, period: $period)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SalaryInfoImpl &&
+            other is _$IncomeInfoImpl &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.date, date) || other.date == date));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.period, period) || other.period == period));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, amount, date);
+  int get hashCode =>
+      Object.hash(runtimeType, date, amount, id, category, period);
 
-  /// Create a copy of SalaryInfo
+  /// Create a copy of IncomeInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SalaryInfoImplCopyWith<_$SalaryInfoImpl> get copyWith =>
-      __$$SalaryInfoImplCopyWithImpl<_$SalaryInfoImpl>(this, _$identity);
+  _$$IncomeInfoImplCopyWith<_$IncomeInfoImpl> get copyWith =>
+      __$$IncomeInfoImplCopyWithImpl<_$IncomeInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SalaryInfoImplToJson(
+    return _$$IncomeInfoImplToJson(
       this,
     );
   }
 }
 
-abstract class _SalaryInfo implements SalaryInfo {
-  const factory _SalaryInfo(
-      {required final double amount,
-      required final DateTime date}) = _$SalaryInfoImpl;
+abstract class _IncomeInfo extends IncomeInfo {
+  const factory _IncomeInfo(
+      {required final DateTime date,
+      final double amount,
+      final TransactionId id,
+      final IncomeCategoryId category,
+      final Period? period}) = _$IncomeInfoImpl;
+  const _IncomeInfo._() : super._();
 
-  factory _SalaryInfo.fromJson(Map<String, dynamic> json) =
-      _$SalaryInfoImpl.fromJson;
+  factory _IncomeInfo.fromJson(Map<String, dynamic> json) =
+      _$IncomeInfoImpl.fromJson;
 
+  @override
+  DateTime get date;
   @override
   double get amount;
   @override
-  DateTime get date;
+  TransactionId get id;
+  @override
+  IncomeCategoryId get category;
+  @override
+  Period? get period;
 
-  /// Create a copy of SalaryInfo
+  /// Create a copy of IncomeInfo
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SalaryInfoImplCopyWith<_$SalaryInfoImpl> get copyWith =>
+  _$$IncomeInfoImplCopyWith<_$IncomeInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

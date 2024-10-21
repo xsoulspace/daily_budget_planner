@@ -127,8 +127,8 @@ class ExpensesPredictionScreen extends StatelessWidget {
               itemBuilder: (final context, final index) {
                 final expense = notifier.regularExpenses[index];
                 return ListTile(
-                  title: Text(expense.category),
-                  subtitle: Text('${expense.amount} - ${expense.period}'),
+                  title: Text(expense.category.value),
+                  subtitle: Text('${expense.amount} - ${expense.date}'),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {

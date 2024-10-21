@@ -6,19 +6,41 @@ part of 'expensess_prediction_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$RegularExpenseImpl _$$RegularExpenseImplFromJson(Map<String, dynamic> json) =>
-    _$RegularExpenseImpl(
-      amount: (json['amount'] as num).toDouble(),
-      category: json['category'] as String,
-      period: $enumDecode(_$PeriodEnumMap, json['period']),
+_$BudgetImpl _$$BudgetImplFromJson(Map<String, dynamic> json) => _$BudgetImpl(
+      date: DateTime.parse(json['date'] as String),
+      id: json['id'] == null
+          ? BudgetId.empty
+          : BudgetId.fromJson(json['id'] as String),
+      amount: (json['amount'] as num?)?.toDouble() ?? 0,
     );
 
-Map<String, dynamic> _$$RegularExpenseImplToJson(
-        _$RegularExpenseImpl instance) =>
+Map<String, dynamic> _$$BudgetImplToJson(_$BudgetImpl instance) =>
     <String, dynamic>{
+      'date': instance.date.toIso8601String(),
+      'id': instance.id,
       'amount': instance.amount,
+    };
+
+_$ExpenseImpl _$$ExpenseImplFromJson(Map<String, dynamic> json) =>
+    _$ExpenseImpl(
+      date: DateTime.parse(json['date'] as String),
+      id: json['id'] == null
+          ? TransactionId.empty
+          : TransactionId.fromJson(json['id'] as String),
+      category: json['category'] == null
+          ? ExpenseCategoryId.empty
+          : ExpenseCategoryId.fromJson(json['category'] as String),
+      amount: (json['amount'] as num?)?.toDouble() ?? 0,
+      period: $enumDecodeNullable(_$PeriodEnumMap, json['period']),
+    );
+
+Map<String, dynamic> _$$ExpenseImplToJson(_$ExpenseImpl instance) =>
+    <String, dynamic>{
+      'date': instance.date.toIso8601String(),
+      'id': instance.id,
       'category': instance.category,
-      'period': _$PeriodEnumMap[instance.period]!,
+      'amount': instance.amount,
+      'period': _$PeriodEnumMap[instance.period],
     };
 
 const _$PeriodEnumMap = {
@@ -28,39 +50,24 @@ const _$PeriodEnumMap = {
   Period.yearly: 'yearly',
 };
 
-_$BudgetImpl _$$BudgetImplFromJson(Map<String, dynamic> json) => _$BudgetImpl(
-      amount: (json['amount'] as num).toDouble(),
+_$IncomeInfoImpl _$$IncomeInfoImplFromJson(Map<String, dynamic> json) =>
+    _$IncomeInfoImpl(
       date: DateTime.parse(json['date'] as String),
+      amount: (json['amount'] as num?)?.toDouble() ?? 0,
+      id: json['id'] == null
+          ? TransactionId.empty
+          : TransactionId.fromJson(json['id'] as String),
+      category: json['category'] == null
+          ? IncomeCategoryId.empty
+          : IncomeCategoryId.fromJson(json['category'] as String),
+      period: $enumDecodeNullable(_$PeriodEnumMap, json['period']),
     );
 
-Map<String, dynamic> _$$BudgetImplToJson(_$BudgetImpl instance) =>
+Map<String, dynamic> _$$IncomeInfoImplToJson(_$IncomeInfoImpl instance) =>
     <String, dynamic>{
-      'amount': instance.amount,
       'date': instance.date.toIso8601String(),
-    };
-
-_$ExpenseImpl _$$ExpenseImplFromJson(Map<String, dynamic> json) =>
-    _$ExpenseImpl(
-      amount: (json['amount'] as num).toDouble(),
-      date: DateTime.parse(json['date'] as String),
-      category: json['category'] as String?,
-    );
-
-Map<String, dynamic> _$$ExpenseImplToJson(_$ExpenseImpl instance) =>
-    <String, dynamic>{
       'amount': instance.amount,
-      'date': instance.date.toIso8601String(),
+      'id': instance.id,
       'category': instance.category,
-    };
-
-_$SalaryInfoImpl _$$SalaryInfoImplFromJson(Map<String, dynamic> json) =>
-    _$SalaryInfoImpl(
-      amount: (json['amount'] as num).toDouble(),
-      date: DateTime.parse(json['date'] as String),
-    );
-
-Map<String, dynamic> _$$SalaryInfoImplToJson(_$SalaryInfoImpl instance) =>
-    <String, dynamic>{
-      'amount': instance.amount,
-      'date': instance.date.toIso8601String(),
+      'period': _$PeriodEnumMap[instance.period],
     };
