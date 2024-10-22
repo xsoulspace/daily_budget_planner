@@ -24,6 +24,7 @@ void _dispose() => unawaited(_getIt.reset());
 Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   await _getIt.reset();
   final r = _getIt.registerSingleton;
+  final rl = _getIt.registerLazySingleton;
 
   /// ********************************************
   /// *      API
@@ -33,60 +34,60 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   r<AnalyticsService>(analyticsManager.analyticsService);
   final localDb = PrefsDb();
   r<LocalDbI>(localDb);
-  r(UserLocalApi());
-  r(AppSettingsLocalApi());
-  r(BudgetLocalApi());
+  rl(UserLocalApi.new);
+  rl(AppSettingsLocalApi.new);
+  rl(BudgetLocalApi.new);
 
   /// ********************************************
   /// *      STATES
   /// ********************************************
   final localeNotifier = UiLocaleNotifier(Locales.fallback);
   r(localeNotifier);
-  r(AppSettingsNotifier());
-  r(UserNotifier());
-  r(AppStatusNotifier());
+  rl(AppSettingsNotifier.new);
+  rl(UserNotifier.new);
+  rl(AppStatusNotifier.new);
   // TODO(arenukvern): create a factory for this
-  final PurchaseManager purchaseManager = switch (Envs.storeTarget) {
-    InstallPlatformTarget.rustore => FlutterRustoreBillingManager(
-        consoleApplicationId: Envs.rustoreApplicationId,
-        // ignore: avoid_redundant_argument_values
-        enableLogger: Envs.logging,
-        deeplinkScheme: Envs.appScheme,
-        productTypeChecker: MonetizationProducts.productTypeChecker,
-      ),
-    InstallPlatformTarget.appleStore ||
-    InstallPlatformTarget.googlePlay =>
-      NoopPurchaseManager(),
-    // TODO(arenukvern): description
-    // InAppPurchaseManager(),
-    _ => NoopPurchaseManager(),
-  };
-  r<PurchaseManager>(purchaseManager);
-  r(UiPredictionNotifier());
-  final monetizationTypeNotifier =
-      MonetizationStatusNotifier(Envs.monetizationType);
-  r(monetizationTypeNotifier);
-  final subscriptionManager = SubscriptionManager(
-    productIds: MonetizationProducts.subscriptions,
-    purchaseManager: purchaseManager,
-    monetizationTypeNotifier: monetizationTypeNotifier,
+  rl<PurchaseManager>(
+    () => switch (Envs.storeTarget) {
+      InstallPlatformTarget.rustore => FlutterRustoreBillingManager(
+          consoleApplicationId: Envs.rustoreApplicationId,
+          // ignore: avoid_redundant_argument_values
+          enableLogger: Envs.logging,
+          deeplinkScheme: Envs.appScheme,
+          productTypeChecker: MonetizationProducts.productTypeChecker,
+        ),
+      InstallPlatformTarget.appleStore ||
+      InstallPlatformTarget.googlePlay =>
+        NoopPurchaseManager(),
+      // TODO(arenukvern): description
+      // InAppPurchaseManager(),
+      _ => NoopPurchaseManager(),
+    },
   );
-  r(subscriptionManager);
-  r(
-    StoreReviewRequester(
+  rl(UiPredictionNotifier.new);
+  rl(() => MonetizationStatusNotifier(Envs.monetizationType));
+  rl(
+    () => SubscriptionManager(
+      productIds: MonetizationProducts.subscriptions,
+      purchaseManager: _g(),
+      monetizationTypeNotifier: _g(),
+    ),
+  );
+  rl(
+    () => StoreReviewRequester(
       localDb: localDb,
       getLocale: () => localeNotifier.value,
     ),
   );
-  r(
-    PurchaseInitializer(
-      monetizationTypeNotifier: monetizationTypeNotifier,
-      purchaseManager: purchaseManager,
-      subscriptionManager: subscriptionManager,
+  rl(
+    () => PurchaseInitializer(
+      monetizationTypeNotifier: _g(),
+      purchaseManager: _g(),
+      subscriptionManager: _g(),
     ),
   );
-  r(WeeklyCubit());
-  r(MonthlyCubit());
+  rl(WeeklyCubit.new);
+  rl(MonthlyCubit.new);
 }
 
 mixin HasLocalApis {

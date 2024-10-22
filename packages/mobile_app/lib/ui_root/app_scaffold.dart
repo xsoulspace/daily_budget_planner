@@ -42,12 +42,21 @@ class _DBPAppState extends State<DBPApp> {
   }
 
   @override
-  Widget build(final BuildContext context) {
-    if (!_isDiLoaded) return LoadingScreen();
-    return GlobalStateProviders(
-      builder: (final context) => const AppScaffoldBuilder(),
-    );
-  }
+  Widget build(final BuildContext context) => ColoredBox(
+        color: AppThemeData.brandLight.colorScheme.surface,
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: Stack(
+            children: [
+              if (!_isDiLoaded) const LoadingScreen(),
+              if (_isDiLoaded)
+                GlobalStateProviders(
+                  builder: (final context) => const AppScaffoldBuilder(),
+                ),
+            ],
+          ),
+        ),
+      );
 }
 
 class AppScaffoldBuilder extends StatelessWidget {

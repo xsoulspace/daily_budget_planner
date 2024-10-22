@@ -25,10 +25,12 @@ final router = GoRouter(
   routes: [
     AppRoute(
       ScreenPaths.root.value,
+      useFade: true,
       (final context, final state) => const PreloadingScreen(),
       routes: [
         AppRoute(
           ScreenPaths.home.value,
+          useFade: true,
           (final context, final state) => const HomeScreen(),
           routes: [
             AppRoute(
@@ -143,7 +145,9 @@ class AppRoute extends GoRoute {
                 key: state.pageKey,
                 child: pageContent,
                 opaque: !isTransparent,
-                barrierColor: Colors.transparent,
+                barrierColor: isTransparent
+                    ? Colors.transparent
+                    : context.colorScheme.surface,
                 transitionsBuilder: (
                   final context,
                   final animation,

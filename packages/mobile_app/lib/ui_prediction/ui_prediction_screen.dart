@@ -164,17 +164,30 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                   children: [
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        LocalizedMap(
-                          value: {
-                            languages.en: 'Trend: savings left for ~2 days',
-                            languages.it:
-                                'Tendenza: risparmio rimanente per ~2 giorni',
-                            languages.ru: 'Тренд: накоплений хватит на ~2 дня',
-                          },
-                        ).getValue(locale),
-                        style: context.textTheme.bodySmall,
-                        textAlign: TextAlign.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.trending_up_rounded,
+                            size: 16,
+                            color:
+                                context.colorScheme.onSurface.withOpacity(0.3),
+                          ),
+                          Gap(4),
+                          Text(
+                            LocalizedMap(
+                              value: {
+                                languages.en: 'Trend: savings left for ~2 days',
+                                languages.it:
+                                    'Tendenza: risparmio rimanente per ~2 giorni',
+                                languages.ru:
+                                    'Тренд: накоплений хватит на ~2 дня',
+                              },
+                            ).getValue(locale),
+                            style: context.textTheme.bodySmall,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
                     Gap(6),
@@ -185,7 +198,12 @@ class _UiPredictionScreenState extends State<UiPredictionScreen> {
                               Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.history),
+                          Icon(
+                            Icons.history,
+                            size: 16,
+                            color:
+                                context.colorScheme.onSurface.withOpacity(0.8),
+                          ),
                           Gap(8),
                           Text(
                             '\$${uiPredictionNotifier.recentBudget.amount.toStringAsFixed(2)} ${LocalizedMap(
