@@ -115,7 +115,7 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
     }
 
     if (_isLoading) return _buildSkeletonLoader();
-
+    final isToday = _isCurrentDate(_dates[_selectedIndex]);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -124,19 +124,13 @@ class _UiPredictionTimelineState extends State<UiPredictionTimeline> {
           padding: EdgeInsets.zero,
           title: Text(
             '${_getFormattedDate(_dates[_selectedIndex], locale)} '
-            '${_isCurrentDate(_dates[_selectedIndex]) ? LocalizedMap(
+            '${isToday ? LocalizedMap(
                 value: {
                   languages.en: '(today)',
                   languages.it: '(oggi)',
                   languages.ru: '(сегодня)',
                 },
-              ).getValue(locale) : LocalizedMap(
-                value: {
-                  languages.en: '(go to today)',
-                  languages.it: '(vai a oggi)',
-                  languages.ru: '(перейти к сегодня)',
-                },
-              ).getValue(locale)}',
+              ).getValue(locale) : ''}',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color:
