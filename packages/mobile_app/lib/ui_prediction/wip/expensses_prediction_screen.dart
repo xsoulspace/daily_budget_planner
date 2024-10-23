@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app/ui_prediction/transaction_models.dart';
 import 'package:mobile_app/ui_prediction/wip/expenses_prediction_graph.dart';
 import 'package:mobile_app/ui_prediction/wip/expenses_prediction_notifier.dart';
-import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 import 'package:mobile_app/ui_prediction/wip/regular_expense_input_form.dart';
 import 'package:provider/provider.dart';
 

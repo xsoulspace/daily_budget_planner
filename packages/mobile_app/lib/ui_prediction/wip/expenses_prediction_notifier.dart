@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:mobile_app/ui_prediction/transaction_models.dart';
 import 'package:mobile_app/ui_prediction/wip/expenses_prediction_service.dart';
-import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class ExpensesPredictionNotifier extends ChangeNotifier {
   ExpensesPredictionNotifier(this._service);
@@ -10,7 +10,7 @@ class ExpensesPredictionNotifier extends ChangeNotifier {
   List<Expense> regularExpenses = [];
   List<Budget> budgets = [];
   List<Expense> expenses = [];
-  IncomeInfo? salaryInfo;
+  Income? salaryInfo;
   double averageDailyBudget = 0;
   double averageDailyExpense = 0;
   PredictionType budgetPrediction = PredictionType.neutral;
@@ -41,7 +41,7 @@ class ExpensesPredictionNotifier extends ChangeNotifier {
     _recalculate();
   }
 
-  void updateSalaryInfo(final IncomeInfo newSalaryInfo) {
+  void updateSalaryInfo(final Income newSalaryInfo) {
     salaryInfo = newSalaryInfo;
     _recalculate();
   }

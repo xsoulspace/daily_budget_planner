@@ -3,9 +3,10 @@
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
+import 'package:mobile_app/ui_prediction/transaction_editor.dart';
+import 'package:mobile_app/ui_prediction/ui_incomes_view.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_timeline.dart';
-import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
 
 class UiPredictionScreen extends StatefulWidget {
   const UiPredictionScreen({super.key});
@@ -77,6 +78,7 @@ class _PredictionHeader extends StatelessWidget {
               child: Row(
                 children: [
                   _HeaderItem(
+                    onPressed: () async => UiIncomesView.show(context: context),
                     title: LocalizedMap(
                       value: {
                         languages.en: 'period',
@@ -94,6 +96,7 @@ class _PredictionHeader extends StatelessWidget {
                   ),
                   const Gap(6),
                   _HeaderItem(
+                    onPressed: () async => UiIncomesView.show(context: context),
                     title: LocalizedMap(
                       value: {
                         languages.en: 'regular expenses',
@@ -106,6 +109,10 @@ class _PredictionHeader extends StatelessWidget {
                   ),
                   const Gap(6),
                   _HeaderItem(
+                    onPressed: () async => UiIncomesView.show(
+                      context: context,
+                      isRegular: true,
+                    ),
                     title: LocalizedMap(
                       value: {
                         languages.en: 'regular income',
@@ -120,7 +127,6 @@ class _PredictionHeader extends StatelessWidget {
               ),
             ),
             const Gap(8),
-            const UiIOSDragHandle(),
           ],
         ),
       ),
@@ -132,38 +138,43 @@ class _HeaderItem extends StatelessWidget {
   const _HeaderItem({
     required this.title,
     required this.value,
+    required this.onPressed,
     this.icon,
   });
 
   final String title;
   final String value;
   final IconData? icon;
-
+  final VoidCallback onPressed;
   @override
   Widget build(final BuildContext context) => Expanded(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                title,
-                style: context.textTheme.labelSmall,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (icon != null) Icon(icon),
-                Text(
-                  value,
-                  style: context.textTheme.titleLarge,
+        child: UiTextButton(
+          padding: EdgeInsets.zero,
+          onPressed: onPressed,
+          title: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  title,
+                  style: context.textTheme.labelSmall,
                   textAlign: TextAlign.center,
                 ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null) Icon(icon),
+                  Text(
+                    value,
+                    style: context.textTheme.titleLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       );
 }
@@ -455,184 +466,6 @@ class UiIOSDragHandle extends StatelessWidget {
           ),
         ),
       );
-}
-
-class UiPredictionDay extends StatelessWidget {
-  const UiPredictionDay({required this.day, super.key});
-  final String day;
-
-  @override
-  Widget build(final BuildContext context) => Container(
-        width: 50,
-        height: 50,
-        margin: EdgeInsets.symmetric(horizontal: 4),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(),
-        ),
-        child: Center(
-          child: Text(day),
-        ),
-      );
-}
-
-class AddBudgetDialog extends StatefulWidget {
-  const AddBudgetDialog({super.key});
-
-  static Future<void> show(final BuildContext context) => showDialog(
-        context: context,
-        builder: (final context) => const AddBudgetDialog(),
-      );
-
-  @override
-  State<AddBudgetDialog> createState() => _AddBudgetDialogState();
-}
-
-class _AddBudgetDialogState extends State<AddBudgetDialog> {
-  final _formKey = GlobalKey<FormState>();
-  final _amountController = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
-
-  @override
-  void dispose() {
-    _amountController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(final BuildContext context) {
-    final locale = useLocale(context);
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    return AlertDialog(
-      insetPadding:
-          screenWidth < 400 ? EdgeInsets.symmetric(horizontal: 4) : null,
-      title: Text(
-        LocalizedMap(
-          value: {
-            languages.en: 'Add New Budget',
-            languages.it: 'Aggiungi Nuovo Budget',
-            languages.ru: 'Добавить Новый Бюджет',
-          },
-        ).getValue(locale),
-      ),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: _amountController,
-              decoration: InputDecoration(
-                labelText: LocalizedMap(
-                  value: {
-                    languages.en: 'Amount',
-                    languages.it: 'Importo',
-                    languages.ru: 'Сумма',
-                  },
-                ).getValue(locale),
-              ),
-              keyboardType: TextInputType.number,
-              validator: (final value) {
-                if (value == null || value.isEmpty) {
-                  return LocalizedMap(
-                    value: {
-                      languages.en: 'Please enter an amount',
-                      languages.it: 'Inserisci un importo',
-                      languages.ru: 'Пожалуйста, введите сумму',
-                    },
-                  ).getValue(locale);
-                }
-                return null;
-              },
-            ),
-            const Gap(16),
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(
-                  LocalizedMap(
-                    value: {
-                      languages.en: 'Date: ',
-                      languages.it: 'Data: ',
-                      languages.ru: 'Дата: ',
-                    },
-                  ).getValue(locale),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    final pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: _selectedDate,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101),
-                    );
-                    if (pickedDate == null) return;
-                    final pickedTime = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.fromDateTime(_selectedDate),
-                    );
-                    if (pickedTime == null) return;
-                    setState(() {
-                      _selectedDate = DateTime(
-                        pickedDate.year,
-                        pickedDate.month,
-                        pickedDate.day,
-                        pickedTime.hour,
-                        pickedTime.minute,
-                      );
-                    });
-                  },
-                  child:
-                      Text(DateFormat.yMMMd().add_Hm().format(_selectedDate)),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            LocalizedMap(
-              value: {
-                languages.en: 'Cancel',
-                languages.it: 'Annulla',
-                languages.ru: 'Отмена',
-              },
-            ).getValue(locale),
-          ),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              final amount = double.parse(_amountController.text);
-              final newBudget = Budget(
-                id: BudgetId(createId()),
-                amount: amount,
-                date: _selectedDate,
-              );
-              unawaited(
-                context
-                    .read<UiPredictionNotifier>()
-                    .upsertBudget(newBudget, isNew: true),
-              );
-              Navigator.of(context).pop();
-            }
-          },
-          child: Text(
-            LocalizedMap(
-              value: {
-                languages.en: 'Add',
-                languages.it: 'Aggiungi',
-                languages.ru: 'Добавить',
-              },
-            ).getValue(locale),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class BudgetBottomSheet extends HookWidget {

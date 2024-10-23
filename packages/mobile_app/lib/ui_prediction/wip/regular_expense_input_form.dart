@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
+import 'package:mobile_app/ui_prediction/transaction_models.dart';
 
 class RegularExpenseInputForm extends StatefulWidget {
   const RegularExpenseInputForm({required this.onSubmit, super.key});
@@ -66,7 +66,7 @@ class _RegularExpenseInputFormState extends State<RegularExpenseInputForm> {
       final regularExpense = Expense(
         amount: _amount,
         date: DateTime.now(),
-        category: ExpenseCategoryId(''),
+        category: TransactionCategoryId(''),
       );
       widget.onSubmit(regularExpense);
     }

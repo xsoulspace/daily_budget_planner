@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UiPredictionState {
   List<Expense> get expenses => throw _privateConstructorUsedError;
   List<Budget> get budgets => throw _privateConstructorUsedError;
-  List<IncomeInfo> get incomes => throw _privateConstructorUsedError;
+  List<Income> get incomes => throw _privateConstructorUsedError;
   double get expensesSum => throw _privateConstructorUsedError;
   double get regularExpensesSum => throw _privateConstructorUsedError;
   double get incomesSum => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $UiPredictionStateCopyWith<$Res> {
   $Res call(
       {List<Expense> expenses,
       List<Budget> budgets,
-      List<IncomeInfo> incomes,
+      List<Income> incomes,
       double expensesSum,
       double regularExpensesSum,
       double incomesSum,
@@ -94,7 +94,7 @@ class _$UiPredictionStateCopyWithImpl<$Res, $Val extends UiPredictionState>
       incomes: null == incomes
           ? _value.incomes
           : incomes // ignore: cast_nullable_to_non_nullable
-              as List<IncomeInfo>,
+              as List<Income>,
       expensesSum: null == expensesSum
           ? _value.expensesSum
           : expensesSum // ignore: cast_nullable_to_non_nullable
@@ -134,7 +134,7 @@ abstract class _$$UiPredictionStateImplCopyWith<$Res>
   $Res call(
       {List<Expense> expenses,
       List<Budget> budgets,
-      List<IncomeInfo> incomes,
+      List<Income> incomes,
       double expensesSum,
       double regularExpensesSum,
       double incomesSum,
@@ -178,7 +178,7 @@ class __$$UiPredictionStateImplCopyWithImpl<$Res>
       incomes: null == incomes
           ? _value._incomes
           : incomes // ignore: cast_nullable_to_non_nullable
-              as List<IncomeInfo>,
+              as List<Income>,
       expensesSum: null == expensesSum
           ? _value.expensesSum
           : expensesSum // ignore: cast_nullable_to_non_nullable
@@ -213,7 +213,7 @@ class _$UiPredictionStateImpl implements _UiPredictionState {
   const _$UiPredictionStateImpl(
       {final List<Expense> expenses = const [],
       final List<Budget> budgets = const [],
-      final List<IncomeInfo> incomes = const [],
+      final List<Income> incomes = const [],
       this.expensesSum = 0,
       this.regularExpensesSum = 0,
       this.incomesSum = 0,
@@ -242,10 +242,10 @@ class _$UiPredictionStateImpl implements _UiPredictionState {
     return EqualUnmodifiableListView(_budgets);
   }
 
-  final List<IncomeInfo> _incomes;
+  final List<Income> _incomes;
   @override
   @JsonKey()
-  List<IncomeInfo> get incomes {
+  List<Income> get incomes {
     if (_incomes is EqualUnmodifiableListView) return _incomes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_incomes);
@@ -329,7 +329,7 @@ abstract class _UiPredictionState implements UiPredictionState {
   const factory _UiPredictionState(
       {final List<Expense> expenses,
       final List<Budget> budgets,
-      final List<IncomeInfo> incomes,
+      final List<Income> incomes,
       final double expensesSum,
       final double regularExpensesSum,
       final double incomesSum,
@@ -342,7 +342,7 @@ abstract class _UiPredictionState implements UiPredictionState {
   @override
   List<Budget> get budgets;
   @override
-  List<IncomeInfo> get incomes;
+  List<Income> get incomes;
   @override
   double get expensesSum;
   @override

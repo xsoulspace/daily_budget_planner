@@ -1,5 +1,5 @@
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
+import 'package:mobile_app/ui_prediction/transaction_models.dart';
 
 class ExpensesPredictionRepository with HasLocalApis {
   static const _regularExpensesKey = 'regular_expenses';
@@ -55,7 +55,7 @@ class ExpensesPredictionRepository with HasLocalApis {
     return iterable.toList();
   }
 
-  Future<void> saveSalaryInfo(final IncomeInfo salaryInfo) async {
+  Future<void> saveSalaryInfo(final Income salaryInfo) async {
     await localDb.setItem(
       key: _salaryInfoKey,
       value: salaryInfo,
@@ -63,9 +63,9 @@ class ExpensesPredictionRepository with HasLocalApis {
     );
   }
 
-  Future<IncomeInfo?> loadSalaryInfo() async => localDb.getItem(
+  Future<Income?> loadSalaryInfo() async => localDb.getItem(
         key: _salaryInfoKey,
-        fromJson: IncomeInfo.fromJson,
+        fromJson: Income.fromJson,
         defaultValue: null,
       );
 }

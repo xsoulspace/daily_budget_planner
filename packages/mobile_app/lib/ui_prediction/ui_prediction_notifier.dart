@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_prediction/wip/expensess_prediction_models.dart';
+import 'package:mobile_app/ui_prediction/transaction_models.dart';
 
 part 'ui_prediction_notifier.freezed.dart';
 
@@ -16,7 +16,7 @@ class UiPredictionState with _$UiPredictionState {
   const factory UiPredictionState({
     @Default([]) final List<Expense> expenses,
     @Default([]) final List<Budget> budgets,
-    @Default([]) final List<IncomeInfo> incomes,
+    @Default([]) final List<Income> incomes,
     @Default(0) final double expensesSum,
     @Default(0) final double regularExpensesSum,
     @Default(0) final double incomesSum,
@@ -208,7 +208,7 @@ class UiPredictionNotifier extends ValueNotifier<UiPredictionState>
     _setRegularIncomesSum();
   }
 
-  Future<void> upsertIncome(final IncomeInfo income) async {
+  Future<void> upsertIncome(final Income income) async {
     // await incomesLocalApi.upsertIncome(income);
     final incomeIndex =
         value.incomes.indexWhere((final i) => i.id == income.id);
