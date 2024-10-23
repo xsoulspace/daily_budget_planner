@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'wip/expensess_prediction_models.freezed.dart';
-part 'wip/expensess_prediction_models.g.dart';
+part 'transaction_models.freezed.dart';
+part 'transaction_models.g.dart';
 
 enum Period { daily, weekly, monthly, yearly }
 
@@ -12,6 +12,13 @@ extension type const BudgetId(String value) {
   static const empty = BudgetId('');
   bool get isEmpty => value.isEmpty;
   String toJson() => value;
+}
+
+enum TransactionType {
+  @JsonValue('expense')
+  expense,
+  @JsonValue('income')
+  income;
 }
 
 extension type const TransactionId(String value) {
@@ -77,41 +84,29 @@ class Budget with _$Budget {
   );
 }
 
-@freezed
+@Freezed()
 sealed class Transaction with _$Transaction {
-  const factory Transaction.expense({
+  const factory Transaction({
     required final DateTime date,
     @Default(TransactionId.empty) final TransactionId id,
     @Default(TransactionCategoryId.empty) final TransactionCategoryId category,
+    @Default('') final String description,
 
     /// in smallest currency unit
     @Default(0) final double amount,
     @Default(CurrencyType.empty) final CurrencyType currency,
+    @Default(TransactionType.expense) final TransactionType type,
     final TransactionPeriodType? periodType,
     final Period? period,
-  }) = Expense;
+  }) = _Transaction;
 
-  const factory Transaction.income({
-    required final DateTime date,
-
-    /// in smallest currency unit
-    @Default(0) final double amount,
-    @Default(TransactionId.empty) final TransactionId id,
-    @Default(IncomeCategoryId.empty) final IncomeCategoryId category,
-    @Default(CurrencyType.empty) final CurrencyType currency,
-    final TransactionPeriodType? periodType,
-    final Period? period,
-  }) = Income;
+  const Transaction._();
 
   factory Transaction.fromJson(final Map<String, dynamic> json) =>
       _$TransactionFromJson(json);
 
-  const Transaction._();
-
-  bool get isRegular => switch (this) {
-        Expense(:final Period? period) => period != null,
-        Income(:final Period? period) => period != null,
-      };
-
+  bool get isExpense => type == TransactionType.expense;
+  bool get isIncome => type == TransactionType.income;
+  bool get isRegular => period != null;
   double get value => amount;
 }

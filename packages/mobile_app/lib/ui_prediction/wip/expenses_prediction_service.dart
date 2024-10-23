@@ -13,7 +13,7 @@ class ExpensesPredictionService {
   }
 
   double calculateAverageDailyExpense(
-    final List<Expense> expenses,
+    final List<Transaction> expenses,
     final Period period,
   ) {
     if (expenses.isEmpty) return 0;
@@ -37,7 +37,7 @@ class ExpensesPredictionService {
   }
 
   PredictionType predictExpensesTrend(
-    final List<Expense> expenses,
+    final List<Transaction> expenses,
     final Period period,
   ) {
     if (expenses.length < 2) return PredictionType.neutral;

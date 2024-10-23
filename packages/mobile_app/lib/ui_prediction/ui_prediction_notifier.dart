@@ -14,9 +14,9 @@ typedef ExpenseTotalTuple = ({double balance, double expense, double income});
 @freezed
 class UiPredictionState with _$UiPredictionState {
   const factory UiPredictionState({
-    @Default([]) final List<Expense> expenses,
+    @Default([]) final List<Transaction> expenses,
     @Default([]) final List<Budget> budgets,
-    @Default([]) final List<Income> incomes,
+    @Default([]) final List<Transaction> incomes,
     @Default(0) final double expensesSum,
     @Default(0) final double regularExpensesSum,
     @Default(0) final double incomesSum,
@@ -185,17 +185,26 @@ class UiPredictionNotifier extends ValueNotifier<UiPredictionState>
     // await budgetLocalApi.upsertBudget(budget);
   }
 
-  Future<void> upsertExpense(final Expense expense) async {
+  Future<void> upsertTransaction(final Transaction transaction) async {
     // await expensesLocalApi.upsertRegularExpense(expense);
-    final expenseIndex =
-        value.expenses.indexWhere((final e) => e.id == expense.id);
-    if (expenseIndex == -1) {
-      value = value.copyWith(expenses: [...value.expenses, expense]);
-    } else {
-      final newExpenses = [...value.expenses]..[expenseIndex] = expense;
-      value = value.copyWith(expenses: newExpenses);
+    switch (transaction.type) {
+      case TransactionType.expense:
+        value = value.copyWith(
+          expenses: value.expenses.upsert(
+            transaction,
+            predicate: (final e) => e.id == transaction.id,
+          ),
+        );
+        _recalculateExpenses();
+      case TransactionType.income:
+        value = value.copyWith(
+          incomes: value.incomes.upsert(
+            transaction,
+            predicate: (final e) => e.id == transaction.id,
+          ),
+        );
+        _recalculateIncomes();
     }
-    _recalculateExpenses();
   }
 
   void _recalculateExpenses() {
@@ -208,7 +217,7 @@ class UiPredictionNotifier extends ValueNotifier<UiPredictionState>
     _setRegularIncomesSum();
   }
 
-  Future<void> upsertIncome(final Income income) async {
+  Future<void> upsertIncome(final Transaction income) async {
     // await incomesLocalApi.upsertIncome(income);
     final incomeIndex =
         value.incomes.indexWhere((final i) => i.id == income.id);
@@ -263,4 +272,19 @@ extension DateTimeWithoutTime on DateTime {
   /// ```
   DateTime get dayStart => DateTime(year, month, day);
   DateTime get dayEnd => DateTime(year, month, day, 23, 59, 59, 999);
+}
+
+extension ListUpsertX<T> on List<T> {
+  /// Helper method to upsert an item in a list
+  List<T> upsert(
+    final T item, {
+    required final bool Function(T) predicate,
+  }) {
+    final index = indexWhere(predicate);
+    if (index == -1) {
+      return [...this, item];
+    } else {
+      return [...this]..[index] = item;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
+import 'package:mobile_app/ui_prediction/transaction_editor.dart';
 import 'package:mobile_app/ui_prediction/transaction_models.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
 
@@ -20,7 +21,7 @@ class UiIncomesView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final incomes = context.select<UiPredictionNotifier, List<Income>>(
+    final incomes = context.select<UiPredictionNotifier, List<Transaction>>(
       (final state) => state.value.incomes,
     );
     final locale = useLocale(context);
@@ -32,7 +33,8 @@ class UiIncomesView extends StatelessWidget {
         ),
       ),
       floatingActionButton: UiTextButton(
-        onPressed: () async {},
+        onPressed: () async =>
+            TransactionBottomSheet.show(context, type: TransactionType.income),
         textTitle: LocalizedMap(
           value: {
             languages.en: 'Add income',
@@ -185,15 +187,18 @@ class IncomeTable extends StatelessWidget {
     super.key,
   });
 
-  final List<Income> incomes;
+  final List<Transaction> incomes;
   final bool isRegular;
 
   @override
   Widget build(final BuildContext context) {
-    final filteredIncomes =
-        incomes.where((final income) => income.isRegular == isRegular).toList();
+    final filteredIncomes = incomes
+        .where(
+          (final income) => income.isRegular == isRegular && income.isIncome,
+        )
+        .toList();
 
-    return UiTransactionsTable<Income>(transactions: filteredIncomes);
+    return UiTransactionsTable<Transaction>(transactions: filteredIncomes);
   }
 }
 
@@ -204,15 +209,18 @@ class ExpenseTable extends StatelessWidget {
     super.key,
   });
 
-  final List<Expense> expenses;
+  final List<Transaction> expenses;
   final bool isRegular;
 
   @override
   Widget build(final BuildContext context) {
     final filteredExpenses = expenses
-        .where((final expense) => expense.isRegular == isRegular)
+        .where(
+          (final expense) =>
+              expense.isRegular == isRegular && expense.isExpense,
+        )
         .toList();
 
-    return UiTransactionsTable<Expense>(transactions: filteredExpenses);
+    return UiTransactionsTable<Transaction>(transactions: filteredExpenses);
   }
 }
