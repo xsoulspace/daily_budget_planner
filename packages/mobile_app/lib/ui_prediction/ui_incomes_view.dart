@@ -64,10 +64,11 @@ class UiTransactionsTable<T extends Transaction> extends HookWidget {
   Widget build(final BuildContext context) {
     final sortColumn = useState('date');
     final ascending = useState(true);
-    final filteredTransactions = useState(transactions);
+    final filteredTransactions = useState([...transactions]);
 
     useEffect(
       () {
+        filteredTransactions.value = [...transactions];
         _sortData(filteredTransactions, sortColumn.value, ascending.value);
         return null;
       },
@@ -85,7 +86,7 @@ class UiTransactionsTable<T extends Transaction> extends HookWidget {
             );
           default:
             return const TableSpan(
-              extent: FixedTableSpanExtent(40),
+              extent: FixedTableSpanExtent(80),
             );
         }
       },
@@ -149,7 +150,7 @@ class UiTransactionsTable<T extends Transaction> extends HookWidget {
     final T transaction,
   ) {
     final cellData = [
-      DateFormat.yMMMEd().format(transaction.date),
+      DateFormat.yMMMEd().add_Hms().format(transaction.date),
       transaction.value.toString(),
       transaction.currency.value,
     ];
