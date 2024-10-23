@@ -18,7 +18,9 @@ enum TransactionType {
   @JsonValue('expense')
   expense,
   @JsonValue('income')
-  income;
+  income,
+  @JsonValue('transfer')
+  transfer,
 }
 
 extension type const TransactionId(String value) {

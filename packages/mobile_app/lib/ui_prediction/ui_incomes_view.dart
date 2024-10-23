@@ -25,29 +25,24 @@ class UiIncomesView extends StatelessWidget {
     final incomes = context.select<UiPredictionNotifier, List<Transaction>>(
       (final state) => state.value.incomes,
     );
-    final locale = useLocale(context);
 
-    return UiScaffold(
+    return UiColumnScaffold(
       appBar: AppBar(
         title: Text(
           isRegular ? 'Regular incomes' : 'Incomes',
         ),
       ),
-      floatingActionButton: UiTextButton(
-        onPressed: () async =>
-            TransactionBottomSheet.show(context, type: TransactionType.income),
-        textTitle: LocalizedMap(
-          value: {
-            languages.en: 'Add income',
-            languages.it: 'Aggiungi entrate',
-            languages.ru: 'Добавить доход',
-          },
-        ).getValue(locale),
-      ),
-      body: IncomeTable(
-        incomes: incomes,
-        isRegular: isRegular,
-      ),
+      children: [
+        UiTransactionsActionsBar(
+          tuple: (type: TransactionType.income,),
+        ),
+        Expanded(
+          child: IncomeTable(
+            incomes: incomes,
+            isRegular: isRegular,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -222,6 +217,41 @@ class IncomeTable extends HookWidget {
     );
 
     return UiTransactionsTable<Transaction>(transactions: filteredIncomes);
+  }
+}
+
+typedef UiTransactionsActionsBarTuple = ({
+  TransactionType type,
+});
+
+class UiTransactionsActionsBar extends StatelessWidget {
+  const UiTransactionsActionsBar({required this.tuple, super.key});
+  final UiTransactionsActionsBarTuple tuple;
+  @override
+  Widget build(final BuildContext context) {
+    final locale = useLocale(context);
+    return Row(
+      children: [
+        UiTextButton(
+          tooltip: LocalizedMap(
+            value: {
+              languages.en: 'Add ${tuple.type.name}',
+              languages.it: 'Aggiungi ${switch (tuple.type) {
+                TransactionType.income => 'entrate',
+                TransactionType.expense => 'spese',
+                TransactionType.transfer => 'transferenze',
+              }}',
+              languages.ru: 'Добавить ${tuple.type.name}',
+            },
+          ).getValue(locale),
+          onPressed: () async => TransactionBottomSheet.show(
+            context,
+            type: tuple.type,
+          ),
+          title: Icon(Icons.add),
+        ),
+      ],
+    );
   }
 }
 

@@ -17,3 +17,21 @@ class UiScaffold extends StatelessWidget {
         floatingActionButton: floatingActionButton,
       );
 }
+
+class UiColumnScaffold extends StatelessWidget {
+  const UiColumnScaffold({
+    required this.children,
+    this.appBar,
+    this.floatingActionButton,
+    super.key,
+  });
+  final List<Widget> children;
+  final PreferredSizeWidget? appBar;
+  final Widget? floatingActionButton;
+  @override
+  Widget build(final BuildContext context) => UiScaffold(
+        body: Column(children: children),
+        appBar: appBar,
+        floatingActionButton: floatingActionButton,
+      );
+}

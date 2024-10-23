@@ -44,10 +44,14 @@ class UiBaseButton extends StatefulWidget {
     this.pressedScale = 0.95,
     this.animationDuration = const Duration(milliseconds: 80),
     this.curve = Curves.ease,
+    this.tooltip = '',
     this.focusNode,
     this.actions = const {},
     super.key,
   });
+
+  /// The tooltip to display when the button is hovered.
+  final String tooltip;
 
   /// {@macro ui_divider.ai_description}
   static const String aiDescription =
@@ -143,7 +147,8 @@ class _UiBaseButtonState extends State<UiBaseButton>
   @override
   Widget build(final BuildContext context) {
     final focused = _isFocused || _isHovered;
-    return FocusableActionDetector(
+    final tooltip = widget.tooltip;
+    final child = FocusableActionDetector(
       focusNode: _focusNode,
       onShowHoverHighlight: (final isHovered) {
         setState(() => _isHovered = isHovered);
@@ -173,6 +178,14 @@ class _UiBaseButtonState extends State<UiBaseButton>
         ),
       ),
     );
+
+    if (tooltip.isNotEmpty) {
+      return Tooltip(
+        message: tooltip,
+        child: child,
+      );
+    }
+    return child;
   }
 
   @override

@@ -422,6 +422,7 @@ class UiTextButton extends StatelessWidget {
   const UiTextButton({
     required this.onPressed,
     this.textTitle = '',
+    this.tooltip = '',
     this.isLoading = false,
     this.title,
     this.padding = const EdgeInsets.symmetric(
@@ -432,12 +433,14 @@ class UiTextButton extends StatelessWidget {
   });
   final String textTitle;
   final bool isLoading;
+  final String tooltip;
   final Widget? title;
   final VoidCallback onPressed;
   final EdgeInsets padding;
 
   @override
   Widget build(final BuildContext context) => UiBaseButton(
+        tooltip: tooltip,
         onPressed: isLoading ? () {} : onPressed,
         builder: (final context, final focused, final onlyFocused) => Container(
           padding: padding,
