@@ -76,6 +76,13 @@ class _UiTransactionsTableState<T extends Transaction>
     _sortData();
   }
 
+  @override
+  void didUpdateWidget(covariant final UiTransactionsTable<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _filteredTransactions = widget.transactions;
+    _sortData();
+  }
+
   void _sortData() {
     _filteredTransactions.sort((final a, final b) {
       switch (_sortColumn) {
