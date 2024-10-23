@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:mobile_app/common_imports.dart';
 
 class UiBackButton extends StatelessWidget {
-  const UiBackButton({super.key});
+  const UiBackButton({super.key, this.onPressed});
+  final VoidCallback? onPressed;
 
   @override
   Widget build(final BuildContext context) => CupertinoNavigationBarBackButton(

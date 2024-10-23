@@ -10,17 +10,14 @@ class PrivacyScreen extends StatelessWidget {
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
     return UiScaffold(
-      appBar: AppBar(
-        leading: UiBackButton(),
-        title: Text(
-          LocalizedMap(
-            value: {
-              languages.en: 'Privacy Policy',
-              languages.it: 'Politica sulla privacy',
-              languages.ru: 'Приватность',
-            },
-          ).getValue(locale),
-        ),
+      appBar: UiAppBar(
+        titleText: LocalizedMap(
+          value: {
+            languages.en: 'Privacy Policy',
+            languages.it: 'Politica sulla privacy',
+            languages.ru: 'Приватность',
+          },
+        ).getValue(locale),
       ),
       body: MarkdownScreen(
         markdownUrlSource: Envs.privacyPolicyUrl,

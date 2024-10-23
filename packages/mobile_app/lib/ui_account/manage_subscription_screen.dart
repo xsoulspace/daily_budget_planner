@@ -12,16 +12,14 @@ class ManageSubscriptionScreen extends HookWidget {
     final (:activeSubscription) = useActiveSubscription(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          LocalizedMap(
-            value: {
-              languages.en: 'Manage Subscription',
-              languages.it: 'Gestisci Abbonamento',
-              languages.ru: 'Управление подпиской',
-            },
-          ).getValue(locale),
-        ),
+      appBar: UiAppBar(
+        titleText: LocalizedMap(
+          value: {
+            languages.en: 'Manage Subscription',
+            languages.it: 'Gestisci Abbonamento',
+            languages.ru: 'Управление подпиской',
+          },
+        ).getValue(locale),
       ),
       body: SafeArea(
         child: Padding(

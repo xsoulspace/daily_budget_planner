@@ -1,6 +1,5 @@
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
 import 'package:mobile_app/ui_prediction/transaction_editor.dart';
 import 'package:mobile_app/ui_prediction/transaction_models.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
@@ -27,9 +26,11 @@ class UiIncomesView extends StatelessWidget {
     );
 
     return UiColumnScaffold(
-      appBar: AppBar(
-        title: Text(
-          isRegular ? 'Regular incomes' : 'Incomes',
+      appBar: UiAppBar(
+        title: FittedBox(
+          child: Text(
+            isRegular ? 'Regular incomes' : 'Incomes',
+          ),
         ),
       ),
       children: [
@@ -230,27 +231,35 @@ class UiTransactionsActionsBar extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
-    return Row(
-      children: [
-        UiTextButton(
-          tooltip: LocalizedMap(
-            value: {
-              languages.en: 'Add ${tuple.type.name}',
-              languages.it: 'Aggiungi ${switch (tuple.type) {
-                TransactionType.income => 'entrate',
-                TransactionType.expense => 'spese',
-                TransactionType.transfer => 'transferenze',
-              }}',
-              languages.ru: 'Добавить ${tuple.type.name}',
-            },
-          ).getValue(locale),
-          onPressed: () async => TransactionBottomSheet.show(
-            context,
-            type: tuple.type,
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: context.colorScheme.primaryContainer.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          UiTextButton(
+            tooltip: LocalizedMap(
+              value: {
+                languages.en: 'Add ${tuple.type.name}',
+                languages.it: 'Aggiungi ${switch (tuple.type) {
+                  TransactionType.income => 'entrate',
+                  TransactionType.expense => 'spese',
+                  TransactionType.transfer => 'transferenze',
+                }}',
+                languages.ru: 'Добавить ${tuple.type.name}',
+              },
+            ).getValue(locale),
+            onPressed: () async => TransactionBottomSheet.show(
+              context,
+              type: tuple.type,
+            ),
+            title: Icon(Icons.add),
           ),
-          title: Icon(Icons.add),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

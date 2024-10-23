@@ -23,7 +23,7 @@ class UiExpensesView extends StatelessWidget {
     );
 
     return UiColumnScaffold(
-      appBar: AppBar(
+      appBar: UiAppBar(
         title: Text(
           isRegular ? 'Regular expenses' : 'Expenses',
         ),

@@ -49,82 +49,76 @@ class TransactionBottomSheet extends HookWidget {
     );
     final period = useState(transaction?.period ?? Period.monthly);
     final isExpense = type == TransactionType.expense;
+
     return Form(
       child: DraggableScrollableSheet(
-        initialChildSize: 0.9,
         minChildSize: 0.5,
         maxChildSize: 0.95,
         expand: false,
+        snap: true,
+        snapSizes: const [0.5, 0.95],
         builder: (final context, final scrollController) =>
             SingleChildScrollView(
           controller: scrollController,
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              left: 16,
-              right: 16,
-              top: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  transaction == null ? 'Add Transaction' : 'Edit Transaction',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 16),
-                TransactionForm(
-                  amountController: amountController,
-                  descriptionController: descriptionController,
-                  selectedDate: selectedDate,
-                  isExpense: isExpense,
-                  periodType: periodType,
-                  period: period,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text(
-                        LocalizedMap(
-                          value: {
-                            languages.en: 'Cancel',
-                            languages.it: 'Annulla',
-                            languages.ru: 'Отмена',
-                          },
-                        ).getValue(locale),
-                      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                transaction == null ? 'Add Transaction' : 'Edit Transaction',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              TransactionForm(
+                amountController: amountController,
+                descriptionController: descriptionController,
+                selectedDate: selectedDate,
+                isExpense: isExpense,
+                periodType: periodType,
+                period: period,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(
+                      LocalizedMap(
+                        value: {
+                          languages.en: 'Cancel',
+                          languages.it: 'Annulla',
+                          languages.ru: 'Отмена',
+                        },
+                      ).getValue(locale),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (!Form.of(context).validate()) return;
-                        final newTransaction = Transaction(
-                          id: transaction?.id ?? TransactionId(createId()),
-                          amount: double.parse(amountController.text),
-                          date: selectedDate.value,
-                          description: descriptionController.text,
-                          type: type,
-                          periodType: periodType.value,
-                          period: period.value,
-                        );
-                        unawaited(
-                          context
-                              .read<UiPredictionNotifier>()
-                              .upsertTransaction(newTransaction),
-                        );
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        transaction == null ? 'Add' : 'Update',
-                      ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (!Form.of(context).validate()) return;
+                      final newTransaction = Transaction(
+                        id: transaction?.id ?? TransactionId(createId()),
+                        amount: double.parse(amountController.text),
+                        date: selectedDate.value,
+                        description: descriptionController.text,
+                        type: type,
+                        periodType: periodType.value,
+                        period: period.value,
+                      );
+                      unawaited(
+                        context
+                            .read<UiPredictionNotifier>()
+                            .upsertTransaction(newTransaction),
+                      );
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      transaction == null ? 'Add' : 'Update',
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

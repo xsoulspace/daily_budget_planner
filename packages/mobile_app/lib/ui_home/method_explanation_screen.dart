@@ -1,6 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_home/hooks/use_monetization_type.dart';
@@ -47,18 +46,17 @@ class MethodExplanationScreen extends HookWidget {
       }
     }
 
+    final locale = useLocale(context);
     return Scaffold(
-      appBar: AppBar(
+      appBar: UiAppBar(
         leading: _buildBackButton(context, pageController, isFirstOpening),
-        title: Text(
-          LocalizedMap(
-            value: {
-              languages.en: 'Magic of Budgeting',
-              languages.ru: 'Магия бюджетирования',
-              languages.it: 'Magia del Budgeting',
-            },
-          ).getValue(useLocale(context)),
-        ),
+        titleText: LocalizedMap(
+          value: {
+            languages.en: 'Magic of Budgeting',
+            languages.ru: 'Магия бюджетирования',
+            languages.it: 'Magia del Budgeting',
+          },
+        ).getValue(locale),
       ),
       body: Center(
         child: ConstrainedBox(
@@ -128,7 +126,7 @@ class MethodExplanationScreen extends HookWidget {
     final PageController pageController,
     final bool isFirstOpening,
   ) {
-    final back = CupertinoNavigationBarBackButton(
+    final back = UiBackButton(
       onPressed: () {
         if (pageController.page! > 0) {
           unawaited(

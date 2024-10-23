@@ -2,7 +2,6 @@
 
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_other/ui_other.dart';
@@ -72,25 +71,17 @@ class Ui2024MonthlySubscriptionPaywall extends HookWidget
           builder: (final context, final constraints) => SingleChildScrollView(
             child: Column(
               children: [
-                AppBar(
-                  centerTitle: true,
-                  backgroundColor: Colors.transparent,
-                  leading: CupertinoNavigationBarBackButton(
-                    color: context.colorScheme.onSurface,
-                  ),
-                  title: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      LocalizedMap(
-                        value: {
-                          languages.en: 'Unlock all features',
-                          languages.it: 'Sblocca tutte le funzionalità',
-                          languages.ru: 'Разблокируйте все функции',
-                        },
-                      ).getValue(locale),
-                      style: context.textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                UiAppBar(
+                  title: Text(
+                    LocalizedMap(
+                      value: {
+                        languages.en: 'Unlock all features',
+                        languages.it: 'Sblocca tutte le funzionalità',
+                        languages.ru: 'Разблокируйте все функции',
+                      },
+                    ).getValue(locale),
+                    style: context.textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -416,47 +407,6 @@ String getSubscriptionPaywallTitle(
       },
     ).getValue(locale);
   }
-}
-
-class UiTextButton extends StatelessWidget {
-  const UiTextButton({
-    required this.onPressed,
-    this.textTitle = '',
-    this.tooltip = '',
-    this.isLoading = false,
-    this.title,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: 12,
-      vertical: 12,
-    ),
-    super.key,
-  });
-  final String textTitle;
-  final bool isLoading;
-  final String tooltip;
-  final Widget? title;
-  final VoidCallback onPressed;
-  final EdgeInsets padding;
-
-  @override
-  Widget build(final BuildContext context) => UiBaseButton(
-        tooltip: tooltip,
-        onPressed: isLoading ? () {} : onPressed,
-        builder: (final context, final focused, final onlyFocused) => Container(
-          padding: padding,
-          color: Colors.transparent,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(child: title ?? Text(textTitle)),
-              if (isLoading) ...[
-                Gap(8),
-                UiCircularProgress.uncentered(),
-              ],
-            ],
-          ),
-        ),
-      );
 }
 
 class _SubscriptionCard extends StatelessWidget {
