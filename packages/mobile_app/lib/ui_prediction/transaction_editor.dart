@@ -154,133 +154,131 @@ class TransactionForm extends HookWidget {
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
 
-    return Form(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            controller: amountController,
-            decoration: InputDecoration(
-              labelText: LocalizedMap(
-                value: {
-                  languages.en: 'Amount',
-                  languages.it: 'Importo',
-                  languages.ru: 'Сумма',
-                },
-              ).getValue(locale),
-              prefixIcon: Icon(Icons.attach_money),
-            ),
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            validator: (final value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter an amount';
-              }
-              if (double.tryParse(value) == null) {
-                return 'Please enter a valid number';
-              }
-              return null;
-            },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          controller: amountController,
+          decoration: InputDecoration(
+            labelText: LocalizedMap(
+              value: {
+                languages.en: 'Amount',
+                languages.it: 'Importo',
+                languages.ru: 'Сумма',
+              },
+            ).getValue(locale),
+            prefixIcon: Icon(Icons.attach_money),
           ),
-          const SizedBox(height: 16),
-          TextFormField(
-            controller: descriptionController,
-            decoration: InputDecoration(
-              labelText: 'Description',
-              prefixIcon: Icon(Icons.description),
-            ),
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          validator: (final value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter an amount';
+            }
+            if (double.tryParse(value) == null) {
+              return 'Please enter a valid number';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16),
+        TextFormField(
+          controller: descriptionController,
+          decoration: InputDecoration(
+            labelText: 'Description',
+            prefixIcon: Icon(Icons.description),
           ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Icon(Icons.calendar_today),
-              const SizedBox(width: 8),
-              TextButton(
-                onPressed: () async {
-                  final pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: selectedDate.value,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Icon(Icons.calendar_today),
+            const SizedBox(width: 8),
+            TextButton(
+              onPressed: () async {
+                final pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate.value,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2101),
+                );
+                if (pickedDate != null) {
+                  selectedDate.value = DateTime(
+                    pickedDate.year,
+                    pickedDate.month,
+                    pickedDate.day,
+                    selectedDate.value.hour,
+                    selectedDate.value.minute,
                   );
-                  if (pickedDate != null) {
-                    selectedDate.value = DateTime(
-                      pickedDate.year,
-                      pickedDate.month,
-                      pickedDate.day,
-                      selectedDate.value.hour,
-                      selectedDate.value.minute,
-                    );
-                  }
-                },
-                child: Text(DateFormat.yMMMd().format(selectedDate.value)),
-              ),
-              const SizedBox(width: 16),
-              TextButton(
-                onPressed: () async {
-                  final pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.fromDateTime(selectedDate.value),
+                }
+              },
+              child: Text(DateFormat.yMMMd().format(selectedDate.value)),
+            ),
+            const SizedBox(width: 16),
+            TextButton(
+              onPressed: () async {
+                final pickedTime = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.fromDateTime(selectedDate.value),
+                );
+                if (pickedTime != null) {
+                  selectedDate.value = DateTime(
+                    selectedDate.value.year,
+                    selectedDate.value.month,
+                    selectedDate.value.day,
+                    pickedTime.hour,
+                    pickedTime.minute,
                   );
-                  if (pickedTime != null) {
-                    selectedDate.value = DateTime(
-                      selectedDate.value.year,
-                      selectedDate.value.month,
-                      selectedDate.value.day,
-                      pickedTime.hour,
-                      pickedTime.minute,
-                    );
-                  }
-                },
-                child: Text(DateFormat.Hm().format(selectedDate.value)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Text('Regularity:'),
-          const SizedBox(height: 8),
-          CupertinoSlidingSegmentedControl<TransactionPeriodType>(
-            groupValue: periodType.value,
+                }
+              },
+              child: Text(DateFormat.Hm().format(selectedDate.value)),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Text('Regularity:'),
+        const SizedBox(height: 8),
+        CupertinoSlidingSegmentedControl<TransactionPeriodType>(
+          groupValue: periodType.value,
+          children: {
+            TransactionPeriodType.bySpecificDate: Text('Specific Date'),
+            TransactionPeriodType.byDayOfWeek: Text('Day of Week'),
+            TransactionPeriodType.byComputedDate: Text('Computed Date'),
+          },
+          onValueChanged: (final value) {
+            if (value != null) {
+              periodType.value = value;
+            }
+          },
+        ),
+        const SizedBox(height: 16),
+        if (periodType.value == TransactionPeriodType.bySpecificDate)
+          CupertinoSlidingSegmentedControl<Period>(
+            groupValue: period.value,
             children: {
-              TransactionPeriodType.bySpecificDate: Text('Specific Date'),
-              TransactionPeriodType.byDayOfWeek: Text('Day of Week'),
-              TransactionPeriodType.byComputedDate: Text('Computed Date'),
+              Period.daily: Text('Daily'),
+              Period.weekly: Text('Weekly'),
+              Period.monthly: Text('Monthly'),
+              Period.yearly: Text('Yearly'),
             },
             onValueChanged: (final value) {
               if (value != null) {
-                periodType.value = value;
+                period.value = value;
               }
             },
+          )
+        else if (periodType.value == TransactionPeriodType.byDayOfWeek)
+          WeekdaySelector(
+            onChanged: (final day) {
+              // Handle weekday selection
+            },
+          )
+        else if (periodType.value == TransactionPeriodType.byComputedDate)
+          ComputedDateSelector(
+            onChanged: (final config) {
+              // Handle computed date configuration
+            },
           ),
-          const SizedBox(height: 16),
-          if (periodType.value == TransactionPeriodType.bySpecificDate)
-            CupertinoSlidingSegmentedControl<Period>(
-              groupValue: period.value,
-              children: {
-                Period.daily: Text('Daily'),
-                Period.weekly: Text('Weekly'),
-                Period.monthly: Text('Monthly'),
-                Period.yearly: Text('Yearly'),
-              },
-              onValueChanged: (final value) {
-                if (value != null) {
-                  period.value = value;
-                }
-              },
-            )
-          else if (periodType.value == TransactionPeriodType.byDayOfWeek)
-            WeekdaySelector(
-              onChanged: (final day) {
-                // Handle weekday selection
-              },
-            )
-          else if (periodType.value == TransactionPeriodType.byComputedDate)
-            ComputedDateSelector(
-              onChanged: (final config) {
-                // Handle computed date configuration
-              },
-            ),
-        ],
-      ),
+      ],
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
 import 'package:mobile_app/ui_prediction/transaction_editor.dart';
 import 'package:mobile_app/ui_prediction/transaction_models.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
+import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class UiIncomesView extends StatelessWidget {
   const UiIncomesView({this.isRegular = false, super.key});
@@ -51,7 +52,7 @@ class UiIncomesView extends StatelessWidget {
   }
 }
 
-class UiTransactionsTable<T extends Transaction> extends StatefulWidget {
+class UiTransactionsTable<T extends Transaction> extends HookWidget {
   const UiTransactionsTable({
     required this.transactions,
     super.key,
@@ -60,42 +61,135 @@ class UiTransactionsTable<T extends Transaction> extends StatefulWidget {
   final List<T> transactions;
 
   @override
-  State<UiTransactionsTable<T>> createState() => _UiTransactionsTableState<T>();
-}
+  Widget build(final BuildContext context) {
+    final sortColumn = useState('date');
+    final ascending = useState(true);
+    final filteredTransactions = useState(transactions);
 
-class _UiTransactionsTableState<T extends Transaction>
-    extends State<UiTransactionsTable<T>> {
-  String _sortColumn = 'date';
-  bool _ascending = true;
-  late List<T> _filteredTransactions;
+    useEffect(
+      () {
+        _sortData(filteredTransactions, sortColumn.value, ascending.value);
+        return null;
+      },
+      [transactions, sortColumn.value, ascending.value],
+    );
 
-  @override
-  void initState() {
-    super.initState();
-    _filteredTransactions = widget.transactions;
-    _sortData();
+    return TableView.builder(
+      columnCount: 3,
+      rowCount: filteredTransactions.value.length + 1,
+      columnBuilder: (final columnIndex) {
+        switch (columnIndex) {
+          case 0:
+            return TableSpan(
+              extent: const FixedTableSpanExtent(150),
+            );
+          default:
+            return const TableSpan(
+              extent: FixedTableSpanExtent(40),
+            );
+        }
+      },
+      pinnedRowCount: 1,
+      rowBuilder: (final rowIndex) => const TableSpan(
+        extent: FixedTableSpanExtent(50),
+      ),
+      cellBuilder: (final context, final vicinity) {
+        if (vicinity.row == 0) {
+          return TableViewCell(
+            child: _buildHeaderCell(
+              context,
+              vicinity.column,
+              sortColumn,
+              ascending,
+            ),
+          );
+        }
+        return TableViewCell(
+          child: _buildDataCell(
+            context,
+            vicinity.column,
+            filteredTransactions.value[vicinity.row - 1],
+          ),
+        );
+      },
+    );
   }
 
-  @override
-  void didUpdateWidget(covariant final UiTransactionsTable<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _filteredTransactions = widget.transactions;
-    _sortData();
+  Widget _buildHeaderCell(
+    final BuildContext context,
+    final int columnIndex,
+    final ValueNotifier<String> sortColumn,
+    final ValueNotifier<bool> ascending,
+  ) {
+    final headers = ['Date', 'Value', 'Currency'];
+    final columnNames = ['date', 'value', 'currency'];
+
+    return GestureDetector(
+      onTap: () => _onSort(columnNames[columnIndex], sortColumn, ascending),
+      child: Container(
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(headers[columnIndex]),
+            if (sortColumn.value == columnNames[columnIndex])
+              Icon(
+                ascending.value ? Icons.arrow_upward : Icons.arrow_downward,
+                size: 16,
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
-  void _sortData() {
-    _filteredTransactions.sort((final a, final b) {
-      switch (_sortColumn) {
+  Widget _buildDataCell(
+    final BuildContext context,
+    final int columnIndex,
+    final T transaction,
+  ) {
+    final cellData = [
+      DateFormat.yMMMEd().format(transaction.date),
+      transaction.value.toString(),
+      transaction.currency.value,
+    ];
+
+    return Container(
+      alignment: Alignment.center,
+      child: Text(cellData[columnIndex]),
+    );
+  }
+
+  void _onSort(
+    final String column,
+    final ValueNotifier<String> sortColumn,
+    final ValueNotifier<bool> ascending,
+  ) {
+    if (sortColumn.value == column) {
+      ascending.value = !ascending.value;
+    } else {
+      sortColumn.value = column;
+      ascending.value = true;
+    }
+  }
+
+  void _sortData(
+    final ValueNotifier<List<T>> filteredTransactions,
+    final String sortColumn,
+    final bool ascending,
+  ) {
+    filteredTransactions.value.sort((final a, final b) {
+      switch (sortColumn) {
         case 'date':
-          return _ascending
+          return ascending
               ? a.date.compareTo(b.date)
               : b.date.compareTo(a.date);
         case 'value':
-          return _ascending
+          return ascending
               ? a.value.compareTo(b.value)
               : b.value.compareTo(a.value);
         case 'currency':
-          return _ascending
+          return ascending
               ? a.currency.value.compareTo(b.currency.value)
               : b.currency.value.compareTo(a.currency.value);
         default:
@@ -103,91 +197,9 @@ class _UiTransactionsTableState<T extends Transaction>
       }
     });
   }
-
-  void _onSort(final String column) {
-    setState(() {
-      if (_sortColumn == column) {
-        _ascending = !_ascending;
-      } else {
-        _sortColumn = column;
-        _ascending = true;
-      }
-      _sortData();
-    });
-  }
-
-  @override
-  Widget build(final BuildContext context) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: SingleChildScrollView(
-          child: DataTable(
-            columns: [
-              DataColumn(
-                label: GestureDetector(
-                  onTap: () => _onSort('date'),
-                  child: Row(
-                    children: [
-                      const Text('Date'),
-                      if (_sortColumn == 'date')
-                        Icon(
-                          _ascending
-                              ? Icons.arrow_upward
-                              : Icons.arrow_downward,
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: GestureDetector(
-                  onTap: () => _onSort('value'),
-                  child: Row(
-                    children: [
-                      const Text('Value'),
-                      if (_sortColumn == 'value')
-                        Icon(
-                          _ascending
-                              ? Icons.arrow_upward
-                              : Icons.arrow_downward,
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: GestureDetector(
-                  onTap: () => _onSort('currency'),
-                  child: Row(
-                    children: [
-                      const Text('Currency'),
-                      if (_sortColumn == 'currency')
-                        Icon(
-                          _ascending
-                              ? Icons.arrow_upward
-                              : Icons.arrow_downward,
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-            rows: _filteredTransactions
-                .map(
-                  (final transaction) => DataRow(
-                    cells: [
-                      DataCell(Text(DateFormat.yMd().format(transaction.date))),
-                      DataCell(Text(transaction.value.toString())),
-                      DataCell(Text(transaction.currency.value)),
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      );
 }
 
-class IncomeTable extends StatelessWidget {
+class IncomeTable extends HookWidget {
   const IncomeTable({
     required this.incomes,
     required this.isRegular,
@@ -199,17 +211,20 @@ class IncomeTable extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final filteredIncomes = incomes
-        .where(
-          (final income) => income.isRegular == isRegular && income.isIncome,
-        )
-        .toList();
+    final filteredIncomes = useMemoized(
+      () => incomes
+          .where(
+            (final income) => income.isRegular == isRegular && income.isIncome,
+          )
+          .toList(),
+      [incomes, isRegular],
+    );
 
     return UiTransactionsTable<Transaction>(transactions: filteredIncomes);
   }
 }
 
-class ExpenseTable extends StatelessWidget {
+class ExpenseTable extends HookWidget {
   const ExpenseTable({
     required this.expenses,
     required this.isRegular,
@@ -221,12 +236,15 @@ class ExpenseTable extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final filteredExpenses = expenses
-        .where(
-          (final expense) =>
-              expense.isRegular == isRegular && expense.isExpense,
-        )
-        .toList();
+    final filteredExpenses = useMemoized(
+      () => expenses
+          .where(
+            (final expense) =>
+                expense.isRegular == isRegular && expense.isExpense,
+          )
+          .toList(),
+      [expenses, isRegular],
+    );
 
     return UiTransactionsTable<Transaction>(transactions: filteredExpenses);
   }
