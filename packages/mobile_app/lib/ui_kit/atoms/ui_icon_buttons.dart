@@ -1,6 +1,45 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_app/common_imports.dart';
 
+class UiTextActionButton extends StatelessWidget {
+  const UiTextActionButton.cancel({super.key, this.onPressed})
+      : isCancel = true;
+  const UiTextActionButton.done({super.key, this.onPressed}) : isCancel = false;
+  final VoidCallback? onPressed;
+  final bool isCancel;
+
+  @override
+  Widget build(final BuildContext context) {
+    final locale = useLocale(context);
+    final textTitle = (isCancel
+            ? LocalizedMap(
+                value: {
+                  languages.en: 'Cancel',
+                  languages.it: 'Annulla',
+                  languages.ru: 'Отмена',
+                },
+              )
+            : LocalizedMap(
+                value: {
+                  languages.en: 'Done',
+                  languages.it: 'Fatto',
+                  languages.ru: 'Готово',
+                },
+              ))
+        .getValue(locale);
+    return UiTextButton(
+      onPressed: onPressed ?? () => context.router.pop(),
+      title: Text(
+        textTitle,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: context.colorScheme.primary,
+            ),
+      ),
+    );
+  }
+}
+
 class UiBackButton extends StatelessWidget {
   const UiBackButton({super.key, this.onPressed});
   final VoidCallback? onPressed;

@@ -31,6 +31,8 @@ class UiIncomesView extends StatelessWidget {
     return UiColumnScaffold(
       appBar: UiAppBar(
         titleText: isRegular ? 'Regular incomes' : 'Incomes',
+        automaticallyImplyLeading: false,
+        trailing: UiTextActionButton.done(),
       ),
       children: [
         Expanded(
