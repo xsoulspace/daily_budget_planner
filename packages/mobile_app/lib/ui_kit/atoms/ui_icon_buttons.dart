@@ -6,8 +6,13 @@ class UiBackButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
-  Widget build(final BuildContext context) => CupertinoNavigationBarBackButton(
-        color: context.colorScheme.onSurface,
+  Widget build(final BuildContext context) => UiBaseButton(
+        onPressed: onPressed ?? () => context.router.pop(),
+        builder: (final isPressed, final isHovered, final isFocused) =>
+            Container(
+          padding: const EdgeInsets.all(6),
+          child: const Icon(CupertinoIcons.back),
+        ),
       );
 }
 

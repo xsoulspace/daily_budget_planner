@@ -24,19 +24,17 @@ class UiExpensesView extends StatelessWidget {
 
     return UiColumnScaffold(
       appBar: UiAppBar(
-        title: Text(
-          isRegular ? 'Regular expenses' : 'Expenses',
-        ),
+        titleText: isRegular ? 'Regular expenses' : 'Expenses',
       ),
       children: [
-        UiTransactionsActionsBar(
-          tuple: (type: TransactionType.expense,),
-        ),
         Expanded(
           child: ExpenseTable(
             expenses: expenses,
             isRegular: isRegular,
           ),
+        ),
+        UiTransactionsActionsBar(
+          tuple: (type: TransactionType.expense,),
         ),
       ],
     );

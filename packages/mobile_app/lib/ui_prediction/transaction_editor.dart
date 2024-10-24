@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_prediction/transaction_models.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
+import 'package:mobile_app/ui_prediction/ui_prediction_screen.dart';
 
 // Keep the existing AddBudgetDialog and BudgetForm classes here
 
@@ -52,18 +53,22 @@ class TransactionBottomSheet extends HookWidget {
 
     return Form(
       child: DraggableScrollableSheet(
-        minChildSize: 0.5,
+        minChildSize: 0.8,
         maxChildSize: 0.95,
-        expand: false,
-        snap: true,
-        snapSizes: const [0.5, 0.95],
+        initialChildSize: 0.8, snap: true, expand: false,
+        shouldCloseOnMinExtent: false,
+        // snapSizes: const [0.5, 0.95],
         builder: (final context, final scrollController) =>
             SingleChildScrollView(
           controller: scrollController,
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Gap(8),
+              UiIOSDragHandle(),
+              Gap(16),
               Text(
                 transaction == null ? 'Add Transaction' : 'Edit Transaction',
                 style: Theme.of(context).textTheme.titleLarge,

@@ -2,7 +2,6 @@
 
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_paywalls/2024_monthly_subscription_paywall.dart';
 import 'package:mobile_app/ui_prediction/transaction_models.dart';
 import 'package:mobile_app/ui_prediction/ui_incomes_view.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
@@ -415,27 +414,19 @@ class _BottomActionBar extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 400),
-      decoration: BoxDecoration(
-        color: context.colorScheme.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-        border:
-            Border.all(color: context.colorScheme.onSurface.withOpacity(0.05)),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Gap(8),
-          Row(
+    return UiBottomActionBar(
+      children: [
+        const UiCloseButton(),
+        UiTextButton(
+          onPressed: () async => AddBudgetDialog.show(context),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const UiCloseButton(),
-              const Spacer(),
-              UiTextButton(
-                onPressed: () {},
-                // onPressed: () async => AddBudgetDialog.show(context),
-                textTitle: LocalizedMap(
+              Icon(Icons.add),
+              Gap(4),
+              Text(
+                LocalizedMap(
                   value: {
                     languages.en: 'Update Budget',
                     languages.it: 'Aggiorna Budget',
@@ -445,10 +436,8 @@ class _BottomActionBar extends StatelessWidget {
               ),
             ],
           ),
-          const Gap(6),
-          UiSafeArea.bottom(),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -594,7 +583,7 @@ class AddBudgetDialog extends HookWidget {
           },
         ).getValue(locale),
       ),
-      content: BudgetForm(
+      content: _BudgetForm(
         amountController: amountController,
         selectedDate: selectedDate,
       ),
@@ -642,20 +631,19 @@ class AddBudgetDialog extends HookWidget {
   }
 }
 
-class BudgetForm extends StatefulWidget {
-  const BudgetForm({
+class _BudgetForm extends StatefulWidget {
+  const _BudgetForm({
     required this.amountController,
     required this.selectedDate,
-    super.key,
   });
 
   final TextEditingController amountController;
   final ValueNotifier<DateTime> selectedDate;
   @override
-  State<BudgetForm> createState() => BudgetFormState();
+  State<_BudgetForm> createState() => _BudgetFormState();
 }
 
-class BudgetFormState extends State<BudgetForm> {
+class _BudgetFormState extends State<_BudgetForm> {
   final _formKey = GlobalKey<FormState>();
   late DateTime _selectedDate;
 
@@ -672,6 +660,11 @@ class BudgetFormState extends State<BudgetForm> {
     final locale = useLocale(context);
     return Form(
       key: _formKey,
+      onPopInvokedWithResult: (final didPop, final result) {
+        if (didPop) {
+          unawaited(SoftKeyboard.close());
+        }
+      },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -686,6 +679,7 @@ class BudgetFormState extends State<BudgetForm> {
                 },
               ).getValue(locale),
             ),
+            autofocus: true,
             keyboardType: TextInputType.number,
             validator: (final value) {
               if (value == null || value.isEmpty) {

@@ -1,8 +1,9 @@
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
-import 'package:mobile_app/ui_prediction/transaction_editor.dart';
 import 'package:mobile_app/ui_prediction/transaction_models.dart';
+import 'package:mobile_app/ui_prediction/ui_bookmark.dart';
 import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
+import 'package:smooth_sheets/smooth_sheets.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class UiIncomesView extends StatelessWidget {
@@ -13,8 +14,10 @@ class UiIncomesView extends StatelessWidget {
     final bool isRegular = false,
   }) async {
     await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (final _) => UiIncomesView(isRegular: isRegular),
+      CupertinoModalSheetRoute(
+        builder: (final _) => UiBottomSheetWrapper(
+          child: UiIncomesView(isRegular: isRegular),
+        ),
       ),
     );
   }
@@ -27,22 +30,19 @@ class UiIncomesView extends StatelessWidget {
 
     return UiColumnScaffold(
       appBar: UiAppBar(
-        title: FittedBox(
-          child: Text(
-            isRegular ? 'Regular incomes' : 'Incomes',
-          ),
-        ),
+        titleText: isRegular ? 'Regular incomes' : 'Incomes',
       ),
       children: [
-        UiTransactionsActionsBar(
-          tuple: (type: TransactionType.income,),
-        ),
         Expanded(
           child: IncomeTable(
             incomes: incomes,
             isRegular: isRegular,
           ),
         ),
+        UiTransactionsActionsBar(
+          tuple: (type: TransactionType.income,),
+        ),
+        Gap(24),
       ],
     );
   }
@@ -231,37 +231,66 @@ class UiTransactionsActionsBar extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: context.colorScheme.primaryContainer.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          UiTextButton(
-            tooltip: LocalizedMap(
-              value: {
-                languages.en: 'Add ${tuple.type.name}',
-                languages.it: 'Aggiungi ${switch (tuple.type) {
-                  TransactionType.income => 'entrate',
-                  TransactionType.expense => 'spese',
-                  TransactionType.transfer => 'transferenze',
-                }}',
-                languages.ru: 'Добавить ${tuple.type.name}',
-              },
-            ).getValue(locale),
-            onPressed: () async => TransactionBottomSheet.show(
-              context,
-              type: tuple.type,
-            ),
-            title: Icon(Icons.add),
+    return UiBottomActionBar(
+      children: [
+        const UiBackButton(),
+        UiTextButton(
+          onPressed: () async {
+            showEditActionsSheet(context);
+            //   return TransactionBottomSheet.show(
+            //   context,
+            //   type: tuple.type,
+            // );
+          },
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.add),
+              Gap(4),
+              Text(
+                LocalizedMap(
+                  value: {
+                    languages.en: 'Add ${tuple.type.name}',
+                    languages.it: 'Aggiungi ${switch (tuple.type) {
+                      TransactionType.income => 'entrate',
+                      TransactionType.expense => 'spese',
+                      TransactionType.transfer => 'transferenze',
+                    }}',
+                    languages.ru: 'Добавить ${tuple.type.name}',
+                  },
+                ).getValue(locale),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
+}
+
+class UiBottomActionBar extends StatelessWidget {
+  const UiBottomActionBar({required this.children, super.key});
+  final List<Widget> children;
+  @override
+  Widget build(final BuildContext context) => SafeArea(
+        top: false,
+        child: Hero(
+          tag: 'bottom-action-bar',
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              color: context.colorScheme.primaryContainer.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: children,
+            ),
+          ),
+        ),
+      );
 }
 
 class ExpenseTable extends HookWidget {
