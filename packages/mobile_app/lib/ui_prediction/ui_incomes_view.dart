@@ -1,9 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_prediction/transaction_models.dart';
-import 'package:mobile_app/ui_prediction/ui_bookmark.dart';
-import 'package:mobile_app/ui_prediction/ui_prediction_notifier.dart';
-import 'package:smooth_sheets/smooth_sheets.dart';
+import 'package:mobile_app/ui_prediction/ui_prediction.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 class UiIncomesView extends StatelessWidget {
@@ -44,7 +42,8 @@ class UiIncomesView extends StatelessWidget {
         UiTransactionsActionsBar(
           tuple: (type: TransactionType.income,),
         ),
-        Gap(24),
+        Gap(8),
+        UiSafeArea.bottom(),
       ],
     );
   }
@@ -149,7 +148,7 @@ class UiTransactionsTable<T extends Transaction> extends HookWidget {
   ) {
     final cellData = [
       DateFormat.yMMMEd().add_Hms().format(transaction.date),
-      transaction.value.toString(),
+      transaction.amount.toString(),
       transaction.currency.value,
     ];
 
@@ -185,8 +184,8 @@ class UiTransactionsTable<T extends Transaction> extends HookWidget {
               : b.date.compareTo(a.date);
         case 'value':
           return ascending
-              ? a.value.compareTo(b.value)
-              : b.value.compareTo(a.value);
+              ? a.amount.compareTo(b.amount)
+              : b.amount.compareTo(a.amount);
         case 'currency':
           return ascending
               ? a.currency.value.compareTo(b.currency.value)
@@ -237,13 +236,10 @@ class UiTransactionsActionsBar extends StatelessWidget {
       children: [
         const UiBackButton(),
         UiTextButton(
-          onPressed: () async {
-            showEditActionsSheet(context);
-            //   return TransactionBottomSheet.show(
-            //   context,
-            //   type: tuple.type,
-            // );
-          },
+          onPressed: () async => TransactionBottomSheet.show(
+            context,
+            type: tuple.type,
+          ),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

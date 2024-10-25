@@ -135,10 +135,6 @@ class AppRoute extends GoRoute {
           path: path,
           routes: routes,
           pageBuilder: (final context, final state) {
-            // final pageContent = Scaffold(
-            //   body: builder(state),
-            //   resizeToAvoidBottomInset: false,
-            // );
             final pageContent = builder(context, state);
             if (useFade || isTransparent) {
               return CustomTransitionPage(

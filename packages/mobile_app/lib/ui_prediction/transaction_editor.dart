@@ -22,12 +22,18 @@ class TransactionBottomSheet extends HookWidget {
     required final TransactionType type,
     final Transaction? transaction,
   }) =>
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (final context) => TransactionBottomSheet(
-          transaction: transaction,
-          type: type,
+      Navigator.push(
+        context,
+        CupertinoModalSheetRoute(
+          swipeDismissible: true,
+          builder: (final context) => UiBottomSheetWrapper(
+            child: UiScaffold(
+              body: TransactionBottomSheet(
+                transaction: transaction,
+                type: type,
+              ),
+            ),
+          ),
         ),
       );
 
@@ -70,8 +76,9 @@ class TransactionBottomSheet extends HookWidget {
               UiIOSDragHandle(),
               Gap(16),
               Text(
-                transaction == null ? 'Add Transaction' : 'Edit Transaction',
-                style: Theme.of(context).textTheme.titleLarge,
+                // TODO(arenukvern): add localization l10n
+                transaction == null ? 'Add ${type.name}' : 'Edit ${type.name}',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 16),
               TransactionForm(

@@ -7,3 +7,4 @@ export 'ui_localized_text.dart';
 export 'ui_safe_area.dart';
 export 'ui_text_button.dart';
 export 'ui_text_counter.dart';
+export 'ui_text_field.dart';

@@ -40,6 +40,10 @@
     "prefix": "unimplemented",
     "body": "// TODO(${1:username}): ${2:description}\nthrow UnimplementedError();"
   },
+  "tln": {
+    "prefix": "tln",
+    "body": "// TODO(arenukvern): add localization l10n"
+  },
   "section-start": {
     "prefix": "section start",
     "body": "/// ********************************************\n/// *      ${1:TITLE} START\n/// ********************************************"

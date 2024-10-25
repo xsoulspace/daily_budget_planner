@@ -110,5 +110,4 @@ sealed class Transaction with _$Transaction {
   bool get isExpense => type == TransactionType.expense;
   bool get isIncome => type == TransactionType.income;
   bool get isRegular => period != null;
-  double get value => amount;
 }

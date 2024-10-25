@@ -574,7 +574,7 @@ class AddBudgetDialog extends HookWidget {
     final locale = useLocale(context);
     final screenWidth = MediaQuery.sizeOf(context).width;
     final amountController = useTextEditingController(
-      text: initialValue?.value.toString() ?? '',
+      text: initialValue?.amount.toString() ?? '',
     );
     final selectedDate = useState(initialValue?.date ?? DateTime.now());
 

@@ -1,5 +1,6 @@
 export 'dart:async';
 
+export 'package:flutter/cupertino.dart' hide RefreshCallback;
 export 'package:flutter/material.dart';
 export 'package:flutter/widgets.dart';
 export 'package:flutter_animate/flutter_animate.dart';
@@ -7,6 +8,7 @@ export 'package:flutter_hooks/flutter_hooks.dart';
 export 'package:gap/gap.dart';
 export 'package:go_router/go_router.dart';
 export 'package:provider/provider.dart' hide Dispose;
+export 'package:smooth_sheets/smooth_sheets.dart';
 export 'package:ui_locale/ui_locale.dart';
 export 'package:xsoulspace_analytics/xsoulspace_analytics.dart';
 export 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
