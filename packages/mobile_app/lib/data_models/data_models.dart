@@ -1,7 +1,8 @@
-// ignore: unnecessary_import
-import 'package:flutter/foundation.dart';
+import 'dart:ui' show Locale;
+
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mobile_app/common_imports.dart';
+import 'package:ui_locale/ui_locale.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
 part 'app_settings_model.dart';
 part 'bank_account_models.dart';

@@ -1,6 +1,7 @@
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_other/privacy_screen.dart';
 import 'package:mobile_app/ui_other/terms_screen.dart';
+import 'package:mobile_app/ui_paywalls/thanks_for_subscribing_screen.dart';
 import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
 
 enum ScreenPaths {
@@ -54,6 +55,14 @@ final router = GoRouter(
             AppRoute(
               ScreenPaths.terms.value,
               (final context, final state) => const TermsScreen(),
+            ),
+            AppRoute(
+              ScreenPaths.thanksForSubscribing.value,
+              (final context, final state) {
+                final subscription =
+                    context.read<SubscriptionManager>().activeSubscription;
+                return ThanksForSubscribingScreen(subscription: subscription);
+              },
             ),
           ],
         ),

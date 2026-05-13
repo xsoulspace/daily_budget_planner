@@ -38,23 +38,22 @@ class SettingsBottomPopup extends StatelessWidget {
               ).getValue(useLocale(context)),
               iconData: Icons.privacy_tip_outlined,
             ),
-            if (kDebugMode) ...[
-              const UiDivider.size1(),
-              UiPopupListTile(
-                iconData: Icons.money,
-                onTap: () async {
-                  unawaited(UiPredictionScreen.show(context));
-                  onClose();
+            const UiDivider.size1(),
+            UiPopupListTile(
+              iconData: Icons.money,
+              onTap: () async {
+                unawaited(UiPredictionScreen.show(context));
+                onClose();
+              },
+              title: LocalizedMap(
+                value: {
+                  languages.en: 'Expenses prediction',
+                  languages.it: 'Previsione delle spese',
+                  languages.ru: 'Предположение о расходах',
                 },
-                title: LocalizedMap(
-                  value: {
-                    languages.en: 'Expenses prediction',
-                    languages.it: 'Previsione delle spese',
-                    languages.ru: 'Предположение о расходах',
-                  },
-                ).getValue(useLocale(context)),
-              ),
-            ],
+              ).getValue(useLocale(context)),
+            ),
+            const UiDivider.size1(),
             const UiDivider.size5(),
             if (context.watch<StoreReviewRequester>().isAvailable) ...[
               UiLoader(

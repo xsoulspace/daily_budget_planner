@@ -47,7 +47,14 @@ dependency_overrides:
   analyzer: ^7.0.0
   cli_util: ^0.4.1
   intl: ^0.19.0
+  melos: ^6.1.0
   source_gen: ^2.0.0
+  universal_storage_interface:
+    path: ../dart_flutter_packages/pkgs/universal_storage_interface
+  universal_storage_sync:
+    path: ../dart_flutter_packages/pkgs/universal_storage_sync
+  universal_storage_sync_utils:
+    path: ../dart_flutter_packages/pkgs/universal_storage_sync_utils
 
 # flutter pub run flutter_launcher_icons:main
 # generate for macos https://appicon.co

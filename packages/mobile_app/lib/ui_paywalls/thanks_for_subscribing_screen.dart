@@ -2,11 +2,13 @@ import 'package:mobile_app/common_imports.dart';
 
 class ThanksForSubscribingScreen extends StatelessWidget {
   const ThanksForSubscribingScreen({
-    required this.subscription,
+    this.subscription,
     super.key,
   });
 
-  final PurchaseProductDetails subscription;
+  /// Subscription details from [SubscriptionManager.activeSubscription]
+  /// after purchase. Null if not available (e.g. restored from route).
+  final PurchaseDetails? subscription;
 
   @override
   Widget build(final BuildContext context) {
@@ -74,11 +76,13 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                   },
                 ).getValue(locale),
               ),
-              const Gap(24),
-              _SubscriptionInfoCard(
-                subscription: subscription,
-                locale: locale,
-              ),
+              if (subscription != null) ...[
+                const Gap(24),
+                _SubscriptionInfoCard(
+                  subscription: subscription!,
+                  locale: locale,
+                ),
+              ],
               const Gap(32),
               ElevatedButton(
                 onPressed: () {
@@ -153,7 +157,7 @@ class _SubscriptionInfoCard extends StatelessWidget {
     required this.locale,
   });
 
-  final PurchaseProductDetails subscription;
+  final PurchaseDetails subscription;
   final Locale locale;
 
   @override

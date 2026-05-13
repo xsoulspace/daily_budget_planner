@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:mobile_app/common_imports.dart';
 
 /// balance = expenses + income
@@ -31,6 +33,12 @@ class CalculateBudgetBalanceCmd with HasResources, HasLocalApis {
       ..balance = balance
       ..expensesSum = expense
       ..incomesSum = income;
+
+    final selectedDate = predictionConfigResource.selectedDate;
+    final endDate = params.endDate;
+    final daysRemaining =
+        math.max(1, endDate.difference(selectedDate).inDays + 1);
+    dailyBudgetResource.value = balance / daysRemaining;
   }
 
   /// Calculates the total expense as the difference between all budgets

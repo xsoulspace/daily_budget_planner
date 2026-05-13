@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/di/storage_kernel_bootstrap.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_notifier.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_notifier.dart';
 import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
@@ -38,6 +40,10 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   r<AnalyticsManager>(analyticsManager, dispose: d);
   r<CrashlyticsService>(analyticsManager.crashlyticsService, dispose: d);
   r<AnalyticsService>(analyticsManager.analyticsService, dispose: d);
+  final storageKernelBootstrap = DailyBudgetStorageKernelBootstrap();
+  await storageKernelBootstrap.initialize();
+  final storageKernel = storageKernelBootstrap.kernel;
+  r(storageKernelBootstrap);
   final localDb = PrefsDb();
   // final isarDb = IsarDb();
   final sembastDb = SembastDb();
@@ -45,9 +51,24 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   r<LocalDbI>(localDb);
   // r<IsarDb>(isarDb, dispose: (final i) => i.close());
   r<SembastDb>(sembastDb, dispose: (final i) => i.close());
-  rl(UserLocalApi.new);
-  rl(AppSettingsLocalApi.new);
-  rl(SimpleBudgetLocalApi.new);
+  r(
+    UserLocalApi(
+      localDb: localDb,
+      storageKernel: storageKernel,
+    ),
+  );
+  r(
+    AppSettingsLocalApi(
+      localDb: localDb,
+      storageKernel: storageKernel,
+    ),
+  );
+  r(
+    BudgetLocalApi(
+      localDb: localDb,
+      storageKernel: storageKernel,
+    ),
+  );
   rl<ManualBudgetsLocalApi>(ManualBudgetsLocalApiSembast.new);
   rl(DictionariesLocalApi.new);
   rl(FinSettingsLocalApi.new);
@@ -115,7 +136,9 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   rl(FinSettingsNotifier.new, dispose: d);
   rl(
     () => SubscriptionManager(
-      productIds: MonetizationProducts.subscriptions,
+      productIds: kDebugMode
+          ? MonetizationProducts.subscriptions
+          : MonetizationProducts.subscriptionsForProduction,
       purchaseManager: _g(),
       monetizationTypeNotifier: _g(),
     ),
@@ -146,7 +169,7 @@ mixin HasLocalApis {
   UserLocalApi get userLocalApi => _g();
   FinSettingsLocalApi get finSettingsLocalApi => _g();
 
-  SimpleBudgetLocalApi get simpleBudgetLocalApi => _g();
+  BudgetLocalApi get simpleBudgetLocalApi => _g();
   ManualBudgetsLocalApi get manualBudgetsLocalApi => _g();
 
   DictionariesLocalApi get dictionariesLocalApi => _g();

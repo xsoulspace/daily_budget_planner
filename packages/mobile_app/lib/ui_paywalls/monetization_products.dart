@@ -19,6 +19,14 @@ enum MonetizationProducts {
       .map((final e) => e.productId)
       .toList();
 
+  /// Production paywall: monthly and yearly only; excludes test product.
+  static List<PurchaseProductId> get subscriptionsForProduction =>
+      values
+          .where((final e) =>
+              e.name.startsWith('s') && e != MonetizationProducts.s2024day1Test)
+          .map((final e) => e.productId)
+          .toList();
+
   static PurchaseProductType? productTypeChecker(
     final PurchaseProductId productId,
   ) =>

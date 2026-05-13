@@ -50,6 +50,7 @@ dependencies:
   flutter_portal: ^1.1.4
   flutter_svg: ^2.0.10+1
   form_builder_validators: ^11.0.0
+  from_json_to_json: ^0.4.0
   freezed_annotation: ^3.0.0
   gap: ^3.0.1
   get_it: ^8.0.0
@@ -57,6 +58,7 @@ dependencies:
   google_fonts: ^6.2.1
   http: ^1.2.2
   intl: ^0.19.0
+  is_dart_empty_or_not: ^0.3.0
   # isar: ^4.0.0-dev.14
   # isar_flutter_libs: ^4.0.0-dev.14
   json_annotation: ^4.9.0
@@ -79,6 +81,9 @@ dependencies:
   smooth_sheets: ^1.0.0-f324.0.10.2
   two_dimensional_scrollables: ^0.3.3
   ui_locale:
+  universal_storage_filesystem: ^0.1.0-dev.11
+  universal_storage_local_db: ^0.1.0-dev.1
+  universal_storage_sync: ^0.1.0-dev.10
   universal_io: ^2.2.2
   url_launcher: ^6.3.0
   uuid: ^4.5.1
@@ -93,6 +98,9 @@ dev_dependencies:
   flutter_gen: ^5.10.0
   flutter_gen_runner: ^5.10.0
   flutter_launcher_icons: ^0.14.3
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
   freezed: ^3.0.3
   go_router_builder: ^2.7.1
   json_serializable: ^6.9.4
