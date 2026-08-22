@@ -1,0 +1,48 @@
+---
+description: DailyBu — design rationale (why)
+---
+
+# DESIGN_FAQ
+
+Why-questions about DailyBu's design. How-to lives in [DX_FAQ](DX_FAQ.mdx); decisions in [decisions/](decisions/README.md).
+
+## The number
+
+**Q: Why is the product one number instead of a budget breakdown?**
+A: The single question "How much can I spend today?" is the whole value; every feature either gets that number or uses it. Breakdowns are available one tap deep, never as the primary surface.
+
+**Q: Why is prediction ("I can spend today") computed from balance and period rather than shown as $0.00 when data is missing?**
+A: A broken default destroys trust faster than a missing feature. The value is derived from existing balance/period logic (`DailyBudgetResource` set in `CalculateBudgetBalanceCmd`) so it is always real.
+
+**Q: Why two timeframes (daily/weekly) and not more?**
+A: Daily answers the moment; weekly smooths irregular days. Extra timeframes add model surface before the core ones are perfect — deferred until both are flawless.
+
+## Aggregate-first engine
+
+**Q: Why are commitments and planned sums primary over individual records?**
+A: Planning does not require ledger discipline. Aggregates are stable inputs users can hold in their heads; records are noisy. See [ADR 0002](decisions/0002-aggregate-first-projection-engine.md).
+
+**Q: What is Sum→Reason?**
+A: When actual spending drifts from plan, the user either adjusts the remaining planned sum in one action or logs a few records to explain the delta. Records reconcile plans; they never gate the number.
+
+**Q: Why do subscriptions and credit payments get first-class treatment?**
+A: They are the highest-signal aggregates for projection — known amounts on known cadences. Making them visible also makes today's number's causes visible, which builds trust.
+
+**Q: Why fold amortization, inflation, and interest into commitments instead of separate features?**
+A: The North Star test: every feature must change today's number or the trajectory behind it. Standalone amortization tables would fail that test; folding them into commitments passes it.
+
+**Q: Why BYOK-first for AI?**
+A: No server-side inference cost while pre-sync/pre-scale, no second subscription (churn poison), and AI scope stays narrow: reconciliation assistance and subscription intelligence whose output remains one number.
+
+## Honesty & monetization
+
+**Q: Why copy-only honesty for sync/tags?**
+A: Selling unimplemented features converts once and churns with distrust. Premium claims only what ships; see [decisions.md](decisions.md) Phase 0 audit.
+
+**Q: Why is the free tier generous?**
+A: Adoption comes from the free instant number; conversion happens on "everywhere" (sync) and "together" (household), which require infrastructure worth paying for.
+
+## Governance
+
+**Q: Where do decisions live?**
+A: Durable trade-offs in [docs/decisions/](decisions/README.md) as ADRs; standing why here; how in DX_FAQ. `docs/decisions.md` holds only pre-ADR provenance.

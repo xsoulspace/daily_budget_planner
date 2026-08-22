@@ -1,5 +1,6 @@
 # DailyBu (in the past Daily Budget Planner)
 
+[![maintained with Skill Steward](https://raw.githubusercontent.com/Arenukvern/skill_steward/main/docs/brand/assets/svg/badge-solid.svg)](https://github.com/Arenukvern/skill_steward)
 [![GitHub](https://img.shields.io/github/license/xsoulspace/daily_budget_planner)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 <a title="Discord" href="https://discord.com/invite/y54DpJwmAn" ><img src="https://img.shields.io/discord/696688204476055592.svg" /></a>
@@ -47,6 +48,10 @@ Please notice: this is not financial advise, but I hope that maybe this method w
 ## Privacy Policy & Terms and Conditions:
 
 https://docs.page/xsoulspace/daily_budget_planner
+
+## Project docs
+
+- [Docs map](docs/start_here/docs_map.mdx) · [North Star](docs/NORTH_STAR.mdx) · [Decisions](docs/decisions/README.md)
 
 ## Have an idea, improvements, or bugs?
 

@@ -12,10 +12,10 @@ class UiScaffold extends StatelessWidget {
   final Widget? floatingActionButton;
   @override
   Widget build(final BuildContext context) => Scaffold(
-        body: body,
-        appBar: appBar,
-        floatingActionButton: floatingActionButton,
-      );
+    body: body,
+    appBar: appBar,
+    floatingActionButton: floatingActionButton,
+  );
 }
 
 class UiColumnScaffold extends StatelessWidget {
@@ -30,20 +30,16 @@ class UiColumnScaffold extends StatelessWidget {
   final Widget? floatingActionButton;
   @override
   Widget build(final BuildContext context) => UiScaffold(
-        body: Column(children: children),
-        appBar: appBar,
-        floatingActionButton: floatingActionButton,
-      );
+    body: Column(children: children),
+    appBar: appBar,
+    floatingActionButton: floatingActionButton,
+  );
 }
 
 class UiBottomSheetWrapper extends StatelessWidget {
   const UiBottomSheetWrapper({required this.child, super.key});
   final Widget child;
   @override
-  Widget build(final BuildContext context) => ScrollableSheet(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: child,
-        ),
-      );
+  Widget build(final BuildContext context) =>
+      ClipRRect(borderRadius: BorderRadius.circular(16), child: child);
 }

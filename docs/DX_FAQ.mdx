@@ -1,0 +1,42 @@
+---
+description: DailyBu — developer workflow (how)
+---
+
+# DX_FAQ
+
+How to work in this repository. Why-rationale lives in [DESIGN_FAQ](DESIGN_FAQ.mdx).
+
+## Validation loop
+
+**Q: What is the native validation gate?**
+A: Two layers. App package (`packages/mobile_app`): `flutter test` (7 tests, currently passing) and `flutter analyze`. Repo root: `flutter analyze` — currently failing with 55 pre-existing errors (missing generated `lib/firebase_options.dart`, errors in `packages/xsoulspace_monetization`). Status tracked in [docs/evidence/current-status.mdx](evidence/current-status.mdx).
+
+**Q: How do I run the app?**
+A: From `packages/mobile_app`: `flutter run -t lib/main_dev.dart` (dev), `lib/main_prod.dart` (prod; requires generated `firebase_options.dart`). Entry points live in `packages/mobile_app/lib/`.
+
+## Steward desk
+
+| Need                   | Command                                 |
+| ---------------------- | --------------------------------------- |
+| Agent-facing repo map  | `steward map`                           |
+| Steward contract state | `steward doctor --json`                 |
+| Installed skills       | `steward list`                          |
+| Evidence ledger        | edit `docs/evidence/current-status.mdx` |
+
+## Docs routing
+
+| Change type              | Update                                                  |
+| ------------------------ | ------------------------------------------------------- |
+| Architectural trade-off  | ADR in `docs/decisions/` + index row                    |
+| Standing "why"           | `docs/DESIGN_FAQ.mdx` Q&A (edit existing before adding) |
+| Workflow / command       | `docs/DX_FAQ.mdx` (this file)                           |
+| Scope / ownership change | `docs/NORTH_STAR.mdx` (+ ADR if large)                  |
+
+## Plan hygiene
+
+**Q: Where do plans go?**
+A: Anywhere temporary (`docs/exec-plans/active/`, issues, scratch). When work completes: extract durable truth to ADR/FAQ/code, then delete the plan file. Completed checklists are not documentation.
+
+## Code layout
+
+Feature-isolated Flutter structure under `packages/mobile_app/`: `data_models/`, `data_states/`, `data_services/`, `data_local_api/`, `core/`, `ui_*` per feature, `di/`, `router.dart`. Authoritative source: the code itself; `ideas/app_structure.md` holds the original guide.

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/skillman/skills_schema.json",
+  "skills": [
+    {
+      "source": "Arenukvern/skill_steward",
+      "commit": "4e0c113f73afd8879945c9da8e1bcb7ffcc1a43e",
+      "skills": [
+        "repository-governance-lifecycle",
+        "repo-quality-system-lifecycle",
+        "skill-source-citations"
+      ]
+    }
+  ]
+}

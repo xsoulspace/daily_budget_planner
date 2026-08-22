@@ -1,5 +1,10 @@
-import 'package:mobile_app/common_imports.dart';
+import 'package:flutter/material.dart';
 
+/// Bottom-sheet layout with a scrollable [body] and a pinned [bottomBar].
+///
+/// Pure Flutter replacement for the smooth_sheets scaffold. The keyboard is
+/// avoided via [MediaQuery.viewInsets] and the bottom bar stays visible while
+/// the keyboard is open.
 class UiBottomSheetScaffold extends StatelessWidget {
   const UiBottomSheetScaffold({
     required this.body,
@@ -27,27 +32,20 @@ class UiBottomSheetScaffold extends StatelessWidget {
           if (didPop) return;
           return onPopInvoked();
         },
-        child: SheetKeyboardDismissible(
-          dismissBehavior: const SheetKeyboardDismissBehavior.onDragDown(
-            isContentScrollAware: true,
+        child: Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.viewInsetsOf(context).bottom,
           ),
-          child: ScrollableSheet(
-            child: Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: sheetShape,
-              constraints: const BoxConstraints(
-                maxWidth: 400,
-              ),
-              child: SheetContentScaffold(
-                resizeBehavior: const ResizeScaffoldBehavior.avoidBottomInset(
-                  // Make the bottom bar visible when the keyboard is open.
-                  maintainBottomBar: true,
-                ),
-                body: body,
-                bottomBar: StickyBottomBarVisibility(
-                  child: bottomBar,
-                ),
-              ),
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: sheetShape,
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(child: SingleChildScrollView(child: body)),
+                bottomBar,
+              ],
             ),
           ),
         ),

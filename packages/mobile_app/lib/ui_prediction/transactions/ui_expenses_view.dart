@@ -1,4 +1,5 @@
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_kit/molecules/ui_modal_sheet_route.dart';
 import 'package:mobile_app/ui_prediction/transactions/ui_transactions_actions_bar.dart';
 
 class UiExpensesView extends StatelessWidget {
@@ -7,14 +8,12 @@ class UiExpensesView extends StatelessWidget {
   static Future<void> show({
     required final BuildContext context,
     final bool isRegular = false,
-  }) async =>
-      Navigator.of(context).push(
-        CupertinoModalSheetRoute(
-          builder: (final _) => UiBottomSheetWrapper(
-            child: UiExpensesView(isRegular: isRegular),
-          ),
-        ),
-      );
+  }) async => Navigator.of(context, rootNavigator: true).push(
+    UiModalSheetRoute<void>(
+      builder: (final _) =>
+          UiBottomSheetWrapper(child: UiExpensesView(isRegular: isRegular)),
+    ),
+  );
 
   @override
   Widget build(final BuildContext context) {
@@ -32,14 +31,9 @@ class UiExpensesView extends StatelessWidget {
       ),
       children: [
         Expanded(
-          child: ExpenseTable(
-            expenses: expenses,
-            isRegular: isRegular,
-          ),
+          child: ExpenseTable(expenses: expenses, isRegular: isRegular),
         ),
-        const UiTransactionsActionsBar(
-          tuple: (type: TransactionType.expense),
-        ),
+        const UiTransactionsActionsBar(tuple: (type: TransactionType.expense)),
         const Gap(8),
         const UiSafeArea.bottom(),
       ],

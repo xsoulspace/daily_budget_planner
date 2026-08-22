@@ -1,0 +1,52 @@
+---
+title: DailyBu North Star
+status: accepted
+date: 2026-08-23
+---
+
+# DailyBu — North Star
+
+## One line
+
+**"How much can I spend today?" — right, instant, everywhere.**
+
+DailyBu answers one question with one number. It plans; it does not ledger.
+
+## What this repository owns
+
+- The daily/weekly number and its calculation path (amount, committed expenses, next budget date).
+- The projection engine: commitments (subscriptions, credit payments, recurring bills), planned sums, and long-horizon trajectories (credits amortization, inflation, interest assumptions).
+- The Sum→Reason interaction model: aggregates are primary inputs; individual records are optional reconciliation evidence for a delta.
+- Premium surface: one subscription tier, honest copy, projections and commitment management as paid value.
+- Platform shells: iOS, Android, and future surfaces (widget, watch) that display the same number.
+
+## What this repository does not own
+
+- Expense-ledger features ("track every purchase" flows). Records exist only to explain drift from plan.
+- Ads in the core path between user and number.
+- Open banking aggregation (future integration; read-only, consent-gated, never a data resale).
+- Financial advice. The app computes arithmetic from user input; it does not recommend investments.
+- AI model hosting as a product center. AI features run BYOK-first; managed keys are optional and priced as usage, never a second subscription.
+
+## Value paths
+
+1. **Fast** — cold start to visible number < 2 s (p95).
+2. **True** — every displayed number is traceable to its inputs; no stub values, no fake forecasts.
+3. **Predictable long-term** — the number extends into an honest trajectory (months), driven by commitments and stated assumptions.
+4. **Everywhere & together** — sync and household sharing are premium; free stays generous on one device.
+
+## Boundaries and ethics
+
+- No feature ships that changes neither today's number nor the trajectory behind it.
+- No unimplemented feature is claimed in copy ("coming soon" labeled explicitly or omitted).
+- Plans are temporary; durable truth lives in ADRs, FAQs, code, and checks — stale plan files are deleted after extraction.
+- User financial data stays local until sync exists; sync is opt-in and subscription-gated.
+
+## Governance
+
+- Charter: this file.
+- Decisions: [docs/decisions/](decisions/README.md).
+- Why-FAQ: [DESIGN_FAQ.mdx](DESIGN_FAQ.mdx). How-FAQ: [DX_FAQ.mdx](DX_FAQ.mdx).
+- Strategy: [strategy_pillars_2026_2028.md](strategy_pillars_2026_2028.md); execution order: [roadmap_to_vision_2026_2028.md](roadmap_to_vision_2026_2028.md).
+
+North Star impact classes (`none/applies/clarifies/sub_star/amends/conflicts`) are recorded per ADR. Changes to the owned list above require an ADR before implementation.

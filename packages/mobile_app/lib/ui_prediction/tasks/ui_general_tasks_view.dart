@@ -1,29 +1,28 @@
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_kit/molecules/ui_modal_sheet_route.dart';
 import 'package:mobile_app/ui_prediction/tasks/ui_tasks_actions_bar.dart';
 
 Future<void> showExpensesTasksView({
   required final BuildContext context,
-}) async => Navigator.of(context).push(
-  CupertinoModalSheetRoute(
-    builder:
-        (final _) => const UiBottomSheetWrapper(
-          child: UiGeneralTasksView(
-            taskTransactionType: TaskTransactionType.expense,
-          ),
-        ),
+}) async => Navigator.of(context, rootNavigator: true).push(
+  UiModalSheetRoute<void>(
+    builder: (final _) => const UiBottomSheetWrapper(
+      child: UiGeneralTasksView(
+        taskTransactionType: TaskTransactionType.expense,
+      ),
+    ),
   ),
 );
 
 Future<void> showIncomesTasksView({
   required final BuildContext context,
-}) async => Navigator.of(context).push(
-  CupertinoModalSheetRoute(
-    builder:
-        (final _) => const UiBottomSheetWrapper(
-          child: UiGeneralTasksView(
-            taskTransactionType: TaskTransactionType.income,
-          ),
-        ),
+}) async => Navigator.of(context, rootNavigator: true).push(
+  UiModalSheetRoute<void>(
+    builder: (final _) => const UiBottomSheetWrapper(
+      child: UiGeneralTasksView(
+        taskTransactionType: TaskTransactionType.income,
+      ),
+    ),
   ),
 );
 
@@ -80,20 +79,21 @@ class _UiGeneralTasksViewState extends State<UiGeneralTasksView>
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
     final tasks = switch (_taskTransactionType) {
-      TaskTransactionType.income => context
-          .select<IncomeTasksResource, List<Task>>(
-            (final c) => c.orderedValues,
-          ),
-      TaskTransactionType.expense => context
-          .select<ExpenseTasksResource, List<Task>>(
-            (final c) => c.orderedValues,
-          ),
+      TaskTransactionType.income =>
+        context.select<IncomeTasksResource, List<Task>>(
+          (final c) => c.orderedValues,
+        ),
+      TaskTransactionType.expense =>
+        context.select<ExpenseTasksResource, List<Task>>(
+          (final c) => c.orderedValues,
+        ),
     };
     final task = tasks[_taskIndex];
-    final (:startDate, :period) = context.select<
-      PredictionConfigResource,
-      ({DateTime startDate, Period period})
-    >((final c) => (startDate: c.startDate, period: c.period));
+    final (:startDate, :period) = context
+        .select<
+          PredictionConfigResource,
+          ({DateTime startDate, Period period})
+        >((final c) => (startDate: c.startDate, period: c.period));
 
     return UiColumnScaffold(
       appBar: UiAppBar(
@@ -102,20 +102,18 @@ class _UiGeneralTasksViewState extends State<UiGeneralTasksView>
             TaskTransactionType.expense: Text(
               LocalizedMap({
                 // TODO(arenukvern): add localization l10n
-                  languages.en: 'Regular expenses',
-                  languages.it: 'Spese regolari',
-                  languages.ru: 'Регулярные расходы',
-                },
-              ).getValue(locale),
+                languages.en: 'Regular expenses',
+                languages.it: 'Spese regolari',
+                languages.ru: 'Регулярные расходы',
+              }).getValue(locale),
             ),
             TaskTransactionType.income: Text(
               LocalizedMap({
                 // TODO(arenukvern): add localization l10n
-                  languages.en: 'Regular incomes',
-                  languages.it: 'Entrate regolari',
-                  languages.ru: 'Регулярные доходы',
-                },
-              ).getValue(locale),
+                languages.en: 'Regular incomes',
+                languages.it: 'Entrate regolari',
+                languages.ru: 'Регулярные доходы',
+              }).getValue(locale),
             ),
           },
           groupValue: _taskTransactionType,

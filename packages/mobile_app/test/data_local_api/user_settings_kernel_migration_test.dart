@@ -22,121 +22,134 @@ void main() {
   });
 
   group('Daily Budget kernel migration', () {
-    test('UserLocalApi migrates legacy user map into kernel namespace', () async {
-      final tempDir = await Directory.systemTemp.createTemp(
-        'daily_budget_user_local_api_migration_',
-      );
-      addTearDown(() => tempDir.delete(recursive: true));
+    test(
+      'UserLocalApi migrates legacy user map into kernel namespace',
+      () async {
+        final tempDir = await Directory.systemTemp.createTemp(
+          'daily_budget_user_local_api_migration_',
+        );
+        addTearDown(() => tempDir.delete(recursive: true));
 
-      final bootstrap = DailyBudgetStorageKernelBootstrap(
-        storageRootPath: tempDir.path,
-      );
-      await bootstrap.initialize();
-      final kernel = bootstrap.kernel;
+        final bootstrap = DailyBudgetStorageKernelBootstrap(
+          storageRootPath: tempDir.path,
+        );
+        await bootstrap.initialize();
+        final kernel = bootstrap.kernel;
 
-      final localDb = _InMemoryLocalDb();
-      await localDb.init();
+        final localDb = _InMemoryLocalDb();
+        await localDb.init();
 
-      final user = UserModel(
-        localId: const UserModelLocalId(value: 'local_1'),
-        remoteId: const UserModelRemoteId(value: 'remote_1'),
-        createdAt: DateTime.utc(2026, 3, 1, 12),
-        updatedAt: DateTime.utc(2026, 3, 1, 12, 30),
-      );
-      await localDb.setMap(key: 'user', value: user.toJson());
+        final user = UserModel(
+          localId: const UserModelLocalId(value: 'local_1'),
+          remoteId: const UserModelRemoteId(value: 'remote_1'),
+          createdAt: DateTime.utc(2026, 3, 1, 12),
+          updatedAt: DateTime.utc(2026, 3, 1, 12, 30),
+        );
+        await localDb.setMap(key: 'user', value: user.toJson());
 
-      final api = UserLocalApi(localDb: localDb, storageKernel: kernel);
-      final loaded = await api.loadUser();
+        final api = UserLocalApi(localDb: localDb, storageKernel: kernel);
+        final loaded = await api.loadUser();
 
-      expect(loaded.toJson(), user.toJson());
-      expect(await localDb.getMap('user'), isEmpty);
+        expect(loaded.toJson(), user.toJson());
+        expect(await localDb.getMap('user'), isEmpty);
 
-      final persistedRaw = await kernel.read(
-        namespace: const StorageNamespace('user'),
-        path: 'profile/user_v1.json',
-      );
-      expect(persistedRaw, isNotNull);
-      final persistedMap = Map<String, dynamic>.from(
-        jsonDecode(persistedRaw!) as Map,
-      );
-      expect(persistedMap, user.toJson());
-    });
+        final persistedRaw = await kernel.read(
+          namespace: const StorageNamespace('user'),
+          path: 'profile/user_v1.json',
+        );
+        expect(persistedRaw, isNotNull);
+        final persistedMap = Map<String, dynamic>.from(
+          jsonDecode(persistedRaw!) as Map,
+        );
+        expect(persistedMap, user.toJson());
+      },
+    );
 
-    test('AppSettingsLocalApi migrates legacy settings into kernel namespace',
-        () async {
-      final tempDir = await Directory.systemTemp.createTemp(
-        'daily_budget_app_settings_local_api_migration_',
-      );
-      addTearDown(() => tempDir.delete(recursive: true));
+    test(
+      'AppSettingsLocalApi migrates legacy settings into kernel namespace',
+      () async {
+        final tempDir = await Directory.systemTemp.createTemp(
+          'daily_budget_app_settings_local_api_migration_',
+        );
+        addTearDown(() => tempDir.delete(recursive: true));
 
-      final bootstrap = DailyBudgetStorageKernelBootstrap(
-        storageRootPath: tempDir.path,
-      );
-      await bootstrap.initialize();
-      final kernel = bootstrap.kernel;
+        final bootstrap = DailyBudgetStorageKernelBootstrap(
+          storageRootPath: tempDir.path,
+        );
+        await bootstrap.initialize();
+        final kernel = bootstrap.kernel;
 
-      final localDb = _InMemoryLocalDb();
-      await localDb.init();
+        final localDb = _InMemoryLocalDb();
+        await localDb.init();
 
-      const legacySettings = <String, dynamic>{'locale': 'en'};
-      await localDb.setMap(key: 'settings', value: legacySettings);
+        const legacySettings = <String, dynamic>{'locale': 'en'};
+        await localDb.setMap(key: 'settings', value: legacySettings);
 
-      final api = AppSettingsLocalApi(localDb: localDb, storageKernel: kernel);
-      await api.loadSettings();
+        final api = AppSettingsLocalApi(
+          localDb: localDb,
+          storageKernel: kernel,
+        );
+        await api.loadSettings();
 
-      expect(await localDb.getMap('settings'), isEmpty);
-      final persistedRaw = await kernel.read(
-        namespace: StorageNamespace.settings,
-        path: 'app/settings_v1.json',
-      );
-      expect(persistedRaw, isNotNull);
-      expect(
-        Map<String, dynamic>.from(jsonDecode(persistedRaw!) as Map),
-        legacySettings,
-      );
-    });
+        expect(await localDb.getMap('settings'), isEmpty);
+        final persistedRaw = await kernel.read(
+          namespace: StorageNamespace.settings,
+          path: 'app/settings_v1.json',
+        );
+        expect(persistedRaw, isNotNull);
+        expect(
+          Map<String, dynamic>.from(jsonDecode(persistedRaw!) as Map),
+          legacySettings,
+        );
+      },
+    );
 
-    test('KernelMapStorageBridge migrates once and keeps kernel source of truth',
-        () async {
-      final tempDir = await Directory.systemTemp.createTemp(
-        'daily_budget_kernel_map_bridge_migration_',
-      );
-      addTearDown(() => tempDir.delete(recursive: true));
+    test(
+      'KernelMapStorageBridge migrates once and keeps kernel source of truth',
+      () async {
+        final tempDir = await Directory.systemTemp.createTemp(
+          'daily_budget_kernel_map_bridge_migration_',
+        );
+        addTearDown(() => tempDir.delete(recursive: true));
 
-      final bootstrap = DailyBudgetStorageKernelBootstrap(
-        storageRootPath: tempDir.path,
-      );
-      await bootstrap.initialize();
-      final kernel = bootstrap.kernel;
+        final bootstrap = DailyBudgetStorageKernelBootstrap(
+          storageRootPath: tempDir.path,
+        );
+        await bootstrap.initialize();
+        final kernel = bootstrap.kernel;
 
-      final localDb = _InMemoryLocalDb();
-      await localDb.init();
+        final localDb = _InMemoryLocalDb();
+        await localDb.init();
 
-      const legacyKey = 'user';
-      const kernelPath = 'profile/user_v1.json';
-      const namespace = StorageNamespace('user');
-      const legacyValue = <String, dynamic>{
-        'localId': {'value': 'legacy_local'},
-        'remoteId': {'value': 'legacy_remote'},
-        'createdAt': '2026-03-01T12:00:00.000Z',
-        'updatedAt': '2026-03-01T12:30:00.000Z',
-      };
-      await localDb.setMap(key: legacyKey, value: legacyValue);
+        const legacyKey = 'user';
+        const kernelPath = 'profile/user_v1.json';
+        const namespace = StorageNamespace('user');
+        const legacyValue = <String, dynamic>{
+          'localId': {'value': 'legacy_local'},
+          'remoteId': {'value': 'legacy_remote'},
+          'createdAt': '2026-03-01T12:00:00.000Z',
+          'updatedAt': '2026-03-01T12:30:00.000Z',
+        };
+        await localDb.setMap(key: legacyKey, value: legacyValue);
 
-      final bridge = KernelMapStorageBridge(
-        localDb: localDb,
-        storageKernel: kernel,
-      );
-      final loaded = await bridge.readMap(
-        legacyKey: legacyKey,
-        namespace: namespace,
-        kernelPath: kernelPath,
-      );
+        final bridge = KernelMapStorageBridge(
+          localDb: localDb,
+          storageKernel: kernel,
+        );
+        final loaded = await bridge.readMap(
+          legacyKey: legacyKey,
+          namespace: namespace,
+          kernelPath: kernelPath,
+        );
 
-      expect(loaded, legacyValue);
-      expect(await localDb.getMap(legacyKey), isEmpty);
-      expect(await kernel.read(namespace: namespace, path: kernelPath), isNotNull);
-    });
+        expect(loaded, legacyValue);
+        expect(await localDb.getMap(legacyKey), isEmpty);
+        expect(
+          await kernel.read(namespace: namespace, path: kernelPath),
+          isNotNull,
+        );
+      },
+    );
   });
 }
 
@@ -311,6 +324,11 @@ final class _InMemoryLocalDb implements LocalDbI {
   @override
   Future<void> clearKey({required final String key}) async {
     _store.remove(key);
+  }
+
+  @override
+  Future<void> clear() async {
+    _store.clear();
   }
 
   @override

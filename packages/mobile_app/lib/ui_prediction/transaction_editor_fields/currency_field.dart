@@ -70,13 +70,13 @@ class _CurrencyAutocompleter extends HookWidget with HasNotifiers {
       },
       optionsViewBuilder: (final context, final onSelected, final options) =>
           _AutocompleteOptions(
-        onSelected: onSelected,
-        options: options,
-        displayStringForOption: (final option) =>
-            displayStringForOption(CurrencyId(option)),
-        openDirection: OptionsViewOpenDirection.down,
-        maxOptionsHeight: 200,
-      ),
+            onSelected: onSelected,
+            options: options,
+            displayStringForOption: (final option) =>
+                displayStringForOption(CurrencyId(option)),
+            openDirection: OptionsViewOpenDirection.down,
+            maxOptionsHeight: 200,
+          ),
       displayStringForOption: (final option) =>
           displayStringForOption(CurrencyId(option)),
       initialValue: (initialValue.isNotEmpty)
@@ -85,21 +85,21 @@ class _CurrencyAutocompleter extends HookWidget with HasNotifiers {
             )
           : null,
       onSelected: (final option) => onSelected(CurrencyId(option)),
-      fieldViewBuilder: (
-        final context,
-        final textController,
-        final focusNode,
-        final onFieldSubmitted,
-      ) =>
-          TextField(
-        controller: textController,
-        focusNode: focusNode,
-        decoration: const InputDecoration(
-          // TODO(arenukvern): add localization l10n
-          labelText: 'Currency',
-          hintText: 'Type to search...',
-        ),
-      ),
+      fieldViewBuilder:
+          (
+            final context,
+            final textController,
+            final focusNode,
+            final onFieldSubmitted,
+          ) => TextField(
+            controller: textController,
+            focusNode: focusNode,
+            decoration: const InputDecoration(
+              // TODO(arenukvern): add localization l10n
+              labelText: 'Currency',
+              hintText: 'Type to search...',
+            ),
+          ),
     );
   }
 }
@@ -129,7 +129,8 @@ class _AutocompleteOptions<T extends Object> extends StatelessWidget {
   Widget build(final BuildContext context) {
     final AlignmentDirectional optionsAlignment = switch (openDirection) {
       OptionsViewOpenDirection.up => AlignmentDirectional.bottomStart,
-      OptionsViewOpenDirection.down => AlignmentDirectional.topStart,
+      OptionsViewOpenDirection.down ||
+      OptionsViewOpenDirection.mostSpace => AlignmentDirectional.topStart,
     };
     return Align(
       alignment: optionsAlignment,
@@ -155,17 +156,13 @@ class _AutocompleteOptions<T extends Object> extends StatelessWidget {
                     final bool highlight =
                         AutocompleteHighlightedOption.of(context) == index;
                     if (highlight) {
-                      SchedulerBinding.instance.addPostFrameCallback(
-                        (final timeStamp) {
-                          unawaited(
-                            Scrollable.ensureVisible(
-                              context,
-                              alignment: 0.5,
-                            ),
-                          );
-                        },
-                        debugLabel: 'AutocompleteOptions.ensureVisible',
-                      );
+                      SchedulerBinding.instance.addPostFrameCallback((
+                        final timeStamp,
+                      ) {
+                        unawaited(
+                          Scrollable.ensureVisible(context, alignment: 0.5),
+                        );
+                      }, debugLabel: 'AutocompleteOptions.ensureVisible');
                     }
                     return Container(
                       color: highlight ? Theme.of(context).focusColor : null,

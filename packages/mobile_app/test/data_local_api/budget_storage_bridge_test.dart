@@ -271,6 +271,11 @@ final class _InMemoryLocalDb implements LocalDbI {
   }
 
   @override
+  Future<void> clear() async {
+    _store.clear();
+  }
+
+  @override
   Future<void> clearAll() async {
     _store.clear();
   }

@@ -1,4 +1,5 @@
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_kit/molecules/ui_modal_sheet_route.dart';
 import 'package:mobile_app/ui_prediction/transaction_editor_fields/transaction_editor_fields.dart';
 
 part 'ui_transaction_editor_state.dart';
@@ -23,21 +24,20 @@ class TransactionEditorDto {
 Map<TransactionType, String> getTransactionTypeNames({
   required final CurrencyType currencyType,
   required final Locale locale,
-}) =>
-    {
-      ...switch (currencyType) {
-        CurrencyType.fiat => {
-            TransactionType.income: 'Income',
-            TransactionType.expense: 'Expense',
-          },
-        CurrencyType.crypto => {
-            TransactionType.income: 'Buy',
-            TransactionType.expense: 'Sell',
-          },
-      },
-      TransactionType.transferIn: 'Transfer in',
-      TransactionType.transferOut: 'Transfer out',
-    };
+}) => {
+  ...switch (currencyType) {
+    CurrencyType.fiat => {
+      TransactionType.income: 'Income',
+      TransactionType.expense: 'Expense',
+    },
+    CurrencyType.crypto => {
+      TransactionType.income: 'Buy',
+      TransactionType.expense: 'Sell',
+    },
+  },
+  TransactionType.transferIn: 'Transfer in',
+  TransactionType.transferOut: 'Transfer out',
+};
 
 typedef TransactionEditorResult = ({
   Transaction transaction,
@@ -49,18 +49,15 @@ Future<TransactionEditorResult?> showTransactionEditor(
   required final Transaction transaction,
   final TransactionSchedule schedule = TransactionSchedule.empty,
   final TransactionEditorDto dto = TransactionEditorDto.empty,
-}) =>
-    Navigator.push(
-      context,
-      ModalSheetRoute(
-        swipeDismissible: true,
-        builder: (final context) => _TransactionEditor(
-          transaction: transaction,
-          schedule: schedule,
-          dto: dto,
-        ),
-      ),
-    );
+}) => Navigator.of(context, rootNavigator: true).push(
+  UiModalSheetRoute<TransactionEditorResult>(
+    builder: (final context) => _TransactionEditor(
+      transaction: transaction,
+      schedule: schedule,
+      dto: dto,
+    ),
+  ),
+);
 
 class _TransactionEditor extends StatefulHookWidget {
   const _TransactionEditor({
@@ -139,8 +136,9 @@ class _TransactionEditorState extends State<_TransactionEditor>
 
     final nameField = TransactionNameField(
       name: transaction.description,
-      onChanged: (final value) => controller
-          .setState((final state) => state.copyWith(description: value)),
+      onChanged: (final value) => controller.setState(
+        (final state) => state.copyWith(description: value),
+      ),
     );
     final noteField = TransactionNoteField(
       note: transaction.note,
@@ -179,8 +177,9 @@ class _TransactionEditorState extends State<_TransactionEditor>
                 readonly: !dto.isTaskChoosable,
                 transactionType: taskTransactionType,
                 taskId: transaction.taskId,
-                onChanged: (final value) => controller
-                    .setState((final state) => state.copyWith(taskId: value)),
+                onChanged: (final value) => controller.setState(
+                  (final state) => state.copyWith(taskId: value),
+                ),
               ),
             ),
           ],
@@ -196,8 +195,9 @@ class _TransactionEditorState extends State<_TransactionEditor>
             TransactionTypeField(
               currencyType: currencyType,
               value: transaction.type,
-              onChanged: (final value) => controller
-                  .setState((final state) => state.copyWith(type: value)),
+              onChanged: (final value) => controller.setState(
+                (final state) => state.copyWith(type: value),
+              ),
             ),
           ],
 
@@ -217,9 +217,7 @@ class _TransactionEditorState extends State<_TransactionEditor>
               ),
             ),
           ],
-          if (currencyType case CurrencyType.fiat) ...[
-            nameField,
-          ],
+          if (currencyType case CurrencyType.fiat) ...[nameField],
 
           /// there is two cases:
           /// when it's crypto:
@@ -231,12 +229,12 @@ class _TransactionEditorState extends State<_TransactionEditor>
           ...switch (transaction.input.currencyType) {
             CurrencyType.fiat => [amountField],
             CurrencyType.crypto => [
-                amountField,
-                Padding(
-                  padding: padding,
-                  child: CoinPriceField(controller: controller.coinPrice),
-                ),
-              ],
+              amountField,
+              Padding(
+                padding: padding,
+                child: CoinPriceField(controller: controller.coinPrice),
+              ),
+            ],
           },
           if (currencyType case CurrencyType.crypto) noteField,
           if (dto.isPeriodChangable) ...[

@@ -1,0 +1,37 @@
+---
+status: current
+evidence_type: ledger
+date: 2026-08-23
+scope: repository claim and proof status
+claim_tested: Current weakest true repository claims.
+proof_level: current ledger initialized; fill with native validation, blocked evidence, or linked proof artifacts
+commands_or_sources:
+  - native validation command
+result: baseline ledger initialized; no readiness or maturity claim yet
+limitations: Populate after validation, benchmark, or blocked evidence exists.
+non_claims:
+  - maturity
+  - harness readiness
+  - product runtime correctness
+next_disposition: keep as current status pointer until superseded
+current_status_pointer: docs/evidence/current-status.mdx
+---
+
+# Current Evidence Status
+
+Use this ledger for the weakest true current claim. Historical evidence is provenance unless this file points to it.
+
+## Current Claims
+
+| Claim                                                                     | Evidence                                                                                                                                                               | Status  | Non-claims                                                                           |
+| ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| Baseline evidence ledger exists                                           | This file was initialized.                                                                                                                                             | current | Does not prove readiness, maturity, harness support, or product runtime correctness. |
+| Skill Steward adopted (steward.yaml valid, 3 skills installed)            | `steward doctor --json` returns zero diagnostics; `skills.json` locked at commit 4e0c113.                                                                              | current | Does not prove harness readiness or code quality.                                    |
+| Native validation gate (`flutter analyze`) currently failing at repo root | 2026-08-23 run: 55 errors repo-wide — missing generated `lib/firebase_options.dart` (prod entrypoint), errors in `packages/xsoulspace_monetization`; 419 issues total. | blocked | Does not claim analyzer-clean codebase.                                              |
+| App package tests pass                                                    | `cd packages/mobile_app && flutter test` → 7/7 passed (2026-08-23).                                                                                                    | current | Does not claim full coverage or repo-wide analyzer cleanliness.                      |
+
+## Rerun Route
+
+- Refresh gate status: `flutter analyze` in repo root; `cd packages/mobile_app && flutter test` for the app package.
+- Fix path for the blocking error: generate Firebase options for the prod flavor (`flutterfire configure`) or scope the prod entrypoint; then re-run and update this ledger.
+- Refresh steward state: `steward doctor --json`.

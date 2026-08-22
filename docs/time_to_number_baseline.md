@@ -2,7 +2,7 @@
 
 **Purpose:** Measure and document time from cold app start until the daily number is visible on home.  
 **Target:** p95 &lt; 2 s (PRD P0-2, P1-1).  
-**Reference:** [PRD next phase](PRD_next_phase.md), [Plan to start next phase](plan_to_start_next_phase.md).
+**Reference:** [PRD next phase](PRD_next_phase.md).
 
 ---
 
