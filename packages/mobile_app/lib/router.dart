@@ -1,8 +1,7 @@
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_other/privacy_screen.dart';
 import 'package:mobile_app/ui_other/terms_screen.dart';
-import 'package:mobile_app/ui_paywalls/thanks_for_subscribing_screen.dart';
-import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
+import 'package:mobile_app/ui_pay/ui_pay.dart';
 
 enum ScreenPaths {
   root('/'),
@@ -10,6 +9,7 @@ enum ScreenPaths {
   paywall('paywall'),
   manageSubscription('manage-subscription'),
   thanksForSubscribing('subscribing-thanks'),
+  waitingPayConfirmation('waiting-pay-confirmation'),
   privacy('privacy'),
   terms('terms'),
   explanation('explain');
@@ -58,11 +58,13 @@ final router = GoRouter(
             ),
             AppRoute(
               ScreenPaths.thanksForSubscribing.value,
-              (final context, final state) {
-                final subscription =
-                    context.read<SubscriptionManager>().activeSubscription;
-                return ThanksForSubscribingScreen(subscription: subscription);
-              },
+              (final context, final state) =>
+                  const ThanksForSubscribingScreen(),
+            ),
+            AppRoute(
+              ScreenPaths.waitingPayConfirmation.value,
+              (final context, final state) =>
+                  const WaitingPayConfirmationScreen(),
             ),
           ],
         ),
@@ -98,18 +100,15 @@ class AppPathsController {
   void toPaywall() => go(ScreenPaths.paywall, routes: _homeRoutes);
   void toThanksForSubscribing() =>
       go(ScreenPaths.thanksForSubscribing, routes: _homeRoutes);
+  void toWaitingPayConfirmation() =>
+      go(ScreenPaths.waitingPayConfirmation, routes: _homeRoutes);
   void toManageSubscription() =>
       go(ScreenPaths.manageSubscription, routes: _homeRoutes);
-  void toExplanation({
-    final bool isFirstTimeOpening = false,
-  }) =>
-      go(
-        ScreenPaths.explanation,
-        routes: [ScreenPaths.home],
-        params: {
-          if (isFirstTimeOpening) 'isFirstOpening': 'true',
-        },
-      );
+  void toExplanation({final bool isFirstTimeOpening = false}) => go(
+    ScreenPaths.explanation,
+    routes: [ScreenPaths.home],
+    params: {if (isFirstTimeOpening) 'isFirstOpening': 'true'},
+  );
   void go(
     final ScreenPaths path, {
     final List<ScreenPaths> routes = const [],
@@ -140,28 +139,28 @@ class AppRoute extends GoRoute {
     final bool useFade = false,
     final bool isTransparent = false,
   }) : super(
-          path: path,
-          routes: routes,
-          pageBuilder: (final context, final state) {
-            final pageContent = builder(context, state);
-            if (useFade || isTransparent) {
-              return CustomTransitionPage(
-                key: state.pageKey,
-                child: pageContent,
-                opaque: !isTransparent,
-                barrierColor: isTransparent
-                    ? Colors.transparent
-                    : context.colorScheme.surface,
-                transitionsBuilder: (
-                  final context,
-                  final animation,
-                  final secondaryAnimation,
-                  final child,
-                ) =>
-                    FadeTransition(opacity: animation, child: child),
-              );
-            }
-            return CupertinoPage(child: pageContent);
-          },
-        );
+         path: path,
+         routes: routes,
+         pageBuilder: (final context, final state) {
+           final pageContent = builder(context, state);
+           if (useFade || isTransparent) {
+             return CustomTransitionPage(
+               key: state.pageKey,
+               child: pageContent,
+               opaque: !isTransparent,
+               barrierColor: isTransparent
+                   ? Colors.transparent
+                   : context.colorScheme.surface,
+               transitionsBuilder:
+                   (
+                     final context,
+                     final animation,
+                     final secondaryAnimation,
+                     final child,
+                   ) => FadeTransition(opacity: animation, child: child),
+             );
+           }
+           return CupertinoPage(child: pageContent);
+         },
+       );
 }

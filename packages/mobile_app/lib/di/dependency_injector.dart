@@ -4,7 +4,10 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/di/storage_kernel_bootstrap.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_notifier.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_notifier.dart';
-import 'package:mobile_app/ui_paywalls/ui_paywalls.dart';
+import 'package:mobile_app/ui_pay/paywall_flow.dart';
+import 'package:xsoulspace_installation_store/xsoulspace_installation_store.dart';
+import 'package:xsoulspace_monetization_foundation/xsoulspace_monetization_foundation.dart';
+import 'package:xsoulspace_monetization_rustore/xsoulspace_monetization_rustore.dart';
 
 /// Shortcuts
 /// Should not be exposed
@@ -51,24 +54,9 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   r<LocalDbI>(localDb);
   // r<IsarDb>(isarDb, dispose: (final i) => i.close());
   r<SembastDb>(sembastDb, dispose: (final i) => i.close());
-  r(
-    UserLocalApi(
-      localDb: localDb,
-      storageKernel: storageKernel,
-    ),
-  );
-  r(
-    AppSettingsLocalApi(
-      localDb: localDb,
-      storageKernel: storageKernel,
-    ),
-  );
-  r(
-    BudgetLocalApi(
-      localDb: localDb,
-      storageKernel: storageKernel,
-    ),
-  );
+  r(UserLocalApi(localDb: localDb, storageKernel: storageKernel));
+  r(AppSettingsLocalApi(localDb: localDb, storageKernel: storageKernel));
+  r(BudgetLocalApi(localDb: localDb, storageKernel: storageKernel));
   rl<ManualBudgetsLocalApi>(ManualBudgetsLocalApiSembast.new);
   rl(DictionariesLocalApi.new);
   rl(FinSettingsLocalApi.new);
@@ -105,21 +93,66 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   rl(AppStatusResource.new, dispose: d);
   // TODO(arenukvern): create a factory for this
   /// possible conflicts with purchase managers
-  rl<PurchaseManager>(
-    () => switch (Envs.storeTarget) {
-      InstallPlatformTarget.rustore => FlutterRustoreBillingManager(
-        consoleApplicationId: Envs.rustoreApplicationId,
-        // ignore: avoid_redundant_argument_values
-        enableLogger: Envs.logging,
-        deeplinkScheme: Envs.appScheme,
-        productTypeChecker: MonetizationProducts.productTypeChecker,
+  /// ********************************************
+  /// *      MONETIZATION
+  /// ********************************************
+  rl<MonetizationStoreStatusResource>(
+    MonetizationStoreStatusResource.new,
+    dispose: d,
+  );
+  rl<MonetizationTypeResource>(
+    () => MonetizationTypeResource(Envs.monetizationType),
+    dispose: d,
+  );
+  rl<ActiveSubscriptionResource>(ActiveSubscriptionResource.new, dispose: d);
+  rl<SubscriptionStatusResource>(SubscriptionStatusResource.new, dispose: d);
+  rl<AvailableSubscriptionsResource>(
+    AvailableSubscriptionsResource.new,
+    dispose: d,
+  );
+  rl<PaywallSelectedSubscriptionResource>(
+    PaywallSelectedSubscriptionResource.new,
+    dispose: d,
+  );
+  rl<PurchasePaywallErrorResource>(
+    PurchasePaywallErrorResource.new,
+    dispose: d,
+  );
+  rl<PurchasesLocalApi>(PurchasesLocalApi.new);
+  rl<PurchaseFlagsLocalApi>(PurchaseFlagsLocalApi.new);
+  rl(
+    () => MonetizationFoundation(
+      resources: (
+        status: _g(),
+        type: _g(),
+        activeSubscription: _g(),
+        subscriptionStatus: _g(),
+        availableSubscriptions: _g(),
+        paywallSelectedSubscription: _g(),
+        purchasePaywallError: _g(),
       ),
-      InstallPlatformTarget.appleStore ||
-      InstallPlatformTarget.googlePlay => NoopPurchaseManager(),
-      // TODO(arenukvern): description
-      // InAppPurchaseManager(),
-      _ => NoopPurchaseManager(),
-    },
+      purchasesLocalApi: _g(),
+      purchaseProvider: switch (Envs.storeTarget) {
+        InstallPlatformTarget.rustore => RustorePurchaseProvider(
+          consoleApplicationId: Envs.rustoreApplicationId,
+          deeplinkScheme: Envs.appScheme,
+          // ignore: avoid_redundant_argument_values
+          enableLogging: Envs.logging,
+          productTypeChecker: MonetizationProducts.productTypeChecker,
+        ),
+        InstallPlatformTarget.appleStore ||
+        InstallPlatformTarget.googlePlay ||
+        InstallPlatformTarget.huawai => const NoopPurchaseProvider(),
+        _ => const NoopPurchaseProvider(),
+      },
+    ),
+    dispose: (final instance) => instance.dispose(),
+  );
+  rl(
+    () => StoreReviewRequester(
+      localDb: localDb,
+      getLocale: () => localeNotifier.value,
+    ),
     dispose: d,
   );
   rl(
@@ -131,34 +164,8 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
     ),
     dispose: d,
   );
-  rl(() => MonetizationStatusNotifier(Envs.monetizationType), dispose: d);
   rl(DictionariesNotifier.new, dispose: d);
   rl(FinSettingsNotifier.new, dispose: d);
-  rl(
-    () => SubscriptionManager(
-      productIds: kDebugMode
-          ? MonetizationProducts.subscriptions
-          : MonetizationProducts.subscriptionsForProduction,
-      purchaseManager: _g(),
-      monetizationTypeNotifier: _g(),
-    ),
-    dispose: d,
-  );
-  rl(
-    () => StoreReviewRequester(
-      localDb: localDb,
-      getLocale: () => localeNotifier.value,
-    ),
-    dispose: d,
-  );
-  rl(
-    () => PurchaseInitializer(
-      monetizationTypeNotifier: _g(),
-      purchaseManager: _g(),
-      subscriptionManager: _g(),
-    ),
-    dispose: d,
-  );
   rl(WeeklyNotifier.new, dispose: d);
   rl(MonthlyNotifier.new, dispose: d);
 }
@@ -214,8 +221,7 @@ mixin HasNotifiers {
   AppStatusResource get appStatusNotifier => _g();
   UiLocaleNotifier get localeNotifier => _g();
   AppSettingsNotifier get appSettingsNotifier => _g();
-  PurchaseInitializer get purchaseIntializer => _g();
-  SubscriptionManager get subscriptionManager => _g();
+  MonetizationFoundation get monetizationFoundation => _g();
   WeeklyNotifier get weeklyCubit => _g();
   MonthlyNotifier get monthlyCubit => _g();
   StoreReviewRequester get storeReviewRequester => _g();

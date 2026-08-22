@@ -3,6 +3,13 @@ include: package:xsoulspace_lints/library.yaml
 analyzer:
   exclude:
     - lib/src/gen/**
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 
 linter:
   # The lint rules applied to this project can be customized in the

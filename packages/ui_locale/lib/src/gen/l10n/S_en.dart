@@ -1,4 +1,8 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'S.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for English (`en`).
 class SEn extends S {
@@ -53,10 +57,12 @@ class SEn extends S {
   String get extraCostsOrSaving => 'Extra costs or savings';
 
   @override
-  String get willBeSubstructedFromYourBudget => 'will be subtracted from your budget';
+  String get willBeSubstructedFromYourBudget =>
+      'will be subtracted from your budget';
 
   @override
-  String get canBeLessIfYouHaveLessThan7Days => 'can be less if you have less than 7 days till chosen date';
+  String get canBeLessIfYouHaveLessThan7Days =>
+      'can be less if you have less than 7 days till chosen date';
 
   @override
   String get daysInTotal => 'Days in total:';

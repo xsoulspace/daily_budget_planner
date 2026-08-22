@@ -18,7 +18,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 0.2.0+7
 
 environment:
-  sdk: ">=3.7.0 <4.0.0"
+  sdk: ">=3.12.0 <4.0.0"
 workspace:
   - packages/*
 
@@ -46,12 +46,31 @@ dependency_overrides:
   intl: ^0.20.3
   melos: ^8.2.2
   source_gen: ^4.2.3
+  xsoulspace_ui_foundation:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_ui_foundation
+  xsoulspace_review:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_review
+  xsoulspace_foundation:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_foundation
+  life_hooks: ^0.3.0
   universal_storage_interface:
     path: ../dart_flutter_packages/pkgs/universal_storage_interface
   universal_storage_sync:
     path: ../dart_flutter_packages/pkgs/universal_storage_sync
   universal_storage_sync_utils:
     path: ../dart_flutter_packages/pkgs/universal_storage_sync_utils
+  # TODO(arenukvern): remove after xsoulspace_monetization_* packages publish
+  # versions compatible with the new foundation stack.
+  xsoulspace_locale:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_locale
+  xsoulspace_installation_store:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_installation_store
+  xsoulspace_monetization_interface:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_monetization_interface
+  xsoulspace_monetization_foundation:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_monetization_foundation
+  xsoulspace_monetization_rustore:
+    path: ../dart_flutter_packages/pkgs/xsoulspace_monetization_rustore
 
 # flutter pub run flutter_launcher_icons:main
 # generate for macos https://appicon.co

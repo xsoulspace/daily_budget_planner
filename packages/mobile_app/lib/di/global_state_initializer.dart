@@ -1,5 +1,6 @@
 import 'package:life_hooks/life_hooks.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_pay/monetization_products.dart';
 
 class PreloadingScreen extends StatefulWidget {
   const PreloadingScreen({super.key});
@@ -29,6 +30,15 @@ class _PreloadingScreenState extends State<PreloadingScreen> {
 class GlobalStateInitializer
     with HasLocalApis, HasNotifiers, HasAnalytics, HasComplexLocalDbs
     implements StateInitializer, Disposable {
+  /// Initializes the monetization foundation (local restore + store init).
+  Future<void> purchaseInitializerInit() async {
+    final monetization = monetizationFoundation;
+    await monetization.initLocal();
+    await monetization.init(
+      productIds: MonetizationProducts.subscriptionsForBuild,
+    );
+  }
+
   @override
   Future<void> onLoad(final BuildContext context) async {
     await Future.wait([localDb.init(), sembastDb.open()]);
@@ -47,7 +57,7 @@ class GlobalStateInitializer
         guideVisibility.setGuideWasOpen();
         AppPathsController.of(context).toExplanation(isFirstTimeOpening: true);
       }
-      await purchaseIntializer.init();
+      await purchaseInitializerInit();
       await dictionariesNotifier.onLoad();
       await finSettingsNotifier.onLoad();
       await Future.wait([

@@ -1,4 +1,8 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'S.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for Russian (`ru`).
 class SRu extends S {
@@ -56,7 +60,8 @@ class SRu extends S {
   String get willBeSubstructedFromYourBudget => 'будет вычтено из бюджета';
 
   @override
-  String get canBeLessIfYouHaveLessThan7Days => 'может быть меньше, если осталось меньше 7 дней до дня бюджета';
+  String get canBeLessIfYouHaveLessThan7Days =>
+      'может быть меньше, если осталось меньше 7 дней до дня бюджета';
 
   @override
   String get daysInTotal => 'Дней всего:';

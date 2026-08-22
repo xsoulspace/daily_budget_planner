@@ -1,4 +1,8 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'S.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for Italian (`it`).
 class SIt extends S {
@@ -53,10 +57,12 @@ class SIt extends S {
   String get extraCostsOrSaving => 'Costi o risparmi aggiuntivi';
 
   @override
-  String get willBeSubstructedFromYourBudget => 'verrà sottratto dal tuo budget';
+  String get willBeSubstructedFromYourBudget =>
+      'verrà sottratto dal tuo budget';
 
   @override
-  String get canBeLessIfYouHaveLessThan7Days => 'può essere inferiore se mancano meno di 7 giorni alla data scelta';
+  String get canBeLessIfYouHaveLessThan7Days =>
+      'può essere inferiore se mancano meno di 7 giorni alla data scelta';
 
   @override
   String get daysInTotal => 'Giorni in totale:';
