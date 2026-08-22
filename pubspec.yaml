@@ -20,10 +20,7 @@ version: 0.2.0+7
 environment:
   sdk: ">=3.7.0 <4.0.0"
 workspace:
-  - packages/mobile_app
-  - packages/ui_locale
-  - packages/xsoulspace_analytics
-  - packages/xsoulspace_monetization
+  - packages/*
 
 # to update use flutter pub upgrade --major-versions
 dependencies:
@@ -33,22 +30,22 @@ dependencies:
     path: packages/mobile_app
 
 dev_dependencies:
-  build_runner: ^2.4.15
-  flutter_gen_runner: ^5.10.0
-  flutter_launcher_icons: ^0.14.3
+  build_runner: ^2.15.2
+  flutter_gen_runner: ^5.15.0
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
-  freezed: ^3.0.3
-  json_serializable: ^6.9.4
-  lints: ^5.1.1
-  xsoulspace_lints: ^0.0.14
+  freezed: ^3.2.5
+  json_serializable: ^6.14.0
+  lints: ^6.1.0
+  xsoulspace_lints: ^0.1.2
 
 dependency_overrides:
-  analyzer: ^7.0.0
-  cli_util: ^0.4.1
-  intl: ^0.19.0
-  melos: ^6.1.0
-  source_gen: ^2.0.0
+  analyzer: ^14.1.0
+  cli_util: ^0.5.1
+  intl: ^0.20.3
+  melos: ^8.2.2
+  source_gen: ^4.2.3
   universal_storage_interface:
     path: ../dart_flutter_packages/pkgs/universal_storage_interface
   universal_storage_sync:

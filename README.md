@@ -66,6 +66,14 @@ All [comments](https://github.com/xsoulspace/daily_budget_planner/issues) and [p
 
 If you need help getting started or have any questions, check out our [Discord Community](https://discord.gg/y54DpJwmAn).
 
+## License
+
+This project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE).
+
+- Personal and noncommercial use is free.
+- Commercial use, including distributing this software (or works based on it) as part of a commercial product or app store publication, requires a separate commercial license.
+- For commercial licensing, contact [anton@xsoulspace.dev](mailto:anton@xsoulspace.dev).
+
 ## Flutter - Getting Started
 
 This project is a starting point for a Flutter application.
