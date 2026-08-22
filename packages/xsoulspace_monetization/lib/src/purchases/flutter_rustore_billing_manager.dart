@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_rustore_billing/flutter_rustore_billing.dart';
 import 'package:flutter_rustore_billing/pigeons/rustore.dart';
+import 'package:from_json_to_json/from_json_to_json.dart';
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
@@ -155,10 +156,9 @@ class FlutterRustoreBillingManager implements PurchaseManager {
           price: details.price,
           currency: details.currency,
           purchaseDate: DateTime.now(),
-          expiryDate:
-              expectedType == PurchaseProductType.subscription
-                  ? DateTime.now().add(details.duration)
-                  : null,
+          expiryDate: expectedType == PurchaseProductType.subscription
+              ? DateTime.now().add(details.duration)
+              : null,
         ),
       );
     } catch (e) {
@@ -238,7 +238,7 @@ class FlutterRustoreBillingManager implements PurchaseManager {
       productType: productType,
       name: product.title ?? '',
       formattedPrice: product.priceLabel ?? '',
-      price: doubleFromJson(product.price ?? '0'),
+      price: jsonDecodeDouble(product.price ?? '0'),
       currency: product.currency ?? '',
       duration: duration,
       freeTrialDuration: PurchaseDuration(
@@ -265,10 +265,9 @@ class FlutterRustoreBillingManager implements PurchaseManager {
   Future<RestoreResult> restore() async {
     try {
       final purchasesResponse = await RustoreBillingClient.purchases();
-      final restoredPurchases =
-          purchasesResponse.purchases.nonNulls
-              .map(_mapToPurchaseDetails)
-              .toList();
+      final restoredPurchases = purchasesResponse.purchases.nonNulls
+          .map(_mapToPurchaseDetails)
+          .toList();
       return RestoreResult.success(restoredPurchases);
     } catch (e) {
       return RestoreResult.failure(e.toString());
@@ -298,7 +297,7 @@ class FlutterRustoreBillingManager implements PurchaseManager {
       productId: productId,
       name: '',
       formattedPrice: purchase.amountLabel ?? '',
-      price: doubleFromJson(purchase.amount ?? '0'),
+      price: jsonDecodeDouble(purchase.amount ?? '0'),
       currency: purchase.currency ?? '',
       purchaseDate: purchaseDate,
       duration: duration,

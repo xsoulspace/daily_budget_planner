@@ -1,4 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:from_json_to_json/from_json_to_json.dart';
 import 'package:universal_io/io.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 
@@ -6,9 +7,7 @@ import '../interfaces/interfaces.dart';
 import '../models/models.dart';
 
 class FirebaseAnalyticsPlugin implements AnalyticsService {
-  FirebaseAnalyticsPlugin({
-    this.forceAnalytics = false,
-  });
+  FirebaseAnalyticsPlugin({this.forceAnalytics = false});
   final bool forceAnalytics;
   late final FirebaseAnalytics _analytics;
   bool _isEnabled = false;
@@ -41,13 +40,10 @@ class FirebaseAnalyticsPlugin implements AnalyticsService {
           parameters: parameters,
         );
       case AnalyticsEvents.kButtonClick:
-        await _analytics.logEvent(
-          name: event.name,
-          parameters: parameters,
-        );
+        await _analytics.logEvent(name: event.name, parameters: parameters);
       case AnalyticsEvents.kPurchaseComplete:
         await _analytics.logPurchase(
-          value: doubleFromJson(parameters[AnalyticsEvents.kPurchaseValue]),
+          value: jsonDecodeDouble(parameters[AnalyticsEvents.kPurchaseValue]),
           currency: parameters[AnalyticsEvents.kPurchaseCurrency] as String?,
           transactionId:
               parameters[AnalyticsEvents.kPurchaseTransactionId] as String?,
