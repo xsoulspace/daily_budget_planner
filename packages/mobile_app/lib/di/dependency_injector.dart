@@ -8,6 +8,7 @@ import 'package:mobile_app/ui_pay/paywall_flow.dart';
 import 'package:mobile_app/ui_pay/monetization_products.dart';
 import 'package:xsoulspace_installation_store/xsoulspace_installation_store.dart';
 import 'package:xsoulspace_monetization_foundation/xsoulspace_monetization_foundation.dart';
+import 'package:xsoulspace_monetization_interface/xsoulspace_monetization_interface.dart';
 import 'package:xsoulspace_monetization_rustore/xsoulspace_monetization_rustore.dart';
 
 /// Shortcuts
@@ -134,17 +135,17 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
       ),
       purchasesLocalApi: _g(),
       purchaseProvider: switch (Envs.storeTarget) {
-        InstallPlatformTarget.rustore => RustorePurchaseProvider(
+        InstallationTargetStore.rustore => RustorePurchaseProvider(
           consoleApplicationId: Envs.rustoreApplicationId,
           deeplinkScheme: Envs.appScheme,
           // ignore: avoid_redundant_argument_values
           enableLogging: Envs.logging,
           productTypeChecker: MonetizationProducts.productTypeChecker,
         ),
-        InstallPlatformTarget.appleStore ||
-        InstallPlatformTarget.googlePlay ||
-        InstallPlatformTarget.huawai => const NoopPurchaseProvider(),
-        _ => const NoopPurchaseProvider(),
+        InstallationTargetStore.mobileAppleAppStore ||
+        InstallationTargetStore.mobileGooglePlay ||
+        InstallationTargetStore.huawei => NoopPurchaseProvider(),
+        _ => NoopPurchaseProvider(),
       },
     ),
     dispose: (final instance) => instance.dispose(),

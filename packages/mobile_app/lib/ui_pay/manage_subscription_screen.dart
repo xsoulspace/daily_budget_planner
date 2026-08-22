@@ -6,6 +6,7 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_pay/has_monetization.dart';
 import 'package:mobile_app/ui_pay/monetization_products.dart';
 import 'package:provider/provider.dart';
+import 'package:xsoulspace_monetization_interface/xsoulspace_monetization_interface.dart';
 
 class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
   const ManageSubscriptionScreen({super.key});
@@ -20,13 +21,11 @@ class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
 
     return Scaffold(
       appBar: UiAppBar(
-        titleText: LocalizedMap(
-        {
-            languages.en: 'Manage Subscription',
-            languages.it: 'Gestisci Abbonamento',
-            languages.ru: 'Управление подпиской',
-          },
-        ).getValue(locale),
+        titleText: LocalizedMap({
+          languages.en: 'Manage Subscription',
+          languages.it: 'Gestisci Abbonamento',
+          languages.ru: 'Управление подпиской',
+        }).getValue(locale),
       ),
       body: SafeArea(
         child: Padding(
@@ -46,26 +45,22 @@ class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
                       monetizationFoundation.openSubscriptionManagement(),
                     ),
                     child: Text(
-                      LocalizedMap(
-        {
-                          languages.en: 'Manage in Store',
-                          languages.it: 'Gestisci nello Store',
-                          languages.ru: 'Управлять в магазине',
-                        },
-                      ).getValue(locale),
+                      LocalizedMap({
+                        languages.en: 'Manage in Store',
+                        languages.it: 'Gestisci nello Store',
+                        languages.ru: 'Управлять в магазине',
+                      }).getValue(locale),
                     ),
                   ),
                 ),
                 const SizedBox(height: 12),
                 Center(
                   child: UiTextButton(
-                    textTitle: LocalizedMap(
-        {
-                        languages.en: 'Restore Purchases',
-                        languages.it: 'Ripristina Acquisti',
-                        languages.ru: 'Восстановить покупки',
-                      },
-                    ).getValue(locale),
+                    textTitle: LocalizedMap({
+                      languages.en: 'Restore Purchases',
+                      languages.it: 'Ripristina Acquisti',
+                      languages.ru: 'Восстановить покупки',
+                    }).getValue(locale),
                     onPressed: () =>
                         unawaited(monetizationFoundation.restore()),
                   ),
@@ -73,13 +68,11 @@ class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
               ] else
                 Center(
                   child: Text(
-                    LocalizedMap(
-        {
-                        languages.en: 'No active subscription',
-                        languages.it: 'Nessun abbonamento attivo',
-                        languages.ru: 'Нет активной подписки',
-                      },
-                    ).getValue(locale),
+                    LocalizedMap({
+                      languages.en: 'No active subscription',
+                      languages.it: 'Nessun abbonamento attivo',
+                      languages.ru: 'Нет активной подписки',
+                    }).getValue(locale),
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
@@ -109,24 +102,20 @@ class _SubscriptionInfoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            LocalizedMap(
-        {
-                languages.en: 'Current Subscription',
-                languages.it: 'Abbonamento Attuale',
-                languages.ru: 'Текущая подписка',
-              },
-            ).getValue(useLocale(context)),
+            LocalizedMap({
+              languages.en: 'Current Subscription',
+              languages.it: 'Abbonamento Attuale',
+              languages.ru: 'Текущая подписка',
+            }).getValue(useLocale(context)),
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
           _DetailItem(
-            title: LocalizedMap(
-        {
-                languages.en: 'Plan:',
-                languages.it: 'Piano:',
-                languages.ru: 'План:',
-              },
-            ).getValue(useLocale(context)),
+            title: LocalizedMap({
+              languages.en: 'Plan:',
+              languages.it: 'Piano:',
+              languages.ru: 'План:',
+            }).getValue(useLocale(context)),
             value: subscription.name.whenEmptyUse(
               MonetizationProducts.fromProductId(
                     subscription.productId,
@@ -135,23 +124,19 @@ class _SubscriptionInfoCard extends StatelessWidget {
             ),
           ),
           _DetailItem(
-            title: LocalizedMap(
-        {
-                languages.en: 'Price:',
-                languages.it: 'Prezzo:',
-                languages.ru: 'Цена:',
-              },
-            ).getValue(useLocale(context)),
+            title: LocalizedMap({
+              languages.en: 'Price:',
+              languages.it: 'Prezzo:',
+              languages.ru: 'Цена:',
+            }).getValue(useLocale(context)),
             value: subscription.formattedPrice,
           ),
           _DetailItem(
-            title: LocalizedMap(
-        {
-                languages.en: 'Next Renewal:',
-                languages.it: 'Prossimo Rinnovo:',
-                languages.ru: 'Следующее продление:',
-              },
-            ).getValue(useLocale(context)),
+            title: LocalizedMap({
+              languages.en: 'Next Renewal:',
+              languages.it: 'Prossimo Rinnovo:',
+              languages.ru: 'Следующее продление:',
+            }).getValue(useLocale(context)),
             value: subscription.expiryDate == null
                 ? 'N/A'
                 : DateFormat.yMMMd(

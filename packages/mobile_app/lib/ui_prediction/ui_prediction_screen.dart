@@ -100,16 +100,14 @@ class _PredictionHeader extends StatelessWidget {
                         );
 
                     return _HeaderItem(
-                      onPressed:
-                          () async => showExpensesTasksView(context: context),
-                      title: LocalizedMap(
+                      onPressed: () async =>
+                          showExpensesTasksView(context: context),
+                      title: LocalizedMap({
                         // TODO(arenukvern): add localization l10n
-                        value: {
-                          languages.en: 'regular expenses',
-                          languages.it: 'spese regolari',
-                          languages.ru: 'регулярные расходы',
-                        },
-                      ).getValue(locale),
+                        languages.en: 'regular expenses',
+                        languages.it: 'spese regolari',
+                        languages.ru: 'регулярные расходы',
+                      }).getValue(locale),
                       value: '\$${plannedExpensesSum.toStringAsFixed(2)}',
                       icon: Icons.arrow_drop_down_rounded,
                     );
@@ -122,16 +120,14 @@ class _PredictionHeader extends StatelessWidget {
                           (final state) => state.incomesSum,
                         );
                     return _HeaderItem(
-                      onPressed:
-                          () async => showIncomesTasksView(context: context),
-                      title: LocalizedMap(
+                      onPressed: () async =>
+                          showIncomesTasksView(context: context),
+                      title: LocalizedMap({
                         // TODO(arenukvern): add localization l10n
-                        value: {
-                          languages.en: 'regular income',
-                          languages.it: 'entrate regolari',
-                          languages.ru: 'регулярные доходы',
-                        },
-                      ).getValue(locale),
+                        languages.en: 'regular income',
+                        languages.it: 'entrate regolari',
+                        languages.ru: 'регулярные доходы',
+                      }).getValue(locale),
                       value: '\$${plannedIncomesSum.toStringAsFixed(2)}',
                       icon: Icons.arrow_drop_up_rounded,
                     );
@@ -148,8 +144,10 @@ class _PredictionHeader extends StatelessWidget {
   }
 }
 
-typedef UseConfigPeriodSelectorRecord =
-    ({Period period, ValueChanged<Period> onPeriodSelected});
+typedef UseConfigPeriodSelectorRecord = ({
+  Period period,
+  ValueChanged<Period> onPeriodSelected,
+});
 UseConfigPeriodSelectorRecord useConfigPeriodSelector({
   required final BuildContext context,
 }) {
@@ -178,13 +176,11 @@ class PeriodSelectorButton extends HookWidget {
     final locale = useLocale(context);
     final controller = useUiPopupButtonController();
 
-    final periodTitle = LocalizedMap(
-        {
-        languages.en: 'period',
-        languages.it: 'periodo',
-        languages.ru: 'период',
-      },
-    ).getValue(locale);
+    final periodTitle = LocalizedMap({
+      languages.en: 'period',
+      languages.it: 'periodo',
+      languages.ru: 'период',
+    }).getValue(locale);
 
     final periodValue = switch (period) {
       Period.weekly => 'week',
@@ -197,19 +193,18 @@ class PeriodSelectorButton extends HookWidget {
     return UiPopupButton(
       controller: controller,
       scaleDirection: UiPopupButtonScaleDirection.down,
-      menuBuilder:
-          (final context) => UiPopupDecoration(
-            child: PeriodMenu(
-              onPeriodSelected: (final newPeriod) {
-                onPeriodSelected(newPeriod);
-                controller.close();
-              },
-              selectedPeriod: period,
-            ),
-          ),
+      menuBuilder: (final context) => UiPopupDecoration(
+        child: PeriodMenu(
+          onPeriodSelected: (final newPeriod) {
+            onPeriodSelected(newPeriod);
+            controller.close();
+          },
+          selectedPeriod: period,
+        ),
+      ),
       shouldRotate: false,
-      buttonBuilder:
-          (final context, final isVisible, final onPressed) => _HeaderItem(
+      buttonBuilder: (final context, final isVisible, final onPressed) =>
+          _HeaderItem(
             onPressed: onPressed,
             title: periodTitle,
             value: periodValue,
@@ -408,13 +403,11 @@ class _TrendIndicator extends StatelessWidget {
           ),
           const Gap(4),
           Text(
-            LocalizedMap(
-        {
-                languages.en: 'Trend: savings left for ~2 days',
-                languages.it: 'Tendenza: risparmio rimanente per ~2 giorni',
-                languages.ru: 'Тренд: накоплений хватит на ~2 дня',
-              },
-            ).getValue(locale),
+            LocalizedMap({
+              languages.en: 'Trend: savings left for ~2 days',
+              languages.it: 'Tendenza: risparmio rimanente per ~2 giorni',
+              languages.ru: 'Тренд: накоплений хватит на ~2 дня',
+            }).getValue(locale),
             style: context.textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
@@ -435,24 +428,23 @@ class BudgetButton extends StatelessWidget {
     );
     return UiBaseButton(
       onPressed: () async => BudgetBottomSheet.show(context),
-      builder:
-          (final _, final __, final ___) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.history,
-                size: 16,
-                color: context.colorScheme.onSurface.withOpacity(0.8),
-              ),
-              const Gap(8),
-              Text(
-                // TODO(arenukvern): description
-                '\$${recentBudget.input.amount(taxFree: true).toStringAsFixed(2)} '
-                '${LocalizedMap( {languages.en: '- left', languages.it: '- rimanenti', languages.ru: '- осталось'}).getValue(locale)}',
-                style: context.textTheme.titleLarge,
-              ),
-            ],
+      builder: (final _, final __, final ___) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.history,
+            size: 16,
+            color: context.colorScheme.onSurface.withOpacity(0.8),
           ),
+          const Gap(8),
+          Text(
+            // TODO(arenukvern): description
+            '\$${recentBudget.input.amount(taxFree: true).toStringAsFixed(2)} '
+            '${LocalizedMap({languages.en: '- left', languages.it: '- rimanenti', languages.ru: '- осталось'}).getValue(locale)}',
+            style: context.textTheme.titleLarge,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -478,13 +470,11 @@ class DailyBudgetDisplay extends StatelessWidget {
           ],
         ),
         Text(
-          LocalizedMap(
-        {
-              languages.en: "I can spend today (Today's budget)",
-              languages.it: 'Posso spendere oggi (Budget oggi)',
-              languages.ru: 'Могу потратить сегодня (Сегодняшний бюджет)',
-            },
-          ).getValue(locale),
+          LocalizedMap({
+            languages.en: "I can spend today (Today's budget)",
+            languages.it: 'Posso spendere oggi (Budget oggi)',
+            languages.ru: 'Могу потратить сегодня (Сегодняшний бюджет)',
+          }).getValue(locale),
           style: context.textTheme.labelLarge,
         ),
       ],
@@ -512,24 +502,20 @@ class DailyStatistics extends StatelessWidget {
           _StatisticItem(
             onPressed: () async => UiExpensesView.show(context: context),
             value: '-\$${totalSumResource.expensesSum.toStringAsFixed(2)}',
-            label: LocalizedMap(
-        {
-                languages.en: 'What I spent (Expenses)',
-                languages.it: 'Cosa ho speso (Spese)',
-                languages.ru: 'Что я потратил (Расходы)',
-              },
-            ).getValue(locale),
+            label: LocalizedMap({
+              languages.en: 'What I spent (Expenses)',
+              languages.it: 'Cosa ho speso (Spese)',
+              languages.ru: 'Что я потратил (Расходы)',
+            }).getValue(locale),
           ),
           _StatisticItem(
             onPressed: () async => UiIncomesView.show(context: context),
             value: '+\$${totalSumResource.incomesSum.toStringAsFixed(2)}',
-            label: LocalizedMap(
-        {
-                languages.en: 'What I earned (Income)',
-                languages.it: 'Cosa ho guadagnato (Entrate)',
-                languages.ru: 'Что я заработал (Доходы)',
-              },
-            ).getValue(locale),
+            label: LocalizedMap({
+              languages.en: 'What I earned (Income)',
+              languages.it: 'Cosa ho guadagnato (Entrate)',
+              languages.ru: 'Что я заработал (Доходы)',
+            }).getValue(locale),
           ),
         ],
       ),
@@ -545,13 +531,11 @@ class BudgetWillLast extends StatelessWidget {
     final locale = useLocale(context);
     return _StatisticItem(
       value: '~2 days',
-      label: LocalizedMap(
-        {
-          languages.en: 'Budget will last ',
-          languages.it: 'Budget rimanente per ',
-          languages.ru: 'Остаток. Хватит ',
-        },
-      ).getValue(locale),
+      label: LocalizedMap({
+        languages.en: 'Budget will last ',
+        languages.it: 'Budget rimanente per ',
+        languages.ru: 'Остаток. Хватит ',
+      }).getValue(locale),
       onPressed: () {},
     );
   }
@@ -574,26 +558,24 @@ class TodaysBudget extends StatelessWidget {
         return _StatisticItem(
           onPressed: () async => BudgetBottomSheet.show(context),
           value: '\$${totalSumResource.balance.toStringAsFixed(2)}',
-          label: LocalizedMap(
-        switch (true) {
-              _ when isToday => {
-                languages.en: 'End of Day Balance',
-                languages.it: 'Saldo finale oggi',
-                languages.ru: 'Остаток на конец дня',
-              },
-              _ when isInFuture => {
-                languages.en: 'End of Day Future Balance',
-                languages.it: 'Saldo finale futuro',
-                languages.ru: 'Остаток на конец дня в будущем',
-              },
-              _ when isInPast => {
-                languages.en: 'End of Day Past Balance',
-                languages.it: 'Saldo finale passato',
-                languages.ru: 'Остаток на конец дня в прошлом',
-              },
-              _ => throw UnsupportedError('Unknown date'),
+          label: LocalizedMap(switch (true) {
+            _ when isToday => {
+              languages.en: 'End of Day Balance',
+              languages.it: 'Saldo finale oggi',
+              languages.ru: 'Остаток на конец дня',
             },
-          ).getValue(locale),
+            _ when isInFuture => {
+              languages.en: 'End of Day Future Balance',
+              languages.it: 'Saldo finale futuro',
+              languages.ru: 'Остаток на конец дня в будущем',
+            },
+            _ when isInPast => {
+              languages.en: 'End of Day Past Balance',
+              languages.it: 'Saldo finale passato',
+              languages.ru: 'Остаток на конец дня в прошлом',
+            },
+            _ => throw UnsupportedError('Unknown date'),
+          }).getValue(locale),
         );
       },
     );
@@ -613,15 +595,14 @@ class _StatisticItem extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => UiBaseButton(
     onPressed: onPressed,
-    builder:
-        (final context, final focused, final setFocused) => AnimatedContainer(
+    builder: (final context, final focused, final setFocused) =>
+        AnimatedContainer(
           duration: 200.milliseconds,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           decoration: BoxDecoration(
-            color:
-                focused
-                    ? context.colorScheme.primaryContainer
-                    : context.colorScheme.surface,
+            color: focused
+                ? context.colorScheme.primaryContainer
+                : context.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: context.colorScheme.onSurface.withOpacity(0.05),
@@ -660,13 +641,11 @@ class UiPredictionBottomActionBar extends StatelessWidget {
               const Icon(Icons.add),
               const Gap(4),
               Text(
-                LocalizedMap(
-        {
-                    languages.en: 'Update Budget',
-                    languages.it: 'Aggiorna Budget',
-                    languages.ru: 'Обновить бюджет',
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en: 'Update Budget',
+                  languages.it: 'Aggiorna Budget',
+                  languages.ru: 'Обновить бюджет',
+                }).getValue(locale),
               ),
             ],
           ),
@@ -685,13 +664,12 @@ class BudgetBottomSheet extends HookWidget {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder:
-            (final context) => DraggableScrollableSheet(
-              minChildSize: 0.2,
-              maxChildSize: 0.9,
-              expand: false,
-              builder: (final _, final controller) => const BudgetBottomSheet(),
-            ),
+        builder: (final context) => DraggableScrollableSheet(
+          minChildSize: 0.2,
+          maxChildSize: 0.9,
+          expand: false,
+          builder: (final _, final controller) => const BudgetBottomSheet(),
+        ),
       );
 
   @override
@@ -711,13 +689,11 @@ class BudgetBottomSheet extends HookWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             child: Text(
-              LocalizedMap(
-        {
-                  languages.en: 'Budget History',
-                  languages.it: 'Storico Budget',
-                  languages.ru: 'История бюджета',
-                },
-              ).getValue(locale),
+              LocalizedMap({
+                languages.en: 'Budget History',
+                languages.it: 'Storico Budget',
+                languages.ru: 'История бюджета',
+              }).getValue(locale),
               style: context.textTheme.titleLarge,
             ),
           ),
@@ -736,9 +712,8 @@ class BudgetBottomSheet extends HookWidget {
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.close),
-                    onPressed:
-                        () async =>
-                            const RemoveBudgetCommand().execute(budget.id),
+                    onPressed: () async =>
+                        const RemoveBudgetCommand().execute(budget.id),
                   ),
                 );
               },
@@ -749,13 +724,11 @@ class BudgetBottomSheet extends HookWidget {
             child: ElevatedButton(
               onPressed: () async => UpsertBudgetDialog.show(context),
               child: Text(
-                LocalizedMap(
-        {
-                    languages.en: 'Add New Budget',
-                    languages.it: 'Aggiungi Nuovo Budget',
-                    languages.ru: 'Добавить Новый Бюджет',
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en: 'Add New Budget',
+                  languages.it: 'Aggiungi Nuovo Budget',
+                  languages.ru: 'Добавить Новый Бюджет',
+                }).getValue(locale),
               ),
             ),
           ),

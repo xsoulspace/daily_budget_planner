@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_pay/paywall_flow.dart';
 import 'package:provider/provider.dart';
@@ -29,13 +30,11 @@ class ThanksForSubscribingScreen extends StatelessWidget {
               Assets.images.paywalls.goldSnowflake.image(height: 80, width: 80),
               const Gap(24),
               Text(
-                LocalizedMap(
-        {
-                    languages.en: 'Thank You for Subscribing!',
-                    languages.it: 'Grazie per esserti abbonato!',
-                    languages.ru: 'Спасибо за подписку!',
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en: 'Thank You for Subscribing!',
+                  languages.it: 'Grazie per esserti abbonato!',
+                  languages.ru: 'Спасибо за подписку!',
+                }).getValue(locale),
                 style: context.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: context.colorScheme.primary,
@@ -44,16 +43,14 @@ class ThanksForSubscribingScreen extends StatelessWidget {
               ),
               const Gap(16),
               Text(
-                LocalizedMap(
-        {
-                    languages.en:
-                        'Your contribution helps to make this app better.',
-                    languages.it:
-                        'Il tuo contributo ci aiuta a migliorare questo prodotto.',
-                    languages.ru:
-                        'Ваш вклад помогает делать это приложение лучше',
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en:
+                      'Your contribution helps to make this app better.',
+                  languages.it:
+                      'Il tuo contributo ci aiuta a migliorare questo prodotto.',
+                  languages.ru:
+                      'Ваш вклад помогает делать это приложение лучше',
+                }).getValue(locale),
                 style: context.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
@@ -66,49 +63,41 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          LocalizedMap(
-        {
-                              languages.en: 'Your Subscription Plan',
-                              languages.it: 'Il tuo piano di abbonamento',
-                              languages.ru: 'Ваш план подписки',
-                            },
-                          ).getValue(locale),
+                          LocalizedMap({
+                            languages.en: 'Your Subscription Plan',
+                            languages.it: 'Il tuo piano di abbonamento',
+                            languages.ru: 'Ваш план подписки',
+                          }).getValue(locale),
                           style: context.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const Gap(16),
                         _DetailItem(
-                          title: LocalizedMap(
-        {
-                              languages.en: 'Plan:',
-                              languages.it: 'Piano:',
-                              languages.ru: 'План:',
-                            },
-                          ).getValue(locale),
+                          title: LocalizedMap({
+                            languages.en: 'Plan:',
+                            languages.it: 'Piano:',
+                            languages.ru: 'План:',
+                          }).getValue(locale),
                           value: subscription.name.whenEmptyUse(
                             subscription.productId.value,
                           ),
                         ),
                         _DetailItem(
-                          title: LocalizedMap(
-        {
-                              languages.en: 'Price:',
-                              languages.it: 'Prezzo:',
-                              languages.ru: 'Цена:',
-                            },
-                          ).getValue(locale),
+                          title: LocalizedMap({
+                            languages.en: 'Price:',
+                            languages.it: 'Prezzo:',
+                            languages.ru: 'Цена:',
+                          }).getValue(locale),
                           value: subscription.formattedPrice,
                         ),
                         if (subscription.expiryDate != null)
                           _DetailItem(
-                            title: LocalizedMap(
-        {
-                                languages.en: 'Next Renewal:',
-                                languages.it: 'Prossimo Rinnovo:',
-                                languages.ru: 'Следующее продление:',
-                              },
-                            ).getValue(locale),
+                            title: LocalizedMap({
+                              languages.en: 'Next Renewal:',
+                              languages.it: 'Prossimo Rinnovo:',
+                              languages.ru: 'Следующее продление:',
+                            }).getValue(locale),
                             value: _formatDate(
                               subscription.expiryDate!,
                               locale,
@@ -131,13 +120,11 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  LocalizedMap(
-        {
-                      languages.en: 'Start Using PRO Features!',
-                      languages.it: 'Inizia a usare le funzionalità PRO!',
-                      languages.ru: 'Начать использовать PRO функции!',
-                    },
-                  ).getValue(locale),
+                  LocalizedMap({
+                    languages.en: 'Start Using PRO Features!',
+                    languages.it: 'Inizia a usare le funzionalità PRO!',
+                    languages.ru: 'Начать использовать PRO функции!',
+                  }).getValue(locale),
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

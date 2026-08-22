@@ -1,7 +1,8 @@
 import 'dart:ui' show Locale;
 
-import 'package:flutter/material.dart' show ThemeMode;
+import 'package:flutter/material.dart' show ThemeMode, DateTimeRange;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:from_json_to_json/from_json_to_json.dart';
 import 'package:ui_locale/ui_locale.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 

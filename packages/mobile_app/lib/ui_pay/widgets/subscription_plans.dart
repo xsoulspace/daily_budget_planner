@@ -5,6 +5,8 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/envs.dart';
 import 'package:mobile_app/ui_pay/has_monetization.dart';
 import 'package:mobile_app/ui_pay/monetization_products.dart';
+import 'package:xsoulspace_installation_store/xsoulspace_installation_store.dart';
+import 'package:xsoulspace_monetization_interface/xsoulspace_monetization_interface.dart';
 
 /// {@template subscription_plans}
 /// Widget that displays subscription plans with proper state handling.
@@ -60,7 +62,7 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
         paywallSelectedSubscriptionResource.selectedProductDetails;
 
     // Handle RuStore authorization required.
-    if (Envs.storeTarget == InstallPlatformTarget.rustore &&
+    if (Envs.storeTarget == InstallationTargetStore.rustore &&
         monetizationStatus == MonetizationStoreStatus.userNotAuthorized) {
       return _buildRuStoreAuthRequiredState(locale);
     }
@@ -95,13 +97,11 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
           const CircularProgressIndicator(),
           const Gap(12),
           Text(
-            LocalizedMap(
-        {
-                languages.en: 'Loading subscription plans…',
-                languages.it: 'Caricamento dei piani…',
-                languages.ru: 'Загрузка планов подписки…',
-              },
-            ).getValue(locale),
+            LocalizedMap({
+              languages.en: 'Loading subscription plans…',
+              languages.it: 'Caricamento dei piani…',
+              languages.ru: 'Загрузка планов подписки…',
+            }).getValue(locale),
             textAlign: TextAlign.center,
           ),
         ],
@@ -117,14 +117,12 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
           Icon(Icons.error_outline, size: 48, color: context.colorScheme.error),
           const Gap(12),
           Text(
-            LocalizedMap(
-        {
-                languages.en: 'Subscriptions are not available on this device.',
-                languages.it:
-                    'Abbonamenti non disponibili su questo dispositivo.',
-                languages.ru: 'Подписки недоступны на этом устройстве.',
-              },
-            ).getValue(locale),
+            LocalizedMap({
+              languages.en: 'Subscriptions are not available on this device.',
+              languages.it:
+                  'Abbonamenti non disponibili su questo dispositivo.',
+              languages.ru: 'Подписки недоступны на этом устройстве.',
+            }).getValue(locale),
             textAlign: TextAlign.center,
             style: context.textTheme.titleMedium,
           ),
@@ -145,16 +143,14 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
           ),
           const Gap(12),
           Text(
-            LocalizedMap(
-        {
-                languages.en:
-                    'Please log in to the ${Envs.storeName} to continue',
-                languages.it:
-                    'Si prega di accedere al ${Envs.storeName} per continuare',
-                languages.ru:
-                    'Пожалуйста, войдите в ${Envs.storeName}, чтобы продолжить',
-              },
-            ).getValue(locale),
+            LocalizedMap({
+              languages.en:
+                  'Please log in to the ${Envs.storeName} to continue',
+              languages.it:
+                  'Si prega di accedere al ${Envs.storeName} per continuare',
+              languages.ru:
+                  'Пожалуйста, войдите в ${Envs.storeName}, чтобы продолжить',
+            }).getValue(locale),
             textAlign: TextAlign.center,
             style: context.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
@@ -162,13 +158,11 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
           ),
           const Gap(16),
           UiTextButton(
-            textTitle: LocalizedMap(
-        {
-                languages.en: 'Retry',
-                languages.it: 'Riprova',
-                languages.ru: 'Повторить',
-              },
-            ).getValue(locale),
+            textTitle: LocalizedMap({
+              languages.en: 'Retry',
+              languages.it: 'Riprova',
+              languages.ru: 'Повторить',
+            }).getValue(locale),
             onPressed: () => unawaited(
               monetizationFoundation.loadSubscriptions(
                 productIds: MonetizationProducts.subscriptionsForBuild,
@@ -188,25 +182,21 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
           Icon(Icons.error_outline, size: 48, color: context.colorScheme.error),
           const Gap(12),
           Text(
-            LocalizedMap(
-        {
-                languages.en: 'No subscriptions found',
-                languages.it: 'Nessun abbonamento trovato',
-                languages.ru: 'Подписки не найдены',
-              },
-            ).getValue(locale),
+            LocalizedMap({
+              languages.en: 'No subscriptions found',
+              languages.it: 'Nessun abbonamento trovato',
+              languages.ru: 'Подписки не найдены',
+            }).getValue(locale),
             textAlign: TextAlign.center,
             style: context.textTheme.titleMedium,
           ),
           const Gap(16),
           UiTextButton(
-            textTitle: LocalizedMap(
-        {
-                languages.en: 'Retry',
-                languages.it: 'Riprova',
-                languages.ru: 'Повторить',
-              },
-            ).getValue(locale),
+            textTitle: LocalizedMap({
+              languages.en: 'Retry',
+              languages.it: 'Riprova',
+              languages.ru: 'Повторить',
+            }).getValue(locale),
             onPressed: () => unawaited(
               monetizationFoundation.loadSubscriptions(
                 productIds: MonetizationProducts.subscriptionsForBuild,
@@ -256,51 +246,43 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
           card(
             preset: MonetizationProducts.s2024day1Test,
             product: productOf(MonetizationProducts.s2024day1Test),
-            label: LocalizedMap(
-        {
-                languages.en: '1 Day Test',
-                languages.it: '1 Giorno Test',
-                languages.ru: '1 День Тест',
-              },
-            ).getValue(locale),
+            label: LocalizedMap({
+              languages.en: '1 Day Test',
+              languages.it: '1 Giorno Test',
+              languages.ru: '1 День Тест',
+            }).getValue(locale),
             isBestValue: false,
           ),
         card(
           preset: MonetizationProducts.s2024month1,
           product: monthly,
-          label: LocalizedMap(
-        {
-              languages.en: '1 Month',
-              languages.it: '1 Mese',
-              languages.ru: '1 Месяц',
-            },
-          ).getValue(locale),
+          label: LocalizedMap({
+            languages.en: '1 Month',
+            languages.it: '1 Mese',
+            languages.ru: '1 Месяц',
+          }).getValue(locale),
           isBestValue: false,
         ),
         const Gap(8),
         card(
           preset: MonetizationProducts.s2024month3,
           product: monthly3,
-          label: LocalizedMap(
-        {
-              languages.en: '3 Months',
-              languages.it: '3 Mesi',
-              languages.ru: '3 Месяца',
-            },
-          ).getValue(locale),
+          label: LocalizedMap({
+            languages.en: '3 Months',
+            languages.it: '3 Mesi',
+            languages.ru: '3 Месяца',
+          }).getValue(locale),
           isBestValue: false,
         ),
         const Gap(8),
         card(
           preset: MonetizationProducts.s2024year,
           product: yearly,
-          label: LocalizedMap(
-        {
-              languages.en: '1 Year',
-              languages.it: '1 Anno',
-              languages.ru: '1 Год',
-            },
-          ).getValue(locale),
+          label: LocalizedMap({
+            languages.en: '1 Year',
+            languages.it: '1 Anno',
+            languages.ru: '1 Год',
+          }).getValue(locale),
           isBestValue: true,
         ),
         const Gap(8),
@@ -315,15 +297,13 @@ class _SubscriptionPlansState extends State<SubscriptionPlans>
             const SizedBox(width: 6),
             Flexible(
               child: Text(
-                LocalizedMap(
-        {
-                    languages.en: 'Recurring billing, cancel anytime.',
-                    languages.it:
-                        'Fatturazione ricorrente, annulla in qualsiasi momento.',
-                    languages.ru:
-                        'Регулярный платёж, можно отменить в любое время.',
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en: 'Recurring billing, cancel anytime.',
+                  languages.it:
+                      'Fatturazione ricorrente, annulla in qualsiasi momento.',
+                  languages.ru:
+                      'Регулярный платёж, можно отменить в любое время.',
+                }).getValue(locale),
                 style: context.textTheme.bodySmall?.copyWith(
                   color: context.colorScheme.onSurface,
                 ),
@@ -415,13 +395,11 @@ class PaywallPlanCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            LocalizedMap(
-        {
-                                languages.en: 'BEST VALUE',
-                                languages.it: 'MIGLIORE OFFERTA',
-                                languages.ru: 'ВЫГОДНО',
-                              },
-                            ).getValue(useLocale(context)),
+                            LocalizedMap({
+                              languages.en: 'BEST VALUE',
+                              languages.it: 'MIGLIORE OFFERTA',
+                              languages.ru: 'ВЫГОДНО',
+                            }).getValue(useLocale(context)),
                             style: context.textTheme.labelSmall?.copyWith(
                               color: context.colorScheme.onPrimary,
                               fontWeight: FontWeight.bold,
@@ -436,7 +414,7 @@ class PaywallPlanCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 2, bottom: 2),
                       child: Text(
                         '${product.freeTrialDuration.days} '
-                        '${LocalizedMap( {languages.en: 'days free trial', languages.it: 'giorni di prova gratuita', languages.ru: 'дней пробный период'}).getValue(useLocale(context))}',
+                        '${LocalizedMap({languages.en: 'days free trial', languages.it: 'giorni di prova gratuita', languages.ru: 'дней пробный период'}).getValue(useLocale(context))}',
                         style: context.textTheme.labelMedium?.copyWith(
                           color: context.colorScheme.secondary,
                           fontWeight: FontWeight.w500,

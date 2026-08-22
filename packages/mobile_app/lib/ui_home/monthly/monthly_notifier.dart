@@ -32,7 +32,7 @@ class MonthlyNotifier
 
   void onAmountChange(final String amount) {
     final updatedBudget = budget.copyWith(
-      amount: doubleFromJson(amount),
+      amount: jsonDecodeDouble(amount),
     );
     value = value.copyWith(value: updatedBudget);
     if (amountController.text != amount) {
@@ -43,7 +43,7 @@ class MonthlyNotifier
 
   void onSavingsChange(final String savings) {
     final updatedBudget = budget.copyWith(
-      savings: doubleFromJson(savings),
+      savings: jsonDecodeDouble(savings),
     );
     value = value.copyWith(value: updatedBudget);
     if (savingsController.text != savings) {

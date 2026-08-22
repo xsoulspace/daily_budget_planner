@@ -53,10 +53,10 @@ class _EditingController extends ValueNotifier<LoadableContainer<Transaction>>
     bool readyToCompose = false;
     switch (transaction.input.currencyType) {
       case CurrencyType.fiat:
-        readyToCompose = doubleFromJson(amount.text) > 0;
+        readyToCompose = jsonDecodeDouble(amount.text) > 0;
       case CurrencyType.crypto:
-        readyToCompose = doubleFromJson(amount.text) > 0 &&
-            doubleFromJson(coinPrice.text) > 0;
+        readyToCompose = jsonDecodeDouble(amount.text) > 0 &&
+            jsonDecodeDouble(coinPrice.text) > 0;
     }
     _canCompose = readyToCompose;
   }
@@ -75,8 +75,8 @@ class _EditingController extends ValueNotifier<LoadableContainer<Transaction>>
 
   TransactionEditorResult? composeResult() {
     if (!canCompose) return null;
-    final amount = doubleFromJson(this.amount.text);
-    // final coinPrice = doubleFromJson(this.coinPrice.text);
+    final amount = jsonDecodeDouble(this.amount.text);
+    // final coinPrice = jsonDecodeDouble(this.coinPrice.text);
 
     final resultTransaction = transaction.copyWith(
       id: isNew ? TransactionId.newId() : transaction.id,

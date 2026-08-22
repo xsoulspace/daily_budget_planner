@@ -7,7 +7,9 @@ import 'package:mobile_app/data_local_api/data_local_api.dart';
 import 'package:mobile_app/di/di.dart';
 import 'package:mobile_app/router.dart';
 import 'package:mobile_app/ui_pay/has_monetization.dart';
+import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 import 'package:xsoulspace_monetization_foundation/xsoulspace_monetization_foundation.dart';
+import 'package:xsoulspace_monetization_interface/xsoulspace_monetization_interface.dart';
 
 /// Local persistence for app-specific purchase flags (not provider data).
 ///

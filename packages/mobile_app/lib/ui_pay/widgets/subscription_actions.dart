@@ -5,6 +5,7 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_pay/has_monetization.dart';
 import 'package:mobile_app/ui_pay/monetization_products.dart';
 import 'package:mobile_app/ui_pay/paywall_flow.dart';
+import 'package:xsoulspace_monetization_interface/xsoulspace_monetization_interface.dart';
 
 class SubscriptionActions extends StatelessWidget with HasMonetization {
   const SubscriptionActions({super.key});
@@ -31,13 +32,11 @@ class SubscriptionActions extends StatelessWidget with HasMonetization {
 
           const Gap(16),
           UiTextButton(
-            textTitle: LocalizedMap(
-        {
-                languages.en: 'Continue Free',
-                languages.it: 'Continua gratis',
-                languages.ru: 'Продолжить бесплатно',
-              },
-            ).getValue(locale),
+            textTitle: LocalizedMap({
+              languages.en: 'Continue Free',
+              languages.it: 'Continua gratis',
+              languages.ru: 'Продолжить бесплатно',
+            }).getValue(locale),
             onPressed: () => PaywallFlow.passPaywall(context),
           ),
 
@@ -111,24 +110,20 @@ class _SubscribeButtonState extends State<_SubscribeButton>
         _SubscriptionDisclosure(productDetails: widget.selectedProductDetails),
         const Gap(16),
         UiLoader(
-          builder: (final context, final setLoading, final isLoading) =>
+          builder: (final context, final isLoading, final setLoading) =>
               UiTextButton(
                 isLoading: isLoading || isSubscribing || isRestoring,
-                textTitle: LocalizedMap(
-        {
-                    languages.en: hasFreeTrial
-                        ? 'START FREE TRIAL'
-                        : 'SUBSCRIBE',
-                    languages.it: hasFreeTrial
-                        ? 'INIZIA PROVA GRATUITA'
-                        : 'ISCRIVITI',
-                    languages.ru: hasFreeTrial
-                        ? 'НАЧАТЬ ПРОБНЫЙ ПЕРИОД'
-                        : 'ПОДПИСАТЬСЯ',
-                  },
-                ).getValue(locale),
+                textTitle: LocalizedMap({
+                  languages.en: hasFreeTrial ? 'START FREE TRIAL' : 'SUBSCRIBE',
+                  languages.it: hasFreeTrial
+                      ? 'INIZIA PROVA GRATUITA'
+                      : 'ISCRIVITI',
+                  languages.ru: hasFreeTrial
+                      ? 'НАЧАТЬ ПРОБНЫЙ ПЕРИОД'
+                      : 'ПОДПИСАТЬСЯ',
+                }).getValue(locale),
                 onPressed: isRestoring
-                    ? null
+                    ? () {}
                     : () async {
                         setLoading(true);
                         try {
@@ -156,16 +151,14 @@ class _RestorePurchases extends StatelessWidget with HasMonetization {
     final locale = useLocale(context);
     final isRestoring = context.watch<SubscriptionStatusResource>().isRestoring;
     return UiLoader(
-      builder: (final context, final setLoading, final isLoading) =>
+      builder: (final context, final isLoading, final setLoading) =>
           UiTextButton(
             isLoading: isLoading || isRestoring,
-            textTitle: LocalizedMap(
-        {
-                languages.en: 'Restore',
-                languages.it: 'Ripristina',
-                languages.ru: 'Восстановить',
-              },
-            ).getValue(locale),
+            textTitle: LocalizedMap({
+              languages.en: 'Restore',
+              languages.it: 'Ripristina',
+              languages.ru: 'Восстановить',
+            }).getValue(locale),
             onPressed: () async {
               setLoading(true);
               try {
@@ -196,46 +189,37 @@ class _SubscriptionDisclosure extends StatelessWidget {
     final perPeriod = preset?.perPeriodLabel() ?? '';
 
     final lengthSentence = length.isEmpty
-        ? LocalizedMap(
-        {
-              languages.en: 'Auto-renewing subscription.',
-              languages.ru: 'Автоматически продлеваемая подписка.',
-              languages.it: 'Abbonamento a rinnovo automatico.',
-            },
-          ).getValue(locale)
-        : LocalizedMap(
-        {
-              languages.en: '$length auto-renewing subscription.',
-              languages.ru: '$length, автоматически продлеваемая подписка.',
-              languages.it: 'Abbonamento $length a rinnovo automatico.',
-            },
-          ).getValue(locale);
+        ? LocalizedMap({
+            languages.en: 'Auto-renewing subscription.',
+            languages.ru: 'Автоматически продлеваемая подписка.',
+            languages.it: 'Abbonamento a rinnovo automatico.',
+          }).getValue(locale)
+        : LocalizedMap({
+            languages.en: '$length auto-renewing subscription.',
+            languages.ru: '$length, автоматически продлеваемая подписка.',
+            languages.it: 'Abbonamento $length a rinnovo automatico.',
+          }).getValue(locale);
 
     final priceSentence = priceText.isEmpty
         ? ''
         : (perPeriod.isEmpty ? priceText : '$priceText $perPeriod.');
 
-    final servicesSentence = LocalizedMap(
-        {
-        languages.en:
-            'Full access to all premium planning features and updates.',
-        languages.ru:
-            'Полный доступ ко всем премиум-функциям планирования и обновлениям.',
-        languages.it:
-            'Accesso completo a tutte le funzionalità premium di pianificazione.',
-      },
-    ).getValue(locale);
+    final servicesSentence = LocalizedMap({
+      languages.en: 'Full access to all premium planning features and updates.',
+      languages.ru:
+          'Полный доступ ко всем премиум-функциям планирования и обновлениям.',
+      languages.it:
+          'Accesso completo a tutte le funzionalità premium di pianificazione.',
+    }).getValue(locale);
 
-    final renewalSentence = LocalizedMap(
-        {
-        languages.en:
-            'Renews automatically until canceled in store settings at least 24 hours before the end of the current period.',
-        languages.ru:
-            'Продлевается автоматически, пока подписка не отменена в настройках магазина не позднее, чем за 24 часа до окончания текущего периода.',
-        languages.it:
-            "Si rinnova automaticamente finché non viene annullato nelle impostazioni dello store almeno 24 ore prima della fine del periodo corrente.",
-      },
-    ).getValue(locale);
+    final renewalSentence = LocalizedMap({
+      languages.en:
+          'Renews automatically until canceled in store settings at least 24 hours before the end of the current period.',
+      languages.ru:
+          'Продлевается автоматически, пока подписка не отменена в настройках магазина не позднее, чем за 24 часа до окончания текущего периода.',
+      languages.it:
+          "Si rinnova automaticamente finché non viene annullato nelle impostazioni dello store almeno 24 ore prima della fine del periodo corrente.",
+    }).getValue(locale);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -295,16 +279,14 @@ class _SubscriptionError extends StatelessWidget {
             const Gap(12),
             Expanded(
               child: Text(
-                LocalizedMap(
-        {
-                    languages.en:
-                        'Something went wrong. Please try again or restart the app.',
-                    languages.ru:
-                        'Что-то пошло не так. Пожалуйста, попробуйте снова или перезапустите приложение.',
-                    languages.it:
-                        'Qualcosa è andato storto. Riprova o riavvia l\'app.',
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en:
+                      'Something went wrong. Please try again or restart the app.',
+                  languages.ru:
+                      'Что-то пошло не так. Пожалуйста, попробуйте снова или перезапустите приложение.',
+                  languages.it:
+                      'Qualcosa è andato storto. Riprova o riavvia l\'app.',
+                }).getValue(locale),
                 style: theme.textTheme.titleSmall,
                 textAlign: TextAlign.left,
               ),

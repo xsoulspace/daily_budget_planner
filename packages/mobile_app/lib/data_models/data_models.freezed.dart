@@ -542,7 +542,7 @@ as String,
 /// @nodoc
 mixin _$MonthlyBudgetModel {
 
- BudgetModelId get id;@JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch) DateTime? get nextBudgetDay; double get amount; double get savings;
+ BudgetModelId get id;@JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch) DateTime? get nextBudgetDay; double get amount; double get savings;
 /// Create a copy of MonthlyBudgetModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -575,7 +575,7 @@ abstract mixin class $MonthlyBudgetModelCopyWith<$Res>  {
   factory $MonthlyBudgetModelCopyWith(MonthlyBudgetModel value, $Res Function(MonthlyBudgetModel) _then) = _$MonthlyBudgetModelCopyWithImpl;
 @useResult
 $Res call({
- BudgetModelId id,@JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch) DateTime? nextBudgetDay, double amount, double savings
+ BudgetModelId id,@JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch) DateTime? nextBudgetDay, double amount, double savings
 });
 
 
@@ -692,7 +692,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BudgetModelId id, @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)  DateTime? nextBudgetDay,  double amount,  double savings)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BudgetModelId id, @JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch)  DateTime? nextBudgetDay,  double amount,  double savings)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MonthlyBudgetModel() when $default != null:
 return $default(_that.id,_that.nextBudgetDay,_that.amount,_that.savings);case _:
@@ -713,7 +713,7 @@ return $default(_that.id,_that.nextBudgetDay,_that.amount,_that.savings);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BudgetModelId id, @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)  DateTime? nextBudgetDay,  double amount,  double savings)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BudgetModelId id, @JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch)  DateTime? nextBudgetDay,  double amount,  double savings)  $default,) {final _that = this;
 switch (_that) {
 case _MonthlyBudgetModel():
 return $default(_that.id,_that.nextBudgetDay,_that.amount,_that.savings);case _:
@@ -733,7 +733,7 @@ return $default(_that.id,_that.nextBudgetDay,_that.amount,_that.savings);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BudgetModelId id, @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch)  DateTime? nextBudgetDay,  double amount,  double savings)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BudgetModelId id, @JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch)  DateTime? nextBudgetDay,  double amount,  double savings)?  $default,) {final _that = this;
 switch (_that) {
 case _MonthlyBudgetModel() when $default != null:
 return $default(_that.id,_that.nextBudgetDay,_that.amount,_that.savings);case _:
@@ -748,11 +748,11 @@ return $default(_that.id,_that.nextBudgetDay,_that.amount,_that.savings);case _:
 @JsonSerializable()
 
 class _MonthlyBudgetModel implements MonthlyBudgetModel {
-  const _MonthlyBudgetModel({required this.id, @JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch) this.nextBudgetDay, this.amount = 0, this.savings = 0});
+  const _MonthlyBudgetModel({required this.id, @JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch) this.nextBudgetDay, this.amount = 0, this.savings = 0});
   factory _MonthlyBudgetModel.fromJson(Map<String, dynamic> json) => _$MonthlyBudgetModelFromJson(json);
 
 @override final  BudgetModelId id;
-@override@JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch) final  DateTime? nextBudgetDay;
+@override@JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch) final  DateTime? nextBudgetDay;
 @override@JsonKey() final  double amount;
 @override@JsonKey() final  double savings;
 
@@ -789,7 +789,7 @@ abstract mixin class _$MonthlyBudgetModelCopyWith<$Res> implements $MonthlyBudge
   factory _$MonthlyBudgetModelCopyWith(_MonthlyBudgetModel value, $Res Function(_MonthlyBudgetModel) _then) = __$MonthlyBudgetModelCopyWithImpl;
 @override @useResult
 $Res call({
- BudgetModelId id,@JsonKey(fromJson: dateTimeFromMilisecondsSinceEpoch, toJson: dateTimeToMilisecondsSinceEpoch) DateTime? nextBudgetDay, double amount, double savings
+ BudgetModelId id,@JsonKey(fromJson: dateTimeFromMillisecondsSinceEpoch, toJson: dateTimeToMillisecondsSinceEpoch) DateTime? nextBudgetDay, double amount, double savings
 });
 
 

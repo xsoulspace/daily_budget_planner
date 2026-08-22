@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:xsoulspace_monetization_interface/xsoulspace_monetization_interface.dart';
 
 /// Prefixes:
@@ -12,7 +13,7 @@ enum MonetizationProducts {
 
   const MonetizationProducts(this._productId);
   final String _productId;
-  PurchaseProductId get productId => PurchaseProductId(_productId);
+  PurchaseProductId get productId => PurchaseProductId.fromJson(_productId);
 
   static final subscriptions = values
       .where((final e) => e.name.startsWith('s'))
@@ -28,6 +29,15 @@ enum MonetizationProducts {
       )
       .map((final e) => e.productId)
       .toList();
+
+  static List<PurchaseProductId> get subscriptionsForBuild =>
+      kDebugMode ? subscriptions : subscriptionsForProduction;
+
+  static PurchaseProductType? productTypeChecker(
+    final PurchaseProductId productId,
+  ) => MonetizationProducts.subscriptions.contains(productId)
+      ? PurchaseProductType.subscription
+      : null;
 
   static MonetizationProducts? fromProductId(final PurchaseProductId id) {
     for (final p in values) {

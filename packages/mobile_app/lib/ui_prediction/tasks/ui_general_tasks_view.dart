@@ -100,9 +100,8 @@ class _UiGeneralTasksViewState extends State<UiGeneralTasksView>
         title: CupertinoSlidingSegmentedControl(
           children: {
             TaskTransactionType.expense: Text(
-              LocalizedMap(
+              LocalizedMap({
                 // TODO(arenukvern): add localization l10n
-                value: {
                   languages.en: 'Regular expenses',
                   languages.it: 'Spese regolari',
                   languages.ru: 'Регулярные расходы',
@@ -110,9 +109,8 @@ class _UiGeneralTasksViewState extends State<UiGeneralTasksView>
               ).getValue(locale),
             ),
             TaskTransactionType.income: Text(
-              LocalizedMap(
+              LocalizedMap({
                 // TODO(arenukvern): add localization l10n
-                value: {
                   languages.en: 'Regular incomes',
                   languages.it: 'Entrate regolari',
                   languages.ru: 'Регулярные доходы',

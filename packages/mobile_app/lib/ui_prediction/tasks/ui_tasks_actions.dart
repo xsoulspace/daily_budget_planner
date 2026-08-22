@@ -26,18 +26,17 @@ class AddTaskTransactionButton extends StatelessWidget {
     return UiBaseButton(
       tooltip: LocalizedMap(
         // TODO(arenukvern): add localization l10n
-        value:
-            dto.isUsedForTaskPlanning
-                ? {
-                  languages.en: 'Plan transaction',
-                  languages.it: 'Pianifica transazione',
-                  languages.ru: 'Запланировать транзакцию',
-                }
-                : {
-                  languages.en: 'Add transaction',
-                  languages.it: 'Aggiungi transazione',
-                  languages.ru: 'Добавить транзакцию',
-                },
+        dto.isUsedForTaskPlanning
+            ? {
+                languages.en: 'Plan transaction',
+                languages.it: 'Pianifica transazione',
+                languages.ru: 'Запланировать транзакцию',
+              }
+            : {
+                languages.en: 'Add transaction',
+                languages.it: 'Aggiungi transazione',
+                languages.ru: 'Добавить транзакцию',
+              },
       ).getValue(locale),
       onPressed: () async {
         final result = await showTransactionEditor(
@@ -60,17 +59,16 @@ class AddTaskTransactionButton extends StatelessWidget {
           ),
         );
       },
-      builder:
-          (final context, final focused, final onlyFocused) => UiFocusedBox(
+      builder: (final context, final focused, final onlyFocused) =>
+          UiFocusedBox(
             focused: focused,
             child: Padding(
               padding: padding,
               child: Icon(
                 Icons.add,
-                color:
-                    focused
-                        ? null
-                        : context.colorScheme.onSurface.withOpacity(0.5),
+                color: focused
+                    ? null
+                    : context.colorScheme.onSurface.withOpacity(0.5),
               ),
             ),
           ),

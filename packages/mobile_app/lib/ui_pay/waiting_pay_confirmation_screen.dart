@@ -77,13 +77,11 @@ class _WaitingPayConfirmationScreenState
                   ),
                   const Gap(8),
                   Text(
-                    LocalizedMap(
-        {
-                        languages.en: 'Processing...',
-                        languages.ru: 'Обработка...',
-                        languages.it: 'Elaborazione...',
-                      },
-                    ).getValue(locale),
+                    LocalizedMap({
+                      languages.en: 'Processing...',
+                      languages.ru: 'Обработка...',
+                      languages.it: 'Elaborazione...',
+                    }).getValue(locale),
                     style: const TextStyle(
                       color: Colors.orange,
                       fontWeight: FontWeight.w600,
@@ -93,13 +91,11 @@ class _WaitingPayConfirmationScreenState
               ),
               const Gap(24),
               Text(
-                LocalizedMap(
-        {
-                    languages.en: 'Waiting for payment confirmation',
-                    languages.ru: 'Ожидаем подтверждение оплаты',
-                    languages.it: 'In attesa di conferma del pagamento',
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en: 'Waiting for payment confirmation',
+                  languages.ru: 'Ожидаем подтверждение оплаты',
+                  languages.it: 'In attesa di conferma del pagamento',
+                }).getValue(locale),
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -107,39 +103,38 @@ class _WaitingPayConfirmationScreenState
               ),
               const Gap(16),
               Text(
-                LocalizedMap(
-        {
-                    languages.en:
-                        'This usually takes less than a minute. You can check the status manually.',
-                    languages.ru:
-                        'Обычно это занимает меньше минуты. Вы можете проверить статус вручную.',
-                    languages.it:
-                        "Di solito richiede meno di un minuto. Puoi controllare lo stato manualmente.",
-                  },
-                ).getValue(locale),
+                LocalizedMap({
+                  languages.en:
+                      'This usually takes less than a minute. You can check the status manually.',
+                  languages.ru:
+                      'Обычно это занимает меньше минуты. Вы можете проверить статус вручную.',
+                  languages.it:
+                      "Di solito richiede meno di un minuto. Puoi controllare lo stato manualmente.",
+                }).getValue(locale),
                 style: theme.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
               const Gap(32),
               UiLoader(
-                builder: (final context, final setLoading, final isLoading) =>
+                isLoading: _isCheckingStatus,
+                builder: (final context, final isLoading, final setLoading) =>
                     UiTextButton(
-                      isLoading: isLoading || _isCheckingStatus,
-                      textTitle: LocalizedMap(
-        {
-                          languages.en: 'Check Status',
-                          languages.ru: 'Проверить статус',
-                          languages.it: 'Controlla Stato',
-                        },
-                      ).getValue(locale),
-                      onPressed: () async {
-                        setLoading(true);
-                        try {
-                          await _checkSubscriptionStatus();
-                        } finally {
-                          setLoading(false);
-                        }
-                      },
+                      isLoading: isLoading,
+                      textTitle: LocalizedMap({
+                        languages.en: 'Check Status',
+                        languages.ru: 'Проверить статус',
+                        languages.it: 'Controlla Stato',
+                      }).getValue(locale),
+                      onPressed: isLoading
+                          ? () {}
+                          : () async {
+                              setLoading(true);
+                              try {
+                                await _checkSubscriptionStatus();
+                              } finally {
+                                setLoading(false);
+                              }
+                            },
                     ),
               ),
             ],

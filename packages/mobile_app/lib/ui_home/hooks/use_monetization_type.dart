@@ -3,6 +3,7 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_pay/has_monetization.dart';
 import 'package:provider/provider.dart';
 import 'package:xsoulspace_monetization_foundation/xsoulspace_monetization_foundation.dart';
+import 'package:xsoulspace_monetization_interface/xsoulspace_monetization_interface.dart';
 
 /// Typedef for the result of useIsSubscriptionMonetization
 typedef IsSubscriptionMonetizationResult = ({bool isSubscriptionMonetization});
@@ -16,9 +17,7 @@ IsSubscriptionMonetizationResult useIsSubscriptionMonetization(
   final BuildContext context,
 ) => (
   isSubscriptionMonetization: context.select<MonetizationTypeResource, bool>(
-    (final value) =>
-        value.type == MonetizationType.subscription &&
-        value.status != MonetizationStoreStatus.notAvailable,
+    (final value) => value.type == MonetizationType.subscription,
   ),
 );
 
