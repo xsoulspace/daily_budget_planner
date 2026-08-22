@@ -78,7 +78,7 @@ class UpsertBudgetDialog extends HookWidget {
           screenWidth < 400 ? const EdgeInsets.symmetric(horizontal: 4) : null,
       title: Text(
         LocalizedMap(
-          value: {
+        {
             languages.en: 'Add New Budget',
             languages.it: 'Aggiungi Nuovo Budget',
             languages.ru: 'Добавить Новый Бюджет',
@@ -91,7 +91,7 @@ class UpsertBudgetDialog extends HookWidget {
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en: 'Cancel',
                 languages.it: 'Annulla',
                 languages.ru: 'Отмена',
@@ -103,7 +103,7 @@ class UpsertBudgetDialog extends HookWidget {
           onPressed: upsertBudget.onSave,
           child: Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en: 'Add',
                 languages.it: 'Aggiungi',
                 languages.ru: 'Добавить',
@@ -141,7 +141,7 @@ class UpsertBudgetForm extends StatelessWidget {
             decoration: InputDecoration(
               constraints: const BoxConstraints(maxWidth: 200),
               labelText: LocalizedMap(
-                value: {
+        {
                   languages.en: 'Amount',
                   languages.it: 'Importo',
                   languages.ru: 'Сумма',
@@ -153,7 +153,7 @@ class UpsertBudgetForm extends StatelessWidget {
             validator: (final value) {
               if (value == null || value.isEmpty) {
                 return LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Please enter an amount',
                     languages.it: 'Inserisci un importo',
                     languages.ru: 'Пожалуйста, введите сумму',
@@ -169,7 +169,7 @@ class UpsertBudgetForm extends StatelessWidget {
             children: [
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Date: ',
                     languages.it: 'Data: ',
                     languages.ru: 'Дата: ',

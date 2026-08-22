@@ -1,11 +1,11 @@
 import 'package:mobile_app/common_imports.dart';
 
-@stateDistributor
+@resource
 class IncomeTasksResource extends OrderedMapNotifier<TaskId, Task> {
   IncomeTasksResource() : super(toKey: (final task) => task.id);
 }
 
-@stateDistributor
+@resource
 class ExpenseTasksResource extends OrderedMapNotifier<TaskId, Task> {
   ExpenseTasksResource() : super(toKey: (final task) => task.id);
 }
@@ -19,11 +19,10 @@ class TasksResource extends ChangeNotifier {
   List<Task> get expenseTasks => _expenseTasks;
 
   void upsertTask(final Task task) {
-    final updatedTasks =
-        switch (task.transactionType) {
-          TaskTransactionType.income => [..._incomeTasks, task],
-          TaskTransactionType.expense => [..._expenseTasks, task],
-        }.unmodifiable;
+    final updatedTasks = switch (task.transactionType) {
+      TaskTransactionType.income => [..._incomeTasks, task],
+      TaskTransactionType.expense => [..._expenseTasks, task],
+    }.unmodifiable;
     final _ = switch (task.transactionType) {
       TaskTransactionType.expense => _expenseTasks = updatedTasks,
       TaskTransactionType.income => _incomeTasks = updatedTasks,
@@ -42,14 +41,13 @@ class TasksResource extends ChangeNotifier {
   }) {
     assert(tasks.isNotEmpty, 'tasks is empty');
 
-    _expenseTasks =
-        tasks
-            .where((final type) {
-              final isVisible = type.type == taskType;
-              return isVisible;
-            })
-            .toList()
-            .unmodifiable;
+    _expenseTasks = tasks
+        .where((final type) {
+          final isVisible = type.type == taskType;
+          return isVisible;
+        })
+        .toList()
+        .unmodifiable;
     notifyListeners();
   }
 }

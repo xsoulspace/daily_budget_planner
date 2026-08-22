@@ -42,7 +42,7 @@ class _UiTasksBarViewState extends State<UiTasksBarView> {
             padding: const EdgeInsets.only(left: 6),
             child: UiTipCard(
               text: LocalizedMap(
-                value: switch (widget.taskTransactionType) {
+        switch (widget.taskTransactionType) {
                   TaskTransactionType.income => {
                     languages.en:
                         'Use categories to plan your regular incomes, '

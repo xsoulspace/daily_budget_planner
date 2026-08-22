@@ -15,7 +15,7 @@ enum SubscriptionManagerStatus { free, subscribed, pending }
 
 enum MonetizationStatus { loading, notAvailable, storeNotAuthorized, loaded }
 
-@stateDistributor
+@resource
 class MonetizationStatusNotifier extends ChangeNotifier {
   MonetizationStatusNotifier(this._type);
   MonetizationType _type;
@@ -68,8 +68,8 @@ class SubscriptionManager extends ChangeNotifier {
   /// The current state of user access.
   SubscriptionManagerStatus get state =>
       monetizationTypeNotifier.type == MonetizationType.free
-          ? SubscriptionManagerStatus.subscribed
-          : _state;
+      ? SubscriptionManagerStatus.subscribed
+      : _state;
 
   LoadableContainer<List<PurchaseProductDetails>> subscriptions =
       LoadableContainer(value: []);
@@ -91,8 +91,9 @@ class SubscriptionManager extends ChangeNotifier {
     } on PlatformException catch (e, stackTrace) {
       debugPrint('Failed to get subscriptions: $e $stackTrace');
       if (e.code == 'RuStoreUserUnauthorizedException') {
-        monetizationTypeNotifier
-            .setStatus(MonetizationStatus.storeNotAuthorized);
+        monetizationTypeNotifier.setStatus(
+          MonetizationStatus.storeNotAuthorized,
+        );
       } else {
         monetizationTypeNotifier.setStatus(MonetizationStatus.notAvailable);
       }
@@ -150,8 +151,9 @@ class SubscriptionManager extends ChangeNotifier {
         case CompletePurchaseSuccess():
           if (details.status
               case (PurchaseStatus.purchased || PurchaseStatus.restored)) {
-            final purchaseInfo =
-                await purchaseManager.getPurchaseInfo(details.purchaseId);
+            final purchaseInfo = await purchaseManager.getPurchaseInfo(
+              details.purchaseId,
+            );
             setActiveSubscription(purchaseInfo);
             _state = SubscriptionManagerStatus.subscribed;
             notifyListeners();

@@ -5,6 +5,7 @@ import 'package:mobile_app/di/storage_kernel_bootstrap.dart';
 import 'package:mobile_app/ui_home/monthly/monthly_notifier.dart';
 import 'package:mobile_app/ui_home/weekly/weekly_notifier.dart';
 import 'package:mobile_app/ui_pay/paywall_flow.dart';
+import 'package:mobile_app/ui_pay/monetization_products.dart';
 import 'package:xsoulspace_installation_store/xsoulspace_installation_store.dart';
 import 'package:xsoulspace_monetization_foundation/xsoulspace_monetization_foundation.dart';
 import 'package:xsoulspace_monetization_rustore/xsoulspace_monetization_rustore.dart';
@@ -86,7 +87,7 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   /// ********************************************
   /// *      Notifiers
   /// ********************************************
-  final localeNotifier = UiLocaleNotifier(Locales.fallback);
+  final localeNotifier = UiLocaleResource(Locales.fallback);
   r(localeNotifier, dispose: d);
   rl(AppSettingsNotifier.new, dispose: d);
   rl(UserNotifier.new, dispose: d);
@@ -118,8 +119,8 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
     PurchasePaywallErrorResource.new,
     dispose: d,
   );
-  rl<PurchasesLocalApi>(PurchasesLocalApi.new);
-  rl<PurchaseFlagsLocalApi>(PurchaseFlagsLocalApi.new);
+  rl<PurchasesLocalApi>(() => PurchasesLocalApi(localDb: localDb));
+  rl<PurchaseFlagsLocalApi>(() => PurchaseFlagsLocalApi(localDb: localDb));
   rl(
     () => MonetizationFoundation(
       resources: (
@@ -219,7 +220,7 @@ mixin HasResources {
 mixin HasNotifiers {
   UserNotifier get userNotifier => _g();
   AppStatusResource get appStatusNotifier => _g();
-  UiLocaleNotifier get localeNotifier => _g();
+  UiLocaleResource get localeNotifier => _g();
   AppSettingsNotifier get appSettingsNotifier => _g();
   MonetizationFoundation get monetizationFoundation => _g();
   WeeklyNotifier get weeklyCubit => _g();

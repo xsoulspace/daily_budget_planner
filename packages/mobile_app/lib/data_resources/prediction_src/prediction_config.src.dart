@@ -1,6 +1,6 @@
 import 'package:mobile_app/common_imports.dart';
 
-@stateDistributor
+@resource
 class PredictionConfigResource extends ChangeNotifier {
   bool _isTaxFree = Envs.isAmountsTaxFree;
   var _countWithTransfers = false;

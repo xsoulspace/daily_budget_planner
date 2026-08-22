@@ -12,7 +12,7 @@ class PrivacyScreen extends StatelessWidget {
     return UiScaffold(
       appBar: UiAppBar(
         titleText: LocalizedMap(
-          value: {
+        {
             languages.en: 'Privacy Policy',
             languages.it: 'Politica sulla privacy',
             languages.ru: 'Приватность',

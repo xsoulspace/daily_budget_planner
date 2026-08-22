@@ -14,7 +14,7 @@ class UiThemeModeTile extends StatelessWidget {
     return ListTile(
       title: Text(
         LocalizedMap(
-          value: {
+        {
             languages.en: 'Theme',
             languages.it: 'Tema',
             languages.ru: 'Тема',
@@ -80,7 +80,7 @@ class UiThemeModeTile extends StatelessWidget {
     };
 
     return LocalizedMap(
-      value: switch (mode) {
+        switch (mode) {
         ThemeMode.system => system,
         ThemeMode.dark => dark,
         ThemeMode.light => light,

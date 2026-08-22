@@ -106,7 +106,7 @@ class _MonthlyViewState extends State<MonthlyView>
         children: [
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en: 'Your Budget',
                 languages.ru: 'Ваш бюджет',
                 languages.it: 'Il tuo budget',
@@ -117,7 +117,7 @@ class _MonthlyViewState extends State<MonthlyView>
           const SizedBox(height: 8),
           _buildInputField(
             label: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Balance',
                 languages.ru: 'Баланс',
                 languages.it: 'Saldo',
@@ -129,7 +129,7 @@ class _MonthlyViewState extends State<MonthlyView>
             onEditingComplete: _requestSavingsFocus,
             icon: Icons.account_balance_outlined,
             tooltip: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Enter your total monthly income here',
                 languages.ru: 'Введите здесь ваш общий ежемесячный доход',
                 languages.it: 'Inserisci qui il tuo reddito mensile totale',
@@ -139,7 +139,7 @@ class _MonthlyViewState extends State<MonthlyView>
           const SizedBox(height: 8),
           _buildInputField(
             label: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Extra Costs/Savings',
                 languages.ru: 'Доп. расходы/сбережения',
                 languages.it: 'Costi extra/risparmi',
@@ -151,7 +151,7 @@ class _MonthlyViewState extends State<MonthlyView>
             onEditingComplete: _requestAmountFocus,
             icon: Icons.savings,
             tooltip: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Enter additional expenses or savings here',
                 languages.ru:
                     'Введите здесь дополнительные расходы или сбережения',
@@ -167,7 +167,7 @@ class _MonthlyViewState extends State<MonthlyView>
               Expanded(
                 child: Tooltip(
                   message: LocalizedMap(
-                    value: {
+        {
                       languages.en: 'Select the date of your next budget cycle',
                       languages.ru:
                           'Выберите дату вашего следующего бюджетного цикла',
@@ -180,7 +180,7 @@ class _MonthlyViewState extends State<MonthlyView>
                         monthlyCubit.onChangeNextBudgetDay(context),
                     child: Text(
                       LocalizedMap(
-                            value: {
+        {
                               languages.en: 'Next Budget Date: ',
                               languages.ru: 'Следующая дата бюджета: ',
                               languages.it: 'Prossima data di budget: ',
@@ -189,7 +189,7 @@ class _MonthlyViewState extends State<MonthlyView>
                           (monthlyCubit.budget.nextBudgetDay
                                   ?.formatDdMmYyyy() ??
                               LocalizedMap(
-                                value: {
+        {
                                   languages.en: 'Choose Date',
                                   languages.ru: 'Выберите дату',
                                   languages.it: 'Scegli la data',
@@ -259,7 +259,7 @@ class _MonthlyViewState extends State<MonthlyView>
         children: [
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en: 'Budget Breakdown',
                 languages.ru: 'Разбивка бюджета',
                 languages.it: 'Ripartizione del budget',
@@ -271,7 +271,7 @@ class _MonthlyViewState extends State<MonthlyView>
           _buildBudgetItem(
             locale: locale,
             label: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Daily Budget',
                 languages.ru: 'Дневной бюджет',
                 languages.it: 'Budget giornaliero',
@@ -280,7 +280,7 @@ class _MonthlyViewState extends State<MonthlyView>
             value: monthlyCubit.dailyBudget,
             icon: Icons.today,
             tooltip: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Your available budget for each day',
                 languages.ru: 'Ваш доступный бюджет на каждый день',
                 languages.it: 'Il tuo budget disponibile per ogni giorno',
@@ -290,7 +290,7 @@ class _MonthlyViewState extends State<MonthlyView>
           _buildBudgetItem(
             locale: locale,
             label: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Weekly Budget',
                 languages.ru: 'Недельный бюджет',
                 languages.it: 'Budget settimanale',
@@ -299,14 +299,14 @@ class _MonthlyViewState extends State<MonthlyView>
             value: monthlyCubit.weeklyBudget,
             icon: Icons.view_week,
             subtitle: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Can be less if < 7 days',
                 languages.ru: 'Может быть меньше, если < 7 дней',
                 languages.it: 'Può essere meno se < 7 giorni',
               },
             ).getValue(locale),
             tooltip: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Your available budget for each week',
                 languages.ru: 'Ваш доступный бюджет на каждую неделю',
                 languages.it: 'Il tuo budget disponibile per ogni settimana',
@@ -317,7 +317,7 @@ class _MonthlyViewState extends State<MonthlyView>
             locale: locale,
             useDouble: false,
             label: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Days in Total',
                 languages.ru: 'Всего дней',
                 languages.it: 'Giorni in totale',
@@ -326,7 +326,7 @@ class _MonthlyViewState extends State<MonthlyView>
             value: monthlyCubit.daysCount.toString(),
             icon: Icons.date_range,
             tooltip: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Total number of days in your budget cycle',
                 languages.ru: 'Общее количество дней в вашем бюджетном цикле',
                 languages.it: 'Numero totale di giorni nel tuo ciclo di budget',

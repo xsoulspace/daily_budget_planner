@@ -22,14 +22,14 @@ class TransactionAmountField extends StatelessWidget with HasNotifiers {
         builder: (final context) {
           final label = switch (currencyType) {
             CurrencyType.fiat => LocalizedMap(
-                value: {
+        {
                   languages.en: 'Amount',
                   languages.it: 'Importo',
                   languages.ru: 'Сумма',
                 },
               ),
             CurrencyType.crypto => LocalizedMap(
-                value: {
+        {
                   languages.en: 'Quantity',
                   languages.it: 'Quantità',
                   languages.ru: 'Количество',

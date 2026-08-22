@@ -26,7 +26,7 @@ class GlobalStateProviders extends StatelessWidget {
         ChangeNotifierProvider<RecentBudgetResource>.value(value: g()),
         ChangeNotifierProvider<UiTimelineNotifier>.value(value: g()),
         ChangeNotifierProvider<UserNotifier>.value(value: g()),
-        ChangeNotifierProvider<UiLocaleNotifier>.value(value: g()),
+        ChangeNotifierProvider<UiLocaleResource>.value(value: g()),
         ChangeNotifierProvider<AppStatusResource>.value(value: g()),
         ChangeNotifierProvider<AppSettingsNotifier>.value(value: g()),
         ChangeNotifierProvider<FinSettingsNotifier>.value(value: g()),

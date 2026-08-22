@@ -1,6 +1,6 @@
 import 'package:mobile_app/common_imports.dart';
 
-@stateDistributor
+@resource
 class TransactionsConfigResource with ChangeNotifier {
   // TODO(arenukvern): cache somewere else
   DateTime? _lastUpdatedTransactionDate;

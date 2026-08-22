@@ -42,7 +42,7 @@ class UiTransactionsActionsBar extends StatelessWidget {
               const Gap(4),
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Add ${tuple.type.name}',
                     languages.it:
                         'Aggiungi ${switch (tuple.type) {

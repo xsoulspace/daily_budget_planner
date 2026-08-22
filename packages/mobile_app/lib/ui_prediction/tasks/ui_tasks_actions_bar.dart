@@ -68,7 +68,7 @@ class UiTasksActionsBar extends StatelessWidget with HasNotifiers {
               const Gap(4),
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Add ${tuple.taskTransactionType.name}',
                     languages.it:
                         'Aggiungi ${switch (tuple.taskTransactionType) {

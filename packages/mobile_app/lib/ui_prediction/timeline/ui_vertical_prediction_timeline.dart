@@ -91,7 +91,7 @@ class _UiVerticalPredictionTimelineState
               padding: EdgeInsets.zero,
               title: Text(
                 '${_getFormattedDate(_notifier.currentDate, locale)} '
-                '${isToday ? LocalizedMap(value: {languages.en: '(today)', languages.it: '(oggi)', languages.ru: '(сегодня)'}).getValue(locale) : ''}',
+                '${isToday ? LocalizedMap( {languages.en: '(today)', languages.it: '(oggi)', languages.ru: '(сегодня)'}).getValue(locale) : ''}',
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(

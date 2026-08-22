@@ -13,7 +13,7 @@ class TermsScreen extends StatelessWidget {
     return UiScaffold(
       appBar: UiAppBar(
         titleText: LocalizedMap(
-          value: {
+        {
             languages.en: 'Terms and Conditions',
             languages.it: 'Termini e Condizioni',
             languages.ru: 'Условия использования',

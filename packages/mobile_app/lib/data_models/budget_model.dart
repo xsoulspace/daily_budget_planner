@@ -17,8 +17,8 @@ abstract class MonthlyBudgetModel with _$MonthlyBudgetModel {
   const factory MonthlyBudgetModel({
     required final BudgetModelId id,
     @JsonKey(
-      fromJson: dateTimeFromMilisecondsSinceEpoch,
-      toJson: dateTimeToMilisecondsSinceEpoch,
+      fromJson: dateTimeFromMillisecondsSinceEpoch,
+      toJson: dateTimeToMillisecondsSinceEpoch,
     )
     final DateTime? nextBudgetDay,
     @Default(0) final double amount,

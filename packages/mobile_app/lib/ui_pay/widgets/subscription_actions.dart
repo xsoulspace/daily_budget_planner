@@ -32,7 +32,7 @@ class SubscriptionActions extends StatelessWidget with HasMonetization {
           const Gap(16),
           UiTextButton(
             textTitle: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Continue Free',
                 languages.it: 'Continua gratis',
                 languages.ru: 'Продолжить бесплатно',
@@ -115,7 +115,7 @@ class _SubscribeButtonState extends State<_SubscribeButton>
               UiTextButton(
                 isLoading: isLoading || isSubscribing || isRestoring,
                 textTitle: LocalizedMap(
-                  value: {
+        {
                     languages.en: hasFreeTrial
                         ? 'START FREE TRIAL'
                         : 'SUBSCRIBE',
@@ -160,7 +160,7 @@ class _RestorePurchases extends StatelessWidget with HasMonetization {
           UiTextButton(
             isLoading: isLoading || isRestoring,
             textTitle: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Restore',
                 languages.it: 'Ripristina',
                 languages.ru: 'Восстановить',
@@ -197,14 +197,14 @@ class _SubscriptionDisclosure extends StatelessWidget {
 
     final lengthSentence = length.isEmpty
         ? LocalizedMap(
-            value: {
+        {
               languages.en: 'Auto-renewing subscription.',
               languages.ru: 'Автоматически продлеваемая подписка.',
               languages.it: 'Abbonamento a rinnovo automatico.',
             },
           ).getValue(locale)
         : LocalizedMap(
-            value: {
+        {
               languages.en: '$length auto-renewing subscription.',
               languages.ru: '$length, автоматически продлеваемая подписка.',
               languages.it: 'Abbonamento $length a rinnovo automatico.',
@@ -216,7 +216,7 @@ class _SubscriptionDisclosure extends StatelessWidget {
         : (perPeriod.isEmpty ? priceText : '$priceText $perPeriod.');
 
     final servicesSentence = LocalizedMap(
-      value: {
+        {
         languages.en:
             'Full access to all premium planning features and updates.',
         languages.ru:
@@ -227,7 +227,7 @@ class _SubscriptionDisclosure extends StatelessWidget {
     ).getValue(locale);
 
     final renewalSentence = LocalizedMap(
-      value: {
+        {
         languages.en:
             'Renews automatically until canceled in store settings at least 24 hours before the end of the current period.',
         languages.ru:
@@ -296,7 +296,7 @@ class _SubscriptionError extends StatelessWidget {
             Expanded(
               child: Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en:
                         'Something went wrong. Please try again or restart the app.',
                     languages.ru:

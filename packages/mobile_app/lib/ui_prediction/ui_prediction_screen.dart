@@ -179,7 +179,7 @@ class PeriodSelectorButton extends HookWidget {
     final controller = useUiPopupButtonController();
 
     final periodTitle = LocalizedMap(
-      value: {
+        {
         languages.en: 'period',
         languages.it: 'periodo',
         languages.ru: 'период',
@@ -409,7 +409,7 @@ class _TrendIndicator extends StatelessWidget {
           const Gap(4),
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en: 'Trend: savings left for ~2 days',
                 languages.it: 'Tendenza: risparmio rimanente per ~2 giorni',
                 languages.ru: 'Тренд: накоплений хватит на ~2 дня',
@@ -448,7 +448,7 @@ class BudgetButton extends StatelessWidget {
               Text(
                 // TODO(arenukvern): description
                 '\$${recentBudget.input.amount(taxFree: true).toStringAsFixed(2)} '
-                '${LocalizedMap(value: {languages.en: '- left', languages.it: '- rimanenti', languages.ru: '- осталось'}).getValue(locale)}',
+                '${LocalizedMap( {languages.en: '- left', languages.it: '- rimanenti', languages.ru: '- осталось'}).getValue(locale)}',
                 style: context.textTheme.titleLarge,
               ),
             ],
@@ -479,7 +479,7 @@ class DailyBudgetDisplay extends StatelessWidget {
         ),
         Text(
           LocalizedMap(
-            value: {
+        {
               languages.en: "I can spend today (Today's budget)",
               languages.it: 'Posso spendere oggi (Budget oggi)',
               languages.ru: 'Могу потратить сегодня (Сегодняшний бюджет)',
@@ -513,7 +513,7 @@ class DailyStatistics extends StatelessWidget {
             onPressed: () async => UiExpensesView.show(context: context),
             value: '-\$${totalSumResource.expensesSum.toStringAsFixed(2)}',
             label: LocalizedMap(
-              value: {
+        {
                 languages.en: 'What I spent (Expenses)',
                 languages.it: 'Cosa ho speso (Spese)',
                 languages.ru: 'Что я потратил (Расходы)',
@@ -524,7 +524,7 @@ class DailyStatistics extends StatelessWidget {
             onPressed: () async => UiIncomesView.show(context: context),
             value: '+\$${totalSumResource.incomesSum.toStringAsFixed(2)}',
             label: LocalizedMap(
-              value: {
+        {
                 languages.en: 'What I earned (Income)',
                 languages.it: 'Cosa ho guadagnato (Entrate)',
                 languages.ru: 'Что я заработал (Доходы)',
@@ -546,7 +546,7 @@ class BudgetWillLast extends StatelessWidget {
     return _StatisticItem(
       value: '~2 days',
       label: LocalizedMap(
-        value: {
+        {
           languages.en: 'Budget will last ',
           languages.it: 'Budget rimanente per ',
           languages.ru: 'Остаток. Хватит ',
@@ -575,7 +575,7 @@ class TodaysBudget extends StatelessWidget {
           onPressed: () async => BudgetBottomSheet.show(context),
           value: '\$${totalSumResource.balance.toStringAsFixed(2)}',
           label: LocalizedMap(
-            value: switch (true) {
+        switch (true) {
               _ when isToday => {
                 languages.en: 'End of Day Balance',
                 languages.it: 'Saldo finale oggi',
@@ -661,7 +661,7 @@ class UiPredictionBottomActionBar extends StatelessWidget {
               const Gap(4),
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Update Budget',
                     languages.it: 'Aggiorna Budget',
                     languages.ru: 'Обновить бюджет',
@@ -712,7 +712,7 @@ class BudgetBottomSheet extends HookWidget {
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             child: Text(
               LocalizedMap(
-                value: {
+        {
                   languages.en: 'Budget History',
                   languages.it: 'Storico Budget',
                   languages.ru: 'История бюджета',
@@ -750,7 +750,7 @@ class BudgetBottomSheet extends HookWidget {
               onPressed: () async => UpsertBudgetDialog.show(context),
               child: Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Add New Budget',
                     languages.it: 'Aggiungi Nuovo Budget',
                     languages.ru: 'Добавить Новый Бюджет',

@@ -20,7 +20,9 @@ version: 0.2.0+7
 environment:
   sdk: ">=3.12.0 <4.0.0"
 workspace:
-  - packages/*
+  - packages/mobile_app
+  - packages/ui_locale
+  - packages/xsoulspace_analytics
 
 # to update use flutter pub upgrade --major-versions
 dependencies:
@@ -35,8 +37,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
-  freezed: ^3.2.5
-  json_serializable: ^6.14.0
+  freezed: ^4.0.0-dev.3
+  json_serializable: ^6.14.1
   lints: ^6.1.0
   xsoulspace_lints: ^0.1.2
 

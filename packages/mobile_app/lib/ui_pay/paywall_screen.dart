@@ -38,7 +38,7 @@ class _PaywallScreenState extends State<PaywallScreen> with HasMonetization {
   Widget build(final BuildContext context) => Scaffold(
     appBar: UiAppBar(
       titleText: LocalizedMap(
-        value: {
+        {
           languages.en: 'Unlock all features',
           languages.it: 'Sblocca tutte le funzionalità',
           languages.ru: 'Разблокируйте все функции',
@@ -54,7 +54,7 @@ class _PaywallScreenState extends State<PaywallScreen> with HasMonetization {
             const Gap(8),
             Text(
               LocalizedMap(
-                value: {
+        {
                   languages.en: 'More ways to plan finances for you',
                   languages.it: 'Più modi per pianificare le tue finanze',
                   languages.ru: 'Больше способов планировать свои финансы',
@@ -76,7 +76,7 @@ class _PaywallScreenState extends State<PaywallScreen> with HasMonetization {
                 Flexible(
                   child: UiTextButton(
                     textTitle: LocalizedMap(
-                      value: {
+        {
                         languages.en: 'Terms',
                         languages.it: 'Termini',
                         languages.ru: 'Условия',
@@ -88,7 +88,7 @@ class _PaywallScreenState extends State<PaywallScreen> with HasMonetization {
                 Flexible(
                   child: UiTextButton(
                     textTitle: LocalizedMap(
-                      value: {
+        {
                         languages.en: 'Privacy',
                         languages.it: 'Privacy',
                         languages.ru: 'Приватность',

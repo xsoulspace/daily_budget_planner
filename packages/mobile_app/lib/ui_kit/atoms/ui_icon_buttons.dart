@@ -12,14 +12,14 @@ class UiTextActionButton extends StatelessWidget {
     final locale = useLocale(context);
     final textTitle = (isCancel
             ? LocalizedMap(
-                value: {
+        {
                   languages.en: 'Cancel',
                   languages.it: 'Annulla',
                   languages.ru: 'Отмена',
                 },
               )
             : LocalizedMap(
-                value: {
+        {
                   languages.en: 'Done',
                   languages.it: 'Fatto',
                   languages.ru: 'Готово',

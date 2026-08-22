@@ -116,7 +116,7 @@ class AppScaffoldBuilder extends StatelessWidget {
           Label(
             id: 'label-jcgd4lyfk9',
             title: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Bug report',
                 languages.ru: 'Сообщить об ошибке',
                 languages.it: 'Segnala un bug',
@@ -126,7 +126,7 @@ class AppScaffoldBuilder extends StatelessWidget {
           Label(
             id: 'label-dqi42ue2re',
             title: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Feature request',
                 languages.ru: 'Предложить функцию',
                 languages.it: 'Proponi una funzione',
@@ -136,7 +136,7 @@ class AppScaffoldBuilder extends StatelessWidget {
           Label(
             id: 'label-n63w8nqhcn',
             title: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Payment issue',
                 languages.ru: 'Проблема с оплатой',
                 languages.it: 'Problema con il pagamento',
@@ -146,7 +146,7 @@ class AppScaffoldBuilder extends StatelessWidget {
           Label(
             id: 'label-8tnmqrfat4',
             title: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Other',
                 languages.ru: 'Другое',
                 languages.it: 'Altro',

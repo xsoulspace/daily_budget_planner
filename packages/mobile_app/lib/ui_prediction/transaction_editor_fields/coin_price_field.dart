@@ -10,7 +10,7 @@ class CoinPriceField extends StatelessWidget {
     return Builder(
       builder: (final context) {
         final label = LocalizedMap(
-          value: {
+        {
             languages.en: 'Coin price',
             languages.it: 'Prezzo della moneta',
             languages.ru: 'Цена монеты',

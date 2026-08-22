@@ -85,7 +85,7 @@ class _UiHorizontalPredictionTimelineState
           title: Text(
             '${_getFormattedDate(_notifier.currentDate, locale)} '
             '${isToday ? LocalizedMap(
-                value: {
+        {
                   languages.en: '(today)',
                   languages.it: '(oggi)',
                   languages.ru: '(сегодня)',

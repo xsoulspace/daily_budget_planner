@@ -7,7 +7,7 @@ import 'package:mobile_app/ui_home/monthly/monthly_notifier.dart';
 
 /// A localized map for money prefix symbols based on language.
 final kMoneyPrefix = LocalizedMap(
-  value: {
+        {
     languages.en: r'$',
     languages.ru: '₽',
     languages.it: '€',
@@ -51,7 +51,7 @@ class MethodExplanationScreen extends HookWidget {
       appBar: UiAppBar(
         leading: _buildBackButton(context, pageController, isFirstOpening),
         titleText: LocalizedMap(
-          value: {
+        {
             languages.en: 'Magic of Budgeting',
             languages.ru: 'Магия бюджетирования',
             languages.it: 'Magia del Budgeting',
@@ -171,14 +171,14 @@ class BalancePage extends HookWidget {
 
     return GuidePage(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: "What's in Your Pocket?",
           languages.ru: 'Что у тебя в кармансах?',
           languages.it: "Cosa c'è nel tuo portafoglio?",
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               "Let's start with how much money you have right now. Don't worry, we won't tell anyone! 🤫",
           languages.ru:
@@ -194,7 +194,7 @@ class BalancePage extends HookWidget {
         decoration: InputDecoration(
           prefixText: kMoneyPrefix.getValue(locale),
           hintText: LocalizedMap(
-            value: {
+        {
               languages.en: 'Enter your current balance',
               languages.ru: 'Введите ваш текущий баланс',
               languages.it: 'Inserisci il tuo saldo attuale',
@@ -225,14 +225,14 @@ class ExpensesPage extends HookWidget {
 
     return GuidePage(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: 'Time for Some Adulting',
           languages.ru: 'Время для взрослой жизни',
           languages.it: 'È ora di fare gli adulti',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               "Now, let's add up all the boring stuff you need to pay for. Think rent, subscriptions, loan payments - you know, the essentials. 💸",
           languages.ru:
@@ -248,7 +248,7 @@ class ExpensesPage extends HookWidget {
         decoration: InputDecoration(
           prefixText: kMoneyPrefix.getValue(locale),
           hintText: LocalizedMap(
-            value: {
+        {
               languages.en: 'Enter your total expenses',
               languages.ru: 'Введите ваши общие расходы',
               languages.it: 'Inserisci le tue spese totali',
@@ -272,14 +272,14 @@ class SalaryDatePage extends HookWidget {
     final locale = useLocale(context);
     return GuidePage(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: 'When Does the Money Train Arrive?',
           languages.ru: 'Когда приходит денежный поезд?',
           languages.it: 'Quando arriva il treno dei soldi?',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               "Last step! When's your next payday? This helps us figure out how long your money needs to last. 🗓️",
           languages.ru:
@@ -292,7 +292,7 @@ class SalaryDatePage extends HookWidget {
         child: Text(
           selectedDate.value == null
               ? LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Select Next Salary Date',
                     languages.ru: 'Выберите дату следующей зарплаты',
                     languages.it: 'Seleziona la data del prossimo stipendio',
@@ -349,7 +349,7 @@ class ResultPage extends StatelessWidget {
         children: [
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en: '🎉 Congratulations!',
                 languages.ru: '🎉 Поздравляем!',
                 languages.it: '🎉 Congratulazioni!',
@@ -360,7 +360,7 @@ class ResultPage extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en:
                     "You've just mastered the art of simple budgeting! Here's your financial snapshot:",
                 languages.ru:
@@ -381,7 +381,7 @@ class ResultPage extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en:
                     "Now you know exactly how much you can spend each day without ending up with holey socks 🧦. Remember, this is a tool - some days you might spend less, others a bit more. The key is to stay aware and make informed decisions. You've got this! 💪",
                 languages.ru:
@@ -398,7 +398,7 @@ class ResultPage extends StatelessWidget {
               activeSubscription == null) ...[
             Text(
               LocalizedMap(
-                value: {
+        {
                   languages.en:
                       'The basic functions of this app are free. To use the most advanced and extra functions, there is a subscription available.',
                   languages.ru:
@@ -418,7 +418,7 @@ class ResultPage extends StatelessWidget {
                   onPressed: onFinish,
                   child: Text(
                     LocalizedMap(
-                      value: {
+        {
                         languages.en: 'Continue Free',
                         languages.ru: 'Продолжить бесплатно',
                         languages.it: 'Continua gratis',
@@ -435,7 +435,7 @@ class ResultPage extends StatelessWidget {
                   },
                   child: Text(
                     LocalizedMap(
-                      value: {
+        {
                         languages.en: 'Purchase',
                         languages.ru: 'Купить',
                         languages.it: 'Acquista',
@@ -451,7 +451,7 @@ class ResultPage extends StatelessWidget {
                 onPressed: onFinish,
                 child: Text(
                   LocalizedMap(
-                    value: {
+        {
                       languages.en: "Cool! Let's start!",
                       languages.ru: 'Круто! Давайте продолжим!',
                       languages.it: 'Fantastico! Iniziamo!',
@@ -463,7 +463,7 @@ class ResultPage extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en:
                     'Disclaimer: This is not financial advice. Please consult with a qualified financial advisor for personalized recommendations.',
                 languages.ru:
@@ -506,7 +506,7 @@ class _ResultCard extends StatelessWidget {
           children: [
             _ResultRow(
               LocalizedMap(
-                value: {
+        {
                   languages.en: 'Current Balance:',
                   languages.ru: 'Текущий баланс:',
                   languages.it: 'Saldo attuale:',
@@ -516,7 +516,7 @@ class _ResultCard extends StatelessWidget {
             ),
             _ResultRow(
               LocalizedMap(
-                value: {
+        {
                   languages.en: 'Required Expenses:',
                   languages.ru: 'Необходимые расходы:',
                   languages.it: 'Spese necessarie:',
@@ -526,7 +526,7 @@ class _ResultCard extends StatelessWidget {
             ),
             _ResultRow(
               LocalizedMap(
-                value: {
+        {
                   languages.en: 'Next Salary Date:',
                   languages.ru: 'Дата следующей зарплаты:',
                   languages.it: 'Data del prossimo stipendio:',
@@ -537,7 +537,7 @@ class _ResultCard extends StatelessWidget {
             const Divider(),
             _ResultRow(
               LocalizedMap(
-                value: {
+        {
                   languages.en: 'Your Daily Budget:',
                   languages.ru: 'Ваш ежедневный бюджет:',
                   languages.it: 'Il tuo budget giornaliero:',
@@ -623,7 +623,7 @@ class GuidePage extends StatelessWidget {
                 onPressed: onNext,
                 child: Text(
                   LocalizedMap(
-                    value: {
+        {
                       languages.en: 'Next',
                       languages.ru: 'Далее',
                       languages.it: 'Avanti',

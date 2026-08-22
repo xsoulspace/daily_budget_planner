@@ -1,7 +1,7 @@
 import 'package:mobile_app/common_imports.dart';
 
 /// transactions without tasks
-@stateDistributor
+@resource
 class IncomeTransactionsResource
     extends OrderedMapNotifier<TransactionId, Transaction> {
   IncomeTransactionsResource()
@@ -9,7 +9,7 @@ class IncomeTransactionsResource
 }
 
 /// transactions without tasks
-@stateDistributor
+@resource
 class ExpenseTransactionsResource
     extends OrderedMapNotifier<TransactionId, Transaction> {
   ExpenseTransactionsResource()
@@ -17,7 +17,7 @@ class ExpenseTransactionsResource
 }
 
 /// transactions without tasks
-@stateDistributor
+@resource
 class TransferInTransactionsResource
     extends OrderedMapNotifier<TransactionId, Transaction> {
   TransferInTransactionsResource()
@@ -25,7 +25,7 @@ class TransferInTransactionsResource
 }
 
 /// transactions without tasks
-@stateDistributor
+@resource
 class TransferOutTransactionsResource
     extends OrderedMapNotifier<TransactionId, Transaction> {
   TransferOutTransactionsResource()

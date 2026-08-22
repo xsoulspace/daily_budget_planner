@@ -270,14 +270,14 @@ class _WelcomeStep extends StatelessWidget {
     final locale = useLocale(context);
     return StepContent(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: 'Welcome to Daily Budget Planner',
           languages.it: 'Benvenuto nel Pianificatore di Budget Giornaliero',
           languages.ru: 'Добро пожаловать в Планировщик дневного бюджета',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               'This app helps you manage your finances by calculating how much you can spend each day based on your budget and regular expenses.',
           languages.it:
@@ -305,14 +305,14 @@ class _SetupBudgetStep extends HookWidget {
     );
     return StepContent(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: 'Set Your Initial Budget',
           languages.it: 'Imposta il tuo Budget Iniziale',
           languages.ru: 'Установите начальный бюджет',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               'Start by entering how much money you have available to spend. This will be your starting budget.',
           languages.it:
@@ -332,7 +332,7 @@ class _SetupBudgetStep extends HookWidget {
             },
             title: Text(
               LocalizedMap(
-                value: {
+        {
                   languages.en: 'Set Budget',
                   languages.it: 'Imposta Budget',
                   languages.ru: 'Установить бюджет',
@@ -353,14 +353,14 @@ class _DailyBudgetStep extends StatelessWidget {
     final configPeriodSelector = useConfigPeriodSelector(context: context);
     return StepContent(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: 'Understanding Daily Budget',
           languages.it: 'Comprendere il Budget Giornaliero',
           languages.ru: 'Понимание дневного бюджета',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               'Your daily budget is calculated by dividing your remaining budget by the number of days in your selected period. This tells you how much you can spend today to stay on track.',
           languages.it:
@@ -376,7 +376,7 @@ class _DailyBudgetStep extends StatelessWidget {
             children: [
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Start Period Date: ',
                     languages.it: 'Data di inizio periodo: ',
                     languages.ru: 'Дата начала периода: ',
@@ -407,14 +407,14 @@ class _RegularIncomeStep extends StatelessWidget {
     final locale = useLocale(context);
     return StepContent(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: 'Add Regular Income',
           languages.it: 'Aggiungi Entrate Regolari',
           languages.ru: 'Добавьте регулярный доход',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               'Add your regular sources of income, such as salary or allowance. The app will factor these in when calculating your daily budget.',
           languages.it:
@@ -428,7 +428,7 @@ class _RegularIncomeStep extends StatelessWidget {
         onPressed: () async => showIncomesTasksView(context: context),
         title: Text(
           LocalizedMap(
-            value: {
+        {
               languages.en: 'Add Income',
               languages.it: 'Aggiungi Entrate',
               languages.ru: 'Добавить доход',
@@ -446,14 +446,14 @@ class _RegularExpensesStep extends StatelessWidget {
     final locale = useLocale(context);
     return StepContent(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: 'Add Regular Expenses',
           languages.it: 'Aggiungi Spese Regolari',
           languages.ru: 'Добавьте регулярные расходы',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               'Add your recurring expenses like rent, utilities, or subscriptions. These will be automatically deducted from your budget.',
           languages.it:
@@ -467,7 +467,7 @@ class _RegularExpensesStep extends StatelessWidget {
         onPressed: () async => showExpensesTasksView(context: context),
         title: Text(
           LocalizedMap(
-            value: {
+        {
               languages.en: 'Add Expenses',
               languages.it: 'Aggiungi Spese',
               languages.ru: 'Добавить расходы',
@@ -485,14 +485,14 @@ class _CompletionStep extends StatelessWidget {
     final locale = useLocale(context);
     return StepContent(
       title: LocalizedMap(
-        value: {
+        {
           languages.en: "You're All Set!",
           languages.it: 'Sei Pronto!',
           languages.ru: 'Всё готово!',
         },
       ).getValue(locale),
       description: LocalizedMap(
-        value: {
+        {
           languages.en:
               "You've completed the setup. Now you can start tracking your daily spending and stay on budget. Remember to record your expenses and income regularly for the best results.",
           languages.it:

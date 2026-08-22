@@ -1,5 +1,6 @@
 import 'dart:ui' show Locale;
 
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ui_locale/ui_locale.dart';
 import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';

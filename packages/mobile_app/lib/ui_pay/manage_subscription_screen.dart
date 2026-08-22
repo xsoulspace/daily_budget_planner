@@ -21,7 +21,7 @@ class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
     return Scaffold(
       appBar: UiAppBar(
         titleText: LocalizedMap(
-          value: {
+        {
             languages.en: 'Manage Subscription',
             languages.it: 'Gestisci Abbonamento',
             languages.ru: 'Управление подпиской',
@@ -47,7 +47,7 @@ class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
                     ),
                     child: Text(
                       LocalizedMap(
-                        value: {
+        {
                           languages.en: 'Manage in Store',
                           languages.it: 'Gestisci nello Store',
                           languages.ru: 'Управлять в магазине',
@@ -60,7 +60,7 @@ class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
                 Center(
                   child: UiTextButton(
                     textTitle: LocalizedMap(
-                      value: {
+        {
                         languages.en: 'Restore Purchases',
                         languages.it: 'Ripristina Acquisti',
                         languages.ru: 'Восстановить покупки',
@@ -74,7 +74,7 @@ class ManageSubscriptionScreen extends StatelessWidget with HasMonetization {
                 Center(
                   child: Text(
                     LocalizedMap(
-                      value: {
+        {
                         languages.en: 'No active subscription',
                         languages.it: 'Nessun abbonamento attivo',
                         languages.ru: 'Нет активной подписки',
@@ -110,7 +110,7 @@ class _SubscriptionInfoCard extends StatelessWidget {
         children: [
           Text(
             LocalizedMap(
-              value: {
+        {
                 languages.en: 'Current Subscription',
                 languages.it: 'Abbonamento Attuale',
                 languages.ru: 'Текущая подписка',
@@ -121,7 +121,7 @@ class _SubscriptionInfoCard extends StatelessWidget {
           const SizedBox(height: 16),
           _DetailItem(
             title: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Plan:',
                 languages.it: 'Piano:',
                 languages.ru: 'План:',
@@ -136,7 +136,7 @@ class _SubscriptionInfoCard extends StatelessWidget {
           ),
           _DetailItem(
             title: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Price:',
                 languages.it: 'Prezzo:',
                 languages.ru: 'Цена:',
@@ -146,7 +146,7 @@ class _SubscriptionInfoCard extends StatelessWidget {
           ),
           _DetailItem(
             title: LocalizedMap(
-              value: {
+        {
                 languages.en: 'Next Renewal:',
                 languages.it: 'Prossimo Rinnovo:',
                 languages.ru: 'Следующее продление:',

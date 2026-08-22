@@ -1,6 +1,6 @@
 import 'package:mobile_app/common_imports.dart';
 
-@stateDistributor
+@resource
 class TaskTransactionsResource with ChangeNotifier {
   TaskTransactionsResource();
   var _transactions = <TransactionId, Transaction>{}.unmodifiable;
@@ -47,13 +47,14 @@ extension TaskTransactionsResourceX on TaskTransactionsResource {
   }) {
     final taskId = scheduledTransaction.taskId;
     assert(taskId.isNotEmpty, 'TaskId is empty');
-    _transactions =
-        {..._transactions, transaction.id: transaction}.unmodifiable;
-    final updatedTasksTransactions =
-        {
-          ..._tasksTransactions,
-          taskId: [...?_tasksTransactions[taskId], scheduledTransaction],
-        }.unmodifiable;
+    _transactions = {
+      ..._transactions,
+      transaction.id: transaction,
+    }.unmodifiable;
+    final updatedTasksTransactions = {
+      ..._tasksTransactions,
+      taskId: [...?_tasksTransactions[taskId], scheduledTransaction],
+    }.unmodifiable;
     _tasksTransactions = updatedTasksTransactions.unmodifiable;
     setState(() {});
   }
@@ -63,16 +64,17 @@ extension TaskTransactionsResourceX on TaskTransactionsResource {
     required final List<ScheduledTransaction> scheduledTransactions,
     required final List<Transaction> transactions,
   }) {
-    _tasksTransactions =
-        {..._tasksTransactions, taskId: scheduledTransactions}.unmodifiable;
-    _transactions =
-        {
-          ..._transactions,
-          ...transactions.toMap(
-            toKey: (final transaction) => transaction.id,
-            toValue: (final transaction) => transaction,
-          ),
-        }.unmodifiable;
+    _tasksTransactions = {
+      ..._tasksTransactions,
+      taskId: scheduledTransactions,
+    }.unmodifiable;
+    _transactions = {
+      ..._transactions,
+      ...transactions.toMap(
+        toKey: (final transaction) => transaction.id,
+        toValue: (final transaction) => transaction,
+      ),
+    }.unmodifiable;
     setState(() {});
   }
 

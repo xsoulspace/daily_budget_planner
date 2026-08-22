@@ -18,7 +18,7 @@ class SettingsBottomPopup extends StatelessWidget {
             UiPopupListTile(
               onTap: () async => AppPathsController.of(context).toTerms(),
               title: LocalizedMap(
-                value: {
+        {
                   languages.en: 'Terms of use',
                   languages.it: 'Condizioni di utilizzo',
                   languages.ru: 'Условия использования',
@@ -30,7 +30,7 @@ class SettingsBottomPopup extends StatelessWidget {
             UiPopupListTile(
               onTap: () async => AppPathsController.of(context).toPrivacy(),
               title: LocalizedMap(
-                value: {
+        {
                   languages.en: 'Privacy policy',
                   languages.it: 'Condizioni di utilizzo',
                   languages.ru: 'Приватность',
@@ -46,7 +46,7 @@ class SettingsBottomPopup extends StatelessWidget {
                 onClose();
               },
               title: LocalizedMap(
-                value: {
+        {
                   languages.en: 'Expenses prediction',
                   languages.it: 'Previsione delle spese',
                   languages.ru: 'Предположение о расходах',
@@ -68,7 +68,7 @@ class SettingsBottomPopup extends StatelessWidget {
                     setLoading(false);
                   },
                   title: LocalizedMap(
-                    value: {
+        {
                       languages.en: 'Leave Review',
                       languages.it: 'Lascia un feedback',
                       languages.ru: 'Оставить отзыв',
@@ -83,7 +83,7 @@ class SettingsBottomPopup extends StatelessWidget {
               UiPopupListTile(
                 onTap: () async => UserFeedback.show(context),
                 title: LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Support & Suggest',
                     languages.it: 'Supporto & Suggerimenti',
                     languages.ru: 'Помощь и предложения',
@@ -103,7 +103,7 @@ class SettingsBottomPopup extends StatelessWidget {
                 onTap: () async =>
                     AppPathsController.of(context).toManageSubscription(),
                 title: LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Manage subscription',
                     languages.it: 'Gestisci abbonamento',
                     languages.ru: 'Управление подпиской',
@@ -116,7 +116,7 @@ class SettingsBottomPopup extends StatelessWidget {
             UiPopupListTile(
               onTap: () async => AppPathsController.of(context).toExplanation(),
               title: LocalizedMap(
-                value: {
+        {
                   languages.en: 'How to use?',
                   languages.it: 'Come usarlo?',
                   languages.ru: 'Как пользоваться?',

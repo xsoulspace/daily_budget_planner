@@ -4,7 +4,7 @@ Locale useLocale(
   final BuildContext context, {
   final bool listen = true,
 }) =>
-    Provider.of<UiLocaleNotifier>(context, listen: listen).value;
+    Provider.of<UiLocaleResource>(context, listen: listen).value;
 
 class UiLocalizedText extends HookWidget {
   const UiLocalizedText({super.key});

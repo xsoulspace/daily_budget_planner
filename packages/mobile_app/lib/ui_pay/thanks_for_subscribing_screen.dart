@@ -30,7 +30,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
               const Gap(24),
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Thank You for Subscribing!',
                     languages.it: 'Grazie per esserti abbonato!',
                     languages.ru: 'Спасибо за подписку!',
@@ -45,7 +45,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
               const Gap(16),
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en:
                         'Your contribution helps to make this app better.',
                     languages.it:
@@ -67,7 +67,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                       children: [
                         Text(
                           LocalizedMap(
-                            value: {
+        {
                               languages.en: 'Your Subscription Plan',
                               languages.it: 'Il tuo piano di abbonamento',
                               languages.ru: 'Ваш план подписки',
@@ -80,7 +80,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                         const Gap(16),
                         _DetailItem(
                           title: LocalizedMap(
-                            value: {
+        {
                               languages.en: 'Plan:',
                               languages.it: 'Piano:',
                               languages.ru: 'План:',
@@ -92,7 +92,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                         ),
                         _DetailItem(
                           title: LocalizedMap(
-                            value: {
+        {
                               languages.en: 'Price:',
                               languages.it: 'Prezzo:',
                               languages.ru: 'Цена:',
@@ -103,7 +103,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                         if (subscription.expiryDate != null)
                           _DetailItem(
                             title: LocalizedMap(
-                              value: {
+        {
                                 languages.en: 'Next Renewal:',
                                 languages.it: 'Prossimo Rinnovo:',
                                 languages.ru: 'Следующее продление:',
@@ -132,7 +132,7 @@ class ThanksForSubscribingScreen extends StatelessWidget {
                 ),
                 child: Text(
                   LocalizedMap(
-                    value: {
+        {
                       languages.en: 'Start Using PRO Features!',
                       languages.it: 'Inizia a usare le funzionalità PRO!',
                       languages.ru: 'Начать использовать PRO функции!',

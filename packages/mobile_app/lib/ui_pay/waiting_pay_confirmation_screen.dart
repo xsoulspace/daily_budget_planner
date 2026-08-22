@@ -78,7 +78,7 @@ class _WaitingPayConfirmationScreenState
                   const Gap(8),
                   Text(
                     LocalizedMap(
-                      value: {
+        {
                         languages.en: 'Processing...',
                         languages.ru: 'Обработка...',
                         languages.it: 'Elaborazione...',
@@ -94,7 +94,7 @@ class _WaitingPayConfirmationScreenState
               const Gap(24),
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en: 'Waiting for payment confirmation',
                     languages.ru: 'Ожидаем подтверждение оплаты',
                     languages.it: 'In attesa di conferma del pagamento',
@@ -108,7 +108,7 @@ class _WaitingPayConfirmationScreenState
               const Gap(16),
               Text(
                 LocalizedMap(
-                  value: {
+        {
                     languages.en:
                         'This usually takes less than a minute. You can check the status manually.',
                     languages.ru:
@@ -126,7 +126,7 @@ class _WaitingPayConfirmationScreenState
                     UiTextButton(
                       isLoading: isLoading || _isCheckingStatus,
                       textTitle: LocalizedMap(
-                        value: {
+        {
                           languages.en: 'Check Status',
                           languages.ru: 'Проверить статус',
                           languages.it: 'Controlla Stato',
