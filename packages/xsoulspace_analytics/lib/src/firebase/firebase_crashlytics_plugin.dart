@@ -17,7 +17,11 @@ class FirebaseCrashlyticsPlugin implements CrashlyticsService {
 
   @override
   Future<void> onLoad() async {
-    _isEnabled = forceCrashlytics || DeviceRuntimeType.isNativeMobile;
+    _isEnabled =
+        forceCrashlytics ||
+        (!kIsWeb &&
+            (defaultTargetPlatform == TargetPlatform.android ||
+                defaultTargetPlatform == TargetPlatform.iOS));
     if (!_isEnabled) return;
     _crashlytics = FirebaseCrashlytics.instance;
     await _crashlytics.setCrashlyticsCollectionEnabled(true);

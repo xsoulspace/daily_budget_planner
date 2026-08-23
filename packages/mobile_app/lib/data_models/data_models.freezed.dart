@@ -1413,6 +1413,570 @@ $InputMoneyCopyWith<$Res> get input {
 
 
 /// @nodoc
+mixin _$Commitment {
+
+ CommitmentId get id; String get title; double get amount; Period get period; CommitmentType get type; CategoryId get categoryId; DateTime get startedAt; DateTime? get endedAt;/// Optional day of period when the charge occurs (1..31 for monthly).
+ int get chargeDayOfMonth;
+/// Create a copy of Commitment
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CommitmentCopyWith<Commitment> get copyWith => _$CommitmentCopyWithImpl<Commitment>(this as Commitment, _$identity);
+
+  /// Serializes this Commitment to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Commitment&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.period, period) || other.period == period)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.chargeDayOfMonth, chargeDayOfMonth) || other.chargeDayOfMonth == chargeDayOfMonth));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,title,amount,period,type,categoryId,startedAt,endedAt,chargeDayOfMonth);
+
+@override
+String toString() {
+  return 'Commitment(id: $id, title: $title, amount: $amount, period: $period, type: $type, categoryId: $categoryId, startedAt: $startedAt, endedAt: $endedAt, chargeDayOfMonth: $chargeDayOfMonth)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CommitmentCopyWith<$Res>  {
+  factory $CommitmentCopyWith(Commitment value, $Res Function(Commitment) _then) = _$CommitmentCopyWithImpl;
+@useResult
+$Res call({
+ CommitmentId id, String title, double amount, Period period, CommitmentType type, CategoryId categoryId, DateTime startedAt, DateTime? endedAt, int chargeDayOfMonth
+});
+
+
+
+
+}
+/// @nodoc
+class _$CommitmentCopyWithImpl<$Res>
+    implements $CommitmentCopyWith<$Res> {
+  _$CommitmentCopyWithImpl(this._self, this._then);
+
+  final Commitment _self;
+  final $Res Function(Commitment) _then;
+
+/// Create a copy of Commitment
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? amount = null,Object? period = null,Object? type = null,Object? categoryId = null,Object? startedAt = null,Object? endedAt = freezed,Object? chargeDayOfMonth = null,}) {
+  return _then(Commitment(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as CommitmentId,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as double,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
+as Period,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CommitmentType,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as CategoryId,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,endedAt: freezed == endedAt ? _self.endedAt : endedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,chargeDayOfMonth: null == chargeDayOfMonth ? _self.chargeDayOfMonth : chargeDayOfMonth // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [Commitment].
+extension CommitmentPatterns on Commitment {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Commitment value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Commitment() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Commitment value)  $default,){
+final _that = this;
+switch (_that) {
+case _Commitment():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Commitment value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Commitment() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CommitmentId id,  String title,  double amount,  Period period,  CommitmentType type,  CategoryId categoryId,  DateTime startedAt,  DateTime? endedAt,  int chargeDayOfMonth)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Commitment() when $default != null:
+return $default(_that.id,_that.title,_that.amount,_that.period,_that.type,_that.categoryId,_that.startedAt,_that.endedAt,_that.chargeDayOfMonth);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CommitmentId id,  String title,  double amount,  Period period,  CommitmentType type,  CategoryId categoryId,  DateTime startedAt,  DateTime? endedAt,  int chargeDayOfMonth)  $default,) {final _that = this;
+switch (_that) {
+case _Commitment():
+return $default(_that.id,_that.title,_that.amount,_that.period,_that.type,_that.categoryId,_that.startedAt,_that.endedAt,_that.chargeDayOfMonth);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CommitmentId id,  String title,  double amount,  Period period,  CommitmentType type,  CategoryId categoryId,  DateTime startedAt,  DateTime? endedAt,  int chargeDayOfMonth)?  $default,) {final _that = this;
+switch (_that) {
+case _Commitment() when $default != null:
+return $default(_that.id,_that.title,_that.amount,_that.period,_that.type,_that.categoryId,_that.startedAt,_that.endedAt,_that.chargeDayOfMonth);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _Commitment extends Commitment {
+  const _Commitment({this.id = CommitmentId.empty, this.title = '', this.amount = 0.0, this.period = Period.monthly, this.type = CommitmentType.subscription, this.categoryId = CategoryId.empty, required this.startedAt, this.endedAt, this.chargeDayOfMonth = 1}): super._();
+  factory _Commitment.fromJson(Map<String, dynamic> json) => _$CommitmentFromJson(json);
+
+@override@JsonKey() final  CommitmentId id;
+@override@JsonKey() final  String title;
+@override@JsonKey() final  double amount;
+@override@JsonKey() final  Period period;
+@override@JsonKey() final  CommitmentType type;
+@override@JsonKey() final  CategoryId categoryId;
+@override final  DateTime startedAt;
+@override final  DateTime? endedAt;
+/// Optional day of period when the charge occurs (1..31 for monthly).
+@override@JsonKey() final  int chargeDayOfMonth;
+
+/// Create a copy of Commitment
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$CommitmentCopyWith<_Commitment> get copyWith => __$CommitmentCopyWithImpl<_Commitment>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$CommitmentToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Commitment&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.period, period) || other.period == period)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.chargeDayOfMonth, chargeDayOfMonth) || other.chargeDayOfMonth == chargeDayOfMonth));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,title,amount,period,type,categoryId,startedAt,endedAt,chargeDayOfMonth);
+
+@override
+String toString() {
+  return 'Commitment(id: $id, title: $title, amount: $amount, period: $period, type: $type, categoryId: $categoryId, startedAt: $startedAt, endedAt: $endedAt, chargeDayOfMonth: $chargeDayOfMonth)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$CommitmentCopyWith<$Res> implements $CommitmentCopyWith<$Res> {
+  factory _$CommitmentCopyWith(_Commitment value, $Res Function(_Commitment) _then) = __$CommitmentCopyWithImpl;
+@override @useResult
+$Res call({
+ CommitmentId id, String title, double amount, Period period, CommitmentType type, CategoryId categoryId, DateTime startedAt, DateTime? endedAt, int chargeDayOfMonth
+});
+
+
+
+
+}
+/// @nodoc
+class __$CommitmentCopyWithImpl<$Res>
+    implements _$CommitmentCopyWith<$Res> {
+  __$CommitmentCopyWithImpl(this._self, this._then);
+
+  final _Commitment _self;
+  final $Res Function(_Commitment) _then;
+
+/// Create a copy of Commitment
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? amount = null,Object? period = null,Object? type = null,Object? categoryId = null,Object? startedAt = null,Object? endedAt = freezed,Object? chargeDayOfMonth = null,}) {
+  return _then(_Commitment(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as CommitmentId,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as double,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
+as Period,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as CommitmentType,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as CategoryId,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,endedAt: freezed == endedAt ? _self.endedAt : endedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,chargeDayOfMonth: null == chargeDayOfMonth ? _self.chargeDayOfMonth : chargeDayOfMonth // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$PlannedSum {
+
+ BudgetId get id; TransactionType get type; double get amount; DateTime get periodStart; Period get period;
+/// Create a copy of PlannedSum
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PlannedSumCopyWith<PlannedSum> get copyWith => _$PlannedSumCopyWithImpl<PlannedSum>(this as PlannedSum, _$identity);
+
+  /// Serializes this PlannedSum to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlannedSum&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.periodStart, periodStart) || other.periodStart == periodStart)&&(identical(other.period, period) || other.period == period));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,type,amount,periodStart,period);
+
+@override
+String toString() {
+  return 'PlannedSum(id: $id, type: $type, amount: $amount, periodStart: $periodStart, period: $period)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $PlannedSumCopyWith<$Res>  {
+  factory $PlannedSumCopyWith(PlannedSum value, $Res Function(PlannedSum) _then) = _$PlannedSumCopyWithImpl;
+@useResult
+$Res call({
+ BudgetId id, TransactionType type, double amount, DateTime periodStart, Period period
+});
+
+
+
+
+}
+/// @nodoc
+class _$PlannedSumCopyWithImpl<$Res>
+    implements $PlannedSumCopyWith<$Res> {
+  _$PlannedSumCopyWithImpl(this._self, this._then);
+
+  final PlannedSum _self;
+  final $Res Function(PlannedSum) _then;
+
+/// Create a copy of PlannedSum
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? amount = null,Object? periodStart = null,Object? period = null,}) {
+  return _then(PlannedSum(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as BudgetId,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as TransactionType,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as double,periodStart: null == periodStart ? _self.periodStart : periodStart // ignore: cast_nullable_to_non_nullable
+as DateTime,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
+as Period,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [PlannedSum].
+extension PlannedSumPatterns on PlannedSum {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PlannedSum value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _PlannedSum() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PlannedSum value)  $default,){
+final _that = this;
+switch (_that) {
+case _PlannedSum():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PlannedSum value)?  $default,){
+final _that = this;
+switch (_that) {
+case _PlannedSum() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BudgetId id,  TransactionType type,  double amount,  DateTime periodStart,  Period period)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _PlannedSum() when $default != null:
+return $default(_that.id,_that.type,_that.amount,_that.periodStart,_that.period);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BudgetId id,  TransactionType type,  double amount,  DateTime periodStart,  Period period)  $default,) {final _that = this;
+switch (_that) {
+case _PlannedSum():
+return $default(_that.id,_that.type,_that.amount,_that.periodStart,_that.period);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BudgetId id,  TransactionType type,  double amount,  DateTime periodStart,  Period period)?  $default,) {final _that = this;
+switch (_that) {
+case _PlannedSum() when $default != null:
+return $default(_that.id,_that.type,_that.amount,_that.periodStart,_that.period);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _PlannedSum extends PlannedSum {
+  const _PlannedSum({this.id = BudgetId.empty, this.type = TransactionType.expense, this.amount = 0.0, required this.periodStart, this.period = Period.monthly}): super._();
+  factory _PlannedSum.fromJson(Map<String, dynamic> json) => _$PlannedSumFromJson(json);
+
+@override@JsonKey() final  BudgetId id;
+@override@JsonKey() final  TransactionType type;
+@override@JsonKey() final  double amount;
+@override final  DateTime periodStart;
+@override@JsonKey() final  Period period;
+
+/// Create a copy of PlannedSum
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PlannedSumCopyWith<_PlannedSum> get copyWith => __$PlannedSumCopyWithImpl<_PlannedSum>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$PlannedSumToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlannedSum&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.periodStart, periodStart) || other.periodStart == periodStart)&&(identical(other.period, period) || other.period == period));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,type,amount,periodStart,period);
+
+@override
+String toString() {
+  return 'PlannedSum(id: $id, type: $type, amount: $amount, periodStart: $periodStart, period: $period)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PlannedSumCopyWith<$Res> implements $PlannedSumCopyWith<$Res> {
+  factory _$PlannedSumCopyWith(_PlannedSum value, $Res Function(_PlannedSum) _then) = __$PlannedSumCopyWithImpl;
+@override @useResult
+$Res call({
+ BudgetId id, TransactionType type, double amount, DateTime periodStart, Period period
+});
+
+
+
+
+}
+/// @nodoc
+class __$PlannedSumCopyWithImpl<$Res>
+    implements _$PlannedSumCopyWith<$Res> {
+  __$PlannedSumCopyWithImpl(this._self, this._then);
+
+  final _PlannedSum _self;
+  final $Res Function(_PlannedSum) _then;
+
+/// Create a copy of PlannedSum
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? amount = null,Object? periodStart = null,Object? period = null,}) {
+  return _then(_PlannedSum(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as BudgetId,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as TransactionType,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
+as double,periodStart: null == periodStart ? _self.periodStart : periodStart // ignore: cast_nullable_to_non_nullable
+as DateTime,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
+as Period,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
 mixin _$FinSettingsModel {
 
  CurrencyId get fiatCurrencyId; CurrencyId get cryptoCurrencyId;

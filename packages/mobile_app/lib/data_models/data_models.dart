@@ -9,6 +9,7 @@ import 'package:xsoulspace_foundation/xsoulspace_foundation.dart';
 part 'app_settings_model.dart';
 part 'bank_account_models.dart';
 part 'budget_model.dart';
+part 'commitment_models.dart';
 part 'data_models.freezed.dart';
 part 'data_models.g.dart';
 part 'fin_settings_model.dart';

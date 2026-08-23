@@ -25,9 +25,9 @@ Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
 _MonthlyBudgetModel _$MonthlyBudgetModelFromJson(Map<String, dynamic> json) =>
     _MonthlyBudgetModel(
       id: BudgetModelId.fromJson(json['id'] as String),
-      nextBudgetDay: json['nextBudgetDay'] == null
-          ? null
-          : DateTime.parse(json['nextBudgetDay'] as String),
+      nextBudgetDay: dateTimeFromMillisecondsSinceEpoch(
+        (json['nextBudgetDay'] as num?)?.toInt(),
+      ),
       amount: (json['amount'] as num?)?.toDouble() ?? 0,
       savings: (json['savings'] as num?)?.toDouble() ?? 0,
     );
@@ -35,7 +35,7 @@ _MonthlyBudgetModel _$MonthlyBudgetModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MonthlyBudgetModelToJson(_MonthlyBudgetModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'nextBudgetDay': instance.nextBudgetDay?.toIso8601String(),
+      'nextBudgetDay': dateTimeToMillisecondsSinceEpoch(instance.nextBudgetDay),
       'amount': instance.amount,
       'savings': instance.savings,
     };
@@ -81,6 +81,71 @@ Map<String, dynamic> _$BudgetToJson(_Budget instance) => <String, dynamic>{
   'transactionType': instance.transactionType,
   'personalIncomeType': instance.personalIncomeType,
   'personalExpenseType': instance.personalExpenseType,
+};
+
+_Commitment _$CommitmentFromJson(Map<String, dynamic> json) => _Commitment(
+  id: json['id'] == null
+      ? CommitmentId.empty
+      : CommitmentId.fromJson(json['id'] as String),
+  title: json['title'] as String? ?? '',
+  amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+  period: json['period'] == null
+      ? Period.monthly
+      : Period.fromJson((json['period'] as num).toInt()),
+  type: json['type'] == null
+      ? CommitmentType.subscription
+      : CommitmentType.fromJson(json['type'] as String),
+  categoryId: json['categoryId'] == null
+      ? CategoryId.empty
+      : CategoryId.fromJson(json['categoryId'] as String),
+  startedAt: DateTime.parse(json['startedAt'] as String),
+  endedAt: json['endedAt'] == null
+      ? null
+      : DateTime.parse(json['endedAt'] as String),
+  chargeDayOfMonth: (json['chargeDayOfMonth'] as num?)?.toInt() ?? 1,
+);
+
+Map<String, dynamic> _$CommitmentToJson(_Commitment instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'amount': instance.amount,
+      'period': instance.period,
+      'type': instance.type,
+      'categoryId': instance.categoryId,
+      'startedAt': instance.startedAt.toIso8601String(),
+      'endedAt': instance.endedAt?.toIso8601String(),
+      'chargeDayOfMonth': instance.chargeDayOfMonth,
+    };
+
+_PlannedSum _$PlannedSumFromJson(Map<String, dynamic> json) => _PlannedSum(
+  id: json['id'] == null
+      ? BudgetId.empty
+      : BudgetId.fromJson(json['id'] as String),
+  type:
+      $enumDecodeNullable(_$TransactionTypeEnumMap, json['type']) ??
+      TransactionType.expense,
+  amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+  periodStart: DateTime.parse(json['periodStart'] as String),
+  period: json['period'] == null
+      ? Period.monthly
+      : Period.fromJson((json['period'] as num).toInt()),
+);
+
+Map<String, dynamic> _$PlannedSumToJson(_PlannedSum instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': _$TransactionTypeEnumMap[instance.type]!,
+      'amount': instance.amount,
+      'periodStart': instance.periodStart.toIso8601String(),
+      'period': instance.period,
+    };
+
+const _$TransactionTypeEnumMap = {
+  TransactionType.expense: 'expense',
+  TransactionType.income: 'income',
+  TransactionType.transferIn: 'transfer_in',
+  TransactionType.transferOut: 'transfer_out',
 };
 
 _FinSettingsModel _$FinSettingsModelFromJson(Map<String, dynamic> json) =>
@@ -351,13 +416,6 @@ Map<String, dynamic> _$TransactionToJson(_Transaction instance) =>
       'type': _$TransactionTypeEnumMap[instance.type]!,
       'categoryId': instance.categoryId,
     };
-
-const _$TransactionTypeEnumMap = {
-  TransactionType.expense: 'expense',
-  TransactionType.income: 'income',
-  TransactionType.transferIn: 'transfer_in',
-  TransactionType.transferOut: 'transfer_out',
-};
 
 FiatInputModel _$FiatInputModelFromJson(Map<String, dynamic> json) =>
     FiatInputModel(

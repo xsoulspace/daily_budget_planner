@@ -65,6 +65,8 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   rl<TransactionsLocalApi>(TransactionsLocalApiSembast.new);
   rl<ScheduledTransactionsLocalApi>(ScheduledTransactionsLocalApiSembast.new);
   rl<TasksLocalApi>(TasksLocalApiSembast.new);
+  rl<CommitmentsLocalApi>(CommitmentsLocalApiSembast.new);
+  rl<PlannedSumsLocalApi>(PlannedSumsLocalApiSembast.new);
 
   /// ********************************************
   /// *      RESOURCES
@@ -84,6 +86,8 @@ Future<void> _init({required final AnalyticsManager analyticsManager}) async {
   rl(TotalSumResource.new, dispose: d);
   rl(DailyBudgetResource.new, dispose: d);
   rl(PlannedSumResource.new, dispose: d);
+  rl(CommitmentsResource.new, dispose: d);
+  rl(PlannedSumsStoreResource.new, dispose: d);
 
   /// ********************************************
   /// *      Notifiers
@@ -180,6 +184,8 @@ mixin HasLocalApis {
 
   BudgetLocalApi get simpleBudgetLocalApi => _g();
   ManualBudgetsLocalApi get manualBudgetsLocalApi => _g();
+  CommitmentsLocalApi get commitmentsLocalApi => _g();
+  PlannedSumsLocalApi get plannedSumsLocalApi => _g();
 
   DictionariesLocalApi get dictionariesLocalApi => _g();
   TransactionsLocalApi get transactionsLocalApi => _g();
@@ -204,6 +210,8 @@ mixin HasResources {
   RecentBudgetResource get recentBudgetResource => _g();
   PredictionConfigResource get predictionConfigResource => _g();
   DailyBudgetResource get dailyBudgetResource => _g();
+  CommitmentsResource get commitmentsResource => _g();
+  PlannedSumsStoreResource get plannedSumsStoreResource => _g();
 
   /// ********************************************
   /// *      SUM RESOURCES

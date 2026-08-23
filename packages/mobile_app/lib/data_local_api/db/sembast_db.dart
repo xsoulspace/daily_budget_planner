@@ -16,6 +16,8 @@ typedef SembastDataMap = Map<String, dynamic>;
 final class SembastDb extends ComplexLocalDb {
   Database? _db;
   final budgets = StoreRef<BudgetId, SembastDataMap>('budgets');
+  final commitments = StoreRef<CommitmentId, SembastDataMap>('commitments');
+  final plannedSums = StoreRef<BudgetId, SembastDataMap>('planned_sums');
   final transactions = StoreRef<TransactionId, SembastDataMap>('transactions');
   final scheduledTransactions = StoreRef<TransactionId, SembastDataMap>(
     'scheduled_transactions',

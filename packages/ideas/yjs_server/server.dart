@@ -11,7 +11,10 @@ class CollaborativeTodoServer {
   final _connections = <WebSocketChannel>{};
 
   /// Handles new WebSocket connection
-  void handleConnection(final WebSocketChannel webSocket) {
+  void handleConnection(
+    final WebSocketChannel webSocket,
+    final String? subprotocol,
+  ) {
     _connections.add(webSocket);
     print('New WebSocket connection established');
 
