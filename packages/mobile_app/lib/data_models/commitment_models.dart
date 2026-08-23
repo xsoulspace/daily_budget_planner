@@ -76,26 +76,22 @@ abstract class Commitment with _$Commitment {
   /// Number of charge occurrences within [range].
   int occurrencesIn(final DateTimeRange range) {
     if (!chargesWithin(range)) return 0;
-    final effectiveStart = startedAt.isAfter(range.start)
-        ? startedAt
-        : range.start;
     final effectiveEnd = endedAt != null && endedAt!.isBefore(range.end)
         ? endedAt!
         : range.end;
-    final days = effectiveEnd.difference(effectiveStart).inDays;
-    if (days < 0) return 0;
-    var date = startedAt.isAfter(range.start) ? startedAt : range.start;
+    final effectiveStart = startedAt.isAfter(range.start)
+        ? startedAt
+        : range.start;
+    // Charges follow the cadence anchored at [startedAt]; count the
+    // occurrences that land inside [effectiveStart, effectiveEnd].
+    var date = startedAt;
     var count = 0;
-    while (!date.isAfter(range.end)) {
-      count++;
-      date = switch (period.inDays) {
-        Period.monthly => DateTime(date.year, date.month + 1, chargeDayOfMonth),
-        _ => date.add(period.duration),
-      };
-      if (date.isBefore(effectiveStart)) break; // guard
+    while (!date.isAfter(effectiveEnd)) {
+      if (!date.isBefore(effectiveStart)) count++;
+      date = period == Period.monthly
+          ? DateTime(date.year, date.month + 1, date.day)
+          : date.add(period.duration);
     }
-    // A charge happens once per period; partial coverage of a period
-    // still counts as at most one charge within that period.
     return count;
   }
 
