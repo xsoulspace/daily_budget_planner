@@ -1,0 +1,24 @@
+# Shared onboarding steps: from fresh launch to the home screen.
+# Used by other flows via runFlow.
+appId: ${APP_ID}
+---
+# Step 1: current balance
+- tapOn: "Enter your current balance"
+- inputText: "10000"
+- tapOn: "Next"
+# Step 2: total expenses
+- tapOn: "Enter your total expenses"
+- inputText: "3000"
+- tapOn: "Next"
+# Step 3: next payday — open the date picker and confirm the preselected date
+- tapOn: "Select Next Salary Date"
+- tapOn: "OK"
+# Congratulations screen (fadeIn animation can delay the text node)
+- extendedWaitUntil:
+    visible: ".*Congratulations.*"
+    timeout: 10000
+- tapOn: "Cool! Let's start!"
+# Home screen
+- extendedWaitUntil:
+    visible: ".*Daily Budget.*"
+    timeout: 10000

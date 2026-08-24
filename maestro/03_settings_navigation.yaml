@@ -1,19 +1,23 @@
 appId: ${APP_ID}
 name: 03 - Settings popup navigation (Terms & Privacy)
+# Precondition: onboarding completed once (run 01 first).
 ---
 - launchApp:
-    clearState: true
-- assertVisible: "Monthly Budget"
+    clearState: false
+- extendedWaitUntil:
+    visible: ".*Your Budget.*"
+    timeout: 30000
 # Open settings popup from the home bottom bar.
 - tapOn: "Settings"
-- assertVisible: "Terms and Conditions"
-- assertVisible: "Privacy Policy"
+- assertVisible: ".*Terms of use.*"
+- assertVisible: ".*Privacy policy.*"
 # Navigate to Terms screen and back.
-- tapOn: "Terms and Conditions"
-- assertVisible: "Terms"
+- tapOn: ".*Terms of use.*"
+- assertVisible: ".*Terms and Conditions.*"
 - back
 # Navigate to Privacy screen and back.
 - tapOn: "Settings"
-- tapOn: "Privacy Policy"
-- assertVisible: "Privacy Policy"
+- tapOn: ".*Privacy policy.*"
+- assertVisible: ".*Privacy Policy.*"
 - back
+- assertVisible: ".*Your Budget.*"

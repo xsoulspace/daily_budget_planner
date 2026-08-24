@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:universal_storage_filesystem/universal_storage_filesystem.dart';
 import 'package:universal_storage_local_db/universal_storage_local_db.dart';
 import 'package:universal_storage_sync/universal_storage_sync.dart';
@@ -79,7 +81,7 @@ final class DailyBudgetStorageKernelBootstrap {
               LocalDbStorageProvider(localDb: await _resolveWebLocalDb()),
             )
           : StorageService(FileSystemStorageProvider());
-      final config = _buildConfig();
+      final config = await _buildConfig();
       await service.initializeWithConfig(config);
 
       final loadResult = await const StorageProfileLoader().load(
@@ -91,7 +93,7 @@ final class DailyBudgetStorageKernelBootstrap {
         path: '_rollout/kernel_bootstrap.json',
         content: jsonEncode(<String, dynamic>{
           'initialized_at_utc': DateTime.now().toUtc().toIso8601String(),
-          'storage_root': storageRootPath,
+          'storage_root': _resolvedRootPath ?? storageRootPath,
           'backend': kIsWeb ? 'local_db' : 'filesystem',
         }),
         message: 'Initialize G5 storage kernel bootstrap',
@@ -122,13 +124,45 @@ final class DailyBudgetStorageKernelBootstrap {
     return resolved;
   }
 
-  FileSystemConfig _buildConfig() => FileSystemConfig.fromFilePathConfig(
-    FilePathConfig.create(
-      path: storageRootPath,
-      macOSBookmarkData: const MacOSBookmark(''),
-    ),
-    databaseName: 'daily_budget_planner',
-  );
+  /// Resolved absolute storage root, set during [initialize] when the
+  /// configured [storageRootPath] was relative.
+  String? get resolvedRootPath => _resolvedRootPath;
+  String? _resolvedRootPath;
+
+  Future<FileSystemConfig> _buildConfig() async {
+    final rootPath = await _resolveRootPath();
+    return FileSystemConfig.fromFilePathConfig(
+      FilePathConfig.create(
+        path: rootPath,
+        macOSBookmarkData: MacOSBookmark.empty,
+      ),
+      databaseName: 'daily_budget_planner',
+    );
+  }
+
+  /// Resolves [storageRootPath] to an absolute path on IO platforms.
+  ///
+  /// Relative defaults like `./.us_daily_budget_planner` only work where the
+  /// process CWD is writable (web/desktop dev). On iOS/Android the app is
+  /// sandboxed and relative paths resolve against a read-only root, so they
+  /// are anchored under [getApplicationSupportDirectory] instead.
+  Future<String> _resolveRootPath() async {
+    if (kIsWeb || p.isAbsolute(storageRootPath)) {
+      return storageRootPath;
+    }
+    try {
+      final support = await getApplicationSupportDirectory();
+      final resolved = p.normalize(p.join(support.path, storageRootPath));
+      _resolvedRootPath = resolved;
+      return resolved;
+    } on Object catch (error) {
+      debugPrint(
+        'DailyBudgetStorageKernelBootstrap: could not resolve app support '
+        'directory, falling back to relative root: $error',
+      );
+      return storageRootPath;
+    }
+  }
 
   static const _settingsNamespace = StorageNamespace.settings;
   static const _userNamespace = StorageNamespace('user');

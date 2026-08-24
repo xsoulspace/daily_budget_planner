@@ -1,0 +1,13 @@
+appId: ${APP_ID}
+name: 01 - Fresh launch completes onboarding and lands on home
+---
+- launchApp:
+    clearState: true
+# Cold debug builds can take a while to pass the preloading screen.
+- extendedWaitUntil:
+    visible: ".*What's in Your Pocket.*"
+    timeout: 60000
+- runFlow: subflows/onboarding.yaml
+- assertVisible: ".*Your Budget.*"
+- assertVisible: ".*Monthly.*"
+- assertVisible: ".*Weekly.*"

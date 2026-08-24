@@ -1,0 +1,16 @@
+appId: ${APP_ID}
+name: 02 - Home tabs and budget breakdown
+# Precondition: onboarding completed once (run 01 first).
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: ".*Your Budget.*"
+    timeout: 30000
+- assertVisible: ".*Daily Budget.*"
+# Switch to Weekly tab and back (anchored regex so the "Weekly Budget"
+# breakdown row on the Monthly view is not matched instead of the tab).
+- tapOn: "Weekly$"
+- assertVisible: ".*Days Left in week.*"
+- tapOn: "Monthly$"
+- assertVisible: ".*Days in Total.*"

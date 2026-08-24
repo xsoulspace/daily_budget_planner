@@ -17,6 +17,7 @@ class SettingsIconButton extends HookWidget {
       buttonBuilder: (final context, final isVisible, final onPressed) =>
           IconButton(
         onPressed: onPressed,
+        tooltip: 'Settings',
         icon: const Icon(Icons.settings),
       ),
     );
