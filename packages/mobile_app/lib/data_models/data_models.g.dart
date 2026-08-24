@@ -34,7 +34,7 @@ _MonthlyBudgetModel _$MonthlyBudgetModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MonthlyBudgetModelToJson(_MonthlyBudgetModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': instance.id.toJson(),
       'nextBudgetDay': dateTimeToMillisecondsSinceEpoch(instance.nextBudgetDay),
       'amount': instance.amount,
       'savings': instance.savings,
@@ -47,7 +47,7 @@ _WeeklyBudgetModel _$WeeklyBudgetModelFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$WeeklyBudgetModelToJson(_WeeklyBudgetModel instance) =>
-    <String, dynamic>{'id': instance.id, 'amount': instance.amount};
+    <String, dynamic>{'id': instance.id.toJson(), 'amount': instance.amount};
 
 _Budget _$BudgetFromJson(Map<String, dynamic> json) => _Budget(
   date: DateTime.parse(json['date'] as String),
@@ -75,12 +75,12 @@ _Budget _$BudgetFromJson(Map<String, dynamic> json) => _Budget(
 
 Map<String, dynamic> _$BudgetToJson(_Budget instance) => <String, dynamic>{
   'date': instance.date.toIso8601String(),
-  'id': instance.id,
-  'input': instance.input,
-  'type': instance.type,
-  'transactionType': instance.transactionType,
-  'personalIncomeType': instance.personalIncomeType,
-  'personalExpenseType': instance.personalExpenseType,
+  'id': instance.id.toJson(),
+  'input': instance.input.toJson(),
+  'type': instance.type.toJson(),
+  'transactionType': instance.transactionType.toJson(),
+  'personalIncomeType': instance.personalIncomeType.toJson(),
+  'personalExpenseType': instance.personalExpenseType.toJson(),
 };
 
 _Commitment _$CommitmentFromJson(Map<String, dynamic> json) => _Commitment(
@@ -107,12 +107,12 @@ _Commitment _$CommitmentFromJson(Map<String, dynamic> json) => _Commitment(
 
 Map<String, dynamic> _$CommitmentToJson(_Commitment instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': instance.id.toJson(),
       'title': instance.title,
       'amount': instance.amount,
-      'period': instance.period,
-      'type': instance.type,
-      'categoryId': instance.categoryId,
+      'period': instance.period.toJson(),
+      'type': instance.type.toJson(),
+      'categoryId': instance.categoryId.toJson(),
       'startedAt': instance.startedAt.toIso8601String(),
       'endedAt': instance.endedAt?.toIso8601String(),
       'chargeDayOfMonth': instance.chargeDayOfMonth,
@@ -134,11 +134,11 @@ _PlannedSum _$PlannedSumFromJson(Map<String, dynamic> json) => _PlannedSum(
 
 Map<String, dynamic> _$PlannedSumToJson(_PlannedSum instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': instance.id.toJson(),
       'type': _$TransactionTypeEnumMap[instance.type]!,
       'amount': instance.amount,
       'periodStart': instance.periodStart.toIso8601String(),
-      'period': instance.period,
+      'period': instance.period.toJson(),
     };
 
 const _$TransactionTypeEnumMap = {
@@ -160,8 +160,8 @@ _FinSettingsModel _$FinSettingsModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FinSettingsModelToJson(_FinSettingsModel instance) =>
     <String, dynamic>{
-      'fiatCurrencyId': instance.fiatCurrencyId,
-      'cryptoCurrencyId': instance.cryptoCurrencyId,
+      'fiatCurrencyId': instance.fiatCurrencyId.toJson(),
+      'cryptoCurrencyId': instance.cryptoCurrencyId.toJson(),
     };
 
 _FinTaskModel _$FinTaskModelFromJson(
@@ -191,13 +191,13 @@ _FinTaskModel _$FinTaskModelFromJson(
 Map<String, dynamic> _$FinTaskModelToJson(_FinTaskModel instance) =>
     <String, dynamic>{
       'startDate': instance.startDate.toIso8601String(),
-      'id': instance.id,
+      'id': instance.id.toJson(),
       'name': instance.name,
       'purpose': _$FinTaskModelPurposeEnumMap[instance.purpose]!,
       'type': _$TaskTypeEnumMap[instance.type]!,
-      'status': instance.status,
-      'period': instance.period,
-      'regularIncomeTaskId': instance.regularIncomeTaskId,
+      'status': instance.status.toJson(),
+      'period': instance.period.toJson(),
+      'regularIncomeTaskId': instance.regularIncomeTaskId.toJson(),
     };
 
 const _$FinTaskModelPurposeEnumMap = {
@@ -241,8 +241,8 @@ _Task _$TaskFromJson(Map<String, dynamic> json) => _Task(
 );
 
 Map<String, dynamic> _$TaskToJson(_Task instance) => <String, dynamic>{
-  'id': instance.id,
-  'status': instance.status,
+  'id': instance.id.toJson(),
+  'status': instance.status.toJson(),
   'title': instance.title,
   'notes': instance.notes,
   'type': _$TaskTypeEnumMap[instance.type]!,
@@ -250,8 +250,8 @@ Map<String, dynamic> _$TaskToJson(_Task instance) => <String, dynamic>{
       _$PersonalIncomeTaskTypeEnumMap[instance.personalIncomeType]!,
   'personalExpenseType':
       _$PersonalExpenseTaskTypeEnumMap[instance.personalExpenseType]!,
-  'transactionType': instance.transactionType,
-  'categoryIds': instance.categoryIds,
+  'transactionType': instance.transactionType.toJson(),
+  'categoryIds': instance.categoryIds.map((e) => e.toJson()).toList(),
 };
 
 const _$PersonalIncomeTaskTypeEnumMap = {
@@ -291,9 +291,9 @@ _ScheduledTransaction _$ScheduledTransactionFromJson(
 Map<String, dynamic> _$ScheduledTransactionToJson(
   _ScheduledTransaction instance,
 ) => <String, dynamic>{
-  'transactionId': instance.transactionId,
-  'taskId': instance.taskId,
-  'schedule': instance.schedule,
+  'transactionId': instance.transactionId.toJson(),
+  'taskId': instance.taskId.toJson(),
+  'schedule': instance.schedule.toJson(),
 };
 
 _TransactionSchedule _$TransactionScheduleFromJson(Map<String, dynamic> json) =>
@@ -319,7 +319,7 @@ Map<String, dynamic> _$TransactionScheduleToJson(
   _TransactionSchedule instance,
 ) => <String, dynamic>{
   'periodType': _$TransactionPeriodTypeEnumMap[instance.periodType]!,
-  'period': instance.period,
+  'period': instance.period.toJson(),
   'startedAt': instance.startedAt?.toIso8601String(),
   'endedAt': instance.endedAt?.toIso8601String(),
 };
@@ -347,12 +347,12 @@ FiatCurrency _$FiatCurrencyFromJson(Map<String, dynamic> json) => FiatCurrency(
 
 Map<String, dynamic> _$FiatCurrencyToJson(FiatCurrency instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': instance.id.toJson(),
       'name': instance.name,
       'slug': instance.slug,
       'symbol': instance.symbol,
       'decimals': instance.decimals,
-      'type': instance.type,
+      'type': instance.type.toJson(),
       'runtimeType': instance.$type,
     };
 
@@ -374,11 +374,11 @@ CryptoCurrency _$CryptoCurrencyFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CryptoCurrencyToJson(CryptoCurrency instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': instance.id.toJson(),
       'name': instance.name,
       'slug': instance.slug,
-      'type': instance.type,
-      'chainId': instance.chainId,
+      'type': instance.type.toJson(),
+      'chainId': instance.chainId.toJson(),
       'runtimeType': instance.$type,
     };
 
@@ -407,14 +407,14 @@ _Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
 Map<String, dynamic> _$TransactionToJson(_Transaction instance) =>
     <String, dynamic>{
       'transactionDate': instance.transactionDate.toIso8601String(),
-      'id': instance.id,
-      'input': instance.input,
+      'id': instance.id.toJson(),
+      'input': instance.input.toJson(),
       'description': instance.description,
       'note': instance.note,
       'shoppingListString': instance.shoppingListString,
-      'taskId': instance.taskId,
+      'taskId': instance.taskId.toJson(),
       'type': _$TransactionTypeEnumMap[instance.type]!,
-      'categoryId': instance.categoryId,
+      'categoryId': instance.categoryId.toJson(),
     };
 
 FiatInputModel _$FiatInputModelFromJson(Map<String, dynamic> json) =>
@@ -434,10 +434,10 @@ FiatInputModel _$FiatInputModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FiatInputModelToJson(FiatInputModel instance) =>
     <String, dynamic>{
-      'currencyId': instance.currencyId,
+      'currencyId': instance.currencyId.toJson(),
       'amountWithTax': instance.amountWithTax,
-      'currencyType': instance.currencyType,
-      'tax': instance.tax,
+      'currencyType': instance.currencyType.toJson(),
+      'tax': instance.tax.toJson(),
       'runtimeType': instance.$type,
     };
 
@@ -458,10 +458,10 @@ CyptoInputModel _$CyptoInputModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CyptoInputModelToJson(CyptoInputModel instance) =>
     <String, dynamic>{
-      'currencyId': instance.currencyId,
+      'currencyId': instance.currencyId.toJson(),
       'amountWithTax': instance.amountWithTax,
-      'currencyType': instance.currencyType,
-      'tax': instance.tax,
+      'currencyType': instance.currencyType.toJson(),
+      'tax': instance.tax.toJson(),
       'runtimeType': instance.$type,
     };
 

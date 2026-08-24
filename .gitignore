@@ -8,6 +8,7 @@
 .atom/
 .buildlog/
 .history
+.flutter_mcp
 .svn/
 *.lock
 *key.properties.*

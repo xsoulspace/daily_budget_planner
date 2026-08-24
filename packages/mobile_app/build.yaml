@@ -9,3 +9,9 @@ targets:
           addImplicitFinal: true
           copyWith: true
           unionValueCase: pascal
+      # Required: enums with a custom `factory fromJson` (e.g. TaskStatus) are
+      # handled by JsonHelper, which otherwise passes them through unencoded
+      # on serialize. This makes it emit `.toJson()` instead.
+      json_serializable:
+        options:
+          explicit_to_json: true
