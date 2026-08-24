@@ -1,0 +1,19 @@
+appId: ${APP_ID}
+name: 03 - Settings popup navigation (Terms & Privacy)
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Monthly Budget"
+# Open settings popup from the home bottom bar.
+- tapOn: "Settings"
+- assertVisible: "Terms and Conditions"
+- assertVisible: "Privacy Policy"
+# Navigate to Terms screen and back.
+- tapOn: "Terms and Conditions"
+- assertVisible: "Terms"
+- back
+# Navigate to Privacy screen and back.
+- tapOn: "Settings"
+- tapOn: "Privacy Policy"
+- assertVisible: "Privacy Policy"
+- back

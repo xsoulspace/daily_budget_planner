@@ -1,0 +1,6 @@
+# Maestro e2e test configuration for daily_budget_planner.
+# Run all flows: maestro test -e APP_ID=com.xsoulspave.dailyBudgetPlanner maestro/
+#
+# The APP_ID env var keeps the suite device/bundle-id agnostic.
+# Override it if the bundle id changes:
+#   maestro test -e APP_ID=your.bundle.id maestro/
