@@ -30,6 +30,9 @@ abstract class AppSettingsModel with _$AppSettingsModel {
     @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson)
     final UiBrightness brightness,
     @Default(true) final bool use24HourFormat,
+    @Default(false) final bool isPredictionUiEnabled,
+    @Default(true) final bool showPredictionIntro,
+    @Default(true) final bool showPredictionTeaser,
   }) = _AppSettingsModel;
 
   const AppSettingsModel._();

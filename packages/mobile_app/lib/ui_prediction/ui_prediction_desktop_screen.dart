@@ -1,9 +1,27 @@
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_prediction/simple_steps/simple_steps.dart';
 import 'package:mobile_app/ui_prediction/tasks/ui_tasks_actions_bar.dart';
 import 'package:recase/recase.dart';
 
-class UiPredictionScreenV2 extends StatelessWidget {
+class UiPredictionScreenV2 extends StatefulHookWidget {
   const UiPredictionScreenV2({super.key});
+
+  @override
+  State<UiPredictionScreenV2> createState() => _UiPredictionScreenV2State();
+}
+
+class _UiPredictionScreenV2State extends State<UiPredictionScreenV2> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((final _) {
+      if (!mounted) return;
+      final settings = context.read<AppSettingsNotifier>();
+      if (!settings.showPredictionIntro) return;
+      unawaited(settings.markPredictionIntroSeen());
+      unawaited(SimpleStepsFlow.show(context));
+    });
+  }
 
   @override
   Widget build(final BuildContext context) {
@@ -140,9 +158,8 @@ class PeriodSelector extends StatelessWidget {
               )
               .toList(),
       selected: period,
-      onSelectionChanged:
-          (final d) =>
-              const UpdatePredictionConfigCommand().onSelectedPeriodChanged(d),
+      onSelectionChanged: (final d) =>
+          const UpdatePredictionConfigCommand().onSelectedPeriodChanged(d),
     );
   }
 }
@@ -151,26 +168,102 @@ class _MainContentCard extends StatelessWidget {
   const _MainContentCard({super.key});
 
   @override
-  Widget build(final BuildContext context) => const _ContentCard(
-    constraints: BoxConstraints(maxWidth: 650, maxHeight: 500),
-    // constraints: BoxConstraints(maxWidth: 400, maxHeight: 500),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        DailyBudgetDisplay(),
-        Gap(32),
-        Row(
-          spacing: 16,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // BudgetWillLast(),
-            TodaysBudget(),
-            
+  Widget build(final BuildContext context) {
+    final hasBudget = context.select<BudgetsResource, bool>(
+      (final budgets) => budgets.length > 0,
+    );
+    return _ContentCard(
+      constraints: const BoxConstraints(maxWidth: 650, maxHeight: 500),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // ADR-0004: the deep surface keeps its own inputs. Without a budget
+          // for the period, offer the fast path first instead of showing $0.00.
+          if (!hasBudget)
+            const _EmptyBudgetPrompt()
+          else ...const [
+            DailyBudgetDisplay(),
+            Gap(32),
+            Row(
+              spacing: 16,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // BudgetWillLast(),
+                TodaysBudget(),
+              ],
+            ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Fast entry for the prediction surface: one field — current available
+/// amount — then the number appears. Mirrors the Home screen's simplicity.
+class _EmptyBudgetPrompt extends HookWidget {
+  const _EmptyBudgetPrompt();
+
+  @override
+  Widget build(final BuildContext context) {
+    final locale = useLocale(context);
+    final amountController = useTextEditingController();
+    final selectedDate = useSelectionDate(context);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          LocalizedMap({
+            languages.en: 'How much do you have right now?',
+            languages.it: 'Quanto hai adesso?',
+            languages.ru: 'Сколько у тебя сейчас?',
+          }).getValue(locale),
+          style: context.textTheme.titleMedium,
+          textAlign: TextAlign.center,
+        ),
+        const Gap(16),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 240),
+          child: TextField(
+            controller: amountController,
+            keyboardType: TextInputType.number,
+            autofocus: true,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              prefixText: r'$ ',
+              border: const OutlineInputBorder(),
+            ),
+          ),
+        ),
+        const Gap(16),
+        UiTextButton(
+          onPressed: () {
+            final amount = double.tryParse(
+              amountController.text.replaceAll(',', '.'),
+            );
+            if (amount == null || amount <= 0) return;
+            unawaited(
+              const UpsertBudgetCommand().execute(
+                Budget(
+                  id: BudgetId(IdCreator.create()),
+                  input: InputMoney.fiat(amountWithTax: amount),
+                  date: selectedDate,
+                ),
+              ),
+            );
+          },
+          title: Text(
+            LocalizedMap({
+              languages.en: 'See my number',
+              languages.it: 'Mostra il mio numero',
+              languages.ru: 'Показать число',
+            }).getValue(locale),
+          ),
         ),
       ],
-    ),
-  );
+    );
+  }
 }
 
 class AddBudgetButton extends StatelessWidget {

@@ -3,22 +3,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_prediction/committed/committed_view.dart';
 import 'package:mobile_app/ui_prediction/tasks/ui_tasks_actions_bar.dart';
-import 'package:mobile_app/ui_prediction/ui_prediction_desktop_screen.dart';
 import 'package:mobile_app/ui_prediction/upsert_budget_dialog.dart';
 
 class UiPredictionScreen extends StatelessWidget {
   const UiPredictionScreen({super.key});
-
-  static Future<void> show(final BuildContext context) => Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (final _) {
-        // return const UiPredictionScreen();
-        return const UiPredictionScreenV2();
-      },
-    ),
-  );
 
   @override
   Widget build(final BuildContext context) => UiScaffold(
@@ -499,6 +489,16 @@ class DailyStatistics extends StatelessWidget {
         runSpacing: 8,
         alignment: WrapAlignment.center,
         children: [
+          _StatisticItem(
+            onPressed: () async => showCommittedView(context: context),
+            value:
+                '-\$${context.read<CommitmentsResource>().orderedValues.totalForRange(DateTimeRange(start: selectedDate.toDayBeginning, end: selectedDate.toDayBeginning.add(const Duration(days: 30)))).toStringAsFixed(2)}',
+            label: LocalizedMap({
+              languages.en: 'Committed (subscriptions, bills)',
+              languages.it: 'Impegni (abbonamenti, bollette)',
+              languages.ru: 'Обязательства (подписки, счета)',
+            }).getValue(locale),
+          ),
           _StatisticItem(
             onPressed: () async => UiExpensesView.show(context: context),
             value: '-\$${totalSumResource.expensesSum.toStringAsFixed(2)}',

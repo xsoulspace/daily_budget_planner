@@ -19,6 +19,12 @@ class Envs {
   static const isCurrencySwitchingEnabled = bool.fromEnvironment(
     'CURRENCY_SWITCHING_ENABLED',
   );
+
+  /// Compile-time default for the prediction UI rollout flag (ADR-0003).
+  /// A persisted user setting overrides this seed.
+  static const isPredictionUiDefault = bool.fromEnvironment(
+    'PREDICTION_UI_ENABLED',
+  );
   static final monetizationType = MonetizationType.fromJson(
     monetizationTypeJson,
   );

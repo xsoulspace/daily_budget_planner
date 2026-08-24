@@ -14,7 +14,13 @@ class AppSettingsNotifier extends ValueNotifier<AppSettingsModel>
 
   Future<void> onLoad() async {
     final settings = await appSettingsApi.loadSettings();
-    await _updateSettings(settings);
+    // Seed the runtime flag default from the compile-time environment;
+    // a persisted value always wins over the seed.
+    await _updateSettings(
+      settings.copyWith(isPredictionUiEnabled: Envs.isPredictionUiDefault),
+    );
+    final persisted = await appSettingsApi.loadSettings();
+    await _updateSettings(persisted);
     await updateLocale(value.locale);
   }
 
@@ -22,10 +28,22 @@ class AppSettingsNotifier extends ValueNotifier<AppSettingsModel>
     await _updateSettings(value.copyWith(brightness: brightness));
   }
 
+  bool get isPredictionUiEnabled => value.isPredictionUiEnabled;
+  Future<void> updatePredictionUiEnabled({required final bool enabled}) =>
+      _updateSettings(value.copyWith(isPredictionUiEnabled: enabled));
+
+  bool get showPredictionIntro => value.showPredictionIntro;
+  Future<void> markPredictionIntroSeen() =>
+      _updateSettings(value.copyWith(showPredictionIntro: false));
+
+  bool get showPredictionTeaser => value.showPredictionTeaser;
+  Future<void> dismissPredictionTeaser() =>
+      _updateSettings(value.copyWith(showPredictionTeaser: false));
+
   ValueListenable<Locale> get locale => localeNotifier;
   UiLanguage get language => locale.value.language;
   Future<void> updateLocale(final Locale? locale) async {
-    final result = await LocaleLogic().updateLocale(
+    final result = await const LocaleLogic().updateLocale(
       newLocale: locale,
       oldLocale: value.locale,
       uiLocale: localeNotifier.value,

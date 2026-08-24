@@ -2,6 +2,7 @@ import 'package:mobile_app/common_imports.dart';
 import 'package:mobile_app/ui_other/privacy_screen.dart';
 import 'package:mobile_app/ui_other/terms_screen.dart';
 import 'package:mobile_app/ui_pay/ui_pay.dart';
+import 'package:mobile_app/ui_prediction/ui_prediction_desktop_screen.dart';
 
 enum ScreenPaths {
   root('/'),
@@ -12,7 +13,8 @@ enum ScreenPaths {
   waitingPayConfirmation('waiting-pay-confirmation'),
   privacy('privacy'),
   terms('terms'),
-  explanation('explain');
+  explanation('explain'),
+  prediction('prediction');
 
   const ScreenPaths(this.value);
   final String value;
@@ -43,6 +45,10 @@ final router = GoRouter(
                 isFirstOpening:
                     state.uri.queryParameters['isFirstOpening'] != null,
               ),
+            ),
+            AppRoute(
+              ScreenPaths.prediction.value,
+              (final context, final state) => const UiPredictionScreenV2(),
             ),
             AppRoute(
               ScreenPaths.manageSubscription.value,
@@ -104,6 +110,7 @@ class AppPathsController {
       go(ScreenPaths.waitingPayConfirmation, routes: _homeRoutes);
   void toManageSubscription() =>
       go(ScreenPaths.manageSubscription, routes: _homeRoutes);
+  void toPrediction() => go(ScreenPaths.prediction, routes: _homeRoutes);
   void toExplanation({final bool isFirstTimeOpening = false}) => go(
     ScreenPaths.explanation,
     routes: [ScreenPaths.home],

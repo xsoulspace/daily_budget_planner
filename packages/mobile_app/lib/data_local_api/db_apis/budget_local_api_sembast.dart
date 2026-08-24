@@ -17,6 +17,7 @@ final class ManualBudgetsLocalApiSembast extends ComplexLocalApi
         await _db.budgets.record(budget.id).put(txn, model.toMap());
       });
     } catch (e, s) {
+      debugPrint('upsertBudget failed: $e\n$s');
       throw LocalApiException(
         message: 'Failed to create budget',
         error: e,

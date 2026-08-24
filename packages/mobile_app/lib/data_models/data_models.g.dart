@@ -13,6 +13,9 @@ _AppSettingsModel _$AppSettingsModelFromJson(Map<String, dynamic> json) =>
           ? UiBrightness.system
           : UiBrightness.fromJson(json['brightness'] as String),
       use24HourFormat: json['use24HourFormat'] as bool? ?? true,
+      isPredictionUiEnabled: json['isPredictionUiEnabled'] as bool? ?? false,
+      showPredictionIntro: json['showPredictionIntro'] as bool? ?? true,
+      showPredictionTeaser: json['showPredictionTeaser'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
@@ -20,6 +23,9 @@ Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
       'locale': localeToString(instance.locale),
       'brightness': UiBrightness.toJson(instance.brightness),
       'use24HourFormat': instance.use24HourFormat,
+      'isPredictionUiEnabled': instance.isPredictionUiEnabled,
+      'showPredictionIntro': instance.showPredictionIntro,
+      'showPredictionTeaser': instance.showPredictionTeaser,
     };
 
 _MonthlyBudgetModel _$MonthlyBudgetModelFromJson(Map<String, dynamic> json) =>

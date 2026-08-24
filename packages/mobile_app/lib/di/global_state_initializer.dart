@@ -66,6 +66,7 @@ class GlobalStateInitializer
         storeReviewRequester.onLoad(),
         const LoadTasksCommand().execute(),
         const LoadBudgetsCmd().execute(),
+        const LoadCommitmentsCmd().execute(),
         const LoadTransactionsCmd().execute(),
         const LoadTransactionsCmd().execute(),
       ]);

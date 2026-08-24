@@ -32,7 +32,11 @@ class BudgetSembastCollection extends SembastContainer<Budget, BudgetId> {
 
   /// Converts to Map for Sembast storage
   @override
-  Map<String, dynamic> toMap() => {...super.toMap(), 'createdAt': item.date};
+  Map<String, dynamic> toMap() => {
+    ...super.toMap(),
+    // Queries filter on this field as an ISO-8601 string; keep types aligned.
+    'createdAt': item.date.toIso8601String(),
+  };
 
   @override
   SembastDataMap getJson() => item.toJson();
