@@ -27,6 +27,7 @@ class _UiPredictionScreenV2State extends State<UiPredictionScreenV2> {
   Widget build(final BuildContext context) {
     final backgroungColor = context.colorScheme.primary;
     return UiScaffold(
+      resizeToAvoidBottomInset: true,
       body: ColoredBox(
         color: backgroungColor,
         child: LayoutBuilder(

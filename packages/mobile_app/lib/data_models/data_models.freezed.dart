@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettingsModel {
 
-@JsonKey(fromJson: localeFromString, toJson: localeToString) Locale? get locale;@JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) UiBrightness get brightness; bool get use24HourFormat; bool get isPredictionUiEnabled; bool get showPredictionIntro; bool get showPredictionTeaser;
+@JsonKey(fromJson: localeFromString, toJson: localeToString) Locale? get locale;@JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) UiBrightness get brightness; bool get use24HourFormat; bool get isPredictionUiEnabled; bool get showPredictionIntro; bool get showPredictionTeaser; DateTime? get predictionTeaserDismissedAt;
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $AppSettingsModelCopyWith<AppSettingsModel> get copyWith => _$AppSettingsModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettingsModel&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.use24HourFormat, use24HourFormat) || other.use24HourFormat == use24HourFormat)&&(identical(other.isPredictionUiEnabled, isPredictionUiEnabled) || other.isPredictionUiEnabled == isPredictionUiEnabled)&&(identical(other.showPredictionIntro, showPredictionIntro) || other.showPredictionIntro == showPredictionIntro)&&(identical(other.showPredictionTeaser, showPredictionTeaser) || other.showPredictionTeaser == showPredictionTeaser));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettingsModel&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.use24HourFormat, use24HourFormat) || other.use24HourFormat == use24HourFormat)&&(identical(other.isPredictionUiEnabled, isPredictionUiEnabled) || other.isPredictionUiEnabled == isPredictionUiEnabled)&&(identical(other.showPredictionIntro, showPredictionIntro) || other.showPredictionIntro == showPredictionIntro)&&(identical(other.showPredictionTeaser, showPredictionTeaser) || other.showPredictionTeaser == showPredictionTeaser)&&(identical(other.predictionTeaserDismissedAt, predictionTeaserDismissedAt) || other.predictionTeaserDismissedAt == predictionTeaserDismissedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,locale,brightness,use24HourFormat,isPredictionUiEnabled,showPredictionIntro,showPredictionTeaser);
+int get hashCode => Object.hash(runtimeType,locale,brightness,use24HourFormat,isPredictionUiEnabled,showPredictionIntro,showPredictionTeaser,predictionTeaserDismissedAt);
 
 @override
 String toString() {
-  return 'AppSettingsModel(locale: $locale, brightness: $brightness, use24HourFormat: $use24HourFormat, isPredictionUiEnabled: $isPredictionUiEnabled, showPredictionIntro: $showPredictionIntro, showPredictionTeaser: $showPredictionTeaser)';
+  return 'AppSettingsModel(locale: $locale, brightness: $brightness, use24HourFormat: $use24HourFormat, isPredictionUiEnabled: $isPredictionUiEnabled, showPredictionIntro: $showPredictionIntro, showPredictionTeaser: $showPredictionTeaser, predictionTeaserDismissedAt: $predictionTeaserDismissedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $AppSettingsModelCopyWith<$Res>  {
   factory $AppSettingsModelCopyWith(AppSettingsModel value, $Res Function(AppSettingsModel) _then) = _$AppSettingsModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(fromJson: localeFromString, toJson: localeToString) Locale? locale,@JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) UiBrightness brightness, bool use24HourFormat, bool isPredictionUiEnabled, bool showPredictionIntro, bool showPredictionTeaser
+@JsonKey(fromJson: localeFromString, toJson: localeToString) Locale? locale,@JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) UiBrightness brightness, bool use24HourFormat, bool isPredictionUiEnabled, bool showPredictionIntro, bool showPredictionTeaser, DateTime? predictionTeaserDismissedAt
 });
 
 
@@ -66,7 +66,7 @@ class _$AppSettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? locale = freezed,Object? brightness = null,Object? use24HourFormat = null,Object? isPredictionUiEnabled = null,Object? showPredictionIntro = null,Object? showPredictionTeaser = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? locale = freezed,Object? brightness = null,Object? use24HourFormat = null,Object? isPredictionUiEnabled = null,Object? showPredictionIntro = null,Object? showPredictionTeaser = null,Object? predictionTeaserDismissedAt = freezed,}) {
   return _then(AppSettingsModel(
 locale: freezed == locale ? _self.locale : locale // ignore: cast_nullable_to_non_nullable
 as Locale?,brightness: null == brightness ? _self.brightness : brightness // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as UiBrightness,use24HourFormat: null == use24HourFormat ? _self.use24HourFormat
 as bool,isPredictionUiEnabled: null == isPredictionUiEnabled ? _self.isPredictionUiEnabled : isPredictionUiEnabled // ignore: cast_nullable_to_non_nullable
 as bool,showPredictionIntro: null == showPredictionIntro ? _self.showPredictionIntro : showPredictionIntro // ignore: cast_nullable_to_non_nullable
 as bool,showPredictionTeaser: null == showPredictionTeaser ? _self.showPredictionTeaser : showPredictionTeaser // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,predictionTeaserDismissedAt: freezed == predictionTeaserDismissedAt ? _self.predictionTeaserDismissedAt : predictionTeaserDismissedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(fromJson: localeFromString, toJson: localeToString)  Locale? locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson)  UiBrightness brightness,  bool use24HourFormat,  bool isPredictionUiEnabled,  bool showPredictionIntro,  bool showPredictionTeaser)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(fromJson: localeFromString, toJson: localeToString)  Locale? locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson)  UiBrightness brightness,  bool use24HourFormat,  bool isPredictionUiEnabled,  bool showPredictionIntro,  bool showPredictionTeaser,  DateTime? predictionTeaserDismissedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettingsModel() when $default != null:
-return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPredictionUiEnabled,_that.showPredictionIntro,_that.showPredictionTeaser);case _:
+return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPredictionUiEnabled,_that.showPredictionIntro,_that.showPredictionTeaser,_that.predictionTeaserDismissedAt);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPred
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(fromJson: localeFromString, toJson: localeToString)  Locale? locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson)  UiBrightness brightness,  bool use24HourFormat,  bool isPredictionUiEnabled,  bool showPredictionIntro,  bool showPredictionTeaser)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(fromJson: localeFromString, toJson: localeToString)  Locale? locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson)  UiBrightness brightness,  bool use24HourFormat,  bool isPredictionUiEnabled,  bool showPredictionIntro,  bool showPredictionTeaser,  DateTime? predictionTeaserDismissedAt)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettingsModel():
-return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPredictionUiEnabled,_that.showPredictionIntro,_that.showPredictionTeaser);case _:
+return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPredictionUiEnabled,_that.showPredictionIntro,_that.showPredictionTeaser,_that.predictionTeaserDismissedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPred
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(fromJson: localeFromString, toJson: localeToString)  Locale? locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson)  UiBrightness brightness,  bool use24HourFormat,  bool isPredictionUiEnabled,  bool showPredictionIntro,  bool showPredictionTeaser)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(fromJson: localeFromString, toJson: localeToString)  Locale? locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson)  UiBrightness brightness,  bool use24HourFormat,  bool isPredictionUiEnabled,  bool showPredictionIntro,  bool showPredictionTeaser,  DateTime? predictionTeaserDismissedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettingsModel() when $default != null:
-return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPredictionUiEnabled,_that.showPredictionIntro,_that.showPredictionTeaser);case _:
+return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPredictionUiEnabled,_that.showPredictionIntro,_that.showPredictionTeaser,_that.predictionTeaserDismissedAt);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.locale,_that.brightness,_that.use24HourFormat,_that.isPred
 
 @JsonSerializable(explicitToJson: true)
 class _AppSettingsModel extends AppSettingsModel {
-  const _AppSettingsModel({@JsonKey(fromJson: localeFromString, toJson: localeToString) this.locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) this.brightness = UiBrightness.system, this.use24HourFormat = true, this.isPredictionUiEnabled = false, this.showPredictionIntro = true, this.showPredictionTeaser = true}): super._();
+  const _AppSettingsModel({@JsonKey(fromJson: localeFromString, toJson: localeToString) this.locale, @JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) this.brightness = UiBrightness.system, this.use24HourFormat = true, this.isPredictionUiEnabled = false, this.showPredictionIntro = true, this.showPredictionTeaser = true, this.predictionTeaserDismissedAt}): super._();
   factory _AppSettingsModel.fromJson(Map<String, dynamic> json) => _$AppSettingsModelFromJson(json);
 
 @override@JsonKey(fromJson: localeFromString, toJson: localeToString) final  Locale? locale;
@@ -224,6 +225,7 @@ class _AppSettingsModel extends AppSettingsModel {
 @override@JsonKey() final  bool isPredictionUiEnabled;
 @override@JsonKey() final  bool showPredictionIntro;
 @override@JsonKey() final  bool showPredictionTeaser;
+@override final  DateTime? predictionTeaserDismissedAt;
 
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
@@ -238,16 +240,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettingsModel&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.use24HourFormat, use24HourFormat) || other.use24HourFormat == use24HourFormat)&&(identical(other.isPredictionUiEnabled, isPredictionUiEnabled) || other.isPredictionUiEnabled == isPredictionUiEnabled)&&(identical(other.showPredictionIntro, showPredictionIntro) || other.showPredictionIntro == showPredictionIntro)&&(identical(other.showPredictionTeaser, showPredictionTeaser) || other.showPredictionTeaser == showPredictionTeaser));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettingsModel&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.brightness, brightness) || other.brightness == brightness)&&(identical(other.use24HourFormat, use24HourFormat) || other.use24HourFormat == use24HourFormat)&&(identical(other.isPredictionUiEnabled, isPredictionUiEnabled) || other.isPredictionUiEnabled == isPredictionUiEnabled)&&(identical(other.showPredictionIntro, showPredictionIntro) || other.showPredictionIntro == showPredictionIntro)&&(identical(other.showPredictionTeaser, showPredictionTeaser) || other.showPredictionTeaser == showPredictionTeaser)&&(identical(other.predictionTeaserDismissedAt, predictionTeaserDismissedAt) || other.predictionTeaserDismissedAt == predictionTeaserDismissedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,locale,brightness,use24HourFormat,isPredictionUiEnabled,showPredictionIntro,showPredictionTeaser);
+int get hashCode => Object.hash(runtimeType,locale,brightness,use24HourFormat,isPredictionUiEnabled,showPredictionIntro,showPredictionTeaser,predictionTeaserDismissedAt);
 
 @override
 String toString() {
-  return 'AppSettingsModel(locale: $locale, brightness: $brightness, use24HourFormat: $use24HourFormat, isPredictionUiEnabled: $isPredictionUiEnabled, showPredictionIntro: $showPredictionIntro, showPredictionTeaser: $showPredictionTeaser)';
+  return 'AppSettingsModel(locale: $locale, brightness: $brightness, use24HourFormat: $use24HourFormat, isPredictionUiEnabled: $isPredictionUiEnabled, showPredictionIntro: $showPredictionIntro, showPredictionTeaser: $showPredictionTeaser, predictionTeaserDismissedAt: $predictionTeaserDismissedAt)';
 }
 
 
@@ -258,7 +260,7 @@ abstract mixin class _$AppSettingsModelCopyWith<$Res> implements $AppSettingsMod
   factory _$AppSettingsModelCopyWith(_AppSettingsModel value, $Res Function(_AppSettingsModel) _then) = __$AppSettingsModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(fromJson: localeFromString, toJson: localeToString) Locale? locale,@JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) UiBrightness brightness, bool use24HourFormat, bool isPredictionUiEnabled, bool showPredictionIntro, bool showPredictionTeaser
+@JsonKey(fromJson: localeFromString, toJson: localeToString) Locale? locale,@JsonKey(fromJson: UiBrightness.fromJson, toJson: UiBrightness.toJson) UiBrightness brightness, bool use24HourFormat, bool isPredictionUiEnabled, bool showPredictionIntro, bool showPredictionTeaser, DateTime? predictionTeaserDismissedAt
 });
 
 
@@ -275,7 +277,7 @@ class __$AppSettingsModelCopyWithImpl<$Res>
 
 /// Create a copy of AppSettingsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? locale = freezed,Object? brightness = null,Object? use24HourFormat = null,Object? isPredictionUiEnabled = null,Object? showPredictionIntro = null,Object? showPredictionTeaser = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? locale = freezed,Object? brightness = null,Object? use24HourFormat = null,Object? isPredictionUiEnabled = null,Object? showPredictionIntro = null,Object? showPredictionTeaser = null,Object? predictionTeaserDismissedAt = freezed,}) {
   return _then(_AppSettingsModel(
 locale: freezed == locale ? _self.locale : locale // ignore: cast_nullable_to_non_nullable
 as Locale?,brightness: null == brightness ? _self.brightness : brightness // ignore: cast_nullable_to_non_nullable
@@ -283,7 +285,8 @@ as UiBrightness,use24HourFormat: null == use24HourFormat ? _self.use24HourFormat
 as bool,isPredictionUiEnabled: null == isPredictionUiEnabled ? _self.isPredictionUiEnabled : isPredictionUiEnabled // ignore: cast_nullable_to_non_nullable
 as bool,showPredictionIntro: null == showPredictionIntro ? _self.showPredictionIntro : showPredictionIntro // ignore: cast_nullable_to_non_nullable
 as bool,showPredictionTeaser: null == showPredictionTeaser ? _self.showPredictionTeaser : showPredictionTeaser // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,predictionTeaserDismissedAt: freezed == predictionTeaserDismissedAt ? _self.predictionTeaserDismissedAt : predictionTeaserDismissedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

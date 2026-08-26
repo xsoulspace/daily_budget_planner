@@ -67,6 +67,7 @@ class GlobalStateInitializer
         const LoadTasksCommand().execute(),
         const LoadBudgetsCmd().execute(),
         const LoadCommitmentsCmd().execute(),
+        const LoadPlannedSumsCmd().execute(),
         const LoadTransactionsCmd().execute(),
         const LoadTransactionsCmd().execute(),
       ]);

@@ -5,16 +5,19 @@ class UiScaffold extends StatelessWidget {
     required this.body,
     this.appBar,
     this.floatingActionButton,
+    this.resizeToAvoidBottomInset = false,
     super.key,
   });
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? floatingActionButton;
+  final bool? resizeToAvoidBottomInset;
   @override
   Widget build(final BuildContext context) => Scaffold(
     body: body,
     appBar: appBar,
     floatingActionButton: floatingActionButton,
+    resizeToAvoidBottomInset: resizeToAvoidBottomInset,
   );
 }
 

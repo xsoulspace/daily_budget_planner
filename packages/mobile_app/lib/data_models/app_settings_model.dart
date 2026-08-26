@@ -31,8 +31,9 @@ abstract class AppSettingsModel with _$AppSettingsModel {
     final UiBrightness brightness,
     @Default(true) final bool use24HourFormat,
     @Default(false) final bool isPredictionUiEnabled,
-    @Default(true) final bool showPredictionIntro,
+    @Default(false) final bool showPredictionIntro,
     @Default(true) final bool showPredictionTeaser,
+    final DateTime? predictionTeaserDismissedAt,
   }) = _AppSettingsModel;
 
   const AppSettingsModel._();

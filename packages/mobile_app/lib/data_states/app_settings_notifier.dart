@@ -5,6 +5,8 @@ class AppSettingsNotifier extends ValueNotifier<AppSettingsModel>
     with HasLocalApis, HasNotifiers {
   AppSettingsNotifier() : super(AppSettingsModel.empty);
 
+  static const teaserDismissCooldown = Duration(days: 7);
+
   Future<void> _updateSettings(final AppSettingsModel settings) async {
     value = settings;
     await appSettingsApi.saveSettings(settings: settings);
@@ -37,8 +39,21 @@ class AppSettingsNotifier extends ValueNotifier<AppSettingsModel>
       _updateSettings(value.copyWith(showPredictionIntro: false));
 
   bool get showPredictionTeaser => value.showPredictionTeaser;
-  Future<void> dismissPredictionTeaser() =>
-      _updateSettings(value.copyWith(showPredictionTeaser: false));
+  bool get isPredictionTeaserVisible {
+    if (!value.showPredictionTeaser) {
+      final dismissedAt = value.predictionTeaserDismissedAt;
+      if (dismissedAt == null) return false;
+      return !DateTime.now().isBefore(dismissedAt.add(teaserDismissCooldown));
+    }
+    return true;
+  }
+
+  Future<void> dismissPredictionTeaser() => _updateSettings(
+    value.copyWith(
+      showPredictionTeaser: false,
+      predictionTeaserDismissedAt: DateTime.now(),
+    ),
+  );
 
   ValueListenable<Locale> get locale => localeNotifier;
   UiLanguage get language => locale.value.language;

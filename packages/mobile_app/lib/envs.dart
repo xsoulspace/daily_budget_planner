@@ -22,9 +22,7 @@ class Envs {
 
   /// Compile-time default for the prediction UI rollout flag (ADR-0003).
   /// A persisted user setting overrides this seed.
-  static const isPredictionUiDefault = bool.fromEnvironment(
-    'PREDICTION_UI_ENABLED',
-  );
+  static const isPredictionUiDefault = true;
   static final monetizationType = MonetizationType.fromJson(
     monetizationTypeJson,
   );

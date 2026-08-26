@@ -16,6 +16,9 @@ _AppSettingsModel _$AppSettingsModelFromJson(Map<String, dynamic> json) =>
       isPredictionUiEnabled: json['isPredictionUiEnabled'] as bool? ?? false,
       showPredictionIntro: json['showPredictionIntro'] as bool? ?? true,
       showPredictionTeaser: json['showPredictionTeaser'] as bool? ?? true,
+      predictionTeaserDismissedAt: json['predictionTeaserDismissedAt'] == null
+          ? null
+          : DateTime.parse(json['predictionTeaserDismissedAt'] as String),
     );
 
 Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
@@ -26,6 +29,8 @@ Map<String, dynamic> _$AppSettingsModelToJson(_AppSettingsModel instance) =>
       'isPredictionUiEnabled': instance.isPredictionUiEnabled,
       'showPredictionIntro': instance.showPredictionIntro,
       'showPredictionTeaser': instance.showPredictionTeaser,
+      'predictionTeaserDismissedAt': instance.predictionTeaserDismissedAt
+          ?.toIso8601String(),
     };
 
 _MonthlyBudgetModel _$MonthlyBudgetModelFromJson(Map<String, dynamic> json) =>

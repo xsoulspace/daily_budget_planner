@@ -1,8 +1,7 @@
 import 'package:mobile_app/common_imports.dart';
 
 /// ADR-0003 Phase 3: dismissible teaser card that deep-links into the
-/// prediction UI. Hidden while dismissed; re-shown only when the flag
-/// flips back (no nagging cooldown timer for now).
+/// prediction UI and reappears after a three-day cooldown.
 class PredictionTeaserCard extends HookWidget {
   const PredictionTeaserCard({super.key});
 
@@ -12,10 +11,10 @@ class PredictionTeaserCard extends HookWidget {
     final isEnabled = context.select<AppSettingsNotifier, bool>(
       (final c) => c.value.isPredictionUiEnabled,
     );
-    final isDismissed = context.select<AppSettingsNotifier, bool>(
-      (final c) => !c.value.showPredictionTeaser,
+    final isVisible = context.select<AppSettingsNotifier, bool>(
+      (final c) => c.isPredictionTeaserVisible,
     );
-    if (!isEnabled || isDismissed) return const SizedBox.shrink();
+    if (!isEnabled || !isVisible) return const SizedBox.shrink();
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),

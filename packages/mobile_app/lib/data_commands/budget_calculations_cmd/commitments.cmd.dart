@@ -12,6 +12,46 @@ class LoadCommitmentsCmd with HasResources, HasLocalApis {
   }
 }
 
+/// Loads planned sums covering the selected date into
+/// [PlannedSumsStoreResource].
+class LoadPlannedSumsCmd with HasResources, HasLocalApis {
+  const LoadPlannedSumsCmd();
+
+  Future<void> execute() async {
+    final config = predictionConfigResource;
+    final sums = await plannedSumsLocalApi.getPlannedSumsForDate(
+      config.selectedDate,
+    );
+    plannedSumsStoreResource.assignAllOrdered(sums);
+  }
+}
+
+typedef UpsertPlannedSumCmdParams = ({PlannedSum sum});
+
+/// Creates or updates a planned sum and refreshes runtime resources.
+class UpsertPlannedSumCmd with HasResources, HasLocalApis {
+  const UpsertPlannedSumCmd();
+
+  Future<void> execute(final UpsertPlannedSumCmdParams params) async {
+    await plannedSumsLocalApi.upsertPlannedSum(params.sum);
+    await const LoadPlannedSumsCmd().execute();
+    await const RecalculateDailyNumberCmd().execute();
+  }
+}
+
+typedef RemovePlannedSumCmdParams = ({BudgetId id});
+
+/// Deletes a planned sum and refreshes runtime resources.
+class RemovePlannedSumCmd with HasResources, HasLocalApis {
+  const RemovePlannedSumCmd();
+
+  Future<void> execute(final RemovePlannedSumCmdParams params) async {
+    await plannedSumsLocalApi.deletePlannedSum(params.id);
+    plannedSumsStoreResource.remove(params.id);
+    await const RecalculateDailyNumberCmd().execute();
+  }
+}
+
 typedef UpsertCommitmentCmdParams = ({Commitment commitment});
 
 /// Creates or updates a commitment and refreshes the runtime resource.

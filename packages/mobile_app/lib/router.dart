@@ -31,9 +31,9 @@ final router = GoRouter(
       (final context, final state) => const PreloadingScreen(),
       routes: [
         AppRoute(
-          ScreenPaths.home.value,
+          ScreenPaths.prediction.value,
           useFade: true,
-          (final context, final state) => const HomeScreen(),
+          (final context, final state) => const UiPredictionScreenV2(),
           routes: [
             AppRoute(
               ScreenPaths.paywall.value,
@@ -47,8 +47,8 @@ final router = GoRouter(
               ),
             ),
             AppRoute(
-              ScreenPaths.prediction.value,
-              (final context, final state) => const UiPredictionScreenV2(),
+              ScreenPaths.home.value,
+              (final context, final state) => const HomeScreen(),
             ),
             AppRoute(
               ScreenPaths.manageSubscription.value,
@@ -98,9 +98,9 @@ String? _handleRootRedirect(
 class AppPathsController {
   AppPathsController.of(this.context);
   final BuildContext context;
-  final _homeRoutes = [ScreenPaths.home];
+  final _homeRoutes = [ScreenPaths.prediction];
   void toRoot() => go(ScreenPaths.root);
-  void toHome() => go(ScreenPaths.home);
+  void toHome() => go(ScreenPaths.prediction, routes: []);
   void toPrivacy() => go(ScreenPaths.privacy, routes: _homeRoutes);
   void toTerms() => go(ScreenPaths.terms, routes: _homeRoutes);
   void toPaywall() => go(ScreenPaths.paywall, routes: _homeRoutes);
@@ -113,7 +113,7 @@ class AppPathsController {
   void toPrediction() => go(ScreenPaths.prediction, routes: _homeRoutes);
   void toExplanation({final bool isFirstTimeOpening = false}) => go(
     ScreenPaths.explanation,
-    routes: [ScreenPaths.home],
+    routes: [ScreenPaths.prediction],
     params: {if (isFirstTimeOpening) 'isFirstOpening': 'true'},
   );
   void go(

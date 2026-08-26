@@ -1,9 +1,12 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/common_imports.dart';
+import 'package:mobile_app/ui_home/settings/settings_bottom_dialog.dart';
 import 'package:mobile_app/ui_prediction/committed/committed_view.dart';
+import 'package:mobile_app/ui_prediction/planned/planned_view.dart';
 import 'package:mobile_app/ui_prediction/tasks/ui_tasks_actions_bar.dart';
 import 'package:mobile_app/ui_prediction/upsert_budget_dialog.dart';
 
@@ -92,8 +95,8 @@ class _PredictionHeader extends StatelessWidget {
                     return _HeaderItem(
                       onPressed: () async =>
                           showExpensesTasksView(context: context),
+                      // TODO(arenukvern): add localization l10n
                       title: LocalizedMap({
-                        // TODO(arenukvern): add localization l10n
                         languages.en: 'regular expenses',
                         languages.it: 'spese regolari',
                         languages.ru: 'регулярные расходы',
@@ -113,7 +116,6 @@ class _PredictionHeader extends StatelessWidget {
                       onPressed: () async =>
                           showIncomesTasksView(context: context),
                       title: LocalizedMap({
-                        // TODO(arenukvern): add localization l10n
                         languages.en: 'regular income',
                         languages.it: 'entrate regolari',
                         languages.ru: 'регулярные доходы',
@@ -500,6 +502,16 @@ class DailyStatistics extends StatelessWidget {
             }).getValue(locale),
           ),
           _StatisticItem(
+            onPressed: () async => showPlannedView(context: context),
+            value:
+                '\$${context.read<PlannedSumsStoreResource>().orderedValues.fold(0, (final sum, final item) => (item.type == TransactionType.expense ? sum - item.amount : sum + item.amount).round()).toStringAsFixed(2)}',
+            label: LocalizedMap({
+              languages.en: 'Planned (expenses, income)',
+              languages.it: 'Pianificato (spese, entrate)',
+              languages.ru: 'Запланировано (расходы, доходы)',
+            }).getValue(locale),
+          ),
+          _StatisticItem(
             onPressed: () async => UiExpensesView.show(context: context),
             value: '-\$${totalSumResource.expensesSum.toStringAsFixed(2)}',
             label: LocalizedMap({
@@ -529,14 +541,18 @@ class BudgetWillLast extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final locale = useLocale(context);
+    final dailyBudget = context.watch<DailyBudgetResource>().value;
+    final balance = context.watch<TotalSumResource>().balance;
+    final safeDailyBudget = dailyBudget < 1 ? 1 : dailyBudget;
+    final days = balance ~/ safeDailyBudget;
     return _StatisticItem(
-      value: '~2 days',
+      value: '~$days',
       label: LocalizedMap({
-        languages.en: 'Budget will last ',
-        languages.it: 'Budget rimanente per ',
-        languages.ru: 'Остаток. Хватит ',
+        languages.en: 'Budget will last (days)',
+        languages.it: 'Durata del budget (giorni)',
+        languages.ru: 'Бюджета хватит (дней)',
       }).getValue(locale),
-      onPressed: () {},
+      onPressed: () async => showCommittedView(context: context),
     );
   }
 }
@@ -631,7 +647,15 @@ class UiPredictionBottomActionBar extends StatelessWidget {
     final locale = useLocale(context);
     return UiBottomActionBar(
       children: [
-        const UiCloseButton(),
+        IconButton(
+          tooltip: LocalizedMap({
+            languages.en: 'Quick calculations',
+            languages.it: 'Calcoli rapidi',
+            languages.ru: 'Быстрые расчёты',
+          }).getValue(locale),
+          onPressed: () async => showQuickCalculations(context: context),
+          icon: const Icon(Icons.calculate_outlined),
+        ),
         UiTextButton(
           onPressed: () async => UpsertBudgetDialog.show(context),
           title: Row(
@@ -648,6 +672,248 @@ class UiPredictionBottomActionBar extends StatelessWidget {
                 }).getValue(locale),
               ),
             ],
+          ),
+        ),
+        IconButton(
+          tooltip: context.s.settings,
+          onPressed: () => _PredictionSettingsSheet.show(context),
+          icon: const Icon(Icons.settings_outlined),
+        ),
+      ],
+    );
+  }
+}
+
+class _PredictionSettingsSheet {
+  const _PredictionSettingsSheet();
+
+  static Future<void> show(final BuildContext context) =>
+      showModalBottomSheet<void>(
+        useRootNavigator: true,
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (final sheetContext) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.65,
+          maxChildSize: 0.9,
+          builder: (final _, final controller) => DecoratedBox(
+            decoration: BoxDecoration(
+              color: Theme.of(sheetContext).colorScheme.surface,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
+            child: ListView(
+              controller: controller,
+              padding: const EdgeInsets.all(16),
+              children: [
+                Center(
+                  child: Text(
+                    sheetContext.s.settings,
+                    style: sheetContext.textTheme.titleLarge,
+                  ),
+                ),
+                const Gap(16),
+                SettingsBottomPopup(onClose: Navigator.of(sheetContext).pop),
+              ],
+            ),
+          ),
+        ),
+      );
+}
+
+Future<void> showQuickCalculations({required final BuildContext context}) =>
+    showModalBottomSheet<void>(
+      useRootNavigator: true,
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (final _) => const QuickCalculationsSheet(),
+    );
+
+class QuickCalculationsSheet extends HookWidget {
+  const QuickCalculationsSheet({super.key});
+
+  @override
+  Widget build(final BuildContext context) {
+    final locale = useLocale(context);
+    final expression = useState('0');
+    unawaited(SoftKeyboard.open());
+
+    Future<void> submit() async {
+      final amount = double.tryParse(
+        expression.value.replaceAll(RegExp(r'[^0-9.]'), ''),
+      );
+      if (amount == null) return;
+      await const UpsertBudgetCommand().execute(
+        Budget(
+          id: BudgetId(IdCreator.create()),
+          input: InputMoney.fiat(amountWithTax: amount),
+          date: DateTime.now(),
+        ),
+      );
+      if (context.mounted) Navigator.of(context).pop();
+    }
+
+    return Focus(
+      autofocus: true,
+      onKeyEvent: (final node, final event) {
+        if (event is! KeyDownEvent) return KeyEventResult.ignored;
+        final key = event.logicalKey;
+        final character = key.keyLabel;
+        if (character.length == 1 &&
+            RegExp(r'[0-9.+\-*/]').hasMatch(character)) {
+          expression.value = expression.value == '0'
+              ? character
+              : '${expression.value}$character';
+          return KeyEventResult.handled;
+        }
+        if (key == LogicalKeyboardKey.backspace) {
+          expression.value = expression.value.length <= 1
+              ? '0'
+              : expression.value.substring(0, expression.value.length - 1);
+          return KeyEventResult.handled;
+        }
+        if (key == LogicalKeyboardKey.enter ||
+            key == LogicalKeyboardKey.numpadEnter) {
+          unawaited(submit());
+          return KeyEventResult.handled;
+        }
+        return KeyEventResult.ignored;
+      },
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: context.colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 36,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: context.colorScheme.onSurface.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const Gap(12),
+                TextField(
+                  readOnly: true,
+                  showCursor: true,
+                  textAlign: TextAlign.end,
+                  controller: TextEditingController(text: expression.value),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: LocalizedMap({
+                      languages.en: 'Available now',
+                      languages.it: 'Disponibile ora',
+                      languages.ru: 'Доступно сейчас',
+                    }).getValue(locale),
+                  ),
+                ),
+                const Gap(12),
+                _QuickCalculationKeypad(
+                  expression: expression.value,
+                  onKey: (final nextExpression) =>
+                      expression.value = nextExpression,
+                  onSubmit: submit,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickCalculationKeypad extends StatelessWidget {
+  const _QuickCalculationKeypad({
+    required this.expression,
+    required this.onKey,
+    required this.onSubmit,
+  });
+
+  final String expression;
+  final ValueChanged<String> onKey;
+  final VoidCallback onSubmit;
+
+  void press(final String key) {
+    if (key == 'back') {
+      onKey(
+        expression.length <= 1
+            ? '0'
+            : expression.substring(0, expression.length - 1),
+      );
+      return;
+    }
+    if (key == '=') {
+      onSubmit();
+      return;
+    }
+    if (expression == '0') {
+      onKey(key);
+      return;
+    }
+    onKey('$expression$key');
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    final locale = useLocale(context);
+    final keys = <List<String>>[
+      ['7', '8', '9', '/'],
+      ['4', '5', '6', '*'],
+      ['1', '2', '3', '-'],
+      ['.', '0', 'back', '+'],
+    ];
+    return Column(
+      children: [
+        ...keys.map(
+          (final row) => Row(
+            children: row.map((final key) {
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: SizedBox(
+                    height: 52,
+                    child: FilledButton.tonal(
+                      onPressed: () => press(key),
+                      style: FilledButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: key == 'back'
+                          ? const Icon(Icons.backspace_outlined)
+                          : Text(key, style: context.textTheme.titleLarge),
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        const Gap(4),
+        SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: FilledButton(
+            onPressed: onSubmit,
+            child: Text(
+              LocalizedMap({
+                languages.en: 'Save',
+                languages.it: 'Salva',
+                languages.ru: 'Сохранить',
+              }).getValue(locale),
+            ),
           ),
         ),
       ],
